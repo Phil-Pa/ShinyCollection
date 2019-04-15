@@ -2,14 +2,11 @@ package de.phil.solidsabissupershinysammlung
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInteractionListener {
 
@@ -27,14 +24,6 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
             startActivity(Intent(applicationContext, AddNewPokemon::class.java))
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val view = content_main_pokemon_list_fragment.view
-        if (view is RecyclerView) {
-            view.adapter?.notifyDataSetChanged()
-        }
     }
 
     override fun onDestroy() {
@@ -61,7 +50,7 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
                     var sum = 0
                     for (p in pokemons) {
                         if (p.huntMethod == HuntMethod.Hatch) {
-                            sum += p.eggsNeeded
+                            sum += p.encounterNeeded
                             pokemonCount++
                         }
                     }

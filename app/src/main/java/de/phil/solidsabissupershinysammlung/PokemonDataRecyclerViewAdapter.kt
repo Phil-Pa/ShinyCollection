@@ -43,8 +43,24 @@ class PokemonDataRecyclerViewAdapter(
         val item = mValues[position]
         holder.mPokedexIdView.text = ("ID: " + item.pokedexId.toString())
         holder.mNameView.text = ("Name: " + item.name)
-        holder.mEggsNeededView.text = ("Eier: " + item.eggsNeeded.toString())
-        holder.mHuntMethodView.text = ("Methode: " + item.huntMethod.name)
+        holder.mEggsNeededView.text = ("Encounter: " + item.encounterNeeded.toString())
+
+        val method = when (item.huntMethod.name) {
+            "Hatch" -> "Gezüchtet"
+            "SOS" -> "SOS-Methode"
+            "FriendSafari" -> "Kontaktsafari"
+            "SoftReset" -> "Softreset"
+            "Random" -> "Zufall"
+            "DexNav" -> "DexNav"
+            "Hordes" -> "Massenbegegnung"
+            "PokeRadar" -> "PokeRadar"
+            "RNGManipulation" -> "RNGManipulation"
+            "ChainFishing" -> "Chain Fishing"
+            "UltraDimension" -> "Ultradimension"
+            else -> "???"
+        }
+
+        holder.mHuntMethodView.text = ("Methode: $method")
 
         holder.mShinyImageView.setImageBitmap(AppUtil.getDrawableFromURL(item.getDownloadUrl()))
 

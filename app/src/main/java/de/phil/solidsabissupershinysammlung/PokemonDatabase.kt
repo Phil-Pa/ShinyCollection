@@ -9,14 +9,6 @@ class PokemonDatabase {
 
     private lateinit var database: SQLiteDatabase
 
-    init {
-
-        // write methods for encalsulating database
-
-//        database.execSQL("CREATE TABLE IF NOT EXISTS TutorialsPoint(Username VARCHAR,Password VARCHAR);")
-//        database.execSQL("INSERT INTO TutorialsPoint VALUES('admin','admin');")
-    }
-
     fun init(context: Context) {
         database = context.openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
     }
@@ -40,14 +32,14 @@ class PokemonDatabase {
                     "pokedexId INT," +
                     "huntMethod INT," +
                     "name VARCHAR(20)," +
-                    "eggsNeeded INT," +
+                    "encounterNeeded INT," +
                     "generation INT" +
                 ");")
     }
 
     fun insert(data: PokemonData) {
-        database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, eggsNeeded, generation)" +
-                        " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.eggsNeeded}, ${data.generation});")
+        database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation)" +
+                        " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation});")
     }
 
     fun getAllPokemon() : List<PokemonData> {
@@ -60,7 +52,7 @@ class PokemonDatabase {
                 val pokedexId = cursor.getInt(cursor.getColumnIndex("pokedexId"))
                 val huntMethod = HuntMethod.fromInt(cursor.getInt(cursor.getColumnIndex("huntMethod")))!!
                 val name = cursor.getString(cursor.getColumnIndex("name"))
-                val eggsNeeded = cursor.getInt(cursor.getColumnIndex("eggsNeeded"))
+                val eggsNeeded = cursor.getInt(cursor.getColumnIndex("encounterNeeded"))
                 val generation = cursor.getInt(cursor.getColumnIndex("generation"))
 
                 val pokemon = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod)

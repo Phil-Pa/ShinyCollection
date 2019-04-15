@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.support.v7.widget.DividerItemDecoration
+
+
 
 /**
  * A fragment representing a list of Items.
@@ -43,6 +46,12 @@ class PokemonDataFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
+
+                val dividerItemDecoration = DividerItemDecoration(
+                    view.getContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+                view.addItemDecoration(dividerItemDecoration)
 
                 val pokemon = PokemonData("name", 1, 1, 1, HuntMethod.Random)
                 val list = mutableListOf<PokemonData>()

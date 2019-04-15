@@ -1,8 +1,7 @@
 package de.phil.solidsabissupershinysammlung
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
@@ -14,7 +13,7 @@ class AddNewPokemon : AppCompatActivity() {
 
         add_new_pokemon_activity_button_add.setOnClickListener {
 
-            val huntMethod = HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)
+            val huntMethod = HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition) as HuntMethod
             val name = add_new_pokemon_activity_edittext_name.text.toString()
 
             if (name.isEmpty() || name.isEmpty()) {
@@ -30,7 +29,7 @@ class AddNewPokemon : AppCompatActivity() {
 
             val eggsNeededString = add_new_pokemon_activity_edittext_eggsNeeded.text.toString()
             if (eggsNeededString.isEmpty() || eggsNeededString.isBlank()) {
-                Toast.makeText(applicationContext, "Du musst angeben, wie viele Eier du gebraucht hast!", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Du musst angeben, wie viele Encounter du gebraucht hast!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -99,7 +98,7 @@ class AddNewPokemon : AppCompatActivity() {
             add_new_pokemon_activity_edittext_eggsNeeded.text.clear()
             add_new_pokemon_activity_edittext_name.text.clear()
 
-            val data = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod as HuntMethod)
+            val data = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod)
             App.addPokemonToDatabase(data)
 
             finish()
