@@ -11,5 +11,11 @@ enum class HuntMethod {
     PokeRadar,
     RNGManipulation,
     ChainFinishing,
-    UltraDimension
+    UltraDimension;
+
+    companion object {
+        private val map = values().associateBy(HuntMethod::ordinal)
+        fun fromInt(type: Int) = map[type]
+    }
+
 }

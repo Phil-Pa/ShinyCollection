@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        App.init(applicationContext)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -23,6 +24,12 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        App.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
