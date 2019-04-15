@@ -40,6 +40,7 @@
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/button_ripple"
             android:text="Hinzufügen"
+            android:textColor="@android:color/white"
             android:layout_marginStart="8dp" android:id="@+id/add_new_pokemon_activity_button_add"/>
 
 </android.support.constraint.ConstraintLayout>

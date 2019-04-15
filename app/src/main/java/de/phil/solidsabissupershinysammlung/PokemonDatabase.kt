@@ -67,6 +67,10 @@ class PokemonDatabase {
         return pokemons
     }
 
+    fun delete(data: PokemonData) {
+        database.execSQL("DELETE FROM $databaseName WHERE pokedexId = ${data.pokedexId} AND encounterNeeded = ${data.encounterNeeded};")
+    }
+
     companion object {
         private const val databaseName = "PokemonDatabase"
     }

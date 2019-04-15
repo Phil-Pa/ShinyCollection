@@ -62,4 +62,6 @@ object App {
         pokemonDatabase?.close()
     }
 
+    fun deletePokemonFromDatabase(data: PokemonData) = pokemonDatabase?.delete(data)
+
 }

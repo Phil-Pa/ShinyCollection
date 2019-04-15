@@ -22,14 +22,17 @@ class PokemonDataRecyclerViewAdapter(
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewAdapter.ViewHolder>() {
 
-    private val mOnClickListener: View.OnClickListener
+    private val mOnClickListener: View.OnLongClickListener
 
     init {
-        mOnClickListener = View.OnClickListener { v ->
+        mOnClickListener = View.OnLongClickListener { v ->
+
             val item = v.tag as PokemonData
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
+
+            true
         }
     }
 
@@ -66,7 +69,7 @@ class PokemonDataRecyclerViewAdapter(
 
         with(holder.mView) {
             tag = item
-            setOnClickListener(mOnClickListener)
+            setOnLongClickListener(mOnClickListener)
         }
     }
 

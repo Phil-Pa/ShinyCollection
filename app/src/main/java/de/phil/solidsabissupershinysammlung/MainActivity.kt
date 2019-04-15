@@ -3,6 +3,7 @@ package de.phil.solidsabissupershinysammlung
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -11,6 +12,34 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInteractionListener {
 
     override fun onListFragmentInteraction(data: PokemonData?) {
+
+        startSupportActionMode(object : ActionMode.Callback {
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                when (item?.itemId) {
+                    R.id.delete_entry -> {
+                        if (data != null) {
+                            App.deletePokemonFromDatabase(data)
+                            mode?.finish()
+                        }
+                    }
+                }
+                return true
+            }
+
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                mode?.menuInflater?.inflate(R.menu.menu_actions, menu)
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                return false
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+
+            }
+
+        })
 
     }
 
