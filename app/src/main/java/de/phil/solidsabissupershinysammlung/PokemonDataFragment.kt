@@ -51,7 +51,7 @@ class PokemonDataFragment : Fragment() {
 
                 // get data from the database
 
-                val data = App.getAllPokemon()!!
+                val data = App.getAllPokemonInDatabase()!!
 
                 adapter =
                     PokemonDataRecyclerViewAdapter(data, listener)

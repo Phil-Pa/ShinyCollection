@@ -2,18 +2,19 @@ package de.phil.solidsabissupershinysammlung
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInteractionListener {
 
     override fun onListFragmentInteraction(data: PokemonData?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
             startActivity(Intent(applicationContext, AddNewPokemon::class.java))
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val view = content_main_pokemon_list_fragment.view
+        if (view is RecyclerView) {
+            view.adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onDestroy() {
@@ -46,10 +55,17 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
         return when (item.itemId) {
             R.id.show_average_eggs -> {
 
-                val pokemons = App.getAllPokemon()
+                val pokemons = App.getAllPokemonInDatabase()
+                var pokemonCount = 0
                 if (pokemons != null && pokemons.isNotEmpty()) {
-                    val sum = pokemons.sumBy { it.eggsNeeded }
-                    val averageEggs = sum.toDouble() / pokemons.size.toDouble()
+                    var sum = 0
+                    for (p in pokemons) {
+                        if (p.huntMethod == HuntMethod.Hatch) {
+                            sum += p.eggsNeeded
+                            pokemonCount++
+                        }
+                    }
+                    val averageEggs = sum.toDouble() / pokemonCount.toDouble()
                     Toast.makeText(applicationContext, averageEggs.toString(), Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(applicationContext, "Du hast noch keine Shiny Pokemon!", Toast.LENGTH_SHORT).show()

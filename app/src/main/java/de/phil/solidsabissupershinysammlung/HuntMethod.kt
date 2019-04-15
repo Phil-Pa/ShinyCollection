@@ -3,7 +3,7 @@ package de.phil.solidsabissupershinysammlung
 enum class HuntMethod {
     Hatch,
     SOS,
-    ContactSafari,
+    FriendSafari,
     SoftReset,
     Random,
     DexNav,

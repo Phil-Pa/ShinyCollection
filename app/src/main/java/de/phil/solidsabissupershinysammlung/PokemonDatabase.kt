@@ -46,8 +46,8 @@ class PokemonDatabase {
     }
 
     fun insert(data: PokemonData) {
-        database.execSQL("INSERT INTO $databaseName (pokedexID, huntMethod, name, eggsNeeded, generation)" +
-                        "VALUES(${data.pokedexId}, ${data.huntMethod.ordinal}, ${data.name}, ${data.eggsNeeded}, ${data.generation});")
+        database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, eggsNeeded, generation)" +
+                        " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.eggsNeeded}, ${data.generation});")
     }
 
     fun getAllPokemon() : List<PokemonData> {

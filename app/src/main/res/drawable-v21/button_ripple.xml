@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+        android:color="@color/colorAccent">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle" android:tint="@color/colorPrimaryDark">
+        </shape>
+    </item>
+
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle" android:tint="@color/colorPrimary">
+
+        </shape>
+    </item>
+</ripple>
