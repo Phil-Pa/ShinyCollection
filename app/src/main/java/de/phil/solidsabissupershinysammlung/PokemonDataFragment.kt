@@ -43,9 +43,15 @@ class PokemonDataFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
+
+                val pokemon = PokemonData("name", 1, 1, 1, HuntMethod.Random)
+                val list = mutableListOf<PokemonData>()
+                for (i in 1..20)
+                    list.add(pokemon)
+
                 // get data from the database
                 adapter =
-                    PokemonDataRecyclerViewAdapter(listOf(PokemonData("name", 1, 1, 1, HuntMethod.Random)), listener)
+                    PokemonDataRecyclerViewAdapter(list, listener)
             }
         }
         return view

@@ -41,13 +41,12 @@ class PokemonDataRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mPokedexIdView.text = item.pokedexId.toString()
-        holder.mNameView.text = item.name
-        holder.mEggsNeededView.text = item.eggsNeeded.toString()
-        holder.mHuntMethodView.text = item.huntMethod.name
+        holder.mPokedexIdView.text = ("ID: " + item.pokedexId.toString())
+        holder.mNameView.text = ("Name: " + item.name)
+        holder.mEggsNeededView.text = ("Eier: " + item.eggsNeeded.toString())
+        holder.mHuntMethodView.text = ("Methode: " + item.huntMethod.name)
 
-        // TODO: implement method
-//        holder.mShinyImageView.background = AppUtil.getDrawableFromURL(item.getDownloadUrl())
+        holder.mShinyImageView.setImageBitmap(AppUtil.getDrawableFromURL(item.getDownloadUrl()))
 
         with(holder.mView) {
             tag = item
