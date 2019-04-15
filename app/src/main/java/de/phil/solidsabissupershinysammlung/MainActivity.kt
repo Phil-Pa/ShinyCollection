@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener {
-            startActivity(Intent(applicationContext, AddNewPokemon::class.java))
+            startActivity(Intent(applicationContext, AddNewPokemonActivity::class.java))
         }
 
     }

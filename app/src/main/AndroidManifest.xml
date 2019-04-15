@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AddNewPokemon" android:parentActivityName=".MainActivity">
+        <activity android:name=".AddNewPokemonActivity" android:parentActivityName=".MainActivity">
         </activity>
         <activity
                 android:name=".MainActivity"

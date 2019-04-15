@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
-class AddNewPokemon : AppCompatActivity() {
+class AddNewPokemonActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
