@@ -19,3 +19,20 @@ enum class HuntMethod {
     }
 
 }
+
+fun HuntMethod.toGerman(): String {
+    return when (this.name) {
+        "Hatch" -> "Gezüchtet"
+        "SOS" -> "SOS-Methode"
+        "FriendSafari" -> "Kontaktsafari"
+        "SoftReset" -> "Softreset"
+        "Random" -> "Zufall"
+        "DexNav" -> "DexNav"
+        "Hordes" -> "Massenbegegnung"
+        "PokeRadar" -> "PokeRadar"
+        "RNGManipulation" -> "RNGManipulation"
+        "ChainFishing" -> "Chain Fishing"
+        "UltraDimension" -> "Ultradimension"
+        else -> "???"
+    }
+}
