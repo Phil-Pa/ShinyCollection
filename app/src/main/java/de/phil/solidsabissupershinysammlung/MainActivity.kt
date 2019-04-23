@@ -73,20 +73,11 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
         return when (item.itemId) {
             R.id.show_average_eggs -> {
 
-                val pokemons = App.getAllPokemonInDatabase()
-                var pokemonCount = 0
-                if (pokemons != null && pokemons.isNotEmpty()) {
-                    var sum = 0
-                    for (p in pokemons) {
-                        if (p.huntMethod == HuntMethod.Hatch) {
-                            sum += p.encounterNeeded
-                            pokemonCount++
-                        }
-                    }
-                    val averageEggs = sum.toDouble() / pokemonCount.toDouble()
-                    Toast.makeText(applicationContext, averageEggs.toString(), Toast.LENGTH_LONG).show()
-                } else {
+                val averageEggs = App.getAverageEggsCount()
+                if (averageEggs <= 0.9) {
                     Toast.makeText(applicationContext, "Du hast noch keine Shiny Pokemon!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, averageEggs.toString(), Toast.LENGTH_LONG).show()
                 }
 
                 true

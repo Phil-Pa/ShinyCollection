@@ -20,18 +20,7 @@ import android.support.v7.widget.DividerItemDecoration
  */
 class PokemonDataFragment : Fragment() {
 
-    // TODO: Customize parameters
-    private var columnCount = 1
-
     private var listener: OnListFragmentInteractionListener? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,10 +31,7 @@ class PokemonDataFragment : Fragment() {
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
+                layoutManager = LinearLayoutManager(context)
 
                 val dividerItemDecoration = DividerItemDecoration(
                     view.getContext(),
@@ -53,17 +39,11 @@ class PokemonDataFragment : Fragment() {
                 )
                 view.addItemDecoration(dividerItemDecoration)
 
-                val pokemon = PokemonData("name", 1, 1, 1, HuntMethod.Random)
-                val list = mutableListOf<PokemonData>()
-                for (i in 1..20)
-                    list.add(pokemon)
-
                 // get data from the database
 
                 val data = App.getAllPokemonInDatabase()!!
 
-                adapter =
-                    PokemonDataRecyclerViewAdapter(data, listener)
+                adapter = PokemonDataRecyclerViewAdapter(data, listener)
             }
         }
         return view
@@ -95,22 +75,6 @@ class PokemonDataFragment : Fragment() {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onListFragmentInteraction(data: PokemonData?)
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            PokemonDataFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
     }
 }

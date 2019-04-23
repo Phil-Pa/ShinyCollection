@@ -13,14 +13,16 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
         add_new_pokemon_activity_button_add.setOnClickListener {
 
-            val huntMethod = HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition) as HuntMethod
+            val position = add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition
+
+            val huntMethod = HuntMethod.fromInt(position)
             val name = add_new_pokemon_activity_edittext_name.text.toString()
 
             if (name.isEmpty() || name.isEmpty()) {
                 Toast.makeText(applicationContext, "Du musst einen Namen für das Pokemon eingeben!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             } else {
-                val allNames = App.getAllPokemonNames(applicationContext)
+                val allNames = AppUtil.getAllPokemonNames(applicationContext)
                 if (!allNames.contains(name)) {
                     Toast.makeText(applicationContext, "Es gibt kein Pokemon namens $name!", Toast.LENGTH_LONG).show()
                     return@setOnClickListener
@@ -36,7 +38,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
             val eggsNeeded = eggsNeededString.toInt()
 
             // get pokedexId and generation from inputs
-            var generation = -1
+            val generation: Int
             val generationNames: List<String>
             val generationIds: List<Int>
 
@@ -98,7 +100,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
             add_new_pokemon_activity_edittext_eggsNeeded.text.clear()
             add_new_pokemon_activity_edittext_name.text.clear()
 
-            val data = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod)
+            val data = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod!!)
             App.addPokemonToDatabase(data)
 
             finish()

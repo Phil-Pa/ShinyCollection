@@ -2,7 +2,6 @@ package de.phil.solidsabissupershinysammlung
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 
 class PokemonDatabase {
@@ -11,15 +10,6 @@ class PokemonDatabase {
 
     fun init(context: Context) {
         database = context.openOrCreateDatabase(databaseName, MODE_PRIVATE, null)
-    }
-
-    fun executeStatement(command: String) {
-        database.execSQL(command)
-    }
-
-    // dont forget to close cursor
-    fun executeSelectStatement(command: String): Cursor {
-        return database.rawQuery(command, null)
     }
 
     fun close() {
@@ -45,7 +35,7 @@ class PokemonDatabase {
     fun getAllPokemon() : List<PokemonData> {
         val cursor = database.rawQuery("SELECT * FROM $databaseName;", null)
 
-        val pokemons = mutableListOf<PokemonData>()
+        val pokemonList = mutableListOf<PokemonData>()
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
@@ -56,7 +46,7 @@ class PokemonDatabase {
                 val generation = cursor.getInt(cursor.getColumnIndex("generation"))
 
                 val pokemon = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod)
-                pokemons.add(pokemon)
+                pokemonList.add(pokemon)
 
                 cursor.moveToNext()
             }
@@ -64,7 +54,7 @@ class PokemonDatabase {
 
         cursor.close()
 
-        return pokemons
+        return pokemonList
     }
 
     fun delete(data: PokemonData) {
