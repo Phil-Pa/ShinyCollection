@@ -50,7 +50,7 @@ object AppUtil {
 
 }
 
-private class DownloadImageTask : AsyncTask<String, Void, Bitmap>() {
+class DownloadImageTask : AsyncTask<String, Void, Bitmap>() {
 
     override fun doInBackground(vararg urls: String): Bitmap? {
         val url = urls[0]

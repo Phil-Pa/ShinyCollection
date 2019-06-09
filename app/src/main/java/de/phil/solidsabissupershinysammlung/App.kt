@@ -7,6 +7,9 @@ object App {
     private var pokemonDatabase: PokemonDatabase? = null
     private var config: BaseConfig? = null
 
+    // ?
+    var dataChangedListener: PokemonListChangedListener? = null
+
     fun init(context: Context) {
         config = BaseConfig(context)
         pokemonDatabase = PokemonDatabase()
@@ -21,7 +24,10 @@ object App {
 
     fun getAllPokemonInDatabase() : List<PokemonData>? = pokemonDatabase?.getAllPokemon()
 
-    fun addPokemonToDatabase(data: PokemonData) = pokemonDatabase?.insert(data)
+    fun addPokemonToDatabase(data: PokemonData) {
+        pokemonDatabase?.insert(data)
+        dataChangedListener?.notifyPokemonAdded()
+    }
 
     fun getAverageEggsCount() : Double {
         val pokemon = getAllPokemonInDatabase()
@@ -43,6 +49,10 @@ object App {
         pokemonDatabase?.close()
     }
 
-    fun deletePokemonFromDatabase(data: PokemonData) = pokemonDatabase?.delete(data)
+    fun deletePokemonFromDatabase(data: PokemonData) {
+        pokemonDatabase?.delete(data)
+        dataChangedListener?.notifyPokemonDeleted()
+
+    }
 
 }
