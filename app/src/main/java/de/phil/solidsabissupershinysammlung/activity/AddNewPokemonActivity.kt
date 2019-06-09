@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
@@ -8,12 +9,34 @@ import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.presenter.AddNewPokemonPresenter
+import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
+import de.phil.solidsabissupershinysammlung.databinding.ActivityAddNewPokemonBinding
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
-class AddNewPokemonActivity : AppCompatActivity() {
+class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
+
+    override fun showMessage(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getSelectedSpinnerPosition(): Int {
+        return add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition
+    }
+
+    override fun returnToMainActivity() {
+        // not sure if it needs to run on the ui thread
+        finish()
+    }
+
+    val presenter: AddNewPokemonPresenter = AddNewPokemonPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val binding: ActivityAddNewPokemonBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_pokemon)
+        binding.presenter = presenter
+
         setContentView(R.layout.activity_add_new_pokemon)
 
         // presenter method

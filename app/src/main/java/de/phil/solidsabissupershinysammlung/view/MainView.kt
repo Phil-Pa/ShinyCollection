@@ -4,6 +4,8 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 interface MainView {
 
+    fun showMessage(message: String)
+
     // navigation drawer methods
     fun startAddNewPokemonActivity()
     fun addPokemonList()

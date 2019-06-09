@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.presenter
 
+import android.view.View
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 interface MainViewPresenter {
@@ -15,5 +16,6 @@ interface MainViewPresenter {
     // fun addPokemonToTab(tabIndex: Int)
     // fun removePokemonFromTab(tabIndex: Int)
 
+    fun handleButtonClick(view: View?)
 
 }
