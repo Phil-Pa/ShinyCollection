@@ -1,4 +1,4 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
+import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 /**
  * A fragment representing a list of Items.
@@ -42,7 +46,8 @@ class PokemonDataFragment : Fragment() {
 
                 adapter = PokemonDataRecyclerViewAdapter(data, listener)
 
-                App.dataChangedListener = object : PokemonListChangedListener {
+                App.dataChangedListener = object :
+                    PokemonListChangedListener {
                     override fun notifyPokemonAdded() {
                         adapter?.notifyItemRangeChanged(1, adapter?.itemCount!!)
                     }

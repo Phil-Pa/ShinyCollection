@@ -1,8 +1,13 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.core.AppUtil
+import de.phil.solidsabissupershinysammlung.model.HuntMethod
+import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.model.PokemonData
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
 class AddNewPokemonActivity : AppCompatActivity() {
@@ -11,6 +16,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_pokemon)
 
+        // presenter method
         add_new_pokemon_activity_button_add.setOnClickListener {
 
             val position = add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition
@@ -100,7 +106,13 @@ class AddNewPokemonActivity : AppCompatActivity() {
             add_new_pokemon_activity_edittext_eggsNeeded.text.clear()
             add_new_pokemon_activity_edittext_name.text.clear()
 
-            val data = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod!!)
+            val data = PokemonData(
+                name,
+                pokedexId,
+                generation,
+                eggsNeeded,
+                huntMethod!!
+            )
             App.addPokemonToDatabase(data)
 
             finish()

@@ -13,10 +13,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".AddNewPokemonActivity" android:parentActivityName=".MainActivity">
+        <activity android:name=".activity.AddNewPokemonActivity" android:parentActivityName=".activity.MainActivity">
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name=".activity.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -1,4 +1,4 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.model
 
 enum class HuntMethod {
     Hatch,

@@ -1,4 +1,4 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import de.phil.solidsabissupershinysammlung.core.AppUtil
+import de.phil.solidsabissupershinysammlung.R
 
 
-import de.phil.solidsabissupershinysammlung.PokemonDataFragment.OnListFragmentInteractionListener
+import de.phil.solidsabissupershinysammlung.fragment.PokemonDataFragment.OnListFragmentInteractionListener
+import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.toGerman
 
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 
@@ -22,10 +26,10 @@ class PokemonDataRecyclerViewAdapter(
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewAdapter.ViewHolder>() {
 
-    private val mOnClickListener: View.OnLongClickListener
+    private val mOnLongClickListener: View.OnLongClickListener
 
     init {
-        mOnClickListener = View.OnLongClickListener { v ->
+        mOnLongClickListener = View.OnLongClickListener { v ->
 
             val item = v.tag as PokemonData
             // Notify the active callbacks interface (the activity, if the fragment is attached to
@@ -56,7 +60,7 @@ class PokemonDataRecyclerViewAdapter(
 
         with(holder.mView) {
             tag = item
-            setOnLongClickListener(mOnClickListener)
+            setOnLongClickListener(mOnLongClickListener)
         }
     }
 

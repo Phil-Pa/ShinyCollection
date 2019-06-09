@@ -1,6 +1,10 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.core
 
 import android.content.Context
+import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
+import de.phil.solidsabissupershinysammlung.fragment.PokemonListChangedListener
+import de.phil.solidsabissupershinysammlung.model.HuntMethod
+import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 object App {
 
@@ -11,7 +15,8 @@ object App {
     var dataChangedListener: PokemonListChangedListener? = null
 
     fun init(context: Context) {
-        config = BaseConfig(context)
+        config =
+            BaseConfig(context)
         pokemonDatabase = PokemonDatabase()
 
         pokemonDatabase?.init(context)

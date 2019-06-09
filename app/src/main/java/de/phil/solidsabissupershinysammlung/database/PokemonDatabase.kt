@@ -1,10 +1,15 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.database
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.database.sqlite.SQLiteDatabase
+import de.phil.solidsabissupershinysammlung.model.HuntMethod
+import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 class PokemonDatabase {
+
+    // TODO create a table for the pokemon lists
+    // TODO change database layout because of is alola?
 
     private lateinit var database: SQLiteDatabase
 
@@ -40,12 +45,24 @@ class PokemonDatabase {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {
                 val pokedexId = cursor.getInt(cursor.getColumnIndex("pokedexId"))
-                val huntMethod = HuntMethod.fromInt(cursor.getInt(cursor.getColumnIndex("huntMethod")))!!
+                val huntMethod = HuntMethod.fromInt(
+                    cursor.getInt(
+                        cursor.getColumnIndex(
+                            "huntMethod"
+                        )
+                    )
+                )!!
                 val name = cursor.getString(cursor.getColumnIndex("name"))
                 val eggsNeeded = cursor.getInt(cursor.getColumnIndex("encounterNeeded"))
                 val generation = cursor.getInt(cursor.getColumnIndex("generation"))
 
-                val pokemon = PokemonData(name, pokedexId, generation, eggsNeeded, huntMethod)
+                val pokemon = PokemonData(
+                    name,
+                    pokedexId,
+                    generation,
+                    eggsNeeded,
+                    huntMethod
+                )
                 pokemonList.add(pokemon)
 
                 cursor.moveToNext()

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
+    tools:context=".activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <fragment android:layout_width="match_parent" android:layout_height="match_parent"
-              class="de.phil.solidsabissupershinysammlung.PokemonDataFragment" android:id="@+id/content_main_pokemon_list_fragment"/>
+              class="de.phil.solidsabissupershinysammlung.fragment.PokemonDataFragment" android:id="@+id/content_main_pokemon_list_fragment"/>
 
 </LinearLayout>

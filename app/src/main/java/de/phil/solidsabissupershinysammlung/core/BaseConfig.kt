@@ -1,4 +1,4 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.core
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

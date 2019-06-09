@@ -1,4 +1,4 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,19 +7,62 @@ import android.support.v7.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.fragment.PokemonDataFragment
+import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
+import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), MainView {
+    override fun startAddNewPokemonActivity() {
+        startActivity(Intent(applicationContext, AddNewPokemonActivity::class.java))
+    }
 
-    override fun onListFragmentInteraction(data: PokemonData?) {
+    override fun addPokemonList() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun removePokemonList() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showAverageEggEncounters() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showAllEggEncounters() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showPokemonDetailDialog(data: PokemonData) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getCurrentTabIndex(): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onListEntryClick(data: PokemonData?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onListEntryLongClick(data: PokemonData?) {
+        /* TODO use modal bottom sheet for long holding list entry
+          number of tab views -> number of list options in bottom sheet
+          for choosing in which pokemon list the pokemon should be */
 
         startSupportActionMode(object : ActionMode.Callback {
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                 when (item?.itemId) {
                     R.id.delete_entry -> {
                         if (data != null) {
-                            App.deletePokemonFromDatabase(data)
+                            // TODO presenter method
+                            // App.deletePokemonFromDatabase(data)
+                            presenter.deletePokemonFromDatabase(data)
                             mode?.finish()
+
                         }
                     }
                 }
@@ -40,19 +83,15 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
             }
 
         })
-
     }
+
+    val presenter: MainPresenter = MainPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.init(applicationContext)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        fab.setOnClickListener {
-            startActivity(Intent(applicationContext, AddNewPokemonActivity::class.java))
-        }
-
     }
 
     override fun onDestroy() {
@@ -73,6 +112,7 @@ class MainActivity : AppCompatActivity(), PokemonDataFragment.OnListFragmentInte
         return when (item.itemId) {
             R.id.show_average_eggs -> {
 
+                // TODO presenter method
                 val averageEggs = App.getAverageEggsCount()
                 if (averageEggs <= 0.9) {
                     Toast.makeText(applicationContext, "Du hast noch keine Shiny Pokemon!", Toast.LENGTH_SHORT).show()
