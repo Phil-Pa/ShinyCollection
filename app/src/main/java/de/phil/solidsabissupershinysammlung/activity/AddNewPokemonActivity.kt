@@ -125,5 +125,6 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
         val binding: ActivityAddNewPokemonBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_pokemon)
         binding.presenter = presenter
 
+        App.addNewPokemonView = this
     }
 }

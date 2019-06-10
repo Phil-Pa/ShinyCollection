@@ -15,7 +15,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.fragment.PokemonDataFragment
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.model.PokemonData
@@ -24,13 +23,18 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.app.AlertDialog
-import android.content.DialogInterface
-import android.text.Editable
 import android.widget.EditText
 import android.text.InputType
+import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity(), MainView {
+
+    override fun updateShinyStatistics() {
+        textViewTotalShinys.text = ("Anzahl Shinys: ${App.getTotalNumberOfShinys()}")
+        textViewTotalEggs.text = ("Eier gesamt: ${App.getTotalEggsCount()}")
+        textViewAverageEggs.text = ("Eier durchschnittlich: ${App.getAverageEggsCount()}")
+    }
 
     override fun showMessage(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
@@ -130,11 +134,17 @@ class MainActivity : AppCompatActivity(), MainView {
         })
     }
 
-    val presenter: MainPresenter = MainPresenter(this)
+    private val presenter: MainPresenter = MainPresenter(this)
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var textViewTotalEggs: TextView
+    private lateinit var textViewAverageEggs: TextView
+    private lateinit var textViewTotalShinys: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.init(applicationContext)
+        App.mainView = this
 
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.presenter = presenter
@@ -150,15 +160,15 @@ class MainActivity : AppCompatActivity(), MainView {
         tabs.setupWithViewPager(viewPager)
 
         // init navigation drawer
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.app_name, R.string.dummy_text
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        navView.setNavigationItemSelectedListener {
+        navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.add_pokemon -> {
                     startAddNewPokemonActivity()
@@ -176,6 +186,16 @@ class MainActivity : AppCompatActivity(), MainView {
             findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
             true
         }
+
+        initNavigationViewViews()
+        updateShinyStatistics()
+    }
+
+    private fun initNavigationViewViews() {
+        val headerView = navigationView.getHeaderView(0)
+        textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
+        textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
+        textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
     }
 
     override fun onDestroy() {

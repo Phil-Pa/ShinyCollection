@@ -37,15 +37,12 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
 
         // TODO if tab index == 0, add pokemon data to normal table, else add to other table containing the pokemon lists
 
-        if (tabIndex == 0)
-            App.addPokemonToDatabase(data)
+        if (tabIndex == 0) {
+            App.addPokemonToShinyList(data)
+        }
 
         addNewPokemonView.clearUserInput()
         addNewPokemonView.returnToMainActivity()
-    }
-
-    override fun addPokemonToDatabase(data: PokemonData) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

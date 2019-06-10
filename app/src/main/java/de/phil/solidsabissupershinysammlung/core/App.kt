@@ -5,6 +5,9 @@ import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListChangedListener
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
+import de.phil.solidsabissupershinysammlung.view.MainView
+import java.lang.IllegalStateException
 
 object App {
 
@@ -12,6 +15,22 @@ object App {
     private var config: BaseConfig? = null
 
     private var pokemonNamesList = listOf<String>()
+
+    private var mMainView: MainView? = null
+
+    var mainView get() = mMainView
+    set(value) {
+        if (mMainView == null)
+            mMainView = value
+    }
+
+    private var mAddNewPokemonView: AddNewPokemonView? = null
+
+    var addNewPokemonView get() = mAddNewPokemonView
+        set(value) {
+            if (mAddNewPokemonView == null)
+                mAddNewPokemonView = value
+        }
 
     // ?
     var dataChangedListener: PokemonListChangedListener? = null
@@ -31,9 +50,11 @@ object App {
         pokemonNamesList = AppUtil.getAllPokemonNames(context)
     }
 
-    fun getAllPokemonNames(): List<String> {
-        return pokemonNamesList
+    private fun updateShinyStatistics() {
+        mainView?.updateShinyStatistics()
     }
+
+    fun getAllPokemonNames() = pokemonNamesList
 
     fun getAllPokemonAlolaNames(): List<String> {
         return listOf(
@@ -46,10 +67,12 @@ object App {
 
     fun getAllPokemonInDatabase(): List<PokemonData>? = pokemonDatabase?.getAllPokemon()
 
-    fun addPokemonToDatabase(data: PokemonData) {
+    private fun addPokemonToDatabase(data: PokemonData) {
         pokemonDatabase?.insert(data)
         dataChangedListener?.notifyPokemonAdded()
     }
+
+    fun getTotalNumberOfShinys() = getAllPokemonInDatabase()!!.size
 
     fun getAverageEggsCount(): Double {
         val pokemon = getAllPokemonInDatabase()
@@ -74,7 +97,7 @@ object App {
 
         for (p in pokemon)
             if (p.huntMethod == HuntMethod.Hatch)
-                eggsCount++
+                eggsCount += p.encounterNeeded
 
         return eggsCount
     }
@@ -86,6 +109,16 @@ object App {
     fun deletePokemonFromDatabase(data: PokemonData) {
         pokemonDatabase?.delete(data)
         dataChangedListener?.notifyPokemonDeleted()
+
+    }
+
+    fun addPokemonToShinyList(data: PokemonData) {
+        addPokemonToDatabase(data)
+        updateRecyclerView()
+        updateShinyStatistics()
+    }
+
+    private fun updateRecyclerView() {
 
     }
 

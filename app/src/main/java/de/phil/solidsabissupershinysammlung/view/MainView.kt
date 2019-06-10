@@ -28,4 +28,6 @@ interface MainView {
 
     // show modal bottom sheet
     fun onListEntryLongClick(data: PokemonData?)
+
+    fun updateShinyStatistics()
 }
