@@ -8,4 +8,14 @@ interface AddNewPokemonView {
 
     fun returnToMainActivity()
 
+    fun getPokemonName(): String
+
+    fun getEncounters(): Int
+
+    fun clearUserInput()
+
+    fun getPokedexIdAndGeneration(_name: String): Pair<Int, Int>
+
+    fun getPokemonListTabIndex(): Int
+
 }

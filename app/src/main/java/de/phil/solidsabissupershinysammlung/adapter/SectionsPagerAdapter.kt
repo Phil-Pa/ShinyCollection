@@ -5,22 +5,27 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import de.phil.solidsabissupershinysammlung.fragment.MainListFragment
+import de.phil.solidsabissupershinysammlung.view.MainView
 
 private val TAB_TITLES = arrayOf(
-    "Tab 1",
-    "Tab 2"
+    "Shiny Liste",
+    "Pokemon Liste 1",
+    "Pokemon Liste 2",
+    "Pokemon Liste 3",
+    "Pokemon Liste 4",
+    "Pokemon Liste 5"
 )
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class SectionsPagerAdapter(private val mainView: MainView, private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
         // Return a MainListFragment (defined as a static inner class below).
-        return MainListFragment.newInstance(position + 1)
+        return MainListFragment.newInstance(mainView, position + 1)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

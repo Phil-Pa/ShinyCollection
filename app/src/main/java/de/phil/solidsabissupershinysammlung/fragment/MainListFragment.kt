@@ -13,11 +13,15 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.view.MainView
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class MainListFragment : Fragment() {
+
+    private lateinit var mainView: MainView
+    private var tabIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,42 +34,39 @@ class MainListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_pokemondata_list, container, false)
 
-        // TODO use recylcer view adapter to initialize the page
+        // TODO use recycler view adapter to initialize the page
 
-//        if (view is RecyclerView) {
-//            with(view) {
-//                layoutManager = LinearLayoutManager(context)
-//
-//                val dividerItemDecoration = DividerItemDecoration(
-//                    view.getContext(),
-//                    DividerItemDecoration.VERTICAL
-//                )
-//                view.addItemDecoration(dividerItemDecoration)
-//
-//                // get data from the database
-//
-//                val data = App.getAllPokemonInDatabase()!!
-//
-//                adapter = PokemonDataRecyclerViewAdapter(data, object : PokemonDataFragment.OnListFragmentInteractionListener {
-//                    override fun onListFragmentInteraction(data: PokemonData?) {
-//                        Toast.makeText(context, "Test!", Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                })
-//
-//                App.dataChangedListener = object :
-//                    PokemonListChangedListener {
-//                    override fun notifyPokemonAdded() {
-//                        adapter?.notifyItemRangeChanged(1, adapter?.itemCount!!)
-//                    }
-//
-//                    override fun notifyPokemonDeleted() {
-//                        adapter?.notifyItemRangeChanged(1, adapter?.itemCount!!)
-//                    }
-//
-//                }
-//            }
-//        }
+        if (view is RecyclerView) {
+            with(view) {
+                layoutManager = LinearLayoutManager(context)
+
+                val dividerItemDecoration = DividerItemDecoration(
+                    view.getContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+                view.addItemDecoration(dividerItemDecoration)
+
+                // get data from the database
+
+                var data = listOf<PokemonData>()
+                if (tabIndex == 0)
+                    data = App.getAllPokemonInDatabase()!!
+
+                adapter = PokemonDataRecyclerViewAdapter(data, mainView)
+
+                App.dataChangedListener = object :
+                    PokemonListChangedListener {
+                    override fun notifyPokemonAdded() {
+                        adapter?.notifyItemRangeChanged(1, adapter?.itemCount!!)
+                    }
+
+                    override fun notifyPokemonDeleted() {
+                        adapter?.notifyItemRangeChanged(1, adapter?.itemCount!!)
+                    }
+
+                }
+            }
+        }
 
         return view
     }
@@ -82,12 +83,15 @@ class MainListFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int): MainListFragment {
-            return MainListFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber)
-                }
+        fun newInstance(mainView: MainView, sectionNumber: Int): MainListFragment {
+            val fragment = MainListFragment()
+            fragment.mainView = mainView
+            fragment.tabIndex = sectionNumber - 1
+            fragment.arguments = Bundle().apply {
+                putInt(ARG_SECTION_NUMBER, sectionNumber)
             }
+
+            return fragment
         }
     }
 }

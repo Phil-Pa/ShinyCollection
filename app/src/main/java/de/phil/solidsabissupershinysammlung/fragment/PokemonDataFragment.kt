@@ -13,6 +13,7 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.view.MainView
 
 /**
  * A fragment representing a list of Items.
@@ -21,7 +22,7 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
  */
 class PokemonDataFragment : Fragment() {
 
-    private var listener: OnListFragmentInteractionListener? = null
+    private var mainView: MainView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +45,7 @@ class PokemonDataFragment : Fragment() {
 
                 val data = App.getAllPokemonInDatabase()!!
 
-                adapter = PokemonDataRecyclerViewAdapter(data, listener)
+                adapter = PokemonDataRecyclerViewAdapter(data, mainView!!)
 
                 App.dataChangedListener = object :
                     PokemonListChangedListener {
@@ -65,30 +66,15 @@ class PokemonDataFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
-            listener = context
+        if (context is MainView) {
+            mainView = context
         } else {
-            throw RuntimeException("$context must implement OnListFragmentInteractionListener")
+            throw RuntimeException("$context must implement MainView")
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(data: PokemonData?)
+        mainView = null
     }
 }

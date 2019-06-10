@@ -9,36 +9,16 @@ import android.widget.TextView
 import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.R
 
-
-import de.phil.solidsabissupershinysammlung.fragment.PokemonDataFragment.OnListFragmentInteractionListener
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.toGerman
+import de.phil.solidsabissupershinysammlung.view.MainView
 
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 
-/**
- * [RecyclerView.Adapter] that can display a [PokemonData] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class PokemonDataRecyclerViewAdapter(
     private val mValues: List<PokemonData>,
-    private val mListener: OnListFragmentInteractionListener?
+    private val mainView: MainView
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewAdapter.ViewHolder>() {
-
-    private val mOnLongClickListener: View.OnLongClickListener
-
-    init {
-        mOnLongClickListener = View.OnLongClickListener { v ->
-
-            val item = v.tag as PokemonData
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
-
-            true
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -60,7 +40,16 @@ class PokemonDataRecyclerViewAdapter(
 
         with(holder.mView) {
             tag = item
-            setOnLongClickListener(mOnLongClickListener)
+            setOnLongClickListener{
+                // Notify the active callbacks interface (the activity, if the fragment is attached to
+                // one) that an item has been selected.
+                mainView.onListEntryLongClick(it.tag as PokemonData)
+
+                true
+            }
+            setOnClickListener {
+                mainView.onListEntryClick(it.tag as PokemonData)
+            }
         }
     }
 

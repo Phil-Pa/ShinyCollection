@@ -1,6 +1,7 @@
 package de.phil.solidsabissupershinysammlung.presenter
 
 import android.view.View
+import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.view.MainView
 
@@ -22,7 +23,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
     }
 
     override fun deletePokemonFromDatabase(data: PokemonData) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        App.deletePokemonFromDatabase(data)
     }
 
 }

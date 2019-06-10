@@ -23,15 +23,47 @@ import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
 import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v7.app.AlertDialog
+import android.content.DialogInterface
+import android.text.Editable
+import android.widget.EditText
+import android.text.InputType
+
 
 class MainActivity : AppCompatActivity(), MainView {
 
     override fun showMessage(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
     override fun startAddNewPokemonActivity() {
-        startActivity(Intent(applicationContext, AddNewPokemonActivity::class.java))
+        val alert = AlertDialog.Builder(this)
+        val editText = EditText(applicationContext)
+        editText.setTextColor(resources.getColor(android.R.color.black))
+        editText.inputType = InputType.TYPE_CLASS_NUMBER
+        alert.setMessage("Gebe an, wo das Pokemon hinzugefügt werden soll. 0 Für Shiny Liste, 1 für Pokemon Liste 1, ...")
+        alert.setTitle("Pokemon hinzufügen")
+
+        alert.setView(editText)
+
+        alert.setPositiveButton("OK") { dialog, whichButton ->
+            val tabIndex = editText.text.toString().toInt()
+
+            // TODO add check for max number of pokemon lists
+            if (tabIndex < 0)
+                return@setPositiveButton
+
+            val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
+            intent.putExtra("tabIndex", tabIndex)
+            startActivity(intent)
+        }
+
+        alert.setNegativeButton("ABBRECHEN") { dialog, whichButton ->
+            dialog.cancel()
+        }
+
+        alert.show()
+
     }
 
     override fun addPokemonList() {
@@ -59,7 +91,8 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun onListEntryClick(data: PokemonData?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (data != null)
+            showMessage(data.toString())
     }
 
     override fun onListEntryLongClick(data: PokemonData?) {
@@ -72,8 +105,6 @@ class MainActivity : AppCompatActivity(), MainView {
                 when (item?.itemId) {
                     R.id.delete_entry -> {
                         if (data != null) {
-                            // TODO presenter method
-                            // App.deletePokemonFromDatabase(data)
                             presenter.deletePokemonFromDatabase(data)
                             mode?.finish()
 
@@ -112,7 +143,7 @@ class MainActivity : AppCompatActivity(), MainView {
         setSupportActionBar(toolbar)
 
         // init tab view
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        val sectionsPagerAdapter = SectionsPagerAdapter(this,applicationContext, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
@@ -129,11 +160,17 @@ class MainActivity : AppCompatActivity(), MainView {
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_home -> {
-                    // Handle the camera action
+                R.id.add_pokemon -> {
+                    startAddNewPokemonActivity()
                 }
-                R.id.nav_share -> {
+                R.id.add_pokemon_list -> {
+                    // TODO pokemon löschen
+                }
+                R.id.delete_pokemon_list -> {
 
+                }
+                R.id.settings -> {
+                    // TODO start settings
                 }
             }
             findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)

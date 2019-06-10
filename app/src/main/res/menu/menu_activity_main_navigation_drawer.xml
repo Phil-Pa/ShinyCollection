@@ -3,20 +3,29 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
-                android:id="@+id/nav_home"
-                android:icon="@android:drawable/ic_dialog_alert"
-                android:title="IC-Dialog-Alert"/>
+                android:id="@+id/add_pokemon"
+                android:icon="@drawable/ic_add_white_24dp"
+                android:title="Pokemon hinzufügen"/>
+        <item android:id="@+id/add_pokemon_list"
+              android:icon="@drawable/ic_add_box_white_24dp"
+              android:title="Pokemon Liste hinzufügen"/>
+        <item android:id="@+id/delete_pokemon_list"
+              android:icon="@drawable/ic_delete_white_24dp"
+              android:title="Pokemon Liste löschen"/>
+        <item android:id="@+id/settings"
+              android:icon="@drawable/ic_settings_white_24dp"
+              android:title="Einstellungen"/>
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                    android:id="@+id/nav_share"
-                    android:icon="@android:drawable/ic_delete"
-                    android:title="IC-Delete"/>
-        </menu>
-    </item>
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                    <!--android:id="@+id/nav_share"-->
+                    <!--android:icon="@android:drawable/ic_delete"-->
+                    <!--android:title="IC-Delete"/>-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>
