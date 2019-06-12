@@ -33,18 +33,13 @@ class PokemonDataRecyclerViewAdapter(
         holder.mEggsNeededView.text = ("Encounter: " + item.encounterNeeded.toString())
 
         val method = item.huntMethod.toGerman()
-
         holder.mHuntMethodView.text = ("Methode: $method")
-
         holder.mShinyImageView.setImageBitmap(AppUtil.getDrawableFromURL(item.getDownloadUrl()))
 
         with(holder.mView) {
             tag = item
             setOnLongClickListener{
-                // Notify the active callbacks interface (the activity, if the fragment is attached to
-                // one) that an item has been selected.
                 mainView.onListEntryLongClick(it.tag as PokemonData)
-
                 true
             }
             setOnClickListener {
@@ -60,7 +55,6 @@ class PokemonDataRecyclerViewAdapter(
         val mNameView: TextView = mView.fragment_pokemondata_name
         val mEggsNeededView: TextView = mView.fragment_pokemondata_eggs_needed
         val mHuntMethodView: TextView = mView.fragment_pokemondata_hunt_method
-
         val mShinyImageView: ImageView = mView.fragment_pokemondata_shiny_image
 
     }

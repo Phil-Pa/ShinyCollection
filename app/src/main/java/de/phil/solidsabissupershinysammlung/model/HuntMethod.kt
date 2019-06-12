@@ -11,7 +11,8 @@ enum class HuntMethod {
     PokeRadar,
     RNGManipulation,
     ChainFinishing,
-    UltraDimension;
+    UltraDimension,
+    Other;
 
     companion object {
         private val map = values().associateBy(HuntMethod::ordinal)
@@ -33,6 +34,7 @@ fun HuntMethod.toGerman(): String {
         "RNGManipulation" -> "RNGManipulation"
         "ChainFishing" -> "Chain Fishing"
         "UltraDimension" -> "Ultradimension"
+        "Other" -> "Anderes"
         else -> "???"
     }
 }

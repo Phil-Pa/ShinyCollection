@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import de.phil.solidsabissupershinysammlung.fragment.MainListFragment
+import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
 import de.phil.solidsabissupershinysammlung.view.MainView
 
 private val TAB_TITLES = arrayOf(
@@ -20,13 +20,17 @@ private val TAB_TITLES = arrayOf(
  */
 class SectionsPagerAdapter(private val mainView: MainView, private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-    private val pages = mutableMapOf<Int, MainListFragment>()
+    private val pages = mutableMapOf<Int, PokemonListFragment>()
 
     override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a MainListFragment (defined as a static inner class below).
         if (!pages.keys.contains(position))
-            pages[position] = MainListFragment.newInstance(mainView, position)
+            pages[position] = PokemonListFragment.newInstance(mainView, position)
+
+        if (pages[position] == null) {
+            // TODO log error
+
+            throw IllegalArgumentException("position")
+        }
 
         return pages[position]!!
     }

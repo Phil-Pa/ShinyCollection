@@ -8,9 +8,9 @@ import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
 
 class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) : AddNewPokemonViewPresenter {
     override fun addPokemonButtonClick(view: View?) {
-        val position = addNewPokemonView.getSelectedSpinnerPosition()
 
-        val huntMethod = HuntMethod.fromInt(position)
+        val tabIndex = addNewPokemonView.getPokemonListTabIndex()
+        val huntMethod = if (tabIndex == 0) HuntMethod.fromInt(addNewPokemonView.getSelectedSpinnerPosition()) else HuntMethod.Other
         val name = addNewPokemonView.getPokemonName()
 
         if (name.isEmpty() || name.isBlank()) {
@@ -21,31 +21,27 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
         val names = App.getAllPokemonNames()
         val alolaNames = App.getAllPokemonAlolaNames()
 
-        // TODO: doesnt work
-
         if (!names.contains(name) && !alolaNames.contains(name)) {
             addNewPokemonView.showMessage("Es gibt kein Pokemon namens $name!")
             return
         }
 
         val encounters = addNewPokemonView.getEncounters()
-        if (encounters == -1 && addNewPokemonView.getPokemonListTabIndex() != 0) {
+        if (encounters == App.INT_ERROR_CODE && tabIndex == 0) {
             addNewPokemonView.showMessage("Du musst angeben, wie viele Encounter du gebraucht hast!")
             return
         }
 
         val pair = addNewPokemonView.getPokedexIdAndGeneration(name)
-
-        if (pair.first == -1 || pair.second == -1) {
-            addNewPokemonView.showMessage("Es gibt kein Pokemon namens $name!")
+        if (pair == null) {
+            // TODO implement app logger
+            addNewPokemonView.showMessage("Von $name konnte die PokedexID und Generation nicht bestimmt werden.")
             return
         }
+        val (pokedexId, generation) = pair
 
-        val tabIndex = addNewPokemonView.getPokemonListTabIndex()
 
-        val data = PokemonData(name, pair.first, pair.second, encounters, huntMethod!!)
-
-        // TODO if tab index == 0, add pokemon data to normal table, else add to other table containing the pokemon lists
+        val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!)
 
         App.addPokemon(data, tabIndex)
 

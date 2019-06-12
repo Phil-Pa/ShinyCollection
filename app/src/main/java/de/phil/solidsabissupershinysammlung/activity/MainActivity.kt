@@ -38,19 +38,24 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun startAddNewPokemonActivity() {
-        var tabIndex = -1
+        var tabIndex = App.INT_ERROR_CODE
 
         val alert = AlertDialog.Builder(this)
         val inflater = layoutInflater
         val alertLayout = inflater.inflate(R.layout.dialog_choose_tab, null)
-        val shiny_list_button = alertLayout.findViewById<Button>(R.id.shiny_list_button)
-        val cycle_15_button = alertLayout.findViewById<Button>(R.id.cycle_15_button)
-        val cycle_20_button = alertLayout.findViewById<Button>(R.id.cycle_20_button)
-        val sos_button = alertLayout.findViewById<Button>(R.id.sos_button)
+        val shinyListButton = alertLayout.findViewById<Button>(R.id.shiny_list_button)
+        val cycle15Button = alertLayout.findViewById<Button>(R.id.cycle_15_button)
+        val cycle20Button = alertLayout.findViewById<Button>(R.id.cycle_20_button)
+        val sosButton = alertLayout.findViewById<Button>(R.id.sos_button)
+
+        alert.setView(alertLayout)
+        alert.setTitle("Pokemon hinzufügen zu:")
 
         val startActivityInternal = {
-            if (tabIndex < 0 || tabIndex > 3)
+            if (tabIndex < 0 || tabIndex > 3) {
+                // TODO log error
                 throw IllegalStateException()
+            }
 
             val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
             intent.putExtra("tabIndex", tabIndex)
@@ -59,32 +64,28 @@ class MainActivity : AppCompatActivity(), MainView {
 
         var dialog: AlertDialog? = null
 
-        shiny_list_button.setOnClickListener {
+        shinyListButton.setOnClickListener {
             tabIndex = 0
             dialog?.cancel()
             startActivityInternal()
         }
-        cycle_15_button.setOnClickListener {
+        cycle15Button.setOnClickListener {
             tabIndex = 1
             dialog?.cancel()
             startActivityInternal()
         }
 
-        cycle_20_button.setOnClickListener {
+        cycle20Button.setOnClickListener {
             tabIndex = 2
             dialog?.cancel()
             startActivityInternal()
         }
 
-        sos_button.setOnClickListener {
+        sosButton.setOnClickListener {
             tabIndex = 3
             dialog?.cancel()
             startActivityInternal()
         }
-
-        alert.setView(alertLayout)
-
-        alert.setTitle("Pokemon hinzufügen zu:")
 
         dialog = alert.create()
 
@@ -97,9 +98,6 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun onListEntryLongClick(data: PokemonData?) {
-        /* TODO use modal bottom sheet for long holding list entry
-          number of tab views -> number of list options in bottom sheet
-          for choosing in which pokemon list the pokemon should be */
 
         startSupportActionMode(object : ActionMode.Callback {
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
@@ -142,22 +140,28 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.init(applicationContext)
-
         App.mainView = this
-
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.presenter = presenter
-
-//        setContentView(R.layout.activity_main_navigation_drawer)
         setSupportActionBar(toolbar)
 
+        initTabs()
+        initNavigationDrawer()
+        initNavigationViewViews()
+        updateShinyStatistics()
+    }
+
+    private fun initTabs() {
         // init tab view
         val sectionsPagerAdapter = SectionsPagerAdapter(this,applicationContext, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
+        viewPager.offscreenPageLimit = 4
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
+    }
 
+    private fun initNavigationDrawer() {
         // init navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
@@ -179,9 +183,6 @@ class MainActivity : AppCompatActivity(), MainView {
             findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
             true
         }
-
-        initNavigationViewViews()
-        updateShinyStatistics()
     }
 
     private fun initNavigationViewViews() {

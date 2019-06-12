@@ -8,6 +8,8 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 class PokemonDatabase {
 
+    // TODO logging all database operations?
+
     private lateinit var database: SQLiteDatabase
 
     fun init(context: Context) {
@@ -31,48 +33,8 @@ class PokemonDatabase {
     }
 
     fun insert(data: PokemonData, tabIndex: Int) {
-
-        // TODO insert into database depending on tabIndex
-
         database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation, tabIndex)" +
                         " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation}, $tabIndex);")
-    }
-
-    fun getAllPokemon() : List<PokemonData> {
-        val cursor = database.rawQuery("SELECT * FROM $databaseName;", null)
-
-        val pokemonList = mutableListOf<PokemonData>()
-
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast) {
-                val pokedexId = cursor.getInt(cursor.getColumnIndex("pokedexId"))
-                val huntMethod = HuntMethod.fromInt(
-                    cursor.getInt(
-                        cursor.getColumnIndex(
-                            "huntMethod"
-                        )
-                    )
-                )!!
-                val name = cursor.getString(cursor.getColumnIndex("name"))
-                val eggsNeeded = cursor.getInt(cursor.getColumnIndex("encounterNeeded"))
-                val generation = cursor.getInt(cursor.getColumnIndex("generation"))
-
-                val pokemon = PokemonData(
-                    name,
-                    pokedexId,
-                    generation,
-                    eggsNeeded,
-                    huntMethod
-                )
-                pokemonList.add(pokemon)
-
-                cursor.moveToNext()
-            }
-        }
-
-        cursor.close()
-
-        return pokemonList
     }
 
     fun delete(data: PokemonData, tabIndex: Int) {

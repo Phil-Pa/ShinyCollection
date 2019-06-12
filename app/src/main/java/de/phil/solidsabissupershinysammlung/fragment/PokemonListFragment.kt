@@ -17,7 +17,7 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 /**
  * A placeholder fragment containing a simple view.
  */
-class MainListFragment : Fragment() {
+class PokemonListFragment : Fragment() {
 
     private lateinit var mainView: MainView
     private var mTabIndex = 0
@@ -90,8 +90,8 @@ class MainListFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(mainView: MainView, sectionNumber: Int): MainListFragment {
-            val fragment = MainListFragment()
+        fun newInstance(mainView: MainView, sectionNumber: Int): PokemonListFragment {
+            val fragment = PokemonListFragment()
             fragment.mainView = mainView
             fragment.mTabIndex = sectionNumber
             fragment.arguments = Bundle().apply {
