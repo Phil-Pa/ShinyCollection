@@ -9,8 +9,6 @@ interface MainView {
     // navigation drawer methods
     fun startAddNewPokemonActivity()
 
-    // TODO create search method for filtering the list, depending on the tab
-
     // call showPokemonDetailDialog
     fun onListEntryClick(data: PokemonData?)
 

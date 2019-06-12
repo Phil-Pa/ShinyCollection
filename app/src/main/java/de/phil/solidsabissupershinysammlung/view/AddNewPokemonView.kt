@@ -14,7 +14,7 @@ interface AddNewPokemonView {
 
     fun clearUserInput()
 
-    fun getPokedexIdAndGeneration(_name: String): Pair<Int, Int>
+    fun getPokedexIdAndGeneration(_name: String): Pair<Int, Int>?
 
     fun getPokemonListTabIndex(): Int
 

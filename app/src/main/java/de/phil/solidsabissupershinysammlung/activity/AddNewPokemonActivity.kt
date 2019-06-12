@@ -17,77 +17,87 @@ import java.lang.IllegalArgumentException
 
 class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
 
+    companion object {
+
+        // if the pokemon names, ids and generations are loaded
+        private var internalDataInitialized = false
+
+        private lateinit var gen1Names: Array<String>
+        private lateinit var gen2Names: Array<String>
+        private lateinit var gen3Names: Array<String>
+        private lateinit var gen4Names: Array<String>
+        private lateinit var gen5Names: Array<String>
+        private lateinit var gen6Names: Array<String>
+        private lateinit var gen7Names: Array<String>
+
+        private lateinit var genNamesArray: Array<Array<String>>
+
+        private lateinit var gen1PokedexIds: Array<Int>
+        private lateinit var gen2PokedexIds: Array<Int>
+        private lateinit var gen3PokedexIds: Array<Int>
+        private lateinit var gen4PokedexIds: Array<Int>
+        private lateinit var gen5PokedexIds: Array<Int>
+        private lateinit var gen6PokedexIds: Array<Int>
+        private lateinit var gen7PokedexIds: Array<Int>
+
+        private lateinit var genPokedexIdsArray: Array<Array<Int>>
+    }
+
+    init {
+        if (!internalDataInitialized) {
+            initializeInternalData()
+            internalDataInitialized = true
+        }
+    }
+
+    private fun initializeInternalData() {
+        gen1Names = resources.getStringArray(R.array.gen1Names)
+        gen2Names = resources.getStringArray(R.array.gen2Names)
+        gen3Names = resources.getStringArray(R.array.gen3Names)
+        gen4Names = resources.getStringArray(R.array.gen4Names)
+        gen5Names = resources.getStringArray(R.array.gen5Names)
+        gen6Names = resources.getStringArray(R.array.gen6Names)
+        gen7Names = resources.getStringArray(R.array.gen7Names)
+
+        genNamesArray = arrayOf(gen1Names, gen2Names, gen3Names, gen4Names, gen5Names, gen6Names, gen7Names)
+
+        gen1PokedexIds = resources.getIntArray(R.array.gen1Ids).toTypedArray()
+        gen2PokedexIds = resources.getIntArray(R.array.gen2Ids).toTypedArray()
+        gen3PokedexIds = resources.getIntArray(R.array.gen3Ids).toTypedArray()
+        gen4PokedexIds = resources.getIntArray(R.array.gen4Ids).toTypedArray()
+        gen5PokedexIds = resources.getIntArray(R.array.gen5Ids).toTypedArray()
+        gen6PokedexIds = resources.getIntArray(R.array.gen6Ids).toTypedArray()
+        gen7PokedexIds = resources.getIntArray(R.array.gen7Ids).toTypedArray()
+
+        genPokedexIdsArray = arrayOf(gen1PokedexIds, gen2PokedexIds, gen3PokedexIds, gen4PokedexIds, gen5PokedexIds, gen6PokedexIds, gen7PokedexIds)
+    }
+
     override fun getPokemonListTabIndex(): Int {
         return intent.getIntExtra("tabIndex", -1)
     }
 
-    override fun getPokedexIdAndGeneration(_name: String): Pair<Int, Int> {
-        val generation: Int
-        val generationNames: List<String>
-        val generationIds: List<Int>
+    override fun getPokedexIdAndGeneration(_name: String): Pair<Int, Int>? {
+        var generation: Int = App.INT_ERROR_CODE
 
         val name = if (_name.endsWith("-alola"))
             _name.replace("-alola", "")
         else
             _name
 
-        // TODO load pokemon names only once
-
-        val gen1Names = resources.getStringArray(R.array.gen1Names)
-        if (!gen1Names.contains(name)) {
-            val gen2Names = resources.getStringArray(R.array.gen2Names)
-            if (!gen2Names.contains(name)) {
-                val gen3Names = resources.getStringArray(R.array.gen3Names)
-                if (!gen3Names.contains(name)) {
-                    val gen4Names = resources.getStringArray(R.array.gen4Names)
-                    if (!gen4Names.contains(name)) {
-                        val gen5Names = resources.getStringArray(R.array.gen5Names)
-                        if (!gen5Names.contains(name)) {
-                            val gen6Names = resources.getStringArray(R.array.gen6Names)
-                            if (!gen6Names.contains(name)) {
-                                val gen7Names = resources.getStringArray(R.array.gen7Names)
-                                if (!gen7Names.contains(name)) {
-                                    Toast.makeText(applicationContext, "$name ist nicht im Pokedex vorhanden!", Toast.LENGTH_LONG).show()
-                                    return Pair(-1, -1)
-                                } else {
-                                    generation = 7
-                                    generationNames = gen7Names.toList()
-                                    generationIds = resources.getIntArray(R.array.gen7Ids).toList()
-                                }
-                            } else {
-                                generation = 6
-                                generationNames = gen6Names.toList()
-                                generationIds = resources.getIntArray(R.array.gen6Ids).toList()
-                            }
-                        } else {
-                            generation = 5
-                            generationNames = gen5Names.toList()
-                            generationIds = resources.getIntArray(R.array.gen5Ids).toList()
-                        }
-                    } else {
-                        generation = 4
-                        generationNames = gen4Names.toList()
-                        generationIds = resources.getIntArray(R.array.gen4Ids).toList()
-                    }
-                } else {
-                    generation = 3
-                    generationNames = gen3Names.toList()
-                    generationIds = resources.getIntArray(R.array.gen3Ids).toList()
-                }
-            } else {
-                generation = 2
-                generationNames = gen2Names.toList()
-                generationIds = resources.getIntArray(R.array.gen2Ids).toList()
+        for (i in 0..6) {
+            if (genNamesArray[i].contains(name)) {
+                generation = i
+                break
             }
-        } else {
-            generation = 1
-            generationNames = gen1Names.toList()
-            generationIds = resources.getIntArray(R.array.gen1Ids).toList()
         }
 
-        val index = generationNames.indexOf(name)
-        val pokedexId = generationIds[index]
-        return Pair<Int, Int>(pokedexId, generation)
+        // if the pokemon with _name does not exist
+        if (generation == App.INT_ERROR_CODE)
+            return null
+
+        val index = genNamesArray[generation].toList().indexOf(name)
+        val pokedexId = genPokedexIdsArray[generation][index]
+        return Pair(pokedexId, generation)
     }
 
     override fun clearUserInput() {

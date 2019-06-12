@@ -11,6 +11,8 @@ import kotlin.IllegalStateException
 
 object App {
 
+    const val INT_ERROR_CODE = -1
+
     val shinyList: List<PokemonData>
         get() {
             return getAllPokemonInDatabase()!!
