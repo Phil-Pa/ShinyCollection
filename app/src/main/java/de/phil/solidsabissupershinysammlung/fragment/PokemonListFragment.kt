@@ -19,8 +19,8 @@ import de.phil.solidsabissupershinysammlung.view.MainView
  */
 class PokemonListFragment : Fragment() {
 
-    private lateinit var mainView: MainView
     private var mTabIndex = 0
+
     private lateinit var recyclerView: RecyclerView
 
     private var myAdapter: PokemonDataRecyclerViewAdapter? = null
@@ -38,7 +38,7 @@ class PokemonListFragment : Fragment() {
 
             // get data from the database
             dataList = App.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
-            myAdapter = PokemonDataRecyclerViewAdapter(dataList, mainView)
+            myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView!!)
 
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(context)
@@ -85,9 +85,8 @@ class PokemonListFragment : Fragment() {
          * number.
          */
         @JvmStatic
-        fun newInstance(mainView: MainView, sectionNumber: Int): PokemonListFragment {
+        fun newInstance(sectionNumber: Int): PokemonListFragment {
             val fragment = PokemonListFragment()
-            fragment.mainView = mainView
             fragment.mTabIndex = sectionNumber
             fragment.arguments = Bundle().apply {
                 putInt(ARG_SECTION_NUMBER, sectionNumber + 1)

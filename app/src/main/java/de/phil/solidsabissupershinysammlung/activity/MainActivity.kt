@@ -11,20 +11,19 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import de.phil.solidsabissupershinysammlung.core.App
+import android.widget.TextView
+import android.widget.Toast
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
+import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
-import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
-import android.support.v7.app.AlertDialog
-import android.util.Log
-import android.widget.*
-import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity(), MainView {
     override fun getCurrentTabIndex(): Int {
@@ -42,58 +41,15 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun startAddNewPokemonActivity() {
-        var tabIndex = App.INT_ERROR_CODE
-
-        val alert = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val alertLayout = inflater.inflate(R.layout.dialog_choose_tab, null)
-        val shinyListButton = alertLayout.findViewById<Button>(R.id.shiny_list_button)
-        val cycle15Button = alertLayout.findViewById<Button>(R.id.cycle_15_button)
-        val cycle20Button = alertLayout.findViewById<Button>(R.id.cycle_20_button)
-        val sosButton = alertLayout.findViewById<Button>(R.id.sos_button)
-
-        alert.setView(alertLayout)
-        alert.setTitle("Pokemon hinzufügen zu:")
-
-        val startActivityInternal = {
-            if (tabIndex < 0 || tabIndex > 3) {
-                Log.e(TAG, "tabIndex out of range")
-                throw IllegalStateException()
-            }
-
-            val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
-            intent.putExtra("tabIndex", tabIndex)
-            startActivity(intent)
+        val tabIndex = getCurrentTabIndex()
+        if (tabIndex < 0 || tabIndex > 3) {
+            Log.e(TAG, "tabIndex out of range")
+            throw IllegalStateException()
         }
 
-        var dialog: AlertDialog? = null
-
-        shinyListButton.setOnClickListener {
-            tabIndex = 0
-            dialog?.cancel()
-            startActivityInternal()
-        }
-        cycle15Button.setOnClickListener {
-            tabIndex = 1
-            dialog?.cancel()
-            startActivityInternal()
-        }
-
-        cycle20Button.setOnClickListener {
-            tabIndex = 2
-            dialog?.cancel()
-            startActivityInternal()
-        }
-
-        sosButton.setOnClickListener {
-            tabIndex = 3
-            dialog?.cancel()
-            startActivityInternal()
-        }
-
-        dialog = alert.create()
-
-        dialog.show()
+        val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
+        intent.putExtra("tabIndex", tabIndex)
+        startActivity(intent)
     }
 
     override fun onListEntryClick(data: PokemonData?) {
@@ -160,7 +116,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private fun initTabs() {
         // init tab view
-        val sectionsPagerAdapter = SectionsPagerAdapter(this,applicationContext, supportFragmentManager)
+        val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         viewPager.offscreenPageLimit = 4
@@ -180,9 +136,6 @@ class MainActivity : AppCompatActivity(), MainView {
 
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.add_pokemon -> {
-                    startAddNewPokemonActivity()
-                }
                 R.id.settings -> {
                     // TODO start settings
                 }
@@ -203,5 +156,21 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onDestroy()
         App.finish()
         Log.i(TAG, "App closed")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        return when (item?.itemId) {
+            R.id.add_pokemon -> {
+                startAddNewPokemonActivity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

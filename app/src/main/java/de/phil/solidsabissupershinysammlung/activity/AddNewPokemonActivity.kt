@@ -21,9 +21,10 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
 
     override fun getPokemonListTabIndex(): Int {
         val tabIndex = intent.getIntExtra("tabIndex", App.INT_ERROR_CODE)
-        if (tabIndex == App.INT_ERROR_CODE)
+        if (tabIndex == App.INT_ERROR_CODE) {
             Log.e(TAG, "could not receive tabIndex from intent")
             throw IllegalStateException()
+        }
         return tabIndex
     }
 

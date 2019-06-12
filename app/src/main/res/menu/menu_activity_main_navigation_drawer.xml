@@ -4,10 +4,6 @@
       tools:showIn="navigation_view">
 
     <group android:checkableBehavior="none">
-        <item
-                android:id="@+id/add_pokemon"
-                android:icon="@drawable/ic_add_white_24dp"
-                android:title="Pokemon hinzufügen"/>
         <item android:id="@+id/settings"
               android:icon="@drawable/ic_settings_white_24dp"
               android:title="Einstellungen"/>

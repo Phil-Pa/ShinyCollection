@@ -20,7 +20,7 @@ private val TAB_TITLES = arrayOf(
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(private val mainView: MainView, private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     companion object {
         private const val TAG = "SectionsPagerAdapter"
@@ -30,7 +30,7 @@ class SectionsPagerAdapter(private val mainView: MainView, private val context: 
 
     override fun getItem(position: Int): Fragment {
         if (!pages.keys.contains(position))
-            pages[position] = PokemonListFragment.newInstance(mainView, position)
+            pages[position] = PokemonListFragment.newInstance(position)
 
         if (pages[position] == null) {
             Log.e(TAG, "$position as tabIndex is not a key in the pokemon list fragment map")
