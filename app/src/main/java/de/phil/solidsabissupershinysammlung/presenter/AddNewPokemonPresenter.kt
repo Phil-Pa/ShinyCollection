@@ -21,8 +21,12 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
         val names = App.getAllPokemonNames()
         val alolaNames = App.getAllPokemonAlolaNames()
 
-        if (!names.contains(name) && !alolaNames.contains(name))
+        // TODO: doesnt work
+
+        if (!names.contains(name) && !alolaNames.contains(name)) {
             addNewPokemonView.showMessage("Es gibt kein Pokemon namens $name!")
+            return
+        }
 
         val encounters = addNewPokemonView.getEncounters()
         if (encounters == -1 && addNewPokemonView.getPokemonListTabIndex() != 0) {
@@ -31,6 +35,12 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
         }
 
         val pair = addNewPokemonView.getPokedexIdAndGeneration(name)
+
+        if (pair.first == -1 || pair.second == -1) {
+            addNewPokemonView.showMessage("Es gibt kein Pokemon namens $name!")
+            return
+        }
+
         val tabIndex = addNewPokemonView.getPokemonListTabIndex()
 
         val data = PokemonData(name, pair.first, pair.second, encounters, huntMethod!!)

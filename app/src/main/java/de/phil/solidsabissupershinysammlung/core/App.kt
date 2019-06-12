@@ -112,7 +112,7 @@ object App {
 
     fun deletePokemonFromDatabase(data: PokemonData, tabIndex: Int) {
 
-        val pokemon = getAllPokemonInDatabaseFromTabIndex(tabIndex) ?: throw IllegalStateException()
+        val pokemon = getAllPokemonInDatabaseFromTabIndex(tabIndex)
 
         var position: Int = 0
         var found = false

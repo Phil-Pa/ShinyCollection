@@ -48,7 +48,7 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
                                 val gen7Names = resources.getStringArray(R.array.gen7Names)
                                 if (!gen7Names.contains(name)) {
                                     Toast.makeText(applicationContext, "$name ist nicht im Pokedex vorhanden!", Toast.LENGTH_LONG).show()
-                                    throw IllegalArgumentException("name")
+                                    return Pair(-1, -1)
                                 } else {
                                     generation = 7
                                     generationNames = gen7Names.toList()
