@@ -1,6 +1,7 @@
 package de.phil.solidsabissupershinysammlung.core
 
 import android.content.Context
+import android.util.Log
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListChangedListener
@@ -11,6 +12,8 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlin.IllegalStateException
 
 object App {
+
+    const val NUM_TAB_VIEWS = 4
 
     // if the pokemon names, ids and generations are loaded
     private var internalDataInitialized = false
@@ -48,20 +51,25 @@ object App {
             mMainView = value
     }
 
-    val dataChangedListeners = java.util.ArrayList<PokemonListChangedListener>(4)
+    val dataChangedListeners = java.util.ArrayList<PokemonListChangedListener>(NUM_TAB_VIEWS)
+
+    private const val TAG = "App"
 
     fun init(context: Context) {
         config = BaseConfig(context)
         pokemonDatabase = PokemonDatabase()
 
+        Log.i(TAG, "initialize database connection")
         pokemonDatabase?.init(context)
 
         if (config?.firstStart == true) {
+            Log.i(TAG, "created database")
             pokemonDatabase?.create()
             config?.firstStart = false
         }
 
         if (!internalDataInitialized) {
+            Log.i(TAG, "initialize pokemon names and pokedex ids")
             initializeInternalData(context)
             internalDataInitialized = true
         }
@@ -90,7 +98,7 @@ object App {
     }
 
     private fun updateShinyStatistics() {
-        // TODO log
+        Log.i(TAG, "update shiny statistics")
         mainView?.updateShinyStatistics()
     }
 
@@ -151,8 +159,8 @@ object App {
             }
         }
 
-        if (position == App.INT_ERROR_CODE) {
-            // TODO log error
+        if (position == INT_ERROR_CODE) {
+            Log.e(TAG, "$data is not in the database")
             throw IllegalStateException()
         }
 

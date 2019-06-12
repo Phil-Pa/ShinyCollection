@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.presenter
 
+import android.util.Log
 import android.view.View
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
@@ -34,7 +35,7 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
 
         val pair = addNewPokemonView.getPokedexIdAndGeneration(name)
         if (pair == null) {
-            // TODO implement app logger
+            Log.w(TAG, "could not get the pokedex id and generation of $name")
             addNewPokemonView.showMessage("Von $name konnte die PokedexID und Generation nicht bestimmt werden.")
             return
         }
@@ -47,6 +48,10 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
 
         addNewPokemonView.clearUserInput()
         addNewPokemonView.returnToMainActivity()
+    }
+
+    companion object {
+        private const val TAG = "AddNewPokemonPresenter"
     }
 
 }

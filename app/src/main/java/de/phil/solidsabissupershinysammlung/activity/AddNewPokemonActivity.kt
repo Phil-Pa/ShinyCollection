@@ -3,6 +3,7 @@ package de.phil.solidsabissupershinysammlung.activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.R
@@ -14,10 +15,14 @@ import java.lang.IllegalStateException
 
 class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
 
+    companion object {
+        private const val TAG = "AddnewPokemonActivity"
+    }
+
     override fun getPokemonListTabIndex(): Int {
         val tabIndex = intent.getIntExtra("tabIndex", App.INT_ERROR_CODE)
         if (tabIndex == App.INT_ERROR_CODE)
-            // TODO: log error
+            Log.e(TAG, "could not receive tabIndex from intent")
             throw IllegalStateException()
         return tabIndex
     }

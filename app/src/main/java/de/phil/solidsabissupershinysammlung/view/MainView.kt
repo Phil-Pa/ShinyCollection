@@ -16,4 +16,6 @@ interface MainView {
     fun onListEntryLongClick(data: PokemonData?)
 
     fun updateShinyStatistics()
+
+    fun getCurrentTabIndex(): Int
 }

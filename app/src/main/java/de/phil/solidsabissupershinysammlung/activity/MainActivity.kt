@@ -22,15 +22,19 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.widget.*
 import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity(), MainView {
+    override fun getCurrentTabIndex(): Int {
+        return view_pager.currentItem
+    }
 
     override fun updateShinyStatistics() {
-        textViewTotalShinys.text = ("Anzahl Shinys: ${App.getTotalNumberOfShinys()}")
-        textViewTotalEggs.text = ("Eier gesamt: ${App.getTotalEggsCount()}")
-        textViewAverageEggs.text = ("Eier durchschnittlich: ${App.getAverageEggsCount()}")
+        textViewTotalShinys.text = ("Anzahl Shinys: ${presenter.getTotalNumberOfShinys()}")
+        textViewTotalEggs.text = ("Eier gesamt: ${presenter.getTotalEggsCount()}")
+        textViewAverageEggs.text = ("Eier durchschnittlich: ${presenter.getAverageEggsCount()}")
     }
 
     override fun showMessage(message: String) {
@@ -53,7 +57,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
         val startActivityInternal = {
             if (tabIndex < 0 || tabIndex > 3) {
-                // TODO log error
+                Log.e(TAG, "tabIndex out of range")
                 throw IllegalStateException()
             }
 
@@ -104,8 +108,7 @@ class MainActivity : AppCompatActivity(), MainView {
                 when (item?.itemId) {
                     R.id.delete_entry -> {
                         if (data != null) {
-                            val tabIndex = view_pager.currentItem
-                            presenter.deletePokemonFromDatabase(data, tabIndex)
+                            presenter.deletePokemonFromDatabase(data)
                             mode?.finish()
 
                         }
@@ -137,14 +140,18 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var textViewAverageEggs: TextView
     private lateinit var textViewTotalShinys: TextView
 
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i(TAG, "App started")
         App.init(applicationContext)
         App.mainView = this
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.presenter = presenter
         setSupportActionBar(toolbar)
-
         initTabs()
         initNavigationDrawer()
         initNavigationViewViews()
@@ -195,15 +202,6 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onDestroy() {
         super.onDestroy()
         App.finish()
+        Log.i(TAG, "App closed")
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-////        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return super.onOptionsItemSelected(item)
-//    }
 }

@@ -6,7 +6,6 @@ import java.lang.IllegalStateException
 
 private const val APP_NAME = "SolidSabisShinySammlung"
 private const val FIRST_START = "First Start"
-private const val NUMBER_OF_POKEMON_LISTS = "Number of Pokemon Lists"
 
 class BaseConfig(context: Context) {
 

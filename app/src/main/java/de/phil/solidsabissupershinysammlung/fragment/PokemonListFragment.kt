@@ -26,11 +26,6 @@ class PokemonListFragment : Fragment() {
     private var myAdapter: PokemonDataRecyclerViewAdapter? = null
     private var dataList = mutableListOf<PokemonData>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//       index = arguments?.getInt(ARG_SECTION_NUMBER) ?: 1
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

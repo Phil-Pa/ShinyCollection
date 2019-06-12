@@ -4,6 +4,8 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.util.Log
+import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
 import de.phil.solidsabissupershinysammlung.view.MainView
 
@@ -20,6 +22,10 @@ private val TAB_TITLES = arrayOf(
  */
 class SectionsPagerAdapter(private val mainView: MainView, private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
+    companion object {
+        private const val TAG = "SectionsPagerAdapter"
+    }
+
     private val pages = mutableMapOf<Int, PokemonListFragment>()
 
     override fun getItem(position: Int): Fragment {
@@ -27,8 +33,7 @@ class SectionsPagerAdapter(private val mainView: MainView, private val context: 
             pages[position] = PokemonListFragment.newInstance(mainView, position)
 
         if (pages[position] == null) {
-            // TODO log error
-
+            Log.e(TAG, "$position as tabIndex is not a key in the pokemon list fragment map")
             throw IllegalArgumentException("position")
         }
 
@@ -40,6 +45,6 @@ class SectionsPagerAdapter(private val mainView: MainView, private val context: 
     }
 
     override fun getCount(): Int {
-        return 4
+        return App.NUM_TAB_VIEWS
     }
 }
