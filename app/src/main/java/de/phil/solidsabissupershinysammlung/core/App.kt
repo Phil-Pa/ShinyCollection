@@ -7,9 +7,16 @@ import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
 import de.phil.solidsabissupershinysammlung.view.MainView
-import java.lang.IllegalStateException
+import kotlin.IllegalStateException
 
 object App {
+
+    val shinyList: List<PokemonData>
+        get() {
+            return getAllPokemonInDatabase()!!
+        }
+    val pokemonList1 = mutableListOf<PokemonData>()
+    val pokemonList2 = mutableListOf<PokemonData>()
 
     private var pokemonDatabase: PokemonDatabase? = null
     private var config: BaseConfig? = null
@@ -33,7 +40,7 @@ object App {
         }
 
     // ?
-    var dataChangedListener: PokemonListChangedListener? = null
+    val dataChangedListeners = java.util.ArrayList<PokemonListChangedListener>(4)
 
     fun init(context: Context) {
         config = BaseConfig(context)
@@ -48,6 +55,8 @@ object App {
 
         // init pokemon names
         pokemonNamesList = AppUtil.getAllPokemonNames(context)
+
+//        config?.firstStart = true
     }
 
     private fun updateShinyStatistics() {
@@ -67,15 +76,10 @@ object App {
 
     fun getAllPokemonInDatabase(): List<PokemonData>? = pokemonDatabase?.getAllPokemon()
 
-    private fun addPokemonToDatabase(data: PokemonData) {
-        pokemonDatabase?.insert(data)
-        dataChangedListener?.notifyPokemonAdded()
-    }
-
-    fun getTotalNumberOfShinys() = getAllPokemonInDatabase()!!.size
+    fun getTotalNumberOfShinys() = pokemonDatabase?.getAllPokemonOfTabIndex(0)!!.size
 
     fun getAverageEggsCount(): Double {
-        val pokemon = getAllPokemonInDatabase()
+        val pokemon = pokemonDatabase?.getAllPokemonOfTabIndex(0)
         var pokemonCount = 0
         return if (pokemon != null && pokemon.isNotEmpty()) {
             var sum = 0
@@ -91,7 +95,7 @@ object App {
     }
 
     fun getTotalEggsCount(): Int {
-        val pokemon = getAllPokemonInDatabase() ?: return 0
+        val pokemon = pokemonDatabase?.getAllPokemonOfTabIndex(0) ?: return 0
 
         var eggsCount = 0
 
@@ -106,19 +110,39 @@ object App {
         pokemonDatabase?.close()
     }
 
-    fun deletePokemonFromDatabase(data: PokemonData) {
-        pokemonDatabase?.delete(data)
-        dataChangedListener?.notifyPokemonDeleted()
+    fun deletePokemonFromDatabase(data: PokemonData, tabIndex: Int) {
+
+        val pokemon = getAllPokemonInDatabaseFromTabIndex(tabIndex) ?: throw IllegalStateException()
+
+        var position: Int = 0
+        var found = false
+
+        for (i in 0 until pokemon.size) {
+            if (data == pokemon[i]) {
+                position = i
+                found = true
+                break
+            }
+        }
+
+        if (!found)
+            throw IllegalStateException()
+
+        pokemonDatabase?.delete(data, tabIndex)
+
+        dataChangedListeners[tabIndex].notifyPokemonDeleted(tabIndex, position)
 
     }
 
-    fun addPokemonToShinyList(data: PokemonData) {
-        addPokemonToDatabase(data)
-        updateRecyclerView()
+    fun addPokemon(data: PokemonData, tabIndex: Int) {
+        pokemonDatabase?.insert(data, tabIndex)
+        dataChangedListeners[tabIndex].notifyPokemonAdded(data, tabIndex)
         updateShinyStatistics()
     }
 
-    private fun updateRecyclerView() {
+    fun getAllPokemonInDatabaseFromTabIndex(tabIndex: Int): List<PokemonData> {
+
+        return pokemonDatabase?.getAllPokemonOfTabIndex(tabIndex)!!
 
     }
 

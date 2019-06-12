@@ -31,6 +31,8 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
         else
             _name
 
+        // TODO load pokemon names only once
+
         val gen1Names = resources.getStringArray(R.array.gen1Names)
         if (!gen1Names.contains(name)) {
             val gen2Names = resources.getStringArray(R.array.gen2Names)
@@ -113,7 +115,6 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
     }
 
     override fun returnToMainActivity() {
-        // not sure if it needs to run on the ui thread
         finish()
     }
 

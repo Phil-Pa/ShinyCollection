@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.Toast
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
 import de.phil.solidsabissupershinysammlung.core.App
@@ -21,7 +20,11 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 class MainListFragment : Fragment() {
 
     private lateinit var mainView: MainView
-    private var tabIndex = 0
+    private var mTabIndex = 0
+    private lateinit var recyclerView: RecyclerView
+
+    private var myAdapter: PokemonDataRecyclerViewAdapter? = null
+    private var dataList = mutableListOf<PokemonData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,37 +37,41 @@ class MainListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_pokemondata_list, container, false)
 
-        // TODO use recycler view adapter to initialize the page
 
         if (view is RecyclerView) {
-            with(view) {
+            recyclerView = view
+
+            // get data from the database
+            dataList = App.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
+            myAdapter = PokemonDataRecyclerViewAdapter(dataList, mainView)
+
+            with(recyclerView) {
                 layoutManager = LinearLayoutManager(context)
 
                 val dividerItemDecoration = DividerItemDecoration(
                     view.getContext(),
                     DividerItemDecoration.VERTICAL
                 )
-                view.addItemDecoration(dividerItemDecoration)
+                recyclerView.addItemDecoration(dividerItemDecoration)
 
-                // get data from the database
+                adapter = myAdapter
 
-                var data = listOf<PokemonData>()
-                if (tabIndex == 0)
-                    data = App.getAllPokemonInDatabase()!!
-
-                adapter = PokemonDataRecyclerViewAdapter(data, mainView)
-
-                App.dataChangedListener = object :
+                App.dataChangedListeners.add(mTabIndex, object :
                     PokemonListChangedListener {
-                    override fun notifyPokemonAdded() {
-                        adapter?.notifyItemRangeChanged(1, adapter?.itemCount!!)
+                    override fun notifyPokemonAdded(data: PokemonData, tabIndex: Int) {
+                        if (mTabIndex == tabIndex) {
+                            dataList.add(data)
+                            myAdapter?.notifyItemInserted(dataList.size - 1)
+                        }
                     }
 
-                    override fun notifyPokemonDeleted() {
-                        adapter?.notifyItemRangeChanged(1, adapter?.itemCount!!)
+                    override fun notifyPokemonDeleted(tabIndex: Int, position: Int) {
+                        if (mTabIndex == tabIndex) {
+                            dataList.removeAt(position)
+                            myAdapter?.notifyItemRemoved(position)
+                        }
                     }
-
-                }
+                })
             }
         }
 
@@ -86,9 +93,9 @@ class MainListFragment : Fragment() {
         fun newInstance(mainView: MainView, sectionNumber: Int): MainListFragment {
             val fragment = MainListFragment()
             fragment.mainView = mainView
-            fragment.tabIndex = sectionNumber - 1
+            fragment.mTabIndex = sectionNumber
             fragment.arguments = Bundle().apply {
-                putInt(ARG_SECTION_NUMBER, sectionNumber)
+                putInt(ARG_SECTION_NUMBER, sectionNumber + 1)
             }
 
             return fragment

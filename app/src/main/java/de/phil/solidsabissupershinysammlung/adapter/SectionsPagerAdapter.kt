@@ -9,11 +9,9 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 
 private val TAB_TITLES = arrayOf(
     "Shiny Liste",
-    "Pokemon Liste 1",
-    "Pokemon Liste 2",
-    "Pokemon Liste 3",
-    "Pokemon Liste 4",
-    "Pokemon Liste 5"
+    "15er Zyklus",
+    "20er Zyklus",
+    "SOS"
 )
 
 /**
@@ -22,10 +20,15 @@ private val TAB_TITLES = arrayOf(
  */
 class SectionsPagerAdapter(private val mainView: MainView, private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
+    private val pages = mutableMapOf<Int, MainListFragment>()
+
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
         // Return a MainListFragment (defined as a static inner class below).
-        return MainListFragment.newInstance(mainView, position + 1)
+        if (!pages.keys.contains(position))
+            pages[position] = MainListFragment.newInstance(mainView, position)
+
+        return pages[position]!!
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
@@ -33,7 +36,6 @@ class SectionsPagerAdapter(private val mainView: MainView, private val context: 
     }
 
     override fun getCount(): Int {
-        // Show 2 total pages.
-        return 2
+        return 4
     }
 }

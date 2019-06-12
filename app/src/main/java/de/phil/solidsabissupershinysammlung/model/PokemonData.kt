@@ -3,7 +3,7 @@ package de.phil.solidsabissupershinysammlung.model
 import de.phil.solidsabissupershinysammlung.core.App
 import java.lang.StringBuilder
 
-class PokemonData(val name: String, val pokedexId: Int, val generation: Int, val encounterNeeded: Int, val huntMethod: HuntMethod) {
+data class PokemonData(val name: String, val pokedexId: Int, val generation: Int, val encounterNeeded: Int, val huntMethod: HuntMethod) {
 
     private fun isAlola() = App.getAllPokemonAlolaNames().contains(name)
 

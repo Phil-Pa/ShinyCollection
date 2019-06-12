@@ -25,7 +25,7 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
             addNewPokemonView.showMessage("Es gibt kein Pokemon namens $name!")
 
         val encounters = addNewPokemonView.getEncounters()
-        if (encounters == -1) {
+        if (encounters == -1 && addNewPokemonView.getPokemonListTabIndex() != 0) {
             addNewPokemonView.showMessage("Du musst angeben, wie viele Encounter du gebraucht hast!")
             return
         }
@@ -37,9 +37,7 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
 
         // TODO if tab index == 0, add pokemon data to normal table, else add to other table containing the pokemon lists
 
-        if (tabIndex == 0) {
-            App.addPokemonToShinyList(data)
-        }
+        App.addPokemon(data, tabIndex)
 
         addNewPokemonView.clearUserInput()
         addNewPokemonView.returnToMainActivity()

@@ -12,10 +12,8 @@ interface MainViewPresenter {
     fun getAllEggEncounters(): Int
 
     // modal bottom sheet methods
-    fun deletePokemonFromDatabase(data: PokemonData)
+    fun deletePokemonFromDatabase(data: PokemonData, tabIndex: Int)
     // fun addPokemonToTab(tabIndex: Int)
     // fun removePokemonFromTab(tabIndex: Int)
-
-    fun handleButtonClick(view: View?)
 
 }

@@ -20,8 +20,4 @@ class BaseConfig(context: Context) {
         get() = prefs.getBoolean(FIRST_START, true)
         set(value) = prefs.edit().putBoolean(FIRST_START, value).apply()
 
-    var numberOfPokemonLists: Int
-        get() = prefs.getInt(NUMBER_OF_POKEMON_LISTS, 0)
-        set(value) = prefs.edit().putInt(NUMBER_OF_POKEMON_LISTS, value).apply()
-
 }

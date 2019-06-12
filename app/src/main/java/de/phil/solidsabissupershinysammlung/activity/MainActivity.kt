@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
@@ -23,10 +22,8 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.app.AlertDialog
-import android.widget.EditText
-import android.text.InputType
-import android.widget.TextView
-
+import android.widget.*
+import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -41,57 +38,57 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun startAddNewPokemonActivity() {
+        var tabIndex = -1
+
         val alert = AlertDialog.Builder(this)
-        val editText = EditText(applicationContext)
-        editText.setTextColor(resources.getColor(android.R.color.black))
-        editText.inputType = InputType.TYPE_CLASS_NUMBER
-        alert.setMessage("Gebe an, wo das Pokemon hinzugefügt werden soll. 0 Für Shiny Liste, 1 für Pokemon Liste 1, ...")
-        alert.setTitle("Pokemon hinzufügen")
+        val inflater = layoutInflater
+        val alertLayout = inflater.inflate(R.layout.dialog_choose_tab, null)
+        val shiny_list_button = alertLayout.findViewById<Button>(R.id.shiny_list_button)
+        val cycle_15_button = alertLayout.findViewById<Button>(R.id.cycle_15_button)
+        val cycle_20_button = alertLayout.findViewById<Button>(R.id.cycle_20_button)
+        val sos_button = alertLayout.findViewById<Button>(R.id.sos_button)
 
-        alert.setView(editText)
-
-        alert.setPositiveButton("OK") { dialog, whichButton ->
-            val tabIndex = editText.text.toString().toInt()
-
-            // TODO add check for max number of pokemon lists
-            if (tabIndex < 0)
-                return@setPositiveButton
+        val startActivityInternal = {
+            if (tabIndex < 0 || tabIndex > 3)
+                throw IllegalStateException()
 
             val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
             intent.putExtra("tabIndex", tabIndex)
             startActivity(intent)
         }
 
-        alert.setNegativeButton("ABBRECHEN") { dialog, whichButton ->
-            dialog.cancel()
+        var dialog: AlertDialog? = null
+
+        shiny_list_button.setOnClickListener {
+            tabIndex = 0
+            dialog?.cancel()
+            startActivityInternal()
+        }
+        cycle_15_button.setOnClickListener {
+            tabIndex = 1
+            dialog?.cancel()
+            startActivityInternal()
         }
 
-        alert.show()
+        cycle_20_button.setOnClickListener {
+            tabIndex = 2
+            dialog?.cancel()
+            startActivityInternal()
+        }
 
-    }
+        sos_button.setOnClickListener {
+            tabIndex = 3
+            dialog?.cancel()
+            startActivityInternal()
+        }
 
-    override fun addPokemonList() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        alert.setView(alertLayout)
 
-    override fun removePokemonList() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        alert.setTitle("Pokemon hinzufügen zu:")
 
-    override fun showAverageEggEncounters() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        dialog = alert.create()
 
-    override fun showAllEggEncounters() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showPokemonDetailDialog(data: PokemonData) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getCurrentTabIndex(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dialog.show()
     }
 
     override fun onListEntryClick(data: PokemonData?) {
@@ -109,7 +106,8 @@ class MainActivity : AppCompatActivity(), MainView {
                 when (item?.itemId) {
                     R.id.delete_entry -> {
                         if (data != null) {
-                            presenter.deletePokemonFromDatabase(data)
+                            val tabIndex = view_pager.currentItem
+                            presenter.deletePokemonFromDatabase(data, tabIndex)
                             mode?.finish()
 
                         }
@@ -173,12 +171,6 @@ class MainActivity : AppCompatActivity(), MainView {
                 R.id.add_pokemon -> {
                     startAddNewPokemonActivity()
                 }
-                R.id.add_pokemon_list -> {
-                    // TODO pokemon löschen
-                }
-                R.id.delete_pokemon_list -> {
-
-                }
                 R.id.settings -> {
                     // TODO start settings
                 }
@@ -203,30 +195,13 @@ class MainActivity : AppCompatActivity(), MainView {
         App.finish()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.show_average_eggs -> {
-
-                // TODO presenter method
-                val averageEggs = App.getAverageEggsCount()
-                if (averageEggs <= 0.9) {
-                    Toast.makeText(applicationContext, "Du hast noch keine Shiny Pokemon!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(applicationContext, averageEggs.toString(), Toast.LENGTH_LONG).show()
-                }
-
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+////        menuInflater.inflate(R.menu.menu_main, menu)
+//        return true
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return super.onOptionsItemSelected(item)
+//    }
 }

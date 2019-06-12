@@ -6,9 +6,6 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.view.MainView
 
 class MainPresenter(private val mainView: MainView) : MainViewPresenter {
-    override fun handleButtonClick(view: View?) {
-        mainView.showMessage("Hi!")
-    }
 
     override fun getAverageEggEncounters(): Float {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -22,8 +19,8 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun deletePokemonFromDatabase(data: PokemonData) {
-        App.deletePokemonFromDatabase(data)
+    override fun deletePokemonFromDatabase(data: PokemonData, tabIndex: Int) {
+        App.deletePokemonFromDatabase(data, tabIndex)
     }
 
 }

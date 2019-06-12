@@ -16,7 +16,7 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 
 class PokemonDataRecyclerViewAdapter(
-    private val mValues: List<PokemonData>,
+    private val mValues: MutableList<PokemonData>,
     private val mainView: MainView
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewAdapter.ViewHolder>() {
 
