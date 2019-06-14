@@ -94,9 +94,11 @@ object PokemonEngine : IPokemonEngine {
     override fun getAllPokemonNames() = genNamesArray.flatten()
 
     override fun addPokemon(data: PokemonData, tabIndex: Int) {
-        pokemonDatabase.insert(data, tabIndex)
-        App.dataChangedListeners[tabIndex].notifyPokemonAdded(data, tabIndex)
-        App.updateShinyStatistics()
+        val inserted = pokemonDatabase.insert(data, tabIndex)
+        if (inserted) {
+            App.dataChangedListeners[tabIndex].notifyPokemonAdded(data, tabIndex)
+            App.updateShinyStatistics()
+        }
     }
 
     override fun getTotalNumberOfShinys() = pokemonDatabase.getAllPokemonOfTabIndex(0).size
@@ -117,6 +119,8 @@ object PokemonEngine : IPokemonEngine {
             0.0
     }
 
+    // TODO make one variable function for deleting pokemon
+
     override fun deletePokemonFromDatabase(data: PokemonData, tabIndex: Int) {
         val pokemon = getAllPokemonInDatabaseFromTabIndex(tabIndex)
 
@@ -135,6 +139,27 @@ object PokemonEngine : IPokemonEngine {
         }
 
         pokemonDatabase.delete(data, tabIndex)
+        App.dataChangedListeners[tabIndex].notifyPokemonDeleted(tabIndex, position)
+    }
+
+    override fun deletePokemonFromDatabaseWithName(pokemonName: String, tabIndex: Int) {
+        val pokemon = getAllPokemonInDatabaseFromTabIndex(tabIndex)
+
+        var position = App.INT_ERROR_CODE
+
+        for (i in 0 until pokemon.size) {
+            if (pokemonName == pokemon[i].name) {
+                position = i
+                break
+            }
+        }
+
+        if (position == App.INT_ERROR_CODE) {
+            Log.e(TAG, "A pokemon with the name $pokemonName is not in the database")
+            throw IllegalStateException()
+        }
+
+        pokemonDatabase.delete(pokemonName, tabIndex)
         App.dataChangedListeners[tabIndex].notifyPokemonDeleted(tabIndex, position)
     }
 

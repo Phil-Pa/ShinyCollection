@@ -38,7 +38,7 @@ class PokemonListFragment : Fragment() {
 
             // get data from the database
             dataList = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
-            myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView!!)
+            myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView)
 
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(context)

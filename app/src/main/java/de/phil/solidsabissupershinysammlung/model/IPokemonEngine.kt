@@ -14,6 +14,7 @@ interface IPokemonEngine {
     fun getTotalEggsCount(): Int
     fun getAllPokemonNames(): List<String>
     fun getAllPokemonInDatabaseFromTabIndex(tabIndex: Int): List<PokemonData>
+    fun deletePokemonFromDatabaseWithName(pokemonName: String, tabIndex: Int)
 
     fun finish()
 

@@ -20,19 +20,13 @@ object App {
             mConfig = value
     }
 
-    private var mMainView: MainView? = null
-
-    var mainView get() = mMainView
-    set(value) {
-        if (mMainView == null)
-            mMainView = value
-    }
+    lateinit var mainView: MainView
 
     val dataChangedListeners = ArrayList<PokemonListChangedListener>(NUM_TAB_VIEWS)
 
     private const val TAG = "App"
 
-    fun init(context: Context) {
+    fun init(context: Context, mainView: MainView) {
         mConfig = BaseConfig(context)
 
         Log.i(TAG, "initialize pokemon engine")
@@ -40,12 +34,15 @@ object App {
 
         if (config.firstStart)
             config.firstStart = false
+
+        this.mainView = mainView
+
         mInitialized = true
     }
 
     fun updateShinyStatistics() {
         Log.i(TAG, "update shiny statistics")
-        mainView?.updateShinyStatistics()
+        mainView.updateShinyStatistics()
     }
 
     fun finish() {

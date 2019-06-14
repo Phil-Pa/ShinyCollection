@@ -30,11 +30,12 @@ class PokemonDatabase {
                 ");")
     }
 
-    fun insert(data: PokemonData, tabIndex: Int) {
-
-        if (!checkAlreadyInserted(data, tabIndex))
+    fun insert(data: PokemonData, tabIndex: Int): Boolean {
+        val inserted = checkAlreadyInserted(data, tabIndex)
+        if (!inserted)
             database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation, tabIndex)" +
                         " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation}, $tabIndex);")
+        return !inserted
     }
 
     private fun checkAlreadyInserted(data: PokemonData, tabIndex: Int): Boolean {
@@ -49,6 +50,10 @@ class PokemonDatabase {
 
     fun delete(data: PokemonData, tabIndex: Int) {
         database.execSQL("DELETE FROM $databaseName WHERE pokedexId = ${data.pokedexId} AND encounterNeeded = ${data.encounterNeeded} AND tabIndex = $tabIndex;")
+    }
+
+    fun delete(pokemonName: String, tabIndex: Int) {
+        database.execSQL("DELETE FROM $databaseName WHERE name = '$pokemonName' AND tabIndex = $tabIndex")
     }
 
     fun getAllPokemonOfTabIndex(tabIndex: Int): List<PokemonData> {

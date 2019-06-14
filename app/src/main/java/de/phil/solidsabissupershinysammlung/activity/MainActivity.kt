@@ -100,8 +100,7 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "App started")
-        App.init(applicationContext)
-        App.mainView = this
+        App.init(applicationContext, this)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.presenter = presenter
         setSupportActionBar(toolbar)
