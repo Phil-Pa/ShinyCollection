@@ -10,10 +10,10 @@ interface MainView {
     fun startAddNewPokemonActivity()
 
     // call showPokemonDetailDialog
-    fun onListEntryClick(data: PokemonData?)
+    fun onListEntryClick(data: PokemonData)
 
     // show modal bottom sheet
-    fun onListEntryLongClick(data: PokemonData?)
+    fun onListEntryLongClick(data: PokemonData)
 
     fun updateShinyStatistics()
 

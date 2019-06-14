@@ -1,18 +1,18 @@
 package de.phil.solidsabissupershinysammlung.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.view.MainView
+import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,7 +37,7 @@ class PokemonListFragment : Fragment() {
             recyclerView = view
 
             // get data from the database
-            dataList = App.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
+            dataList = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
             myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView!!)
 
             with(recyclerView) {

@@ -10,13 +10,14 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.presenter.AddNewPokemonPresenter
 import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
 import de.phil.solidsabissupershinysammlung.databinding.ActivityAddNewPokemonBinding
+import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 import java.lang.IllegalStateException
 
 class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
 
     companion object {
-        private const val TAG = "AddnewPokemonActivity"
+        private const val TAG = "AddNewPokemonActivity"
     }
 
     override fun getPokemonListTabIndex(): Int {
@@ -37,7 +38,7 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
             _name
 
         for (i in 0..6) {
-            if (App.genNamesArray[i].contains(name)) {
+            if (PokemonEngine.genNamesArray[i].contains(name)) {
                 generation = i
                 break
             }
@@ -47,8 +48,8 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
         if (generation == App.INT_ERROR_CODE)
             return null
 
-        val index = App.genNamesArray[generation].toList().indexOf(name)
-        val pokedexId = App.genPokedexIdsArray[generation][index]
+        val index = PokemonEngine.genNamesArray[generation].toList().indexOf(name)
+        val pokedexId = PokemonEngine.genPokedexIdsArray[generation][index]
         return Pair(pokedexId, generation)
     }
 

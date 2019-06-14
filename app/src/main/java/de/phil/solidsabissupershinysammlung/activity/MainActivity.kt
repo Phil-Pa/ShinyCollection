@@ -52,22 +52,19 @@ class MainActivity : AppCompatActivity(), MainView {
         startActivity(intent)
     }
 
-    override fun onListEntryClick(data: PokemonData?) {
-        if (data != null)
-            showMessage(data.toString())
+    override fun onListEntryClick(data: PokemonData) {
+        showMessage(data.toString())
     }
 
-    override fun onListEntryLongClick(data: PokemonData?) {
+    override fun onListEntryLongClick(data: PokemonData) {
 
         startSupportActionMode(object : ActionMode.Callback {
             override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                 when (item?.itemId) {
                     R.id.delete_entry -> {
-                        if (data != null) {
-                            presenter.deletePokemonFromDatabase(data)
-                            mode?.finish()
+                        presenter.deletePokemonFromDatabase(data)
+                        mode?.finish()
 
-                        }
                     }
                 }
                 return true
@@ -119,7 +116,7 @@ class MainActivity : AppCompatActivity(), MainView {
         val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
-        viewPager.offscreenPageLimit = 4
+        viewPager.offscreenPageLimit = App.NUM_TAB_VIEWS
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
     }

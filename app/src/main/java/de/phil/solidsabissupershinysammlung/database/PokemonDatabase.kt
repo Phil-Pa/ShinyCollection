@@ -8,8 +8,6 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 class PokemonDatabase {
 
-    // TODO logging all database operations?
-
     private lateinit var database: SQLiteDatabase
 
     fun init(context: Context) {
@@ -33,8 +31,20 @@ class PokemonDatabase {
     }
 
     fun insert(data: PokemonData, tabIndex: Int) {
-        database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation, tabIndex)" +
+
+        if (!checkAlreadyInserted(data, tabIndex))
+            database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation, tabIndex)" +
                         " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation}, $tabIndex);")
+    }
+
+    private fun checkAlreadyInserted(data: PokemonData, tabIndex: Int): Boolean {
+
+        val pokemon = getAllPokemonOfTabIndex(tabIndex)
+        for (p in pokemon)
+            if (p == data)
+                return true
+
+        return false
     }
 
     fun delete(data: PokemonData, tabIndex: Int) {

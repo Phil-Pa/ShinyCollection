@@ -1,13 +1,11 @@
 package de.phil.solidsabissupershinysammlung.adapter
 
-import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
-import de.phil.solidsabissupershinysammlung.view.MainView
 
 private val TAB_TITLES = arrayOf(
     "Shiny Liste",

@@ -2,18 +2,12 @@ package de.phil.solidsabissupershinysammlung.core
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import java.lang.IllegalStateException
 
-private const val APP_NAME = "SolidSabisShinySammlung"
 private const val FIRST_START = "First Start"
 
 class BaseConfig(context: Context) {
 
     private val prefs = context.getSharedPreferences("Preferences", MODE_PRIVATE)!!
-
-    var appName: String
-        get() = prefs.getString(APP_NAME, "")!!
-        set(value) = prefs.edit().putString(APP_NAME, value).apply()
 
     var firstStart: Boolean
         get() = prefs.getBoolean(FIRST_START, true)

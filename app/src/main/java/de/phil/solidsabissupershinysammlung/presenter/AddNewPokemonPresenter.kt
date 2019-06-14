@@ -5,6 +5,7 @@ import android.view.View
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
 
 class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) : AddNewPokemonViewPresenter {
@@ -19,8 +20,8 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
             return
         }
 
-        val names = App.getAllPokemonNames()
-        val alolaNames = App.getAllPokemonAlolaNames()
+        val names = PokemonEngine.getAllPokemonNames()
+        val alolaNames = PokemonEngine.getAllPokemonAlolaNames()
 
         if (!names.contains(name) && !alolaNames.contains(name)) {
             addNewPokemonView.showMessage("Es gibt kein Pokemon namens $name!")
@@ -44,7 +45,7 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
 
         val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!)
 
-        App.addPokemon(data, tabIndex)
+        PokemonEngine.addPokemon(data, tabIndex)
 
         addNewPokemonView.clearUserInput()
         addNewPokemonView.returnToMainActivity()
