@@ -49,8 +49,8 @@ class PokemonListFragment : Fragment() {
 
                 App.dataChangedListeners.add(mTabIndex, object :
                     PokemonListChangedListener {
-                    override fun notifyPokemonAdded(data: PokemonData, tabIndex: Int) {
-                        if (mTabIndex == tabIndex) {
+                    override fun notifyPokemonAdded(data: PokemonData) {
+                        if (mTabIndex == data.tabIndex) {
                             dataList.add(data)
                             myAdapter?.notifyItemInserted(dataList.size - 1)
                         }
@@ -60,6 +60,14 @@ class PokemonListFragment : Fragment() {
                         if (mTabIndex == tabIndex) {
                             dataList.removeAt(position)
                             myAdapter?.notifyItemRemoved(position)
+                        }
+                    }
+
+                    override fun notifyAllPokemonDeleted(tabIndex: Int) {
+                        if (mTabIndex == tabIndex) {
+                            val length = dataList.size
+                            dataList.clear()
+                            myAdapter?.notifyItemRangeRemoved(0, length)
                         }
                     }
                 })

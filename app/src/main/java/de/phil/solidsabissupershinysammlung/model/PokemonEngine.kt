@@ -7,6 +7,12 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 
 object PokemonEngine : IPokemonEngine {
+    override fun deleteAllPokemonInDatabase() {
+        pokemonDatabase.deleteAll()
+        for (i in 0 until App.NUM_TAB_VIEWS) {
+            App.dataChangedListeners[i].notifyAllPokemonDeleted(i)
+        }
+    }
 
     override fun finish() {
         pokemonDatabase.close()
@@ -93,9 +99,9 @@ object PokemonEngine : IPokemonEngine {
 
     override fun getAllPokemonNames() = genNamesArray.flatten()
 
-    override fun addPokemon(data: PokemonData, tabIndex: Int) {
-        pokemonDatabase.insert(data, tabIndex)
-        App.dataChangedListeners[tabIndex].notifyPokemonAdded(data, tabIndex)
+    override fun addPokemon(data: PokemonData) {
+        pokemonDatabase.insert(data)
+        App.dataChangedListeners[data.tabIndex].notifyPokemonAdded(data)
         App.updateShinyStatistics()
     }
 
@@ -119,8 +125,8 @@ object PokemonEngine : IPokemonEngine {
 
     // TODO make one variable function for deleting pokemon
 
-    override fun deletePokemonFromDatabase(data: PokemonData, tabIndex: Int) {
-        val pokemon = getAllPokemonInDatabaseFromTabIndex(tabIndex)
+    override fun deletePokemonFromDatabase(data: PokemonData) {
+        val pokemon = getAllPokemonInDatabaseFromTabIndex(data.tabIndex)
 
         var position = App.INT_ERROR_CODE
 
@@ -136,8 +142,8 @@ object PokemonEngine : IPokemonEngine {
             throw IllegalStateException()
         }
 
-        pokemonDatabase.delete(data, tabIndex)
-        App.dataChangedListeners[tabIndex].notifyPokemonDeleted(tabIndex, position)
+        pokemonDatabase.delete(data)
+        App.dataChangedListeners[data.tabIndex].notifyPokemonDeleted(data.tabIndex, position)
     }
 
     override fun deletePokemonFromDatabaseWithName(pokemonName: String, tabIndex: Int) {

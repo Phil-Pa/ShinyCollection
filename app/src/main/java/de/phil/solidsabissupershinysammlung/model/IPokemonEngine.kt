@@ -8,13 +8,14 @@ interface IPokemonEngine {
 
     fun getAllPokemonAlolaNames(): List<String>
     fun getTotalNumberOfShinys(): Int
-    fun addPokemon(data: PokemonData, tabIndex: Int)
+    fun addPokemon(data: PokemonData)
     fun getAverageEggsCount(): Double
-    fun deletePokemonFromDatabase(data: PokemonData, tabIndex: Int)
+    fun deletePokemonFromDatabase(data: PokemonData)
     fun getTotalEggsCount(): Int
     fun getAllPokemonNames(): List<String>
     fun getAllPokemonInDatabaseFromTabIndex(tabIndex: Int): List<PokemonData>
     fun deletePokemonFromDatabaseWithName(pokemonName: String, tabIndex: Int)
+    fun deleteAllPokemonInDatabase()
 
     fun finish()
 

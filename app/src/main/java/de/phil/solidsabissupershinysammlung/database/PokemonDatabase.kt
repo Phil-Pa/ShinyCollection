@@ -30,13 +30,17 @@ class PokemonDatabase {
                 ");")
     }
 
-    fun insert(data: PokemonData, tabIndex: Int) {
+    fun insert(data: PokemonData) {
         database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation, tabIndex)" +
-                        " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation}, $tabIndex);")
+                        " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation}, ${data.tabIndex});")
     }
 
-    fun delete(data: PokemonData, tabIndex: Int) {
-        database.execSQL("DELETE FROM $databaseName WHERE pokedexId = ${data.pokedexId} AND encounterNeeded = ${data.encounterNeeded} AND tabIndex = $tabIndex;")
+    fun delete(data: PokemonData) {
+        database.execSQL("DELETE FROM $databaseName WHERE pokedexId = ${data.pokedexId} AND encounterNeeded = ${data.encounterNeeded} AND tabIndex = ${data.tabIndex};")
+    }
+
+    fun deleteAll() {
+        database.execSQL("DELETE FROM $databaseName;")
     }
 
     fun delete(pokemonName: String, tabIndex: Int) {
@@ -61,13 +65,15 @@ class PokemonDatabase {
                 val name = cursor.getString(cursor.getColumnIndex("name"))
                 val eggsNeeded = cursor.getInt(cursor.getColumnIndex("encounterNeeded"))
                 val generation = cursor.getInt(cursor.getColumnIndex("generation"))
+                val dataTabIndex = cursor.getInt(cursor.getColumnIndex("tabIndex"))
 
                 val pokemon = PokemonData(
                     name,
                     pokedexId,
                     generation,
                     eggsNeeded,
-                    huntMethod
+                    huntMethod,
+                    dataTabIndex
                 )
                 pokemonList.add(pokemon)
 

@@ -4,7 +4,8 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 interface PokemonListChangedListener {
 
-    fun notifyPokemonAdded(data: PokemonData, tabIndex: Int)
+    fun notifyPokemonAdded(data: PokemonData)
     fun notifyPokemonDeleted(tabIndex: Int, position: Int)
+    fun notifyAllPokemonDeleted(tabIndex: Int)
 
 }

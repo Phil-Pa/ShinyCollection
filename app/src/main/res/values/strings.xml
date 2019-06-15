@@ -1,58 +1,53 @@
 <resources>
-    <string name="app_name">SolidSabisShinyCollection</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">SolidSabisShinySammlung</string>
+    <string name="action_settings">Einstellungen</string>
 
     <!-- navigation view -->
-    <string name="num_shinys">Number Shinys</string>
-    <string name="num_eggs">Total Egg Count</string>
-    <string name="avg_eggs">Average Eggs</string>
+    <string name="num_shinys">Anzahl Shinys</string>
+    <string name="num_eggs">Eier gesamt</string>
+    <string name="avg_eggs">Eier durchschnittlich</string>
 
     <!-- recycler view item -->
     <string name="recycler_view_item_id">ID</string>
     <string name="recycler_view_item_name">Name</string>
-    <string name="recycler_view_item_encounter">Encounter</string>
-    <string name="recycler_view_item_hunt_method">Method</string>
+    <string name="recycler_view_item_encounter">Begegnungen</string>
+    <string name="recycler_view_item_hunt_method">Methode</string>
 
     <!-- AddNewPokemonActivity -->
     <string name="editText_pokemonName_hint">Name:</string>
-    <string name="editText_encounter_hint">Encounter:</string>
-    <string name="button_add_pokemon_text">Add Pokemon</string>
-
-    <!-- dialog choose tab -->
-    <string name="dialog_shiny_list">Shiny List</string>
-    <string name="dialog_15_cycles_list">15 Cycle</string>
-    <string name="dialog_20_cycles_list">20 Cycle</string>
-    <string name="dialog_sos_list">SOS</string>
+    <string name="editText_encounter_hint">Begegnungen:</string>
+    <string name="button_add_pokemon_text">Pokemon hinzuf\u00FCgen</string>
 
     <!-- menu item bar -->
-    <string name="menu_delete">Delete Pokemon</string>
-    <string name="menu_add">Add Pokemon</string>
+    <string name="menu_delete">Pokemon löschen</string>
+    <string name="menu_add">Pokemon hinzufügen</string>
 
     <!-- navigation drawer options -->
-    <string name="drawer_settings">Settings</string>
-    <string name="drawer_export_data">Export Data</string>
+    <string name="drawer_settings">Einstellungen</string>
+    <string name="drawer_export_data">Daten exportieren</string>
+    <string name="drawer_import_data">Daten importieren</string>
 
     <!-- tabs titles -->
     <string-array name="tab_titles">
-        <item>Shiny List</item>
-        <item>15 Cycle</item>
-        <item>20 Cycle</item>
+        <item>Shiny Liste</item>
+        <item>15er Zyklus</item>
+        <item>20er Zyklus</item>
         <item>SOS</item>
+        <item>Softreset</item>
     </string-array>
 
     <string-array name="hunt_methods">
-        <item>Breeding</item>
-        <item>SOS-Method</item>
-        <item>ContactSafari</item>
+        <item>Gezüchtet</item>
+        <item>SOS-Methode</item>
+        <item>Kontaktsafari</item>
         <item>Softreset</item>
-        <item>Random</item>
+        <item>Zufall</item>
         <item>DexNav</item>
-        <item>Hordes</item>
+        <item>Massenbegegnung</item>
         <item>PokeRadar</item>
         <item>RNGManipulation</item>
         <item>Chain Fishing</item>
-        <item>Ultra Dimension</item>
-        <item>Other</item>
+        <item>Ultradimension</item>
+        <item>Anderes</item>
     </string-array>
-
 </resources>

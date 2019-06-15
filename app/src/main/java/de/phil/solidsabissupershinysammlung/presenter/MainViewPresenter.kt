@@ -10,5 +10,6 @@ interface MainViewPresenter {
 
     fun deletePokemonFromDatabase(data: PokemonData)
     fun exportData(): String
+    fun importData(data: String): Boolean
 
 }

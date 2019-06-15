@@ -10,7 +10,7 @@ import kotlin.collections.ArrayList
 
 object App {
 
-    const val NUM_TAB_VIEWS = 4
+    const val NUM_TAB_VIEWS = 5
     const val INT_ERROR_CODE = -1
 
     private var mInitialized = false

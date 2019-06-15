@@ -43,9 +43,9 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
         val (pokedexId, generation) = pair
 
 
-        val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!)
+        val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!, tabIndex)
 
-        PokemonEngine.addPokemon(data, tabIndex)
+        PokemonEngine.addPokemon(data)
 
         addNewPokemonView.clearUserInput()
         addNewPokemonView.returnToMainActivity()

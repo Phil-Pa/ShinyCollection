@@ -7,15 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.toGerman
-import de.phil.solidsabissupershinysammlung.model.toJapanese
 import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
-import java.lang.Exception
-import java.lang.IllegalStateException
 
 class PokemonDataRecyclerViewAdapter(
     private val mValues: MutableList<PokemonData>,
@@ -31,17 +27,19 @@ class PokemonDataRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
 
+
+
         // "ID: "
-        holder.mPokedexIdView.text = (holder.mPokedexIdView.text.toString() + ": " + item.pokedexId.toString())
+        holder.mPokedexIdView.text = ("ID: " + item.pokedexId.toString())
         // "Name: "
-        holder.mNameView.text = (holder.mNameView.text.toString() + ": " + item.name)
+        holder.mNameView.text = ("Name: " + item.name)
         // "Encounter: "
-        holder.mEggsNeededView.text = (holder.mEggsNeededView.text.toString() + ": " + item.encounterNeeded.toString())
+        holder.mEggsNeededView.text = ("Begegnungen: " + item.encounterNeeded.toString())
 
         // "Methode: "
-        val method: String = item.huntMethod.toString()
+        val method: String = item.huntMethod.toGerman()
 
-        holder.mHuntMethodView.text = (holder.mHuntMethodView.text.toString() + ": " + method)
+        holder.mHuntMethodView.text = ("Methode: $method")
         holder.mShinyImageView.setImageBitmap(AppUtil.getDrawableFromURL(item.getDownloadUrl()))
 
         with(holder.mView) {

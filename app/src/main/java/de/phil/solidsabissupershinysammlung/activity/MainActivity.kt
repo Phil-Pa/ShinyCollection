@@ -42,10 +42,9 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun updateShinyStatistics() {
-
-        textViewTotalShinys.text = (textViewTotalShinys.text.toString() + ": ${presenter.getTotalNumberOfShinys()}")
-        textViewTotalEggs.text = (textViewTotalEggs.text.toString() + ": ${presenter.getTotalEggsCount()}")
-        textViewAverageEggs.text = (textViewAverageEggs.text.toString() + ": ${presenter.getAverageEggsCount().round(2)}")
+        textViewTotalShinys.text = (resources.getString(R.string.num_shinys) + ": ${presenter.getTotalNumberOfShinys()}")
+        textViewTotalEggs.text = (resources.getString(R.string.num_eggs) + ": ${presenter.getTotalEggsCount()}")
+        textViewAverageEggs.text = (resources.getString(R.string.avg_eggs) + ": ${presenter.getAverageEggsCount().round(2)}")
     }
 
     override fun showMessage(message: String) {
@@ -146,6 +145,24 @@ class MainActivity : AppCompatActivity(), MainView {
             when (it.itemId) {
                 R.id.settings -> {
                     // TODO start settings
+                }
+                R.id.importData -> {
+
+                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+                    // 0 -> text, 1 -> uri, 2 -> intent
+                    val data = clipboard.primaryClip?.getItemAt(0)?.text
+
+                    if (data == null || data.isBlank() || data.isEmpty()) {
+                        showMessage("Clipboard data not valid")
+                    } else {
+                        val success = presenter.importData(data.toString())
+                        if (success) {
+                            showMessage("Successfully imported data")
+                        } else {
+                            showMessage("Could not import data")
+                        }
+                    }
                 }
                 R.id.exportData -> {
                     val exportData = presenter.exportData()
