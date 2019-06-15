@@ -5,6 +5,8 @@ import android.util.Log
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListChangedListener
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.view.MainView
+import java.util.*
+import kotlin.collections.ArrayList
 
 object App {
 
@@ -13,6 +15,7 @@ object App {
 
     private var mInitialized = false
     private lateinit var mConfig: BaseConfig
+    lateinit var locale: Locale
 
     var config get() = mConfig
     set(value) {
@@ -28,6 +31,7 @@ object App {
 
     fun init(context: Context, mainView: MainView) {
         mConfig = BaseConfig(context)
+        locale = context.resources.configuration.locale
 
         Log.i(TAG, "initialize pokemon engine")
         PokemonEngine.initialize(context)

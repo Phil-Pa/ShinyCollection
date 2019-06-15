@@ -17,7 +17,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@drawable/leufeo"
-            android:contentDescription="Navigation Header"
             android:id="@+id/imageView"/>
 
     <TextView
@@ -26,19 +25,19 @@
             android:paddingTop="8dp"
             android:textColor="@android:color/white"
             android:id="@+id/textView_all_eggs"
-            android:text="Eier gesamt: xxx"/>
+            android:text="@string/num_eggs"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Anzahl Shinys: xxx"
+            android:text="@string/num_shinys"
             android:textColor="@android:color/white"
             android:id="@+id/textView_number_shinys"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eier durchschnittlich: xxx"
+            android:text="@string/avg_eggs"
             android:textColor="@android:color/white"
             android:id="@+id/textView_average_eggs"/>
 

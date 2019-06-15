@@ -1,29 +1,25 @@
 package de.phil.solidsabissupershinysammlung.adapter
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
+import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
-
-private val TAB_TITLES = arrayOf(
-    "Shiny Liste",
-    "15er Zyklus",
-    "20er Zyklus",
-    "SOS"
-)
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class SectionsPagerAdapter(context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     companion object {
         private const val TAG = "SectionsPagerAdapter"
     }
 
+    private var tabTitles: Array<String> = context.resources.getStringArray(R.array.tab_titles)
     private val pages = mutableMapOf<Int, PokemonListFragment>()
 
     override fun getItem(position: Int): Fragment {
@@ -39,7 +35,7 @@ class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return TAB_TITLES[position]
+        return tabTitles[position]
     }
 
     override fun getCount(): Int {

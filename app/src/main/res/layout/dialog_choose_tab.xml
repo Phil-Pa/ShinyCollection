@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="horizontal"
               android:padding="15dp">
@@ -11,7 +11,7 @@
         <Button android:layout_width="100dp"
                 android:textColor="@android:color/white"
                 style="?android:attr/buttonBarButtonStyle"
-                android:text="Shiny Liste"
+                android:text="@string/dialog_shiny_list"
                 android:background="@drawable/button_ripple"
                 android:layout_height="wrap_content" android:id="@+id/shiny_list_button"
                 android:layout_marginStart="8dp"
@@ -20,7 +20,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/cycle_20_button"/>
         <Button android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="15er Zyklus"
+                android:text="@string/dialog_15_cycles_list"
                 android:textColor="@android:color/white"
                 style="?android:attr/buttonBarButtonStyle"
                 android:background="@drawable/button_ripple"
@@ -31,7 +31,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/sos_button"/>
         <Button android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="20er Zyklus"
+                android:text="@string/dialog_20_cycles_list"
                 android:textColor="@android:color/white"
                 style="?android:attr/buttonBarButtonStyle"
                 android:background="@drawable/button_ripple" android:id="@+id/cycle_20_button"
@@ -41,7 +41,7 @@
                 app:layout_constraintHorizontal_bias="0.5"/>
         <Button android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="SOS"
+                android:text="@string/dialog_sos_list"
                 android:textColor="@android:color/white"
                 style="?android:attr/buttonBarButtonStyle"
                 android:background="@drawable/button_ripple"

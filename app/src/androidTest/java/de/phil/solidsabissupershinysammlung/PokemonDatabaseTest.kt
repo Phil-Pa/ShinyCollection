@@ -1,6 +1,5 @@
 package de.phil.solidsabissupershinysammlung
 
-import android.app.Instrumentation
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
@@ -12,11 +11,9 @@ import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.Exception
 
 
 /**
@@ -107,7 +104,7 @@ class PokemonDatabaseTest {
 
     @Test
     fun testDeletePokemonFromDatabase() {
-        
+
         val pokemonName = "Bisaknosp"
         val encounter = "1232"
 

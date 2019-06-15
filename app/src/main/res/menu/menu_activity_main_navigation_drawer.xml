@@ -6,7 +6,7 @@
     <group android:checkableBehavior="none">
         <item android:id="@+id/settings"
               android:icon="@drawable/ic_settings_white_24dp"
-              android:title="Einstellungen"/>
+              android:title="@string/drawer_settings"/>
     </group>
 
     <!--<item android:title="Communicate">-->

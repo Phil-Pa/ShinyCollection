@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:background="@drawable/custom_ripple"
-              android:layout_height="100dp"
+              android:layout_height="130dp"
               android:orientation="horizontal">
 
     <LinearLayout android:layout_width="0dp" android:layout_height="match_parent"
@@ -14,7 +14,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/dummy_text"
+                android:text="@string/recycler_view_item_id"
                 android:layout_margin="@dimen/text_margin"
                 android:textAppearance="?attr/textAppearanceListItem"/>
 
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/dummy_text"
+                android:text="@string/recycler_view_item_name"
                 android:layout_margin="@dimen/text_margin"
                 android:textAppearance="?attr/textAppearanceListItem"/>
 
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/dummy_text"
+                android:text="@string/recycler_view_item_encounter"
                 android:layout_margin="@dimen/text_margin"
                 android:textAppearance="?attr/textAppearanceListItem"/>
 
@@ -47,13 +47,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/dummy_text"
+                android:text="@string/recycler_view_item_hunt_method"
                 android:layout_margin="@dimen/text_margin"
                 android:textAppearance="?attr/textAppearanceListItem"/>
 
     </LinearLayout>
 
-    <ImageView android:layout_width="80dp" android:layout_height="80dp"
+    <ImageView android:layout_width="120dp" android:layout_height="120dp"
                android:id="@+id/fragment_pokemondata_shiny_image" android:src="@mipmap/ic_launcher"/>
 
 </LinearLayout>

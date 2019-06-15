@@ -14,9 +14,6 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 
-/**
- * A placeholder fragment containing a simple view.
- */
 class PokemonListFragment : Fragment() {
 
     private var mTabIndex = 0

@@ -24,6 +24,13 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.round
+
+fun Float.round(decimals: Int): Float {
+    var multiplier = 1.0
+    repeat(decimals) { multiplier *= 10 }
+    return (round(this * multiplier) / multiplier).toFloat()
+}
 
 class MainActivity : AppCompatActivity(), MainView {
     override fun getCurrentTabIndex(): Int {
@@ -31,9 +38,10 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun updateShinyStatistics() {
-        textViewTotalShinys.text = ("Anzahl Shinys: ${presenter.getTotalNumberOfShinys()}")
-        textViewTotalEggs.text = ("Eier gesamt: ${presenter.getTotalEggsCount()}")
-        textViewAverageEggs.text = ("Eier durchschnittlich: ${presenter.getAverageEggsCount()}")
+
+        textViewTotalShinys.text = (textViewTotalShinys.text.toString() + ": ${presenter.getTotalNumberOfShinys()}")
+        textViewTotalEggs.text = (textViewTotalEggs.text.toString() + ": ${presenter.getTotalEggsCount()}")
+        textViewAverageEggs.text = (textViewAverageEggs.text.toString() + ": ${presenter.getAverageEggsCount().round(2)}")
     }
 
     override fun showMessage(message: String) {
@@ -112,7 +120,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private fun initTabs() {
         // init tab view
-        val sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         viewPager.offscreenPageLimit = App.NUM_TAB_VIEWS
@@ -125,7 +133,7 @@ class MainActivity : AppCompatActivity(), MainView {
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.app_name, R.string.dummy_text
+            this, drawerLayout, toolbar, R.string.app_name, R.string.app_name
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

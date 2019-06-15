@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">SolidSabisShinySammlung</string>
+    <string name="action_settings">Einstellungen</string>
+
+    <!-- navigation view -->
+    <string name="num_shinys">Anzahl Shinys</string>
+    <string name="num_eggs">Eier gesamt</string>
+    <string name="avg_eggs">Eier durchschnittlich</string>
+
+    <!-- recycler view item -->
+    <string name="recycler_view_item_id">ID</string>
+    <string name="recycler_view_item_name">Name</string>
+    <string name="recycler_view_item_encounter">Begegnungen</string>
+    <string name="recycler_view_item_hunt_method">Methode</string>
+
+    <!-- AddNewPokemonActivity -->
+    <string name="editText_pokemonName_hint">Name:</string>
+    <string name="editText_encounter_hint">Begegnungen:</string>
+    <string name="button_add_pokemon_text">Pokemon hinzufügen</string>
+
+    <!-- dialog choose tab -->
+    <string name="dialog_shiny_list">Shiny Liste</string>
+    <string name="dialog_15_cycles_list">15 Zyklus</string>
+    <string name="dialog_20_cycles_list">20 Zyklus</string>
+    <string name="dialog_sos_list">SOS</string>
+
+    <!-- menu item bar -->
+    <string name="menu_delete">Pokemon löschen</string>
+    <string name="menu_add">Pokemon hinzufügen</string>
+
+    <!-- navigation drawer options -->
+    <string name="drawer_settings">Einstellungen</string>
+
+    <!-- tabs titles -->
+    <string-array name="tab_titles">
+        <item>Shiny Liste</item>
+        <item>15er Zyklus</item>
+        <item>20er Zyklus</item>
+        <item>SOS</item>
+    </string-array>
+
+    <string-array name="hunt_methods">
+        <item>Gezüchtet</item>
+        <item>SOS-Methode</item>
+        <item>Kontaktsafari</item>
+        <item>Softreset</item>
+        <item>Zufall</item>
+        <item>DexNav</item>
+        <item>Massenbegegnung</item>
+        <item>PokeRadar</item>
+        <item>RNGManipulation</item>
+        <item>Chain Fishing</item>
+        <item>Ultradimension</item>
+        <item>Anderes</item>
+    </string-array>
+</resources>
