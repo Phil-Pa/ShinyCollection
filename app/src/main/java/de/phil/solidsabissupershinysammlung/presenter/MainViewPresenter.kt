@@ -9,5 +9,6 @@ interface MainViewPresenter {
     fun getTotalNumberOfShinys(): Int
 
     fun deletePokemonFromDatabase(data: PokemonData)
+    fun exportData(): String
 
 }

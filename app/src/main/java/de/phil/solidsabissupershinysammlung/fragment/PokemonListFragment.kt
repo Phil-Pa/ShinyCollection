@@ -29,7 +29,6 @@ class PokemonListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_pokemondata_list, container, false)
 
-
         if (view is RecyclerView) {
             recyclerView = view
 

@@ -15,7 +15,6 @@ object App {
 
     private var mInitialized = false
     private lateinit var mConfig: BaseConfig
-    lateinit var locale: Locale
 
     var config get() = mConfig
     set(value) {
@@ -31,7 +30,6 @@ object App {
 
     fun init(context: Context, mainView: MainView) {
         mConfig = BaseConfig(context)
-        locale = context.resources.configuration.locale
 
         Log.i(TAG, "initialize pokemon engine")
         PokemonEngine.initialize(context)

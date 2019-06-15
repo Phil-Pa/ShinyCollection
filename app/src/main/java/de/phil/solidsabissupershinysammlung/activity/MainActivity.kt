@@ -1,5 +1,8 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -25,6 +28,7 @@ import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.round
+
 
 fun Float.round(decimals: Int): Float {
     var multiplier = 1.0
@@ -142,6 +146,13 @@ class MainActivity : AppCompatActivity(), MainView {
             when (it.itemId) {
                 R.id.settings -> {
                     // TODO start settings
+                }
+                R.id.exportData -> {
+                    val exportData = presenter.exportData()
+                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText("label", exportData)
+                    clipboard.primaryClip = clip
+                    showMessage("Copied data to clipboard")
                 }
             }
             findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)

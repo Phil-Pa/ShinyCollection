@@ -30,6 +30,7 @@
 
     <!-- navigation drawer options -->
     <string name="drawer_settings">Settings</string>
+    <string name="drawer_export_data">Export Data</string>
 
     <!-- tabs titles -->
     <string-array name="tab_titles">

@@ -39,12 +39,7 @@ class PokemonDataRecyclerViewAdapter(
         holder.mEggsNeededView.text = (holder.mEggsNeededView.text.toString() + ": " + item.encounterNeeded.toString())
 
         // "Methode: "
-        val method: String = when {
-            App.locale.language == "de" -> item.huntMethod.toGerman()
-            App.locale.language == "en" -> item.huntMethod.toString()
-            App.locale.language == "ja" -> item.huntMethod.toJapanese()
-            else -> throw IllegalStateException("unknown language")
-        }
+        val method: String = item.huntMethod.toString()
 
         holder.mHuntMethodView.text = (holder.mHuntMethodView.text.toString() + ": " + method)
         holder.mShinyImageView.setImageBitmap(AppUtil.getDrawableFromURL(item.getDownloadUrl()))

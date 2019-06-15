@@ -94,11 +94,9 @@ object PokemonEngine : IPokemonEngine {
     override fun getAllPokemonNames() = genNamesArray.flatten()
 
     override fun addPokemon(data: PokemonData, tabIndex: Int) {
-        val inserted = pokemonDatabase.insert(data, tabIndex)
-        if (inserted) {
-            App.dataChangedListeners[tabIndex].notifyPokemonAdded(data, tabIndex)
-            App.updateShinyStatistics()
-        }
+        pokemonDatabase.insert(data, tabIndex)
+        App.dataChangedListeners[tabIndex].notifyPokemonAdded(data, tabIndex)
+        App.updateShinyStatistics()
     }
 
     override fun getTotalNumberOfShinys() = pokemonDatabase.getAllPokemonOfTabIndex(0).size

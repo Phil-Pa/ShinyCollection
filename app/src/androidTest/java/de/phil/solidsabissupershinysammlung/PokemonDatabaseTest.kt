@@ -65,44 +65,6 @@ class PokemonDatabaseTest {
     }
 
     @Test
-    fun testAlreadyInserted() {
-
-        val pokemonName = "Bisasam"
-        val encounter = "123"
-
-        for (i in 1..2) {
-            onView(withId(R.id.add_pokemon)).perform(click())
-
-            onView(withId(R.id.add_new_pokemon_activity_edittext_name)).perform(typeText(pokemonName))
-            onView(withId(R.id.add_new_pokemon_activity_edittext_eggsNeeded)).perform(closeSoftKeyboard())
-
-            onView(withId(R.id.add_new_pokemon_activity_edittext_eggsNeeded)).perform(typeText(encounter))
-            onView(withId(R.id.add_new_pokemon_activity_edittext_eggsNeeded)).perform(closeSoftKeyboard())
-
-            onView(withId(R.id.add_new_pokemon_activity_button_add)).perform(click())
-        }
-
-        // check if the same data got only inserted once
-        val pokemon = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(0)
-
-        var counter = 0
-
-        for (p in pokemon) {
-            if (p.name == pokemonName && p.encounterNeeded == encounter.toInt())
-                counter++
-        }
-
-        if (counter >= 2)
-            fail("Pokemon with same data got added twice or more to the database")
-
-        try {
-            PokemonEngine.deletePokemonFromDatabaseWithName(pokemonName, 0)
-        } catch (e: Exception) {
-
-        }
-    }
-
-    @Test
     fun testDeletePokemonFromDatabase() {
 
         val pokemonName = "Bisaknosp"

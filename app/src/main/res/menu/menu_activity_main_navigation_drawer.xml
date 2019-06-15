@@ -4,6 +4,9 @@
       tools:showIn="navigation_view">
 
     <group android:checkableBehavior="none">
+        <item android:id="@+id/exportData"
+              android:icon="@drawable/ic_settings_white_24dp"
+              android:title="@string/drawer_export_data"/>
         <item android:id="@+id/settings"
               android:icon="@drawable/ic_settings_white_24dp"
               android:title="@string/drawer_settings"/>
