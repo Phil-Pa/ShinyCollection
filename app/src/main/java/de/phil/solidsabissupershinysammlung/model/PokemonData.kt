@@ -1,6 +1,7 @@
 package de.phil.solidsabissupershinysammlung.model
 
-data class PokemonData(val name: String, val pokedexId: Int, val generation: Int, val encounterNeeded: Int, val huntMethod: HuntMethod, val tabIndex: Int) {
+data class PokemonData(val name: String, val pokedexId: Int, val generation: Int, val encounterNeeded: Int, val huntMethod: HuntMethod, val tabIndex: Int,
+                       val internalId: Int) {
 
     private fun isAlola() = PokemonEngine.getAllPokemonAlolaNames().contains(name)
 

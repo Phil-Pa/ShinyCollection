@@ -25,7 +25,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
 
     override fun importData(data: String): Boolean {
         val dataList = data.split("\n")
-        val regex = Regex("PokemonData\\(name=([\\w+\\-\\d]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), tabIndex=(\\d)\\)")
+        val regex = Regex("PokemonData\\(name=([\\w+\\-\\d]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)")
 
         PokemonEngine.deleteAllPokemonInDatabase()
 
@@ -47,8 +47,9 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             val encounterNeeded = match.groupValues[4].toInt()
             val huntMethod = HuntMethod.valueOf(match.groupValues[5])
             val tabIndex = match.groupValues[6].toInt()
+            val internalId = match.groupValues[7].toInt()
 
-            PokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex))
+            PokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex, internalId))
         }
 
         return true

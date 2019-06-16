@@ -26,17 +26,18 @@ class PokemonDatabase {
                     "name VARCHAR(20)," +
                     "encounterNeeded INT," +
                     "generation INT," +
-                    "tabIndex INT" +
+                    "tabIndex INT," +
+                    "internalId INT" +
                 ");")
     }
 
     fun insert(data: PokemonData) {
-        database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation, tabIndex)" +
-                        " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation}, ${data.tabIndex});")
+        database.execSQL("INSERT INTO $databaseName (pokedexId, huntMethod, name, encounterNeeded, generation, tabIndex, internalId)" +
+                        " VALUES (${data.pokedexId}, ${data.huntMethod.ordinal}, \"${data.name}\", ${data.encounterNeeded}, ${data.generation}, ${data.tabIndex}, ${data.internalId});")
     }
 
     fun delete(data: PokemonData) {
-        database.execSQL("DELETE FROM $databaseName WHERE pokedexId = ${data.pokedexId} AND encounterNeeded = ${data.encounterNeeded} AND tabIndex = ${data.tabIndex};")
+        database.execSQL("DELETE FROM $databaseName WHERE internalId = ${data.internalId};")
     }
 
     fun deleteAll() {
@@ -66,6 +67,7 @@ class PokemonDatabase {
                 val eggsNeeded = cursor.getInt(cursor.getColumnIndex("encounterNeeded"))
                 val generation = cursor.getInt(cursor.getColumnIndex("generation"))
                 val dataTabIndex = cursor.getInt(cursor.getColumnIndex("tabIndex"))
+                val internalId = cursor.getInt(cursor.getColumnIndex("internalId"))
 
                 val pokemon = PokemonData(
                     name,
@@ -73,7 +75,8 @@ class PokemonDatabase {
                     generation,
                     eggsNeeded,
                     huntMethod,
-                    dataTabIndex
+                    dataTabIndex,
+                    internalId
                 )
                 pokemonList.add(pokemon)
 
@@ -84,6 +87,17 @@ class PokemonDatabase {
         cursor.close()
 
         return pokemonList.toList()
+    }
+
+    fun getMaxInternalId(): Int {
+        val cursor = database.rawQuery("SELECT MAX(internalId) FROM $databaseName;", null)
+
+        if (!cursor.moveToFirst())
+            throw IllegalStateException("can not get max internalId")
+
+        val result = cursor.getInt((cursor.getColumnIndex("internalId")))
+        cursor.close()
+        return result
     }
 
     companion object {

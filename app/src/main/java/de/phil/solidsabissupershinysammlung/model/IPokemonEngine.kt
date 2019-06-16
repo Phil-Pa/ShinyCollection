@@ -16,6 +16,7 @@ interface IPokemonEngine {
     fun getAllPokemonInDatabaseFromTabIndex(tabIndex: Int): List<PokemonData>
     fun deletePokemonFromDatabaseWithName(pokemonName: String, tabIndex: Int)
     fun deleteAllPokemonInDatabase()
+    fun getMaxInternalId(): Int
 
     fun finish()
 

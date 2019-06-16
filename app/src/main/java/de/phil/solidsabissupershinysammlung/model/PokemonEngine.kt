@@ -181,4 +181,7 @@ object PokemonEngine : IPokemonEngine {
 
     override fun getAllPokemonInDatabaseFromTabIndex(tabIndex: Int) = pokemonDatabase.getAllPokemonOfTabIndex(tabIndex)
 
+    override fun getMaxInternalId(): Int {
+        return pokemonDatabase.getMaxInternalId()
+    }
 }

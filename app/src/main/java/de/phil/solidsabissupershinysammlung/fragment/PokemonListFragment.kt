@@ -34,6 +34,10 @@ class PokemonListFragment : Fragment() {
 
             // get data from the database
             dataList = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
+
+            // sort the data
+            dataList.sortBy { it.internalId }
+
             myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView)
 
             with(recyclerView) {

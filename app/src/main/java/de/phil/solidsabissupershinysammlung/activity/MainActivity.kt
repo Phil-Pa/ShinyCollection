@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun startAddNewPokemonActivity() {
         val tabIndex = getCurrentTabIndex()
-        if (tabIndex < 0 || tabIndex > 3) {
+        if (tabIndex < 0 || tabIndex > App.INT_ERROR_CODE) {
             Log.e(TAG, "tabIndex out of range")
             throw IllegalStateException()
         }
