@@ -10,6 +10,9 @@
         <item android:id="@+id/exportData"
               android:icon="@drawable/ic_content_copy_white_24dp"
               android:title="@string/drawer_export_data"/>
+        <item android:id="@+id/sortData"
+              android:icon="@drawable/ic_sort_white_24dp"
+              android:title="@string/drawer_sort_data"/>
         <item android:id="@+id/settings"
               android:icon="@drawable/ic_settings_white_24dp"
               android:title="@string/drawer_settings"/>

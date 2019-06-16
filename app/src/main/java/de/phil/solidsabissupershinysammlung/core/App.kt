@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListChangedListener
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
+import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.view.MainView
 import java.util.*
 import kotlin.collections.ArrayList
@@ -51,4 +52,11 @@ object App {
         PokemonEngine.finish()
     }
 
+    fun setSortMethod(sortMethod: PokemonSortMethod) {
+        mConfig.sortMethod = sortMethod.ordinal
+    }
+
+    fun getSortMethod(): PokemonSortMethod {
+        return PokemonSortMethod.fromInt(mConfig.sortMethod)!!
+    }
 }

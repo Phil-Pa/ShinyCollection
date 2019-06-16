@@ -26,6 +26,13 @@
     <string name="drawer_settings">Einstellungen</string>
     <string name="drawer_export_data">Daten exportieren</string>
     <string name="drawer_import_data">Daten importieren</string>
+    <string name="drawer_sort_data">Pokemon sortieren</string>
+
+    <!-- sort dialog -->
+    <string name="sort_dialog_title">Sortieren nach:</string>
+    <string name="sort_dialog_negative_button">Abbrechen</string>
+    <string name="sort_dialog_positive_button">Bestätigen</string>
+    <string name="dialog_sort_message">Wähle aus, nach welchem Kriterium die Pokemon sortiert werden sollen.</string>
 
     <!-- tabs titles -->
     <string-array name="tab_titles">
@@ -36,6 +43,7 @@
         <item>Softreset</item>
     </string-array>
 
+    <!-- hunt methods -->
     <string-array name="hunt_methods">
         <item>Gezüchtet</item>
         <item>SOS-Methode</item>
@@ -49,5 +57,13 @@
         <item>Chain Fishing</item>
         <item>Ultradimension</item>
         <item>Anderes</item>
+    </string-array>
+
+    <!-- sort methods -->
+    <string-array name="sort_methods">
+        <item>Name</item>
+        <item>Anzahl Begegnungen</item>
+        <item>PokedexId</item>
+        <item>Ursprüngliche Reihenfolge</item>
     </string-array>
 </resources>

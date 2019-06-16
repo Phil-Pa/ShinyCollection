@@ -13,6 +13,7 @@ import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapt
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
+import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 class PokemonListFragment : Fragment() {
 
@@ -36,7 +37,13 @@ class PokemonListFragment : Fragment() {
             dataList = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
 
             // sort the data
-            dataList.sortBy { it.internalId }
+            when (App.getSortMethod()) {
+                PokemonSortMethod.InternalId -> dataList.sortBy { it.internalId }
+                PokemonSortMethod.Name -> dataList.sortBy { it.name }
+                PokemonSortMethod.PokedexId -> dataList.sortBy { it.pokedexId }
+                PokemonSortMethod.Encounter -> dataList.sortBy { it.encounterNeeded }
+            }
+
 
             myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView)
 

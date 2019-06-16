@@ -1,9 +1,8 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.*
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -12,8 +11,10 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
+import android.support.v7.widget.AppCompatSpinner
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -24,6 +25,7 @@ import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun startAddNewPokemonActivity() {
         val tabIndex = getCurrentTabIndex()
-        if (tabIndex < 0 || tabIndex > App.INT_ERROR_CODE) {
+        if (tabIndex < 0 || tabIndex > App.NUM_TAB_VIEWS) {
             Log.e(TAG, "tabIndex out of range")
             throw IllegalStateException()
         }
@@ -171,6 +173,38 @@ class MainActivity : AppCompatActivity(), MainView {
                     clipboard.primaryClip = clip
                     showMessage("Copied data to clipboard")
                 }
+                R.id.sortData -> {
+
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(resources.getString(R.string.sort_dialog_title))
+                    builder.setMessage(R.string.dialog_sort_message)
+
+                    val customView = layoutInflater.inflate(R.layout.dialog_sort, null)
+                    builder.setView(customView)
+
+                    builder.setNegativeButton(R.string.sort_dialog_negative_button,
+                        DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+
+                    builder.setPositiveButton(R.string.sort_dialog_positive_button, object : DialogInterface.OnClickListener {
+                        override fun onClick(dialog: DialogInterface?, which: Int) {
+                            val spinner = customView.findViewById<AppCompatSpinner>(R.id.dialog_sort_spinner)
+
+                            // 0 = name, 1 = encounter, 2 = pokedexId, 3 = original
+                            when (spinner.selectedItemPosition) {
+                                0 -> App.setSortMethod(PokemonSortMethod.Name)
+                                1 -> App.setSortMethod(PokemonSortMethod.Encounter)
+                                2 -> App.setSortMethod(PokemonSortMethod.PokedexId)
+                                3 -> App.setSortMethod(PokemonSortMethod.InternalId)
+                                else -> return
+                            }
+
+                            restartApp()
+                        }
+                    })
+
+                    val dialog = builder.create()
+                    dialog.show()
+                }
             }
             findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
             true
@@ -182,6 +216,19 @@ class MainActivity : AppCompatActivity(), MainView {
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
+    }
+
+    private fun restartApp() {
+
+        Thread.sleep(1000)
+
+        val mStartActivity = Intent(applicationContext, MainActivity::class.java)
+        val mPendingIntentId = 123456
+        val mPendingIntent =
+            PendingIntent.getActivity(applicationContext, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT)
+        val mgr = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent)
+        System.exit(0)
     }
 
     override fun onDestroy() {

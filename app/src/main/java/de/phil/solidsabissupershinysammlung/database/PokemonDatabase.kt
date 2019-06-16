@@ -95,7 +95,7 @@ class PokemonDatabase {
         if (!cursor.moveToFirst())
             throw IllegalStateException("can not get max internalId")
 
-        val result = cursor.getInt((cursor.getColumnIndex("internalId")))
+        val result = cursor.getInt(0)
         cursor.close()
         return result
     }

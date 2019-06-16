@@ -16,7 +16,7 @@
     <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:srcCompat="@drawable/leufeo"
+            app:srcCompat="@drawable/wuffels"
             android:id="@+id/imageView"/>
 
     <TextView
