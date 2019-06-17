@@ -24,6 +24,7 @@ object App {
     }
 
     lateinit var mainView: MainView
+    var dataListDirty = false
 
     val dataChangedListeners = ArrayList<PokemonListChangedListener>(NUM_TAB_VIEWS)
 
@@ -41,11 +42,6 @@ object App {
         this.mainView = mainView
 
         mInitialized = true
-    }
-
-    fun updateShinyStatistics() {
-        Log.i(TAG, "update shiny statistics")
-        mainView.updateShinyStatistics()
     }
 
     fun finish() {

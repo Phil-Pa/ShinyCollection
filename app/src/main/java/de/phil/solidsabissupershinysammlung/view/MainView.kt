@@ -1,13 +1,15 @@
 package de.phil.solidsabissupershinysammlung.view
 
+import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 interface MainView {
 
     fun showMessage(message: String)
 
     // navigation drawer methods
-    fun startAddNewPokemonActivity()
+    fun startAddNewPokemonActivity(tabIndex: Int)
 
     // call showPokemonDetailDialog
     fun onListEntryClick(data: PokemonData)
@@ -15,7 +17,11 @@ interface MainView {
     // show modal bottom sheet
     fun onListEntryLongClick(data: PokemonData)
 
-    fun updateShinyStatistics()
+    fun updateShinyStatistics(numberOfShinys: Int, totalEggsCount: Int, averageEggsCount: Float)
 
     fun getCurrentTabIndex(): Int
+    fun copyToClipboard(data: String)
+    fun getClipboardStringData(): String?
+
+    fun showDialog(action: (PokemonSortMethod) -> Unit)
 }

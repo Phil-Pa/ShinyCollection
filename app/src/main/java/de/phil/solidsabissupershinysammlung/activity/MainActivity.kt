@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
-import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -29,37 +28,70 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.math.round
-
-
-fun Float.round(decimals: Int): Float {
-    var multiplier = 1.0
-    repeat(decimals) { multiplier *= 10 }
-    return (round(this * multiplier) / multiplier).toFloat()
-}
 
 class MainActivity : AppCompatActivity(), MainView {
+    override fun showDialog(action: (PokemonSortMethod) -> Unit) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(resources.getString(R.string.sort_dialog_title))
+        builder.setMessage(R.string.dialog_sort_message)
+
+        val customView = layoutInflater.inflate(R.layout.dialog_sort, null)
+        builder.setView(customView)
+
+        builder.setNegativeButton(R.string.sort_dialog_negative_button,
+            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+
+        builder.setPositiveButton(
+            R.string.sort_dialog_positive_button
+        ) { _, _ ->
+            val spinner = customView.findViewById<AppCompatSpinner>(R.id.dialog_sort_spinner)
+
+            // 0 = name, 1 = encounter, 2 = pokedexId, 3 = original
+            val sortMethod = when (spinner.selectedItemPosition) {
+                0 -> PokemonSortMethod.Name
+                1 -> PokemonSortMethod.Encounter
+                2 -> PokemonSortMethod.PokedexId
+                3 -> PokemonSortMethod.InternalId
+                else -> PokemonSortMethod.InternalId
+            }
+
+            action(sortMethod)
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    override fun getClipboardStringData(): String? {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+        // 0 -> text, 1 -> uri, 2 -> intent
+
+        return clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+    }
+
+    override fun copyToClipboard(data: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("label", data)
+        clipboard.primaryClip = clip
+        showMessage("Copied data to clipboard")
+    }
+
     override fun getCurrentTabIndex(): Int {
         return view_pager.currentItem
     }
 
-    override fun updateShinyStatistics() {
-        textViewTotalShinys.text = (resources.getString(R.string.num_shinys) + ": ${presenter.getTotalNumberOfShinys()}")
-        textViewTotalEggs.text = (resources.getString(R.string.num_eggs) + ": ${presenter.getTotalEggsCount()}")
-        textViewAverageEggs.text = (resources.getString(R.string.avg_eggs) + ": ${presenter.getAverageEggsCount().round(2)}")
+    override fun updateShinyStatistics(numberOfShinys: Int, totalEggsCount: Int, averageEggsCount: Float) {
+        textViewTotalShinys.text = (resources.getString(R.string.num_shinys) + ": $numberOfShinys")
+        textViewTotalEggs.text = (resources.getString(R.string.num_eggs) + ": $totalEggsCount")
+        textViewAverageEggs.text = (resources.getString(R.string.avg_eggs) + ": $averageEggsCount")
     }
 
     override fun showMessage(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun startAddNewPokemonActivity() {
-        val tabIndex = getCurrentTabIndex()
-        if (tabIndex < 0 || tabIndex > App.NUM_TAB_VIEWS) {
-            Log.e(TAG, "tabIndex out of range")
-            throw IllegalStateException()
-        }
-
+    override fun startAddNewPokemonActivity(tabIndex: Int) {
         val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
         intent.putExtra("tabIndex", tabIndex)
         startActivity(intent)
@@ -120,7 +152,7 @@ class MainActivity : AppCompatActivity(), MainView {
         initTabs()
         initNavigationDrawer()
         initNavigationViewViews()
-        updateShinyStatistics()
+        presenter.setNavigationViewData()
     }
 
     private fun initTabs() {
@@ -147,67 +179,22 @@ class MainActivity : AppCompatActivity(), MainView {
             when (it.itemId) {
                 R.id.settings -> {
                     // TODO start settings
+                    true
                 }
                 R.id.importData -> {
-
-                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-                    // 0 -> text, 1 -> uri, 2 -> intent
-                    val data = clipboard.primaryClip?.getItemAt(0)?.text
-
-                    if (data == null || data.isBlank() || data.isEmpty()) {
-                        showMessage("Clipboard data not valid")
-                    } else {
-                        val success = presenter.importData(data.toString())
-                        if (success) {
-                            showMessage("Successfully imported data")
-                        } else {
-                            showMessage("Could not import data")
-                        }
-                    }
+                    presenter.importData()
+                    true
                 }
                 R.id.exportData -> {
-                    val exportData = presenter.exportData()
-                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip = ClipData.newPlainText("label", exportData)
-                    clipboard.primaryClip = clip
-                    showMessage("Copied data to clipboard")
+                    presenter.exportData()
+                    true
                 }
                 R.id.sortData -> {
-
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle(resources.getString(R.string.sort_dialog_title))
-                    builder.setMessage(R.string.dialog_sort_message)
-
-                    val customView = layoutInflater.inflate(R.layout.dialog_sort, null)
-                    builder.setView(customView)
-
-                    builder.setNegativeButton(R.string.sort_dialog_negative_button,
-                        DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
-
-                    builder.setPositiveButton(R.string.sort_dialog_positive_button, object : DialogInterface.OnClickListener {
-                        override fun onClick(dialog: DialogInterface?, which: Int) {
-                            val spinner = customView.findViewById<AppCompatSpinner>(R.id.dialog_sort_spinner)
-
-                            // 0 = name, 1 = encounter, 2 = pokedexId, 3 = original
-                            when (spinner.selectedItemPosition) {
-                                0 -> App.setSortMethod(PokemonSortMethod.Name)
-                                1 -> App.setSortMethod(PokemonSortMethod.Encounter)
-                                2 -> App.setSortMethod(PokemonSortMethod.PokedexId)
-                                3 -> App.setSortMethod(PokemonSortMethod.InternalId)
-                                else -> return
-                            }
-
-                            restartApp()
-                        }
-                    })
-
-                    val dialog = builder.create()
-                    dialog.show()
+                    presenter.sortData()
+                    true
                 }
+                else -> true
             }
-            findViewById<DrawerLayout>(R.id.drawer_layout).closeDrawer(GravityCompat.START)
-            true
         }
     }
 
@@ -216,19 +203,6 @@ class MainActivity : AppCompatActivity(), MainView {
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
-    }
-
-    private fun restartApp() {
-
-        Thread.sleep(1000)
-
-        val mStartActivity = Intent(applicationContext, MainActivity::class.java)
-        val mPendingIntentId = 123456
-        val mPendingIntent =
-            PendingIntent.getActivity(applicationContext, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT)
-        val mgr = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent)
-        System.exit(0)
     }
 
     override fun onDestroy() {
@@ -242,11 +216,24 @@ class MainActivity : AppCompatActivity(), MainView {
         return true
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.setNavigationViewData()
+//        if (App.dataListDirty) {
+//            presenter.sortData()
+//            App.dataListDirty = false
+//        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         return when (item?.itemId) {
+            R.id.random_pokemon -> {
+                presenter.showRandomPokemon()
+                true
+            }
             R.id.add_pokemon -> {
-                startAddNewPokemonActivity()
+                presenter.startAddNewPokemonActivity()
                 true
             }
             else -> super.onOptionsItemSelected(item)

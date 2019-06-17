@@ -8,6 +8,9 @@ import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 
 object PokemonEngine : IPokemonEngine {
     override fun deleteAllPokemonInDatabase() {
+        if (pokemonDatabase.getNumberOfDataSets() == 0)
+            return
+
         pokemonDatabase.deleteAll()
         for (i in 0 until App.NUM_TAB_VIEWS) {
             App.dataChangedListeners[i].notifyAllPokemonDeleted(i)
@@ -102,7 +105,6 @@ object PokemonEngine : IPokemonEngine {
     override fun addPokemon(data: PokemonData) {
         pokemonDatabase.insert(data)
         App.dataChangedListeners[data.tabIndex].notifyPokemonAdded(data)
-        App.updateShinyStatistics()
     }
 
     override fun getTotalNumberOfShinys() = pokemonDatabase.getAllPokemonOfTabIndex(0).size
@@ -126,7 +128,14 @@ object PokemonEngine : IPokemonEngine {
     // TODO make one variable function for deleting pokemon
 
     override fun deletePokemonFromDatabase(data: PokemonData) {
-        val pokemon = getAllPokemonInDatabaseFromTabIndex(data.tabIndex)
+        val pokemon = getAllPokemonInDatabaseFromTabIndex(data.tabIndex).toMutableList()
+
+        when (App.getSortMethod()) {
+            PokemonSortMethod.InternalId -> pokemon.sortBy { it.internalId }
+            PokemonSortMethod.Name -> pokemon.sortBy { it.name }
+            PokemonSortMethod.PokedexId -> pokemon.sortBy { it.pokedexId }
+            PokemonSortMethod.Encounter -> pokemon.sortBy { it.encounterNeeded }
+        }
 
         var position = App.INT_ERROR_CODE
 
@@ -183,5 +192,9 @@ object PokemonEngine : IPokemonEngine {
 
     override fun getMaxInternalId(): Int {
         return pokemonDatabase.getMaxInternalId()
+    }
+
+    override fun getNumberOfDataSets(): Int {
+        return pokemonDatabase.getNumberOfDataSets()
     }
 }

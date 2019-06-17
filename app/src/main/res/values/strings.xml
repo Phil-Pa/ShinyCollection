@@ -21,6 +21,7 @@
     <!-- menu item bar -->
     <string name="menu_delete">Pokemon löschen</string>
     <string name="menu_add">Pokemon hinzufügen</string>
+    <string name="menu_random">Zufälliges Pokemon</string>
 
     <!-- navigation drawer options -->
     <string name="drawer_settings">Einstellungen</string>

@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.phil.solidsabissupershinysammlung.activity.MainActivity">
     <item
+        android:id="@+id/random_pokemon"
+        android:icon="@drawable/ic_random_white_24dp"
+        android:orderInCategory="50"
+        android:title="@string/menu_random"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/add_pokemon"
         android:icon="@drawable/ic_add_white_24dp"
         android:orderInCategory="100"

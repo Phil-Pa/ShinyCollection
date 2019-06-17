@@ -4,12 +4,12 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 interface MainViewPresenter {
 
-    fun getAverageEggsCount(): Float
-    fun getTotalEggsCount(): Int
-    fun getTotalNumberOfShinys(): Int
-
     fun deletePokemonFromDatabase(data: PokemonData)
-    fun exportData(): String
-    fun importData(data: String): Boolean
+    fun exportData()
+    fun importData()
+    fun setNavigationViewData()
+    fun showRandomPokemon()
+    fun startAddNewPokemonActivity()
+    fun sortData()
 
 }

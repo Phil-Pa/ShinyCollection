@@ -4,26 +4,63 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
+import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.view.MainView
+import java.util.*
+import kotlin.math.round
 
 class MainPresenter(private val mainView: MainView) : MainViewPresenter {
-    override fun getAverageEggsCount(): Float {
-        return PokemonEngine.getAverageEggsCount().toFloat()
+    override fun sortData() {
+        mainView.showDialog {sortMethod ->
+            App.setSortMethod(sortMethod)
+            for (i in 0 until App.NUM_TAB_VIEWS) {
+                App.dataChangedListeners[i].notifySortPokemon(sortMethod)
+            }
+        }
     }
 
-    override fun getTotalEggsCount(): Int {
-        return PokemonEngine.getTotalEggsCount()
+    override fun startAddNewPokemonActivity() {
+        val tabIndex = mainView.getCurrentTabIndex()
+        if (tabIndex < 0 || tabIndex > App.NUM_TAB_VIEWS) {
+            throw IllegalStateException()
+        }
+
+        mainView.startAddNewPokemonActivity(tabIndex)
     }
 
-    override fun getTotalNumberOfShinys(): Int {
-        return PokemonEngine.getTotalNumberOfShinys()
+    override fun showRandomPokemon() {
+        val pokemon = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mainView.getCurrentTabIndex())
+
+        if (pokemon.isEmpty()) {
+            mainView.showMessage("There is no Pokemon in the list")
+            return
+        }
+
+        val random = Random()
+        mainView.showMessage(pokemon[random.nextInt(pokemon.size)].toString())
+    }
+
+    private fun updateShinyStatistics() {
+        mainView.updateShinyStatistics(PokemonEngine.getTotalNumberOfShinys(), PokemonEngine.getTotalEggsCount(), PokemonEngine.getAverageEggsCount().toFloat().round(2))
+    }
+
+    override fun setNavigationViewData() {
+        updateShinyStatistics()
     }
 
     override fun deletePokemonFromDatabase(data: PokemonData) {
         PokemonEngine.deletePokemonFromDatabase(data)
     }
 
-    override fun importData(data: String): Boolean {
+    override fun importData() {
+
+        val data = mainView.getClipboardStringData()
+
+        if (data == null) {
+            mainView.showMessage("Could not import data")
+            return
+        }
+
         val dataList = data.split("\n")
         val regex = Regex("PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)")
 
@@ -36,10 +73,17 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             if (dataString == "\n" || dataString.isEmpty() || dataString.isBlank())
                 continue
 
-            if (!regex.matches(dataString))
-                return false
+            if (!regex.matches(dataString)) {
+                mainView.showMessage("Could not import data")
+                return
+            }
 
-            val match = regex.matchEntire(dataString) ?: return false
+            val match: MatchResult? = regex.matchEntire(dataString)
+
+            if (match == null) {
+                mainView.showMessage("Could not import data")
+                return
+            }
 
             val name = match.groupValues[1]
             val pokedexId = match.groupValues[2].toInt()
@@ -50,12 +94,12 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             val internalId = match.groupValues[7].toInt()
 
             PokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex, internalId))
+            updateShinyStatistics()
         }
-
-        return true
     }
 
-    override fun exportData(): String {
+    override fun exportData() {
+
         val pokemonList = mutableListOf<PokemonData>()
         for (i in 0 until App.NUM_TAB_VIEWS) {
             pokemonList.addAll(PokemonEngine.getAllPokemonInDatabaseFromTabIndex(i))
@@ -67,6 +111,12 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             sb.append(pokemon.toString()).append("\n")
         }
 
-        return sb.toString()
+        mainView.copyToClipboard(sb.toString())
     }
+}
+
+private fun Float.round(decimals: Int): Float {
+    var multiplier = 1.0f
+    repeat(decimals) { multiplier *= 10 }
+    return (round(this * multiplier) / multiplier).toFloat()
 }

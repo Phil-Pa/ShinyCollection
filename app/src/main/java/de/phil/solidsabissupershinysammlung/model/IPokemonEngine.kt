@@ -17,6 +17,7 @@ interface IPokemonEngine {
     fun deletePokemonFromDatabaseWithName(pokemonName: String, tabIndex: Int)
     fun deleteAllPokemonInDatabase()
     fun getMaxInternalId(): Int
+    fun getNumberOfDataSets(): Int
 
     fun finish()
 

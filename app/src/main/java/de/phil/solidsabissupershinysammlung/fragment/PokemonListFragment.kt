@@ -24,6 +24,15 @@ class PokemonListFragment : Fragment() {
     private var myAdapter: PokemonDataRecyclerViewAdapter? = null
     private var dataList = mutableListOf<PokemonData>()
 
+    private fun sortData(sortMethod: PokemonSortMethod) {
+        when (sortMethod) {
+            PokemonSortMethod.InternalId -> dataList.sortBy { it.internalId }
+            PokemonSortMethod.Name -> dataList.sortBy { it.name }
+            PokemonSortMethod.PokedexId -> dataList.sortBy { it.pokedexId }
+            PokemonSortMethod.Encounter -> dataList.sortBy { it.encounterNeeded }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,12 +46,7 @@ class PokemonListFragment : Fragment() {
             dataList = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
 
             // sort the data
-            when (App.getSortMethod()) {
-                PokemonSortMethod.InternalId -> dataList.sortBy { it.internalId }
-                PokemonSortMethod.Name -> dataList.sortBy { it.name }
-                PokemonSortMethod.PokedexId -> dataList.sortBy { it.pokedexId }
-                PokemonSortMethod.Encounter -> dataList.sortBy { it.encounterNeeded }
-            }
+            sortData(App.getSortMethod())
 
 
             myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView)
@@ -60,6 +64,11 @@ class PokemonListFragment : Fragment() {
 
                 App.dataChangedListeners.add(mTabIndex, object :
                     PokemonListChangedListener {
+                    override fun notifySortPokemon(sortMethod: PokemonSortMethod) {
+                        sortData(sortMethod)
+                        myAdapter?.notifyDataSetChanged()
+                    }
+
                     override fun notifyPokemonAdded(data: PokemonData) {
                         if (mTabIndex == data.tabIndex) {
                             dataList.add(data)
