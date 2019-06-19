@@ -1,10 +1,10 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.presenter.AddNewPokemonPresenter

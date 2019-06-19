@@ -1,10 +1,10 @@
 package de.phil.solidsabissupershinysammlung.adapter
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
@@ -13,7 +13,7 @@ import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class SectionsPagerAdapter(context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
         private const val TAG = "SectionsPagerAdapter"
@@ -41,4 +41,5 @@ class SectionsPagerAdapter(context: Context, fm: FragmentManager) : FragmentPage
     override fun getCount(): Int {
         return App.NUM_TAB_VIEWS
     }
+
 }

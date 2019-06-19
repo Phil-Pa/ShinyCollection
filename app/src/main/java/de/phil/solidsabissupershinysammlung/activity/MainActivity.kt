@@ -1,24 +1,22 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.*
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.view.ActionMode
-import android.support.v7.widget.AppCompatSpinner
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
@@ -178,7 +176,7 @@ class MainActivity : AppCompatActivity(), MainView {
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.settings -> {
-                    // TODO start settings
+                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     true
                 }
                 R.id.importData -> {
