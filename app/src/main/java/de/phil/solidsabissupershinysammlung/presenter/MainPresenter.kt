@@ -37,7 +37,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
         }
 
         val random = Random()
-        mainView.showMessage(pokemon[random.nextInt(pokemon.size)].toString())
+        mainView.showMessage(pokemon[random.nextInt(pokemon.size)].name)
     }
 
     private fun updateShinyStatistics() {

@@ -39,4 +39,5 @@ dependencies {
     androidTestImplementation ('com.android.support.test:rules:0.5') {
         exclude module: 'support-annotations'
     }
+    implementation 'androidx.preference:preference-ktx:1.1.0-beta01'
 }
