@@ -94,8 +94,9 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             val internalId = match.groupValues[7].toInt()
 
             PokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex, internalId))
-            updateShinyStatistics()
         }
+        App.performAutoSort()
+        updateShinyStatistics()
     }
 
     override fun exportData() {

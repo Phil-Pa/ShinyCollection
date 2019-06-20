@@ -36,6 +36,9 @@
     <string name="sort_dialog_positive_button">Bestätigen</string>
     <string name="dialog_sort_message">Wähle aus, nach welchem Kriterium die Pokemon sortiert werden sollen.</string>
 
+    <!-- action mode -->
+    <string name="action_mode_title">ausgewählt</string>
+
     <!-- tabs titles -->
     <string-array name="tab_titles">
         <item>Shiny Liste</item>
@@ -68,20 +71,8 @@
         <item>PokedexId</item>
         <item>Ursprüngliche Reihenfolge</item>
     </string-array>
-    <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="title_activity_settings">Einstellungen</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="fragment_pokemondata_image_content_description">Bild des Shiny Pokemon</string>
 </resources>

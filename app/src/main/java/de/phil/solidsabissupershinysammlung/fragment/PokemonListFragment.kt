@@ -48,7 +48,6 @@ class PokemonListFragment : Fragment() {
             // sort the data
             sortData(App.getSortMethod())
 
-
             myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView)
 
             with(recyclerView) {

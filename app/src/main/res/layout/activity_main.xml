@@ -28,7 +28,9 @@
                     android:layout_width="match_parent"
                     android:theme="@style/AppTheme.AppBarOverlay">
 
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <LinearLayout
+                        android:id="@+id/tabs_parent"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
 
                     <androidx.appcompat.widget.Toolbar
                             android:id="@+id/toolbar"
@@ -39,6 +41,7 @@
 
                     <com.google.android.material.tabs.TabLayout
                             android:id="@+id/tabs"
+                            android:animateLayoutChanges="true"
                             app:tabMode="scrollable"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

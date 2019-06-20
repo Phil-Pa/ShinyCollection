@@ -1,7 +1,7 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.annotation.SuppressLint
 import android.content.*
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatSpinner
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
@@ -96,37 +97,50 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun onListEntryClick(data: PokemonData) {
-        showMessage(data.toString())
+        if (actionMode != null) {
+            pokemonToDelete = data
+            actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
+        } else {
+            showMessage(data.toString())
+        }
     }
 
+    private var actionMode: ActionMode? = null
+    private var pokemonToDelete: PokemonData? = null
+
     override fun onListEntryLongClick(data: PokemonData) {
-
-        startSupportActionMode(object : ActionMode.Callback {
-            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                when (item?.itemId) {
-                    R.id.delete_entry -> {
-                        presenter.deletePokemonFromDatabase(data)
-                        mode?.finish()
-
+        if (actionMode == null) {
+            startSupportActionMode(object : ActionMode.Callback {
+                override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                    when (item?.itemId) {
+                        R.id.delete_entry -> {
+                            if (pokemonToDelete != null)
+                                presenter.deletePokemonFromDatabase(pokemonToDelete!!)
+                            mode?.finish()
+                        }
                     }
+                    return true
                 }
-                return true
-            }
 
-            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                mode?.menuInflater?.inflate(R.menu.menu_actions, menu)
-                return true
-            }
+                override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    mode?.menuInflater?.inflate(R.menu.menu_actions, menu)
+                    actionMode = mode
+                    return true
+                }
 
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-                return false
-            }
+                override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                    return false
+                }
 
-            override fun onDestroyActionMode(mode: ActionMode?) {
+                override fun onDestroyActionMode(mode: ActionMode?) {
+                    actionMode = null
+                    pokemonToDelete = null
+                }
+            })
+        }
 
-            }
-
-        })
+        pokemonToDelete = data
+        actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
     }
 
     private val presenter: MainPresenter = MainPresenter(this)
@@ -163,6 +177,7 @@ class MainActivity : AppCompatActivity(), MainView {
         tabs.setupWithViewPager(viewPager)
     }
 
+    @SuppressLint("WrongConstant")
     private fun initNavigationDrawer() {
         // init navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -177,22 +192,18 @@ class MainActivity : AppCompatActivity(), MainView {
             when (it.itemId) {
                 R.id.settings -> {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
-                    true
                 }
                 R.id.importData -> {
                     presenter.importData()
-                    true
                 }
                 R.id.exportData -> {
                     presenter.exportData()
-                    true
                 }
                 R.id.sortData -> {
                     presenter.sortData()
-                    true
                 }
-                else -> true
             }
+            true
         }
     }
 

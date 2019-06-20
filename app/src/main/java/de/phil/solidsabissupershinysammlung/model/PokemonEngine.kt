@@ -105,7 +105,6 @@ object PokemonEngine : IPokemonEngine {
     override fun addPokemon(data: PokemonData) {
         pokemonDatabase.insert(data)
         App.dataChangedListeners[data.tabIndex].notifyPokemonAdded(data)
-        App.performAutoSort()
     }
 
     override fun getTotalNumberOfShinys() = pokemonDatabase.getAllPokemonOfTabIndex(0).size
