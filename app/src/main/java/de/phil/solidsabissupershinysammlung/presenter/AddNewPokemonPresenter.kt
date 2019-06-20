@@ -43,7 +43,7 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
         val (pokedexId, generation) = pair
 
 
-        val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!, tabIndex, PokemonEngine.getMaxInternalId())
+        val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!, tabIndex, PokemonEngine.getMaxInternalId() + 1)
 
         PokemonEngine.addPokemon(data)
         App.performAutoSort()

@@ -35,7 +35,7 @@ class PokemonDatabaseTest {
 
     @Before
     fun setup() {
-        appContext = InstrumentationRegistry.getInstrumentation().context
+        appContext = InstrumentationRegistry.getInstrumentation().targetContext
         val intent = Intent(appContext, MainActivity::class.java)
         activityRule.launchActivity(intent)
         mainView = activityRule.activity as MainView
