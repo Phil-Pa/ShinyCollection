@@ -2,16 +2,14 @@ package de.phil.solidsabissupershinysammlung.presenter
 
 import android.content.Context
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
-import android.support.test.rule.ActivityTestRule
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.view.MainView
 import org.junit.After
 import org.junit.Before
-import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.Rule
+import org.junit.Test
 
 class MainPresenterTest {
 
@@ -22,7 +20,7 @@ class MainPresenterTest {
 
     @Before
     fun setup() {
-        appContext = InstrumentationRegistry.getContext()
+        appContext = InstrumentationRegistry.getInstrumentation().context
         val intent = Intent(appContext, MainActivity::class.java)
         activityRule.launchActivity(intent)
         mainView = activityRule.activity as MainView

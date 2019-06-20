@@ -6,8 +6,6 @@ import de.phil.solidsabissupershinysammlung.fragment.PokemonListChangedListener
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.view.MainView
-import java.util.*
-import kotlin.collections.ArrayList
 
 object App {
 
@@ -54,5 +52,12 @@ object App {
 
     fun getSortMethod(): PokemonSortMethod {
         return PokemonSortMethod.fromInt(mConfig.sortMethod)!!
+    }
+
+    fun performAutoSort() {
+        if (mConfig.isAutoSort && dataChangedListeners.size == NUM_TAB_VIEWS) {
+            for (i in 0 until NUM_TAB_VIEWS)
+                dataChangedListeners[i].notifySortPokemon(getSortMethod())
+        }
     }
 }

@@ -1,37 +1,45 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import de.phil.solidsabissupershinysammlung.R
-import kotlinx.android.synthetic.main.activity_settings.*
+import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.core.BaseConfig
 
-class SettingsActivity : AppCompatActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        setContentView(R.layout.activity_settings)
-        setSupportActionBar(toolbar_settings)
+        if (sharedPreferences == null || key == null)
+            return
 
+        App.config.isAutoSort = sharedPreferences.getBoolean(key, false)
     }
 
-    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat?, pref: Preference?): Boolean {
-        // Instantiate the new Fragment
-        val args = pref?.extras
-        val fragment = supportFragmentManager.fragmentFactory.instantiate(
-            classLoader,
-            pref?.fragment!!)
-        fragment.arguments = args
-        fragment.setTargetFragment(caller, 0)
-        // Replace the existing Fragment with the new Fragment
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.settings_fragment, fragment)
-            .addToBackStack(null)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.settings_activity)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.settings, SettingsFragment())
             .commit()
-        return true
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onResume() {
+        super.onResume()
+        BaseConfig.prefs.registerOnSharedPreferenceChangeListener(this)
+    }
 
+    override fun onPause() {
+        super.onPause()
+        BaseConfig.prefs.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        }
+    }
 }

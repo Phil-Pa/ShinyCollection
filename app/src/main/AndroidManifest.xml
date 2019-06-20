@@ -13,9 +13,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.AddNewPokemonActivity" android:parentActivityName=".activity.MainActivity">
+        <activity
+                android:name=".activity.SettingsActivity"
+                android:label="@string/title_activity_settings"
+                android:parentActivityName=".activity.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="de.phil.solidsabissupershinysammlung.activity.MainActivity"/>
         </activity>
-        <activity android:name=".activity.SettingsActivity" android:parentActivityName=".activity.MainActivity">
+        <activity
+                android:name=".activity.AddNewPokemonActivity"
+                android:parentActivityName=".activity.MainActivity">
         </activity>
         <activity
                 android:name=".activity.MainActivity"

@@ -6,7 +6,7 @@
               android:layout_height="130dp"
               android:orientation="horizontal">
 
-    <androidx.constraintlayout.ConstraintLayout android:layout_width="0dp" android:layout_height="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="0dp" android:layout_height="match_parent"
                                                 android:layout_weight="1">
 
         <TextView
@@ -59,9 +59,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
 
-    </androidx.constraintlayout.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView android:layout_width="120dp" android:layout_height="120dp"
+               android:contentDescription="@string/fragment_pokemondata_image_content_description"
                android:id="@+id/fragment_pokemondata_shiny_image" android:src="@mipmap/ic_launcher"/>
 
 </LinearLayout>

@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), MainView {
         builder.setTitle(resources.getString(R.string.sort_dialog_title))
         builder.setMessage(R.string.dialog_sort_message)
 
-        val customView = layoutInflater.inflate(R.layout.dialog_sort, null)
+        val customView = layoutInflater.inflate(R.layout.dialog_sort, drawerLayout, false)
         builder.setView(customView)
 
         builder.setNegativeButton(R.string.sort_dialog_negative_button,
@@ -217,10 +217,8 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onResume() {
         super.onResume()
         presenter.setNavigationViewData()
-//        if (App.dataListDirty) {
-//            presenter.sortData()
-//            App.dataListDirty = false
-//        }
+
+        App.performAutoSort()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

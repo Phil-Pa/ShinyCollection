@@ -1,6 +1,5 @@
 package de.phil.solidsabissupershinysammlung.view
 
-import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 

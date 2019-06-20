@@ -2,18 +2,17 @@ package de.phil.solidsabissupershinysammlung
 
 import android.content.Context
 import android.content.Intent
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.view.MainView
-import junit.framework.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -36,7 +35,7 @@ class PokemonDatabaseTest {
 
     @Before
     fun setup() {
-        appContext = InstrumentationRegistry.getContext()
+        appContext = InstrumentationRegistry.getInstrumentation().context
         val intent = Intent(appContext, MainActivity::class.java)
         activityRule.launchActivity(intent)
         mainView = activityRule.activity as MainView
