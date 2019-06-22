@@ -53,11 +53,11 @@ class PokemonListFragment : Fragment() {
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(context)
 
-                val dividerItemDecoration = DividerItemDecoration(
-                    view.getContext(),
-                    DividerItemDecoration.VERTICAL
-                )
-                recyclerView.addItemDecoration(dividerItemDecoration)
+//                val dividerItemDecoration = DividerItemDecoration(
+//                    view.getContext(),
+//                    DividerItemDecoration.VERTICAL
+//                )
+//                recyclerView.addItemDecoration(dividerItemDecoration)
 
                 adapter = myAdapter
 

@@ -406,7 +406,7 @@
         <item>Pupitar</item>
         <item>Despotar</item>
         <item>Lugia</item>
-        <item>Ho-oh</item>
+        <item>Ho-Oh</item>
         <item>Celebi</item>
     </string-array>
     <integer-array name="gen2Ids">
@@ -601,7 +601,7 @@
         <item>Sonnfel</item>
         <item>Schmerbe</item>
         <item>Welsar</item>
-        <item>Krebscorbs</item>
+        <item>Krebscorps</item>
         <item>Krebutak</item>
         <item>Puppance</item>
         <item>Lepumentas</item>
@@ -814,7 +814,7 @@
         <item>Burmy</item>
         <item>Burmadame</item>
         <item>Moterpel</item>
-        <item>Wardribie</item>
+        <item>Wadribie</item>
         <item>Honweisel</item>
         <item>Pachurisu</item>
         <item>Bamelin</item>
@@ -1344,7 +1344,7 @@
         <item>Florges</item>
         <item>Mähikel</item>
         <item>Chevrumm</item>
-        <item>Pam-pam</item>
+        <item>Pam-Pam</item>
         <item>Pandagro</item>
         <item>Coiffwaff</item>
         <item>Psiau</item>
@@ -1384,8 +1384,8 @@
         <item>Pumpdjinn</item>
         <item>Arktip</item>
         <item>Arktilas</item>
-        <item>Ef-em</item>
-        <item>Uhafnir</item>
+        <item>eF-eM</item>
+        <item>UHaFnir</item>
         <item>Xerneas</item>
         <item>Yveltal</item>
         <item>Zygarde</item>
@@ -1518,7 +1518,7 @@
         <item>Sankabuh</item>
         <item>Colossand</item>
         <item>Gufa</item>
-        <item>Typ:null</item>
+        <item>Typ:Null</item>
         <item>Amigento</item>
         <item>Meteno</item>
         <item>Koalelu</item>
@@ -1526,15 +1526,15 @@
         <item>Togedemaru</item>
         <item>Mimigma</item>
         <item>Knirfish</item>
-        <item>Sen-long</item>
+        <item>Sen-Long</item>
         <item>Moruda</item>
         <item>Miniras</item>
         <item>Mediras</item>
         <item>Grandiras</item>
-        <item>Kapu-riki</item>
-        <item>Kapu-fala</item>
-        <item>Kapu-toro</item>
-        <item>Kapu-kime</item>
+        <item>Kapu-Riki</item>
+        <item>Kapu-Fala</item>
+        <item>Kapu-Toro</item>
+        <item>Kapu-Kime</item>
         <item>Cosmog</item>
         <item>Cosmovum</item>
         <item>Solgaleo</item>

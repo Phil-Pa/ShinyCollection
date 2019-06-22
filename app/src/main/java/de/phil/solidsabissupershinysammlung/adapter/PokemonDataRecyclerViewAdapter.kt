@@ -27,8 +27,6 @@ class PokemonDataRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
 
-
-
         // "ID: "
         holder.mPokedexIdView.text = ("ID: " + item.pokedexId.toString())
         // "Name: "
