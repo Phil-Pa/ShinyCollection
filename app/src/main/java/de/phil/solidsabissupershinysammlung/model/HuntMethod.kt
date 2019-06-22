@@ -35,6 +35,5 @@ fun HuntMethod.toGerman(): String {
         HuntMethod.ChainFinishing -> "Chain Fishing"
         HuntMethod.UltraDimension -> "Ultradimension"
         HuntMethod.Other -> "Anderes"
-        else -> "???"
     }
 }

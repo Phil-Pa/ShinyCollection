@@ -4,7 +4,6 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
-import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.view.MainView
 import java.util.*
 import kotlin.math.round
@@ -40,17 +39,9 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
         mainView.showMessage(pokemon[random.nextInt(pokemon.size)].name)
     }
 
-    private fun updateShinyStatistics() {
-        mainView.updateShinyStatistics(PokemonEngine.getTotalNumberOfShinys(), PokemonEngine.getTotalEggsCount(), PokemonEngine.getAverageEggsCount().toFloat().round(2))
-    }
+    override fun setNavigationViewData() = mainView.updateShinyStatistics(PokemonEngine.getTotalNumberOfShinys(), PokemonEngine.getTotalEggsCount(), PokemonEngine.getAverageEggsCount().toFloat().round(2))
 
-    override fun setNavigationViewData() {
-        updateShinyStatistics()
-    }
-
-    override fun deletePokemonFromDatabase(data: PokemonData) {
-        PokemonEngine.deletePokemonFromDatabase(data)
-    }
+    override fun deletePokemonFromDatabase(data: PokemonData) = PokemonEngine.deletePokemonFromDatabase(data)
 
     override fun importData() {
 
@@ -96,7 +87,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             PokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex, internalId))
         }
         App.performAutoSort()
-        updateShinyStatistics()
+        setNavigationViewData()
     }
 
     override fun exportData() {
@@ -119,5 +110,5 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
 private fun Float.round(decimals: Int): Float {
     var multiplier = 1.0f
     repeat(decimals) { multiplier *= 10 }
-    return (round(this * multiplier) / multiplier).toFloat()
+    return (round(this * multiplier) / multiplier)
 }

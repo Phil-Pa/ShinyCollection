@@ -9,10 +9,6 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 class SectionsPagerAdapter(context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
@@ -31,15 +27,10 @@ class SectionsPagerAdapter(context: Context, fm: FragmentManager) : FragmentPage
             throw IllegalArgumentException("position")
         }
 
-        return pages[position]!!
+        return pages[position] ?: throw IllegalStateException()
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return tabTitles[position]
-    }
-
-    override fun getCount(): Int {
-        return App.NUM_TAB_VIEWS
-    }
+    override fun getPageTitle(position: Int) = tabTitles[position]
+    override fun getCount() = App.NUM_TAB_VIEWS
 
 }

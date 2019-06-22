@@ -1,13 +1,10 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.*
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -17,7 +14,6 @@ import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
@@ -79,9 +75,7 @@ class MainActivity : AppCompatActivity(), MainView {
         showMessage("Copied data to clipboard")
     }
 
-    override fun getCurrentTabIndex(): Int {
-        return view_pager.currentItem
-    }
+    override fun getCurrentTabIndex() = view_pager.currentItem
 
     override fun updateShinyStatistics(numberOfShinys: Int, totalEggsCount: Int, averageEggsCount: Float) {
         textViewTotalShinys.text = (resources.getString(R.string.num_shinys) + ": $numberOfShinys")
@@ -180,7 +174,6 @@ class MainActivity : AppCompatActivity(), MainView {
         tabs.setupWithViewPager(viewPager)
     }
 
-    @SuppressLint("WrongConstant")
     private fun initNavigationDrawer() {
         // init navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout)

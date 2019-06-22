@@ -91,14 +91,12 @@ object PokemonEngine : IPokemonEngine {
         internalDataInitialized = true
     }
 
-    override fun getAllPokemonAlolaNames(): List<String> {
-        return listOf(
-            "Rattfratz-alola", "Rattikarl-alola",
-            "Raichu-alola", "Sandan-alola", "Sandamer-alola",
-            "Vulpix-alola", "Vulnona-alola", "Digda-alola", "Digdri-alola",
-            "Mauzi-alola", "Snobilikat-alola", "Kleinstein-alola", "Georok-alola",
-            "Geowaz-alola", "Sleima-alola", "Sleimok-alola", "Kokowei-alola", "Knogga-alola")
-    }
+    override fun getAllPokemonAlolaNames() = listOf(
+        "Rattfratz-alola", "Rattikarl-alola",
+        "Raichu-alola", "Sandan-alola", "Sandamer-alola",
+        "Vulpix-alola", "Vulnona-alola", "Digda-alola", "Digdri-alola",
+        "Mauzi-alola", "Snobilikat-alola", "Kleinstein-alola", "Georok-alola",
+        "Geowaz-alola", "Sleima-alola", "Sleimok-alola", "Kokowei-alola", "Knogga-alola")
 
     override fun getAllPokemonNames() = genNamesArray.flatten()
 
@@ -190,11 +188,7 @@ object PokemonEngine : IPokemonEngine {
 
     override fun getAllPokemonInDatabaseFromTabIndex(tabIndex: Int) = pokemonDatabase.getAllPokemonOfTabIndex(tabIndex)
 
-    override fun getMaxInternalId(): Int {
-        return pokemonDatabase.getMaxInternalId()
-    }
+    override fun getMaxInternalId() = pokemonDatabase.getMaxInternalId()
 
-    override fun getNumberOfDataSets(): Int {
-        return pokemonDatabase.getNumberOfDataSets()
-    }
+    override fun getNumberOfDataSets() = pokemonDatabase.getNumberOfDataSets()
 }
