@@ -2,7 +2,7 @@
 <layout>
 
     <data>
-        <variable name="presenter" type="de.phil.solidsabissupershinysammlung.presenter.MainPresenter"/>
+        <variable name="presenter" type="de.phil.solidsabissupershinysammlung.presenter.MainViewPresenter"/>
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

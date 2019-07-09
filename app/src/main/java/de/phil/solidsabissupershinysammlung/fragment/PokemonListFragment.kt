@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,8 @@ import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 class PokemonListFragment : Fragment() {
+
+
 
     private var mTabIndex = 0
 
@@ -40,6 +43,8 @@ class PokemonListFragment : Fragment() {
 
         if (view is RecyclerView) {
             recyclerView = view
+
+            ViewCompat.setNestedScrollingEnabled(recyclerView, true)
 
             // get data from the database
             dataList = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
@@ -91,7 +96,7 @@ class PokemonListFragment : Fragment() {
                 })
             }
         }
-
+0
         return view
     }
 

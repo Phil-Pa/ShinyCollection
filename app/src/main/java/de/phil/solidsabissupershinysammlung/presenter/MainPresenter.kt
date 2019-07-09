@@ -39,7 +39,9 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
         mainView.showMessage(pokemon[random.nextInt(pokemon.size)].name)
     }
 
-    override fun setNavigationViewData() = mainView.updateShinyStatistics(PokemonEngine.getTotalNumberOfShinys(), PokemonEngine.getTotalEggsCount(), PokemonEngine.getAverageEggsCount().toFloat().round(2))
+    override fun setNavigationViewData() = mainView.updateShinyStatistics(PokemonEngine.getTotalNumberOfShinys(),
+        PokemonEngine.getTotalNumberOfEggShiny(), PokemonEngine.getTotalNumberOfSosShinys(), PokemonEngine.getTotalEggsCount(),
+        PokemonEngine.getAverageEggsCount().toFloat().round(2))
 
     override fun deletePokemonFromDatabase(data: PokemonData) = PokemonEngine.deletePokemonFromDatabase(data)
 

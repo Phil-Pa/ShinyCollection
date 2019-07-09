@@ -15,6 +15,10 @@ class BaseConfig(context: Context) {
         get() = prefs.getBoolean(FIRST_START, true)
         set(value) = prefs.edit().putBoolean(FIRST_START, value).apply()
 
+    var guideShown: Boolean
+        get() = prefs.getBoolean(GUIDE_SHOWN, false)
+        set(value) = prefs.edit().putBoolean(GUIDE_SHOWN, value).apply()
+
     var sortMethod: Int
         get() = prefs.getInt(SORT_METHOD, PokemonSortMethod.InternalId.ordinal)
         set(value) = prefs.edit().putInt(SORT_METHOD, value).apply()
@@ -27,6 +31,7 @@ class BaseConfig(context: Context) {
         const val PREFERENCE_NAME = "de.phil.solidsabissupershinysammlung_preferences"
         lateinit var prefs: SharedPreferences
         const val FIRST_START = "First Start"
+        const val GUIDE_SHOWN = "Guide Shown"
         const val SORT_METHOD = "Sort Method"
         const val AUTO_SORT = "Auto Sort"
     }

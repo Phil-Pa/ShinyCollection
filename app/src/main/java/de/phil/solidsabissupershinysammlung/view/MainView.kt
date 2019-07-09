@@ -16,7 +16,7 @@ interface MainView {
     // show modal bottom sheet
     fun onListEntryLongClick(data: PokemonData)
 
-    fun updateShinyStatistics(numberOfShinys: Int, totalEggsCount: Int, averageEggsCount: Float)
+    fun updateShinyStatistics(numberOfShinys: Int, numberOfEggShinys: Int, numberOfSosShinys: Int, totalEggsCount: Int, averageEggsCount: Float)
 
     fun getCurrentTabIndex(): Int
     fun copyToClipboard(data: String)

@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="176dp"
+        android:layout_height="230dp"
         android:background="@drawable/navigation_drawer_image"
         android:paddingBottom="16dp"
         android:paddingLeft="16dp"
@@ -17,23 +17,37 @@
             android:contentDescription="@string/drawer_image_description"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:srcCompat="@drawable/leufeo"
+            app:srcCompat="@drawable/wuffels"
             android:id="@+id/imageView"/>
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:textColor="@android:color/white"
-            android:id="@+id/textView_all_eggs"
-            android:text="@string/num_eggs"/>
-
-    <TextView
+            android:paddingTop="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/num_shinys"
             android:textColor="@android:color/white"
             android:id="@+id/textView_number_shinys"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/num_shinys_eggs"
+            android:textColor="@android:color/white"
+            android:id="@+id/textView_number_shinys_eggs"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/num_shinys_sos"
+            android:textColor="@android:color/white"
+            android:id="@+id/textView_number_shinys_sos"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:id="@+id/textView_all_eggs"
+            android:text="@string/num_eggs"/>
 
     <TextView
             android:layout_width="wrap_content"

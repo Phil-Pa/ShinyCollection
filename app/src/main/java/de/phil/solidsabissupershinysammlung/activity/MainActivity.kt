@@ -1,10 +1,13 @@
 package de.phil.solidsabissupershinysammlung.activity
 
 import android.content.*
+import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -15,6 +18,8 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
@@ -24,6 +29,7 @@ import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
+import de.phil.solidsabissupershinysammlung.presenter.MainViewPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -61,24 +67,40 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun getClipboardStringData(): String? {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        var result: String? = null
 
-        // 0 -> text, 1 -> uri, 2 -> intent
+        var finished = false
 
-        return clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+        runOnUiThread {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+            // 0 -> text, 1 -> uri, 2 -> intent
+
+            result = clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+            finished = true
+        }
+
+        while (true) {
+            if (finished)
+                return result
+        }
     }
 
     override fun copyToClipboard(data: String) {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("label", data)
-        clipboard.primaryClip = clip
-        showMessage("Copied data to clipboard")
+        runOnUiThread {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("label", data)
+            clipboard.primaryClip = clip
+            showMessage("Copied data to clipboard")
+        }
     }
 
     override fun getCurrentTabIndex() = view_pager.currentItem
 
-    override fun updateShinyStatistics(numberOfShinys: Int, totalEggsCount: Int, averageEggsCount: Float) {
+    override fun updateShinyStatistics(numberOfShinys: Int, numberOfEggShinys: Int, numberOfSosShinys: Int, totalEggsCount: Int, averageEggsCount: Float) {
         textViewTotalShinys.text = (resources.getString(R.string.num_shinys) + ": $numberOfShinys")
+        textViewTotalEggShinys.text = (resources.getString(R.string.num_shinys_eggs) + ": $numberOfEggShinys")
+        textViewTotalSosShinys.text = (resources.getString(R.string.num_shinys_sos) + ": $numberOfSosShinys")
         textViewTotalEggs.text = (resources.getString(R.string.num_eggs) + ": $totalEggsCount")
         textViewAverageEggs.text = (resources.getString(R.string.avg_eggs) + ": $averageEggsCount")
     }
@@ -140,12 +162,19 @@ class MainActivity : AppCompatActivity(), MainView {
         actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
     }
 
-    private val presenter: MainPresenter = MainPresenter(this)
+    private val presenter: MainViewPresenter = MainPresenter(this)
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+
     private lateinit var textViewTotalEggs: TextView
+    private lateinit var textViewTotalEggShinys: TextView
+    private lateinit var textViewTotalSosShinys: TextView
     private lateinit var textViewAverageEggs: TextView
     private lateinit var textViewTotalShinys: TextView
+
+    private lateinit var menuItemRandom: View
+    private lateinit var menuItemAdd: View
+
 
     companion object {
         private const val TAG = "MainActivity"
@@ -162,6 +191,59 @@ class MainActivity : AppCompatActivity(), MainView {
         initNavigationDrawer()
         initNavigationViewViews()
         presenter.setNavigationViewData()
+    }
+
+    private fun showGuide() {
+        TapTargetSequence(this)
+            .targets(
+                TapTarget.forView(menuItemRandom, "Zufälliges Pokemon", "Hiermit kannst du ein Pokemon aus der Liste zufällig auswählen lassen, in der du dich gerade befindest.")
+                    .outerCircleColor(R.color.colorAccent)      // Specify a color for the outer circle
+                    .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                    .targetCircleColor(android.R.color.white)   // Specify a color for the target circle
+                    .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                    .titleTextColor(android.R.color.white)      // Specify the color of the title text
+                    .descriptionTextSize(16)            // Specify the size (in sp) of the description text
+                    .descriptionTextColor(android.R.color.white)  // Specify the color of the description text
+                    .textColor(android.R.color.white)            // Specify a color for both the title and description text
+                    .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                    .dimColor(android.R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                    .drawShadow(true)                   // Whether to draw a drop shadow or not
+                    .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                    .tintTarget(true)                   // Whether to tint the target view's color
+                    .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                    //.icon()                     // Specify a custom drawable to draw as the target
+                    .targetRadius(60), // Specify the target radius (in dp)
+                TapTarget.forView(menuItemAdd, "Pokemon hinzufügen", "Hier kannst du ein Pokemon zu der Liste hinzufügen, in der du dich gerade befindest.")
+                    .outerCircleColor(R.color.colorAccent)      // Specify a color for the outer circle
+                    .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                    .targetCircleColor(android.R.color.white)   // Specify a color for the target circle
+                    .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                    .titleTextColor(android.R.color.white)      // Specify the color of the title text
+                    .descriptionTextSize(16)            // Specify the size (in sp) of the description text
+                    .descriptionTextColor(android.R.color.white)  // Specify the color of the description text
+                    .textColor(android.R.color.white)            // Specify a color for both the title and description text
+                    .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                    .dimColor(android.R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                    .drawShadow(true)                   // Whether to draw a drop shadow or not
+                    .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                    .tintTarget(true)                   // Whether to tint the target view's color
+                    .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                    //.icon()                     // Specify a custom drawable to draw as the target
+                    .targetRadius(60) // Specify the target radius (in dp)
+            )
+            .listener(object : TapTargetSequence.Listener {
+                override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {
+
+                }
+
+                override fun onSequenceFinish() {
+                    // Yay
+                }
+
+                override fun onSequenceCanceled(lastTarget: TapTarget) {
+                    // Boo
+                }
+            }).start()
     }
 
     private fun initTabs() {
@@ -205,9 +287,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private fun initNavigationViewViews() {
         val headerView = navigationView.getHeaderView(0)
-        textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
-        textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
+        textViewTotalEggShinys = headerView.findViewById(R.id.textView_number_shinys_eggs)
+        textViewTotalSosShinys = headerView.findViewById(R.id.textView_number_shinys_sos)
+        textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
+        textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
     }
 
     override fun onDestroy() {
@@ -218,6 +302,18 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        Handler().post {
+            menuItemAdd = findViewById(R.id.add_pokemon)
+            menuItemRandom = findViewById(R.id.random_pokemon)
+
+            // app first start has already
+            if (!App.config.guideShown) {
+                showGuide()
+                App.config.guideShown = true
+            }
+        }
+
         return true
     }
 

@@ -5,7 +5,7 @@
 
     <group android:checkableBehavior="none">
         <item android:id="@+id/importData"
-              android:icon="@drawable/ic_import_data_white_24dp"
+              android:icon="@drawable/ic_import_black_24dp"
               android:title="@string/drawer_import_data"/>
         <item android:id="@+id/exportData"
               android:icon="@drawable/ic_content_copy_white_24dp"

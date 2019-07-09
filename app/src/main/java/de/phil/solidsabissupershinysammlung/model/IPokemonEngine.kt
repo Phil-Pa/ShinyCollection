@@ -20,5 +20,7 @@ interface IPokemonEngine {
     fun getNumberOfDataSets(): Int
 
     fun finish()
+    fun getTotalNumberOfEggShiny(): Int
+    fun getTotalNumberOfSosShinys(): Int
 
 }

@@ -7,6 +7,7 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 
 object PokemonEngine : IPokemonEngine {
+
     override fun deleteAllPokemonInDatabase() {
         if (pokemonDatabase.getNumberOfDataSets() == 0)
             return
@@ -184,6 +185,30 @@ object PokemonEngine : IPokemonEngine {
                 eggsCount += p.encounterNeeded
 
         return eggsCount
+    }
+
+    override fun getTotalNumberOfEggShiny(): Int {
+        val pokemon = pokemonDatabase.getAllPokemonOfTabIndex(0)
+
+        var eggShinyCount = 0
+
+        for (p in pokemon)
+            if (p.huntMethod == HuntMethod.Hatch)
+                eggShinyCount++
+
+        return eggShinyCount
+    }
+
+    override fun getTotalNumberOfSosShinys(): Int {
+        val pokemon = pokemonDatabase.getAllPokemonOfTabIndex(0)
+
+        var sosShinyCount = 0
+
+        for (p in pokemon)
+            if (p.huntMethod == HuntMethod.SOS)
+                sosShinyCount++
+
+        return sosShinyCount
     }
 
     override fun getAllPokemonInDatabaseFromTabIndex(tabIndex: Int) = pokemonDatabase.getAllPokemonOfTabIndex(tabIndex)

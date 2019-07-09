@@ -9,7 +9,7 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 
 object App {
 
-    const val NUM_TAB_VIEWS = 5
+    const val NUM_TAB_VIEWS = 6
     const val INT_ERROR_CODE = -1
 
     private var mInitialized = false

@@ -4,6 +4,8 @@
 
     <!-- navigation view -->
     <string name="num_shinys">Anzahl Shinys</string>
+    <string name="num_shinys_eggs">Anzahl gezüchtet</string>
+    <string name="num_shinys_sos">Anzahl SOS</string>
     <string name="num_eggs">Eier gesamt</string>
     <string name="avg_eggs">Eier durchschnittlich</string>
 
@@ -44,6 +46,7 @@
         <item>Shiny Liste</item>
         <item>15er Zyklus</item>
         <item>20er Zyklus</item>
+        <item>20er+ Zyklus</item>
         <item>SOS</item>
         <item>Softreset</item>
     </string-array>
@@ -75,4 +78,5 @@
     <string name="title_activity_settings">Einstellungen</string>
 
     <string name="fragment_pokemondata_image_content_description">Bild des Shiny Pokemon</string>
+
 </resources>
