@@ -17,7 +17,7 @@
             android:contentDescription="@string/drawer_image_description"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:srcCompat="@drawable/wuffels"
+            app:srcCompat="@drawable/leufeo"
             android:id="@+id/imageView"/>
 
     <TextView

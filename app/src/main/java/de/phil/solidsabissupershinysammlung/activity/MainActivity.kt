@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -175,7 +176,6 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var menuItemRandom: View
     private lateinit var menuItemAdd: View
 
-
     companion object {
         private const val TAG = "MainActivity"
     }
@@ -306,6 +306,8 @@ class MainActivity : AppCompatActivity(), MainView {
         Handler().post {
             menuItemAdd = findViewById(R.id.add_pokemon)
             menuItemRandom = findViewById(R.id.random_pokemon)
+
+
 
             // app first start has already
             if (!App.config.guideShown) {
