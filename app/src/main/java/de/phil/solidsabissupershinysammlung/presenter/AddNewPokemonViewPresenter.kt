@@ -4,6 +4,6 @@ import android.view.View
 
 interface AddNewPokemonViewPresenter {
 
-    fun addPokemonButtonClick(view: View?)
+    fun addPokemonButtonClick()
 
 }

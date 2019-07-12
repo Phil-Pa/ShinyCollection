@@ -10,5 +10,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context=".fragment.PokemonListFragment"
         tools:listitem="@layout/fragment_pokemondata"/>

@@ -12,7 +12,7 @@ class PresenterTest {
     val mainView: MainView = mock(MainView::class.java)
 
     @Test(expected = IllegalStateException::class)
-    fun test1() {
+    fun testTabIndexOutOfRange() {
 
         var tabIndex = 3
 

@@ -1,18 +1,16 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import de.phil.solidsabissupershinysammlung.core.App
+import androidx.databinding.DataBindingUtil
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.databinding.ActivityAddNewPokemonBinding
 import de.phil.solidsabissupershinysammlung.presenter.AddNewPokemonPresenter
 import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
-import de.phil.solidsabissupershinysammlung.databinding.ActivityAddNewPokemonBinding
-import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
-import java.lang.IllegalStateException
 
 class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
 
@@ -38,7 +36,7 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
             _name
 
         for (i in 0..6) {
-            if (PokemonEngine.genNamesArray[i].contains(name)) {
+            if (App.pokemonEngine.getNamesArray(i).contains(name)) {
                 generation = i
                 break
             }
@@ -48,8 +46,8 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
         if (generation == App.INT_ERROR_CODE)
             return null
 
-        val index = PokemonEngine.genNamesArray[generation].toList().indexOf(name)
-        val pokedexId = PokemonEngine.genPokedexIdsArray[generation][index]
+        val index = App.pokemonEngine.getNamesArray(generation).toList().indexOf(name)
+        val pokedexId = App.pokemonEngine.getPokedexIdsArray(generation)[index]
         return Pair(pokedexId, generation)
     }
 
@@ -81,7 +79,10 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityAddNewPokemonBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_pokemon)
-        binding.presenter = presenter
+        setContentView(R.layout.activity_add_new_pokemon)
+        add_new_pokemon_activity_button_add.setOnClickListener {
+            presenter.addPokemonButtonClick()
+        }
+
     }
 }

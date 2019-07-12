@@ -6,7 +6,14 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 
-object PokemonEngine : IPokemonEngine {
+class PokemonEngine : IPokemonEngine {
+    override fun getNamesArray(index: Int): Array<String> = genNamesArray[index]
+
+    override fun getPokedexIdsArray(index: Int): Array<Int> = genPokedexIdsArray[index]
+
+    companion object {
+        private const val TAG = "PokemonEngine"
+    }
 
     override fun deleteAllPokemonInDatabase() {
         if (pokemonDatabase.getNumberOfDataSets() == 0)
@@ -22,7 +29,6 @@ object PokemonEngine : IPokemonEngine {
         pokemonDatabase.close()
     }
 
-    private const val TAG = "PokemonEngine"
     private lateinit var pokemonDatabase: PokemonDatabase
 
     // if the pokemon names, ids and generations are loaded

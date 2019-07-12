@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data>
-        <variable name="presenter" type="de.phil.solidsabissupershinysammlung.presenter.MainViewPresenter"/>
-    </data>
-
     <androidx.drawerlayout.widget.DrawerLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,7 +8,7 @@
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="false"
+            android:fitsSystemWindows="true"
             tools:openDrawer="end">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,28 +22,24 @@
             <com.google.android.material.appbar.AppBarLayout
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:fitsSystemWindows="true"
                     android:theme="@style/AppTheme.AppBarOverlay">
 
-                <LinearLayout
-                        android:id="@+id/tabs_parent"
-                        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:layout_scrollFlags="scroll|enterAlways|snap"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-                    <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="?attr/actionBarSize"
-                            android:background="?attr/colorPrimary"
-                            app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
-                    <com.google.android.material.tabs.TabLayout
-                            android:id="@+id/tabs"
-                            android:animateLayoutChanges="true"
-                            app:tabMode="scrollable"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/colorPrimary"/>
-
-                </LinearLayout>
+                <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabs"
+                        android:animateLayoutChanges="true"
+                        app:tabMode="scrollable"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorPrimary"/>
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -55,8 +47,8 @@
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:context=".activity.MainActivity"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:context=".activity.MainActivity"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

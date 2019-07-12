@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
+import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
@@ -44,7 +45,7 @@ class PokemonDatabaseTest {
 
     private fun clearDatabase() {
         activityRule.runOnUiThread {
-            PokemonEngine.deleteAllPokemonInDatabase()
+            App.pokemonEngine.deleteAllPokemonInDatabase()
         }
     }
 
@@ -59,16 +60,16 @@ class PokemonDatabaseTest {
 
         activityRule.runOnUiThread {
             for (pokemon in pokemonData)
-                PokemonEngine.addPokemon(pokemon)
+                App.pokemonEngine.addPokemon(pokemon)
         }
 
-        assertEquals(2, PokemonEngine.getNumberOfDataSets())
+        assertEquals(2, App.pokemonEngine.getNumberOfDataSets())
 
         activityRule.runOnUiThread {
-            PokemonEngine.deleteAllPokemonInDatabase()
+            App.pokemonEngine.deleteAllPokemonInDatabase()
         }
 
-        assertEquals(0, PokemonEngine.getNumberOfDataSets())
+        assertEquals(0, App.pokemonEngine.getNumberOfDataSets())
 
         clearDatabase()
     }
@@ -89,17 +90,17 @@ class PokemonDatabaseTest {
 
         onView(withId(R.id.add_new_pokemon_activity_button_add)).perform(click())
 
-        val pokemon = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(0)
+        val pokemon = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(0)
 
         // pokemon got inserted successfully
         assertTrue(pokemon.map { it.name }.filter { it == pokemonName }.size == 1)
 
         // delete pokemon afterwards
         activityRule.runOnUiThread {
-            PokemonEngine.deletePokemonFromDatabaseWithName(pokemonName, 0)
+            App.pokemonEngine.deletePokemonFromDatabaseWithName(pokemonName, 0)
         }
 
-        assert(PokemonEngine.getAllPokemonInDatabaseFromTabIndex(0).isEmpty())
+        assert(App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(0).isEmpty())
 
         clearDatabase()
     }
@@ -134,10 +135,10 @@ class PokemonDatabaseTest {
         assert(mainView.getCurrentTabIndex() == 0)
 
         activityRule.runOnUiThread {
-            PokemonEngine.deletePokemonFromDatabaseWithName(pokemonName1, 0)
+            App.pokemonEngine.deletePokemonFromDatabaseWithName(pokemonName1, 0)
         }
 
-        val pokemon = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(0).map { it.name }
+        val pokemon = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(0).map { it.name }
         assertFalse(pokemon.contains(pokemonName1))
 
         clearDatabase()

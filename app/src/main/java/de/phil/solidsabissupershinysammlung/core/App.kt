@@ -3,14 +3,17 @@ package de.phil.solidsabissupershinysammlung.core
 import android.content.Context
 import android.util.Log
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListChangedListener
+import de.phil.solidsabissupershinysammlung.model.IPokemonEngine
 import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.view.MainView
 
 object App {
 
+    // constants
     const val NUM_TAB_VIEWS = 6
     const val INT_ERROR_CODE = -1
+    private const val TAG = "App"
 
     private var mInitialized = false
     private lateinit var mConfig: BaseConfig
@@ -20,19 +23,17 @@ object App {
         if (!mInitialized)
             mConfig = value
     }
-
     lateinit var mainView: MainView
     var dataListDirty = false
-
     val dataChangedListeners = ArrayList<PokemonListChangedListener>(NUM_TAB_VIEWS)
-
-    private const val TAG = "App"
+    lateinit var pokemonEngine: IPokemonEngine
 
     fun init(context: Context, mainView: MainView) {
         mConfig = BaseConfig(context)
+        pokemonEngine = PokemonEngine()
 
         Log.i(TAG, "initialize pokemon engine")
-        PokemonEngine.initialize(context)
+        pokemonEngine.initialize(context)
 
         if (config.firstStart)
             config.firstStart = false
@@ -43,7 +44,7 @@ object App {
     }
 
     fun finish() {
-        PokemonEngine.finish()
+        pokemonEngine.finish()
     }
 
     fun setSortMethod(sortMethod: PokemonSortMethod) {

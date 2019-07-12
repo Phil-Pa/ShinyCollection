@@ -23,4 +23,7 @@ interface IPokemonEngine {
     fun getTotalNumberOfEggShiny(): Int
     fun getTotalNumberOfSosShinys(): Int
 
+    fun getNamesArray(index: Int): Array<String>
+    fun getPokedexIdsArray(index: Int): Array<Int>
+
 }

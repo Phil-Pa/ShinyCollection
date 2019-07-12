@@ -1,15 +1,13 @@
 package de.phil.solidsabissupershinysammlung.presenter
 
 import android.util.Log
-import android.view.View
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
 
 class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) : AddNewPokemonViewPresenter {
-    override fun addPokemonButtonClick(view: View?) {
+    override fun addPokemonButtonClick() {
 
         val tabIndex = addNewPokemonView.getPokemonListTabIndex()
         val huntMethod = if (tabIndex == 0) HuntMethod.fromInt(addNewPokemonView.getSelectedSpinnerPosition()) else HuntMethod.Other
@@ -20,8 +18,8 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
             return
         }
 
-        val names = PokemonEngine.getAllPokemonNames()
-        val alolaNames = PokemonEngine.getAllPokemonAlolaNames()
+        val names = App.pokemonEngine.getAllPokemonNames()
+        val alolaNames = App.pokemonEngine.getAllPokemonAlolaNames()
 
         if (!names.contains(name) && !alolaNames.contains(name)) {
             addNewPokemonView.showMessage("Es gibt kein Pokemon namens $name!")
@@ -43,9 +41,9 @@ class AddNewPokemonPresenter(private val addNewPokemonView: AddNewPokemonView) :
         val (pokedexId, generation) = pair
 
 
-        val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!, tabIndex, PokemonEngine.getMaxInternalId() + 1)
+        val data = PokemonData(name, pokedexId, generation, encounters, huntMethod!!, tabIndex, App.pokemonEngine.getMaxInternalId() + 1)
 
-        PokemonEngine.addPokemon(data)
+        App.pokemonEngine.addPokemon(data)
         App.performAutoSort()
         App.dataListDirty = true
 

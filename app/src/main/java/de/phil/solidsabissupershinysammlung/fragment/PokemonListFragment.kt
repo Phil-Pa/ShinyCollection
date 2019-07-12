@@ -47,7 +47,7 @@ class PokemonListFragment : Fragment() {
             ViewCompat.setNestedScrollingEnabled(recyclerView, true)
 
             // get data from the database
-            dataList = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
+            dataList = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
 
             // sort the data
             sortData(App.getSortMethod())

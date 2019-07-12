@@ -3,7 +3,6 @@ package de.phil.solidsabissupershinysammlung.presenter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.view.MainView
 import java.util.*
 import kotlin.math.round
@@ -28,7 +27,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
     }
 
     override fun showRandomPokemon() {
-        val pokemon = PokemonEngine.getAllPokemonInDatabaseFromTabIndex(mainView.getCurrentTabIndex())
+        val pokemon = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(mainView.getCurrentTabIndex())
 
         if (pokemon.isEmpty()) {
             mainView.showMessage("There is no Pokemon in the list")
@@ -39,11 +38,11 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
         mainView.showMessage(pokemon[random.nextInt(pokemon.size)].name)
     }
 
-    override fun setNavigationViewData() = mainView.updateShinyStatistics(PokemonEngine.getTotalNumberOfShinys(),
-        PokemonEngine.getTotalNumberOfEggShiny(), PokemonEngine.getTotalNumberOfSosShinys(), PokemonEngine.getTotalEggsCount(),
-        PokemonEngine.getAverageEggsCount().toFloat().round(2))
+    override fun setNavigationViewData() = mainView.updateShinyStatistics(App.pokemonEngine.getTotalNumberOfShinys(),
+        App.pokemonEngine.getTotalNumberOfEggShiny(), App.pokemonEngine.getTotalNumberOfSosShinys(), App.pokemonEngine.getTotalEggsCount(),
+        App.pokemonEngine.getAverageEggsCount().toFloat().round(2))
 
-    override fun deletePokemonFromDatabase(data: PokemonData) = PokemonEngine.deletePokemonFromDatabase(data)
+    override fun deletePokemonFromDatabase(data: PokemonData) = App.pokemonEngine.deletePokemonFromDatabase(data)
 
     override fun importData() {
 
@@ -57,7 +56,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
         val dataList = data.split("\n")
         val regex = Regex("PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)")
 
-        PokemonEngine.deleteAllPokemonInDatabase()
+        App.pokemonEngine.deleteAllPokemonInDatabase()
 
         for (dataString in dataList) {
 
@@ -86,7 +85,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             val tabIndex = match.groupValues[6].toInt()
             val internalId = match.groupValues[7].toInt()
 
-            PokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex, internalId))
+            App.pokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex, internalId))
         }
         App.performAutoSort()
         setNavigationViewData()
@@ -96,7 +95,7 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
 
         val pokemonList = mutableListOf<PokemonData>()
         for (i in 0 until App.NUM_TAB_VIEWS) {
-            pokemonList.addAll(PokemonEngine.getAllPokemonInDatabaseFromTabIndex(i))
+            pokemonList.addAll(App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(i))
         }
 
         val sb = StringBuilder()

@@ -1,9 +1,11 @@
 package de.phil.solidsabissupershinysammlung.model
 
+import de.phil.solidsabissupershinysammlung.core.App
+
 data class PokemonData(val name: String, val pokedexId: Int, val generation: Int, val encounterNeeded: Int, val huntMethod: HuntMethod, val tabIndex: Int,
                        val internalId: Int) {
 
-    private fun isAlola() = PokemonEngine.getAllPokemonAlolaNames().contains(name)
+    private fun isAlola() = App.pokemonEngine.getAllPokemonAlolaNames().contains(name)
 
     fun getDownloadUrl(): String {
         val baseString = "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"

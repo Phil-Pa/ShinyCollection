@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -184,8 +183,7 @@ class MainActivity : AppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "App started")
         App.init(applicationContext, this)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.presenter = presenter
+        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         initTabs()
         initNavigationDrawer()
