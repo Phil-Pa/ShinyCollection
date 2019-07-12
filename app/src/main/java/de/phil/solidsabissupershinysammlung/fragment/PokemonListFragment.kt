@@ -12,14 +12,31 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
+
 
 class PokemonListFragment : Fragment() {
 
-
-
     private var mTabIndex = 0
+
+//    private val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//        override fun onMove(
+//            recyclerView: RecyclerView,
+//            viewHolder: RecyclerView.ViewHolder,
+//            target: RecyclerView.ViewHolder
+//        ): Boolean {
+//            return false
+//        }
+//
+//        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//            val pokemonData = viewHolder.itemView.tag as PokemonData
+//
+//            if (ItemTouchHelper.LEFT == direction) {
+//                App.pokemonEngine.deletePokemonFromDatabase(pokemonData)
+//                Toast.makeText(activity as MainActivity, "${pokemonData.name} wurde gelöscht!", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
 
     private lateinit var recyclerView: RecyclerView
 
@@ -44,6 +61,10 @@ class PokemonListFragment : Fragment() {
         if (view is RecyclerView) {
             recyclerView = view
 
+//            val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+//            itemTouchHelper.attachToRecyclerView(recyclerView)
+
+            // TODO: try and test if we really need this
             ViewCompat.setNestedScrollingEnabled(recyclerView, true)
 
             // get data from the database
@@ -106,6 +127,7 @@ class PokemonListFragment : Fragment() {
          * fragment.
          */
         private const val ARG_SECTION_NUMBER = "section_number"
+        private const val TAG = "PokemonListFragment"
 
         /**
          * Returns a new instance of this fragment for the given section

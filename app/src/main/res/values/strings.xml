@@ -78,5 +78,7 @@
     <string name="title_activity_settings">Einstellungen</string>
 
     <string name="fragment_pokemondata_image_content_description">Bild des Shiny Pokemon</string>
+    <string name="title_activity_addNewPokemon">Pokemon hinzufügen</string>
+    <string name="title_activity_edit_pokemon">Pokemon bearbeiten</string>
 
 </resources>

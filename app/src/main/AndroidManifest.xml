@@ -13,6 +13,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.EditPokemonDataActivity"
+                  android:label="@string/title_activity_edit_pokemon"
+                  android:parentActivityName=".activity.MainActivity">
+        </activity>
         <activity
                 android:name=".activity.SettingsActivity"
                 android:label="@string/title_activity_settings"
@@ -22,6 +26,7 @@
                     android:value="de.phil.solidsabissupershinysammlung.activity.MainActivity"/>
         </activity>
         <activity
+                android:label="@string/title_activity_addNewPokemon"
                 android:name=".activity.AddNewPokemonActivity"
                 android:parentActivityName=".activity.MainActivity">
         </activity>
