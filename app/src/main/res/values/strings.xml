@@ -80,5 +80,6 @@
     <string name="fragment_pokemondata_image_content_description">Bild des Shiny Pokemon</string>
     <string name="title_activity_addNewPokemon">Pokemon hinzufügen</string>
     <string name="title_activity_edit_pokemon">Pokemon bearbeiten</string>
+    <string name="avg_shinys_sos">SOS durchschnittlich</string>
 
 </resources>

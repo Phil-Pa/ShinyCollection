@@ -15,8 +15,8 @@ class SectionsPagerAdapter(context: Context, fm: FragmentManager) : FragmentPage
         private const val TAG = "SectionsPagerAdapter"
     }
 
-    private var tabTitles: Array<String> = context.resources.getStringArray(R.array.tab_titles)
     private val pages = mutableMapOf<Int, PokemonListFragment>()
+    private var tabTitles: Array<String> = context.resources.getStringArray(R.array.tab_titles)
 
     override fun getItem(position: Int): Fragment {
         if (!pages.keys.contains(position))

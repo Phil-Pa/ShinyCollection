@@ -1,3 +1,8 @@
+ext {
+    var = 'E:\\Dokumente\\Android\\Keys\\signed_key.jks'
+    var1 = kotlin_version
+    var2 = var1
+}
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -5,9 +10,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    dataBinding {
-        enabled = true
-    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "de.phil.solidsabissupershinysammlung"

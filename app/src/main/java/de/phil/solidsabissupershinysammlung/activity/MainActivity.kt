@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatSpinner
-import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.getkeepsafe.taptargetview.TapTarget
@@ -25,7 +24,6 @@ import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.databinding.ActivityMainBinding
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
@@ -34,6 +32,7 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainView {
+
     override fun showDialog(action: (PokemonSortMethod) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(resources.getString(R.string.sort_dialog_title))
@@ -97,12 +96,20 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun getCurrentTabIndex() = view_pager.currentItem
 
-    override fun updateShinyStatistics(numberOfShinys: Int, numberOfEggShinys: Int, numberOfSosShinys: Int, totalEggsCount: Int, averageEggsCount: Float) {
+    override fun updateShinyStatistics(
+        numberOfShinys: Int,
+        numberOfEggShinys: Int,
+        numberOfSosShinys: Int,
+        averageSosCount: Float,
+        totalEggsCount: Int,
+        averageEggsCount: Float
+    ) {
         textViewTotalShinys.text = (resources.getString(R.string.num_shinys) + ": $numberOfShinys")
         textViewTotalEggShinys.text = (resources.getString(R.string.num_shinys_eggs) + ": $numberOfEggShinys")
         textViewTotalSosShinys.text = (resources.getString(R.string.num_shinys_sos) + ": $numberOfSosShinys")
         textViewTotalEggs.text = (resources.getString(R.string.num_eggs) + ": $totalEggsCount")
         textViewAverageEggs.text = (resources.getString(R.string.avg_eggs) + ": $averageEggsCount")
+        textViewAverageSosShinys.text = (resources.getString(R.string.avg_shinys_sos) + ": $averageSosCount")
     }
 
     override fun showMessage(message: String) {
@@ -169,6 +176,7 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var textViewTotalEggs: TextView
     private lateinit var textViewTotalEggShinys: TextView
     private lateinit var textViewTotalSosShinys: TextView
+    private lateinit var textViewAverageSosShinys: TextView
     private lateinit var textViewAverageEggs: TextView
     private lateinit var textViewTotalShinys: TextView
 
@@ -194,7 +202,11 @@ class MainActivity : AppCompatActivity(), MainView {
     private fun showGuide() {
         TapTargetSequence(this)
             .targets(
-                TapTarget.forView(menuItemRandom, "Zufälliges Pokemon", "Hiermit kannst du ein Pokemon aus der Liste zufällig auswählen lassen, in der du dich gerade befindest.")
+                TapTarget.forView(
+                    menuItemRandom,
+                    "Zufälliges Pokemon",
+                    "Hiermit kannst du ein Pokemon aus der Liste zufällig auswählen lassen, in der du dich gerade befindest."
+                )
                     .outerCircleColor(R.color.colorAccent)      // Specify a color for the outer circle
                     .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
                     .targetCircleColor(android.R.color.white)   // Specify a color for the target circle
@@ -211,7 +223,11 @@ class MainActivity : AppCompatActivity(), MainView {
                     .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
                     //.icon()                     // Specify a custom drawable to draw as the target
                     .targetRadius(60), // Specify the target radius (in dp)
-                TapTarget.forView(menuItemAdd, "Pokemon hinzufügen", "Hier kannst du ein Pokemon zu der Liste hinzufügen, in der du dich gerade befindest.")
+                TapTarget.forView(
+                    menuItemAdd,
+                    "Pokemon hinzufügen",
+                    "Hier kannst du ein Pokemon zu der Liste hinzufügen, in der du dich gerade befindest."
+                )
                     .outerCircleColor(R.color.colorAccent)      // Specify a color for the outer circle
                     .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
                     .targetCircleColor(android.R.color.white)   // Specify a color for the target circle
@@ -249,6 +265,7 @@ class MainActivity : AppCompatActivity(), MainView {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
+//        viewPager.offscreenPageLimit = App.NUM_TAB_VIEWS
         viewPager.offscreenPageLimit = App.NUM_TAB_VIEWS
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
@@ -288,6 +305,7 @@ class MainActivity : AppCompatActivity(), MainView {
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
         textViewTotalEggShinys = headerView.findViewById(R.id.textView_number_shinys_eggs)
         textViewTotalSosShinys = headerView.findViewById(R.id.textView_number_shinys_sos)
+        textViewAverageSosShinys = headerView.findViewById(R.id.textView_average_shinys_sos)
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
     }
@@ -304,8 +322,6 @@ class MainActivity : AppCompatActivity(), MainView {
         Handler().post {
             menuItemAdd = findViewById(R.id.add_pokemon)
             menuItemRandom = findViewById(R.id.random_pokemon)
-
-
 
             // app first start has already
             if (!App.config.guideShown) {

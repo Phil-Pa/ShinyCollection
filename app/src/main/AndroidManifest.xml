@@ -13,10 +13,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.EditPokemonDataActivity"
-                  android:label="@string/title_activity_edit_pokemon"
-                  android:parentActivityName=".activity.MainActivity">
-        </activity>
         <activity
                 android:name=".activity.SettingsActivity"
                 android:label="@string/title_activity_settings"
@@ -32,6 +28,7 @@
         </activity>
         <activity
                 android:name=".activity.MainActivity"
+                android:persistent="true"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

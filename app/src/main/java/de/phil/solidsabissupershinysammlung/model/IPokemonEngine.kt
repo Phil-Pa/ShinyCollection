@@ -25,5 +25,6 @@ interface IPokemonEngine {
 
     fun getNamesArray(index: Int): Array<String>
     fun getPokedexIdsArray(index: Int): Array<Int>
+    fun getAverageSosCount(): Float
 
 }
