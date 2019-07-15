@@ -1,5 +1,8 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.graphics.drawable.AnimatedImageDrawable
+import android.graphics.drawable.AnimatedImageDrawable.REPEAT_INFINITE
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -7,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.presenter.AddNewPokemonPresenter
 import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
@@ -51,8 +55,9 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
     }
 
     override fun clearUserInput() {
-        add_new_pokemon_activity_edittext_eggsNeeded.text.clear()
-        add_new_pokemon_activity_edittext_name.text.clear()
+        add_new_pokemon_activity_edittext_eggsNeeded.text?.clear()
+        add_new_pokemon_activity_edittext_name.text?.clear()
+
     }
 
     override fun getEncounters(): Int {

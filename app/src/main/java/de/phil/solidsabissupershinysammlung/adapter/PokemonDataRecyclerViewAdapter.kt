@@ -30,7 +30,7 @@ class PokemonDataRecyclerViewAdapter(
         // "ID: "
         holder.mPokedexIdView.text = ("ID: " + item.pokedexId.toString())
         // "Name: "
-        holder.mNameView.text = ("Name: " + item.name)
+        holder.mNameView.text = (item.name)
         // "Encounter: "
         holder.mEggsNeededView.text = ("Begegnungen: " + item.encounterNeeded.toString())
 
