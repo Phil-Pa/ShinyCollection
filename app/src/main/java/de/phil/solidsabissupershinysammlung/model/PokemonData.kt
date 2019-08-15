@@ -9,6 +9,12 @@ data class PokemonData(val name: String, val pokedexId: Int, val generation: Int
 
     fun getDownloadUrl(): String {
         val baseString = "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
+
+
+        return "$baseString${getBitmapFileName()}"
+    }
+
+    fun getBitmapFileName(): String {
         val generationString = StringBuilder(pokedexId.toString())
         while (generationString.length < 3)
             generationString.insert(0, '0')
@@ -16,8 +22,7 @@ data class PokemonData(val name: String, val pokedexId: Int, val generation: Int
         if (isAlola()) {
             generationString.append("-alola")
         }
-
-        return "$baseString$generationString.png"
+        return "$generationString.png"
     }
 
 }

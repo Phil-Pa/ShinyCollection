@@ -33,6 +33,8 @@
                     android:id="@+id/tabs"
                     android:animateLayoutChanges="true"
                     app:tabMode="scrollable"
+                    app:tabIndicatorColor="@android:color/white"
+                    app:tabIndicatorFullWidth="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/colorPrimary"/>

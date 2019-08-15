@@ -1,6 +1,8 @@
 package de.phil.solidsabissupershinysammlung.activity
 
 import android.content.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
@@ -30,8 +32,39 @@ import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.presenter.MainViewPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity(), MainView {
+
+    override fun saveBitmap(bitmapFileName: String, bitmap: Bitmap) {
+
+        val contextWrapper = ContextWrapper(this)
+
+        val directory = contextWrapper.getDir("images", Context.MODE_PRIVATE)
+        val path = File(directory, bitmapFileName)
+
+        val fos = FileOutputStream(path)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        fos.close()
+
+    }
+
+    override fun loadSavedBitmap(bitmapFileName: String): Bitmap? {
+
+        val contextWrapper = ContextWrapper(this)
+
+        val directory = contextWrapper.getDir("images", Context.MODE_PRIVATE)
+
+        val file = File(directory, bitmapFileName)
+
+        try {
+            return BitmapFactory.decodeStream(FileInputStream(file))
+        } catch (e: Exception) {
+            return null
+        }
+    }
 
     override fun showDialog(action: (PokemonSortMethod) -> Unit) {
         val builder = AlertDialog.Builder(this)

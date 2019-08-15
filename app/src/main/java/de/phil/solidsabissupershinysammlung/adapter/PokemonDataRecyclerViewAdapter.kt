@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.adapter
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,14 @@ class PokemonDataRecyclerViewAdapter(
         val method: String = item.huntMethod.toGerman()
 
         holder.mHuntMethodView.text = ("Methode: $method")
-        holder.mShinyImageView.setImageBitmap(AppUtil.getDrawableFromURL(item.getDownloadUrl()))
+        var bitmap: Bitmap? = mainView.loadSavedBitmap(item.getBitmapFileName())
+
+        if (bitmap == null) {
+            bitmap = AppUtil.getDrawableFromURL(item.getDownloadUrl())
+            mainView.saveBitmap(item.getBitmapFileName(), bitmap!!)
+        }
+
+        holder.mShinyImageView.setImageBitmap(bitmap)
 
         with(holder.mView) {
             tag = item

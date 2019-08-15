@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.view
 
+import android.graphics.Bitmap
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
@@ -30,4 +31,6 @@ interface MainView {
     fun getClipboardStringData(): String?
 
     fun showDialog(action: (PokemonSortMethod) -> Unit)
+    fun loadSavedBitmap(bitmapFileName: String): Bitmap?
+    fun saveBitmap(bitmapFileName: String, bitmap: Bitmap)
 }

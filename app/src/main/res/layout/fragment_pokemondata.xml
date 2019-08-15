@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:background="@drawable/custom_ripple"
-              android:layout_height="130dp"
-              android:orientation="horizontal">
+                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                              android:layout_width="match_parent"
+                                              android:background="@drawable/custom_ripple"
+                                              android:layout_height="130dp"
+                                              android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="0dp" android:layout_height="match_parent"
                                                        android:layout_weight="1">
@@ -53,7 +53,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fragment_pokemondata_name"
                     android:layout_width="wrap_content"
-                    android:maxWidth="110dp"
+                    android:maxWidth="250dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="@string/recycler_view_item_name"
@@ -65,13 +65,14 @@
                     app:layout_constraintBottom_toTopOf="@+id/fragment_pokemondata_shiny_image"
             />
 
-            <androidx.appcompat.widget.AppCompatImageView android:layout_width="80dp" android:layout_height="80dp"
-                       android:contentDescription="@string/fragment_pokemondata_image_content_description"
-                       android:id="@+id/fragment_pokemondata_shiny_image"
-                       android:src="@mipmap/ic_launcher"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <androidx.appcompat.widget.AppCompatImageView android:layout_width="80dp"
+                                                          android:contentDescription="@string/fragment_pokemondata_image_content_description"
+                                                          android:id="@+id/fragment_pokemondata_shiny_image"
+                                                          android:src="@mipmap/ic_launcher"
+                                                          app:layout_constraintEnd_toEndOf="parent"
+                                                          android:layout_gravity="center"
+                                                          app:layout_constraintBottom_toBottomOf="parent"
+                                                          android:layout_height="80dp"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
