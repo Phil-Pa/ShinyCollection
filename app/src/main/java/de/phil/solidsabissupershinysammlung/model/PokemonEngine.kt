@@ -7,6 +7,31 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 
 class PokemonEngine : IPokemonEngine {
+
+    override fun getPokedexIdByName(text: String): Int {
+        var index = 0
+        for (array in genNamesArray) {
+            for (pokemonName in array) {
+                index++
+
+                if (text == pokemonName)
+                    return index
+            }
+        }
+
+        return App.INT_ERROR_CODE
+    }
+
+    override fun pokemonNameExists(name: String): Boolean {
+
+        for (array in genNamesArray) {
+            for (pokemonName in array)
+                if (name == pokemonName)
+                    return true
+        }
+        return false
+    }
+
     override fun getAverageSosCount(): Float {
         val totalSosCount = getTotalNumberOfSosShinys()
 
@@ -60,7 +85,7 @@ class PokemonEngine : IPokemonEngine {
     private lateinit var gen6Names: Array<String>
     private lateinit var gen7Names: Array<String>
 
-    lateinit var genNamesArray: Array<Array<String>>
+    private lateinit var genNamesArray: Array<Array<String>>
 
     private lateinit var gen1PokedexIds: Array<Int>
     private lateinit var gen2PokedexIds: Array<Int>
@@ -70,7 +95,7 @@ class PokemonEngine : IPokemonEngine {
     private lateinit var gen6PokedexIds: Array<Int>
     private lateinit var gen7PokedexIds: Array<Int>
 
-    lateinit var genPokedexIdsArray: Array<Array<Int>>
+    private lateinit var genPokedexIdsArray: Array<Array<Int>>
 
     override fun initialize(context: Context) {
 

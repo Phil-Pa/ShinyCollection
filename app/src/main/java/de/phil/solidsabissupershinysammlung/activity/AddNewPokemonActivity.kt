@@ -1,15 +1,16 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import android.graphics.drawable.AnimatedImageDrawable
-import android.graphics.drawable.AnimatedImageDrawable.REPEAT_INFINITE
-import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.core.AppUtil
+import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.presenter.AddNewPokemonPresenter
 import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
@@ -79,7 +80,7 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
         finish()
     }
 
-    val presenter: AddNewPokemonPresenter = AddNewPokemonPresenter(this)
+    private val presenter: AddNewPokemonPresenter = AddNewPokemonPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +88,44 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
         add_new_pokemon_activity_button_add.setOnClickListener {
             presenter.addPokemonButtonClick()
         }
+        add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                var text = s.toString()
+
+                val isAlola = text.endsWith("-alola")
+                if (isAlola)
+                    text = text.replace("-alola", "")
+
+                if (App.pokemonEngine.pokemonNameExists(text)) {
+                    val id = App.pokemonEngine.getPokedexIdByName(text)
+
+                    if (id == App.INT_ERROR_CODE)
+                        return
+
+                    val invalidData = PokemonData("-1", id, -1, -1, HuntMethod.Other, -1, -1)
+                    val urlWithoutAlola = invalidData.getDownloadUrl()
+                    val url = StringBuilder(urlWithoutAlola)
+
+                    val bitmap = if (isAlola)
+                        AppUtil.getDrawableFromURL(url.insert(urlWithoutAlola.length - 4, "-alola").toString())
+                    else
+                        AppUtil.getDrawableFromURL(urlWithoutAlola)
+
+                    add_new_pokemon_activity_imageView_preview.setImageBitmap(bitmap)
+                } else {
+                    add_new_pokemon_activity_imageView_preview.setImageBitmap(null)
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

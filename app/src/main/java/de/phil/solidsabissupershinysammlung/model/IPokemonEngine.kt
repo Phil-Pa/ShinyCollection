@@ -18,6 +18,7 @@ interface IPokemonEngine {
     fun deleteAllPokemonInDatabase()
     fun getMaxInternalId(): Int
     fun getNumberOfDataSets(): Int
+    fun pokemonNameExists(name: String): Boolean
 
     fun finish()
     fun getTotalNumberOfEggShiny(): Int
@@ -26,5 +27,6 @@ interface IPokemonEngine {
     fun getNamesArray(index: Int): Array<String>
     fun getPokedexIdsArray(index: Int): Array<Int>
     fun getAverageSosCount(): Float
+    fun getPokedexIdByName(text: String): Int
 
 }
