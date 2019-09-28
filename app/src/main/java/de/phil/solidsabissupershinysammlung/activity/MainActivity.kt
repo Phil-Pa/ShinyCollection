@@ -59,10 +59,10 @@ class MainActivity : AppCompatActivity(), MainView {
 
         val file = File(directory, bitmapFileName)
 
-        try {
-            return BitmapFactory.decodeStream(FileInputStream(file))
+        return try {
+            BitmapFactory.decodeStream(FileInputStream(file))
         } catch (e: Exception) {
-            return null
+            null
         }
     }
 
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(), MainView {
         runOnUiThread {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("label", data)
-            clipboard.primaryClip = clip
+            clipboard.setPrimaryClip(clip)
             showMessage("Copied data to clipboard")
         }
     }
@@ -373,9 +373,9 @@ class MainActivity : AppCompatActivity(), MainView {
         App.performAutoSort()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        return when (item?.itemId) {
+        return when (item.itemId) {
             R.id.random_pokemon -> {
                 presenter.showRandomPokemon()
                 true

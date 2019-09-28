@@ -43,7 +43,9 @@ class PokemonDataRecyclerViewAdapter(
 
         if (bitmap == null) {
             bitmap = AppUtil.getDrawableFromURL(item.getDownloadUrl())
-            mainView.saveBitmap(item.getBitmapFileName(), bitmap!!)
+
+            if (bitmap != null)
+                mainView.saveBitmap(item.getBitmapFileName(), bitmap)
         }
 
         holder.mShinyImageView.setImageBitmap(bitmap)

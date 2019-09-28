@@ -118,7 +118,6 @@ class PokemonListFragment : Fragment() {
                 })
             }
         }
-0
         return view
     }
 
