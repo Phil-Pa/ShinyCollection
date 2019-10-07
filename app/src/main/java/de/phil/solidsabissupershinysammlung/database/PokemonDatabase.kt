@@ -83,13 +83,13 @@ class PokemonDatabase {
                 // add data to the result
 
                 val pokemon = PokemonData(
+                    internalId,
                     name,
                     pokedexId,
                     generation,
                     eggsNeeded,
                     huntMethod,
-                    dataTabIndex,
-                    internalId
+                    dataTabIndex
                 )
                 pokemonList.add(pokemon)
 

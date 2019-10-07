@@ -1,10 +1,38 @@
 package de.phil.solidsabissupershinysammlung.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import de.phil.solidsabissupershinysammlung.core.App
 
-data class PokemonData(val name: String, val pokedexId: Int, val generation: Int, val encounterNeeded: Int, val huntMethod: HuntMethod, val tabIndex: Int,
-                       val internalId: Int) {
+@Entity
+data class PokemonData(
+    @PrimaryKey(autoGenerate = true)
+    val internalId: Int,
 
+    @ColumnInfo(name = "name")
+    val name: String,
+
+    @ColumnInfo(name = "pokedex_id")
+    val pokedexId: Int,
+
+    @ColumnInfo(name = "generation")
+    val generation: Int,
+
+    @ColumnInfo(name = "encounter_needed")
+    val encounterNeeded: Int,
+
+    @ColumnInfo(name = "hunt_method")
+    val huntMethod: HuntMethod,
+
+    @ColumnInfo(name = "tab_index")
+    val tabIndex: Int
+
+//    @ColumnInfo
+//    val isAlola: Boolean
+) {
+
+    // TODO: remove
     private fun isAlola() = App.pokemonEngine.getAllPokemonAlolaNames().contains(name)
 
     fun getDownloadUrl(): String {

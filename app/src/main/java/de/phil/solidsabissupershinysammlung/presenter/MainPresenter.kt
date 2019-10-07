@@ -85,7 +85,15 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
             val tabIndex = match.groupValues[6].toInt()
             val internalId = match.groupValues[7].toInt()
 
-            App.pokemonEngine.addPokemon(PokemonData(name, pokedexId, generation, encounterNeeded, huntMethod, tabIndex, internalId))
+            App.pokemonEngine.addPokemon(PokemonData(
+                internalId,
+                name,
+                pokedexId,
+                generation,
+                encounterNeeded,
+                huntMethod,
+                tabIndex
+            ))
         }
         App.performAutoSort()
         setNavigationViewData()

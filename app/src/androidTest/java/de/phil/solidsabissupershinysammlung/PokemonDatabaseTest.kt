@@ -12,7 +12,6 @@ import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.model.PokemonEngine
 import de.phil.solidsabissupershinysammlung.view.MainView
 import org.junit.Assert.*
 import org.junit.Before
@@ -53,8 +52,8 @@ class PokemonDatabaseTest {
     fun testDeleteAllPokemon() {
 
         val pokemonData = listOf(
-            PokemonData("Bisasam", 1, 1, 0, HuntMethod.Other, 0, 0),
-            PokemonData("Bisaknosp", 2, 1, 0, HuntMethod.Other, 1, 1)
+            PokemonData(0, "Bisasam", 1, 1, 0, HuntMethod.Other, 0),
+            PokemonData(1, "Bisaknosp", 2, 1, 0, HuntMethod.Other, 1)
         )
 
 

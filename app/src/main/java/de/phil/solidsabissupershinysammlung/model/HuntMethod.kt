@@ -1,21 +1,23 @@
 package de.phil.solidsabissupershinysammlung.model
 
-enum class HuntMethod {
-    Hatch,
-    SOS,
-    FriendSafari,
-    SoftReset,
-    Random,
-    DexNav,
-    Hordes,
-    PokeRadar,
-    RNGManipulation,
-    ChainFinishing,
-    UltraDimension,
-    Other;
+enum class HuntMethod(val value: Int) {
+    Hatch(0),
+    SOS(1),
+    FriendSafari(2),
+    SoftReset(3),
+    Random(4),
+    DexNav(5),
+    Hordes(6),
+    PokeRadar(7),
+    RNGManipulation(8),
+    ChainFinishing(9),
+    UltraDimension(10),
+    Other(11);
 
     companion object {
         private val map = values().associateBy(HuntMethod::ordinal)
+
+        // TODO: could have errors because of constant values above
         fun fromInt(type: Int) = map[type]
     }
 

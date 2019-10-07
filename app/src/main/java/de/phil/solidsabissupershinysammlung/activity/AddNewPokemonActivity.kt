@@ -102,7 +102,7 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
                     if (id == App.INT_ERROR_CODE)
                         return
 
-                    val invalidData = PokemonData("-1", id, -1, -1, HuntMethod.Other, -1, -1)
+                    val invalidData = PokemonData(-1, "-1", id, -1, -1, HuntMethod.Other, -1)
                     val urlWithoutAlola = invalidData.getDownloadUrl()
                     val url = StringBuilder(urlWithoutAlola)
 
