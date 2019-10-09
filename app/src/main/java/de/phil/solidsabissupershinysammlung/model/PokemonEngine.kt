@@ -208,7 +208,7 @@ class PokemonEngine : IPokemonEngine {
 
         var position = App.INT_ERROR_CODE
 
-        for (i in 0 until pokemon.size) {
+        for (i in pokemon.indices) {
             if (pokemonName == pokemon[i].name) {
                 position = i
                 break

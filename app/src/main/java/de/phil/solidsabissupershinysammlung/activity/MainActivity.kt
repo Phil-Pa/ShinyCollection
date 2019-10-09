@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
@@ -31,6 +32,7 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
 import de.phil.solidsabissupershinysammlung.presenter.MainViewPresenter
 import de.phil.solidsabissupershinysammlung.view.MainView
+import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileInputStream
@@ -127,7 +129,9 @@ class MainActivity : AppCompatActivity(), MainView {
         }
     }
 
-    override fun getCurrentTabIndex() = view_pager.currentItem
+    override fun getCurrentTabIndex(): Int {
+        return view_pager.currentItem
+    }
 
     override fun updateShinyStatistics(
         numberOfShinys: Int,
@@ -202,7 +206,7 @@ class MainActivity : AppCompatActivity(), MainView {
         actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
     }
 
-    private val presenter: MainViewPresenter = MainPresenter(this)
+    private val presenter = MainPresenter(this)
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
@@ -220,6 +224,8 @@ class MainActivity : AppCompatActivity(), MainView {
         private const val TAG = "MainActivity"
     }
 
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "App started")
@@ -230,6 +236,9 @@ class MainActivity : AppCompatActivity(), MainView {
         initNavigationDrawer()
         initNavigationViewViews()
         presenter.setNavigationViewData()
+
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
     }
 
     private fun showGuide() {
@@ -294,11 +303,9 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     private fun initTabs() {
-        // init tab view
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
-//        viewPager.offscreenPageLimit = App.NUM_TAB_VIEWS
         viewPager.offscreenPageLimit = App.NUM_TAB_VIEWS
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
@@ -320,13 +327,28 @@ class MainActivity : AppCompatActivity(), MainView {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
                 }
                 R.id.importData -> {
-                    presenter.importData()
+                    val data = getClipboardStringData()
+
+                    val success = viewModel.import(data)
+                    if (!success)
+                        showMessage("Could not import data")
                 }
                 R.id.exportData -> {
-                    presenter.exportData()
+                    val data = viewModel.export()
+
+                    if (data == null)
+                        showMessage("there is no data to export")
+                    else
+                        copyToClipboard(data)
                 }
                 R.id.sortData -> {
-                    presenter.sortData()
+                    // TODO: handle callbacks
+                    showDialog {sortMethod ->
+                        App.setSortMethod(sortMethod)
+                        for (i in 0 until App.NUM_TAB_VIEWS) {
+                            App.dataChangedListeners[i].notifySortPokemon(sortMethod)
+                        }
+                    }
                 }
             }
             true
@@ -341,12 +363,6 @@ class MainActivity : AppCompatActivity(), MainView {
         textViewAverageSosShinys = headerView.findViewById(R.id.textView_average_shinys_sos)
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        App.finish()
-        Log.i(TAG, "App closed")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -377,11 +393,18 @@ class MainActivity : AppCompatActivity(), MainView {
 
         return when (item.itemId) {
             R.id.random_pokemon -> {
-                presenter.showRandomPokemon()
+//                presenter.showRandomPokemon()
+                val pokemon = viewModel.getRandomPokemon()
+                if (pokemon == null)
+                    showMessage("No pokemon saved")
+                else
+                    showMessage(pokemon.name)
                 true
             }
             R.id.add_pokemon -> {
-                presenter.startAddNewPokemonActivity()
+//                presenter.startAddNewPokemonActivity()
+                // TODO: copy the code in these methods right here
+                startAddNewPokemonActivity(getCurrentTabIndex())
                 true
             }
             else -> super.onOptionsItemSelected(item)

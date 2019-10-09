@@ -24,7 +24,7 @@ class DownloadImageTask : AsyncTask<String, Void, Bitmap>() {
             val `in` = java.net.URL(url).openStream()
             image = BitmapFactory.decodeStream(`in`)
         } catch (e: Exception) {
-            Log.e("Error", e.message)
+            Log.e("Error", e.message ?: "no message")
             e.printStackTrace()
         }
 

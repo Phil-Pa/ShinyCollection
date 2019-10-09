@@ -128,7 +128,7 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
         })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item?.itemId) {
             android.R.id.home -> {
                 finish()

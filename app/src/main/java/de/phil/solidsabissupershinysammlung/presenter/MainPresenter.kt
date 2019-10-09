@@ -7,8 +7,8 @@ import de.phil.solidsabissupershinysammlung.view.MainView
 import java.util.*
 import kotlin.math.round
 
-class MainPresenter(private val mainView: MainView) : MainViewPresenter {
-    override fun sortData() {
+class MainPresenter(private val mainView: MainView) {
+    fun sortData() {
         mainView.showDialog {sortMethod ->
             App.setSortMethod(sortMethod)
             for (i in 0 until App.NUM_TAB_VIEWS) {
@@ -17,103 +17,12 @@ class MainPresenter(private val mainView: MainView) : MainViewPresenter {
         }
     }
 
-    override fun startAddNewPokemonActivity() {
-        val tabIndex = mainView.getCurrentTabIndex()
-        if (tabIndex < 0 || tabIndex > App.NUM_TAB_VIEWS) {
-            throw IllegalStateException()
-        }
-
-        mainView.startAddNewPokemonActivity(tabIndex)
-    }
-
-    override fun showRandomPokemon() {
-        val pokemon = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(mainView.getCurrentTabIndex())
-
-        if (pokemon.isEmpty()) {
-            mainView.showMessage("There is no Pokemon in the list")
-            return
-        }
-
-        val random = Random()
-        mainView.showMessage(pokemon[random.nextInt(pokemon.size)].name)
-    }
-
-    override fun setNavigationViewData() = mainView.updateShinyStatistics(App.pokemonEngine.getTotalNumberOfShinys(),
+    fun setNavigationViewData() = mainView.updateShinyStatistics(App.pokemonEngine.getTotalNumberOfShinys(),
         App.pokemonEngine.getTotalNumberOfEggShiny(), App.pokemonEngine.getTotalNumberOfSosShinys(), App.pokemonEngine.getAverageSosCount().round(2), App.pokemonEngine.getTotalEggsCount(),
         App.pokemonEngine.getAverageEggsCount().toFloat().round(2))
 
-    override fun deletePokemonFromDatabase(data: PokemonData) = App.pokemonEngine.deletePokemonFromDatabase(data)
+    fun deletePokemonFromDatabase(data: PokemonData) = App.pokemonEngine.deletePokemonFromDatabase(data)
 
-    override fun importData() {
-
-        val data = mainView.getClipboardStringData()
-
-        if (data == null) {
-            mainView.showMessage("Could not import data")
-            return
-        }
-
-        val dataList = data.split("\n")
-        val regex = Regex("PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)")
-
-        App.pokemonEngine.deleteAllPokemonInDatabase()
-
-        for (dataString in dataList) {
-
-            // TODO find better solution
-
-            if (dataString == "\n" || dataString.isEmpty() || dataString.isBlank())
-                continue
-
-            if (!regex.matches(dataString)) {
-                mainView.showMessage("Could not import data")
-                return
-            }
-
-            val match: MatchResult? = regex.matchEntire(dataString)
-
-            if (match == null) {
-                mainView.showMessage("Could not import data")
-                return
-            }
-
-            val name = match.groupValues[1]
-            val pokedexId = match.groupValues[2].toInt()
-            val generation = match.groupValues[3].toInt()
-            val encounterNeeded = match.groupValues[4].toInt()
-            val huntMethod = HuntMethod.valueOf(match.groupValues[5])
-            val tabIndex = match.groupValues[6].toInt()
-            val internalId = match.groupValues[7].toInt()
-
-            App.pokemonEngine.addPokemon(PokemonData(
-                internalId,
-                name,
-                pokedexId,
-                generation,
-                encounterNeeded,
-                huntMethod,
-                tabIndex
-            ))
-        }
-        App.performAutoSort()
-        setNavigationViewData()
-    }
-
-    override fun exportData() {
-
-        val pokemonList = mutableListOf<PokemonData>()
-        for (i in 0 until App.NUM_TAB_VIEWS) {
-            pokemonList.addAll(App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(i))
-        }
-
-        val sb = StringBuilder()
-
-        for (pokemon in pokemonList) {
-            sb.append(pokemon.toString()).append("\n")
-        }
-
-        mainView.copyToClipboard(sb.toString())
-    }
 }
 
 private fun Float.round(decimals: Int): Float {
