@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -129,7 +130,7 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item?.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 true

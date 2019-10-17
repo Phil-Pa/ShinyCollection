@@ -109,9 +109,6 @@ class PokemonEngine : IPokemonEngine {
 
         Log.i(TAG, "initialize database connection")
         pokemonDatabase.init(context)
-
-        if (App.config.firstStart)
-            pokemonDatabase.create()
     }
 
     private fun initializeVariables(context: Context) {

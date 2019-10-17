@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.adapter
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
@@ -8,20 +9,25 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.toGerman
-import de.phil.solidsabissupershinysammlung.view.MainView
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 
 class PokemonDataRecyclerViewAdapter(
-    private val mValues: MutableList<PokemonData>,
-    private val mainView: MainView
+    private val mValues: MutableList<PokemonData>
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewAdapter.ViewHolder>() {
+
+    private var appContext: Context? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_pokemondata, parent, false)
+
+        if (appContext == null)
+            appContext = parent.context
+
         return ViewHolder(view)
     }
 
@@ -39,13 +45,13 @@ class PokemonDataRecyclerViewAdapter(
         val method: String = item.huntMethod.toGerman()
 
         holder.mHuntMethodView.text = ("Methode: $method")
-        var bitmap: Bitmap? = mainView.loadSavedBitmap(item.getBitmapFileName())
+        var bitmap: Bitmap? = (appContext as MainActivity).loadSavedBitmap(item.getBitmapFileName())
 
         if (bitmap == null) {
             bitmap = AppUtil.getDrawableFromURL(item.getDownloadUrl())
 
             if (bitmap != null)
-                mainView.saveBitmap(item.getBitmapFileName(), bitmap)
+                (appContext as MainActivity).saveBitmap(item.getBitmapFileName(), bitmap)
         }
 
         holder.mShinyImageView.setImageBitmap(bitmap)
@@ -53,11 +59,11 @@ class PokemonDataRecyclerViewAdapter(
         with(holder.mView) {
             tag = item
             setOnLongClickListener{
-                mainView.onListEntryLongClick(it.tag as PokemonData)
+                (appContext as MainActivity).onListEntryLongClick(it.tag as PokemonData)
                 true
             }
             setOnClickListener {
-                mainView.onListEntryClick(it.tag as PokemonData)
+                (appContext as MainActivity).onListEntryClick(it.tag as PokemonData)
             }
         }
     }

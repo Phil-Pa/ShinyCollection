@@ -12,7 +12,6 @@ import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.view.MainView
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule

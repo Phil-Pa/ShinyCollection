@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import de.phil.solidsabissupershinysammlung.model.PokemonData
 
-@Database(entities = [PokemonDao::class], version = 1)
+@TypeConverters(Converters::class)
+@Database(entities = [PokemonData::class], version = 1, exportSchema = false)
 abstract class PokemonRoomDatabase : RoomDatabase() {
 
     abstract fun pokemonDao(): PokemonDao

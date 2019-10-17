@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.getkeepsafe.taptargetview.TapTarget
@@ -27,20 +28,19 @@ import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.database.IAndroidPokemonResources
+import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
-import de.phil.solidsabissupershinysammlung.presenter.MainPresenter
-import de.phil.solidsabissupershinysammlung.presenter.MainViewPresenter
-import de.phil.solidsabissupershinysammlung.view.MainView
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity() {
 
-    override fun saveBitmap(bitmapFileName: String, bitmap: Bitmap) {
+    fun saveBitmap(bitmapFileName: String, bitmap: Bitmap) {
 
         val contextWrapper = ContextWrapper(this)
 
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     }
 
-    override fun loadSavedBitmap(bitmapFileName: String): Bitmap? {
+    fun loadSavedBitmap(bitmapFileName: String): Bitmap? {
 
         val contextWrapper = ContextWrapper(this)
 
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), MainView {
         }
     }
 
-    override fun showDialog(action: (PokemonSortMethod) -> Unit) {
+    private fun showDialog(action: (PokemonSortMethod) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(resources.getString(R.string.sort_dialog_title))
         builder.setMessage(R.string.dialog_sort_message)
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity(), MainView {
         dialog.show()
     }
 
-    override fun getClipboardStringData(): String? {
+    private fun getClipboardStringData(): String? {
         var result: String? = null
 
         var finished = false
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), MainView {
         }
     }
 
-    override fun copyToClipboard(data: String) {
+    private fun copyToClipboard(data: String) {
         runOnUiThread {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("label", data)
@@ -129,11 +129,11 @@ class MainActivity : AppCompatActivity(), MainView {
         }
     }
 
-    override fun getCurrentTabIndex(): Int {
+    fun getCurrentTabIndex(): Int {
         return view_pager.currentItem
     }
 
-    override fun updateShinyStatistics(
+    private fun updateShinyStatistics(
         numberOfShinys: Int,
         numberOfEggShinys: Int,
         numberOfSosShinys: Int,
@@ -142,24 +142,21 @@ class MainActivity : AppCompatActivity(), MainView {
         averageEggsCount: Float
     ) {
         textViewTotalShinys.text = (resources.getString(R.string.num_shinys) + ": $numberOfShinys")
-        textViewTotalEggShinys.text = (resources.getString(R.string.num_shinys_eggs) + ": $numberOfEggShinys")
-        textViewTotalSosShinys.text = (resources.getString(R.string.num_shinys_sos) + ": $numberOfSosShinys")
+        textViewTotalEggShinys.text =
+            (resources.getString(R.string.num_shinys_eggs) + ": $numberOfEggShinys")
+        textViewTotalSosShinys.text =
+            (resources.getString(R.string.num_shinys_sos) + ": $numberOfSosShinys")
         textViewTotalEggs.text = (resources.getString(R.string.num_eggs) + ": $totalEggsCount")
         textViewAverageEggs.text = (resources.getString(R.string.avg_eggs) + ": $averageEggsCount")
-        textViewAverageSosShinys.text = (resources.getString(R.string.avg_shinys_sos) + ": $averageSosCount")
+        textViewAverageSosShinys.text =
+            (resources.getString(R.string.avg_shinys_sos) + ": $averageSosCount")
     }
 
-    override fun showMessage(message: String) {
+    private fun showMessage(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun startAddNewPokemonActivity(tabIndex: Int) {
-        val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
-        intent.putExtra("tabIndex", tabIndex)
-        startActivity(intent)
-    }
-
-    override fun onListEntryClick(data: PokemonData) {
+    fun onListEntryClick(data: PokemonData) {
         if (actionMode != null) {
             pokemonToDelete = data
             actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
@@ -171,14 +168,15 @@ class MainActivity : AppCompatActivity(), MainView {
     private var actionMode: ActionMode? = null
     private var pokemonToDelete: PokemonData? = null
 
-    override fun onListEntryLongClick(data: PokemonData) {
+    fun onListEntryLongClick(data: PokemonData) {
         if (actionMode == null) {
             startSupportActionMode(object : ActionMode.Callback {
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     when (item?.itemId) {
                         R.id.delete_entry -> {
                             if (pokemonToDelete != null)
-                                presenter.deletePokemonFromDatabase(pokemonToDelete!!)
+                                viewModel.deletePokemon(pokemonToDelete!!)
+
                             mode?.finish()
                         }
                     }
@@ -206,7 +204,6 @@ class MainActivity : AppCompatActivity(), MainView {
         actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
     }
 
-    private val presenter = MainPresenter(this)
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
@@ -224,24 +221,48 @@ class MainActivity : AppCompatActivity(), MainView {
         private const val TAG = "MainActivity"
     }
 
-    private lateinit var viewModel: MainViewModel
+    interface OnListChangedListener {
+        fun sort(pokemonSortMethod: PokemonSortMethod)
+        fun addPokemon(pokemonData: PokemonData)
+        fun deletePokemon(tabIndex: Int, position: Int)
+        fun deleteAllPokemon(tabIndex: Int)
+    }
+
+    lateinit var viewModel: MainViewModel
+    private val recyclerViewChangedListeners = mutableListOf<OnListChangedListener>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(TAG, "App started")
-        App.init(applicationContext, this)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         initTabs()
         initNavigationDrawer()
         initNavigationViewViews()
-        presenter.setNavigationViewData()
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel.init(PokemonRepository(object : IAndroidPokemonResources {
 
+        }, application))
+        viewModel.getShinyListData().observe(this, Observer {
+
+            val updateData = viewModel.getStatisticsData()
+
+            updateShinyStatistics(
+                updateData.totalNumberOfShiny,
+                updateData.totalNumberOfEggShiny,
+                updateData.totalNumberOfSosShiny,
+                updateData.averageSos,
+                updateData.totalEggs,
+                updateData.averageEggs
+            )
+        })
     }
 
     private fun showGuide() {
+
+        // TODO: use string resources
+
         TapTargetSequence(this)
             .targets(
                 TapTarget.forView(
@@ -312,7 +333,6 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     private fun initNavigationDrawer() {
-        // init navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
@@ -331,6 +351,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
                     val success = viewModel.import(data)
                     if (!success)
+                        // TODO: use string resources
                         showMessage("Could not import data")
                 }
                 R.id.exportData -> {
@@ -343,7 +364,7 @@ class MainActivity : AppCompatActivity(), MainView {
                 }
                 R.id.sortData -> {
                     // TODO: handle callbacks
-                    showDialog {sortMethod ->
+                    showDialog { sortMethod ->
                         App.setSortMethod(sortMethod)
                         for (i in 0 until App.NUM_TAB_VIEWS) {
                             App.dataChangedListeners[i].notifySortPokemon(sortMethod)
@@ -372,10 +393,9 @@ class MainActivity : AppCompatActivity(), MainView {
             menuItemAdd = findViewById(R.id.add_pokemon)
             menuItemRandom = findViewById(R.id.random_pokemon)
 
-            // app first start has already
-            if (!App.config.guideShown) {
+            if (!viewModel.isGuideShown()) {
                 showGuide()
-                App.config.guideShown = true
+                viewModel.setGuideShown()
             }
         }
 
@@ -384,30 +404,36 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun onResume() {
         super.onResume()
-        presenter.setNavigationViewData()
 
-        App.performAutoSort()
+        // TODO: handle auto sort
+        if (viewModel.shouldAutoSort())
+            recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
+        //App.performAutoSort()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
             R.id.random_pokemon -> {
-//                presenter.showRandomPokemon()
                 val pokemon = viewModel.getRandomPokemon()
                 if (pokemon == null)
+                    // TODO: use string resources
                     showMessage("No pokemon saved")
                 else
                     showMessage(pokemon.name)
                 true
             }
             R.id.add_pokemon -> {
-//                presenter.startAddNewPokemonActivity()
-                // TODO: copy the code in these methods right here
-                startAddNewPokemonActivity(getCurrentTabIndex())
+                val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
+                intent.putExtra("tabIndex", view_pager.currentItem)
+                startActivityForResult(intent, App.REQUEST_ADD_POKEMON)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun addRecyclerViewChangedListener(listener: OnListChangedListener) {
+        recyclerViewChangedListeners.add(listener)
     }
 }

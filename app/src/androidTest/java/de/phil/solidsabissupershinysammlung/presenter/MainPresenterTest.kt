@@ -2,17 +2,14 @@ package de.phil.solidsabissupershinysammlung.presenter
 
 import android.content.Context
 import android.content.Intent
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
-import de.phil.solidsabissupershinysammlung.view.MainView
 import org.junit.After
 import org.junit.Assert.fail
 import org.junit.Before

@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
@@ -53,6 +55,10 @@ class PokemonListFragment : Fragment() {
         }
     }
 
+    private fun getMainActivity(): MainActivity {
+        return (activity as MainActivity)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,12 +75,15 @@ class PokemonListFragment : Fragment() {
             ViewCompat.setNestedScrollingEnabled(recyclerView, true)
 
             // get data from the database
-            dataList = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
+            // TODO: use room database
+//            dataList = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
+            getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex).value!!.toMutableList()
 
             // sort the data
-            sortData(App.getSortMethod())
+            // sortData(App.getSortMethod())
+            sortData(getMainActivity().viewModel.getSortMethod())
 
-            myAdapter = PokemonDataRecyclerViewAdapter(dataList, App.mainView)
+            myAdapter = PokemonDataRecyclerViewAdapter(dataList)
 
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(context)
@@ -87,35 +96,65 @@ class PokemonListFragment : Fragment() {
 
                 adapter = myAdapter
 
-                App.dataChangedListeners.add(mTabIndex, object :
-                    PokemonListChangedListener {
-                    override fun notifySortPokemon(sortMethod: PokemonSortMethod) {
-                        sortData(sortMethod)
-                        myAdapter?.notifyDataSetChanged()
-                    }
-
-                    override fun notifyPokemonAdded(data: PokemonData) {
-                        if (mTabIndex == data.tabIndex) {
-                            dataList.add(data)
+                getMainActivity().addRecyclerViewChangedListener(object : MainActivity.OnListChangedListener {
+                    override fun addPokemon(pokemonData: PokemonData) {
+                        if (mTabIndex == pokemonData.tabIndex) {
+                            dataList.add(pokemonData)
                             myAdapter?.notifyItemInserted(dataList.size - 1)
                         }
                     }
 
-                    override fun notifyPokemonDeleted(tabIndex: Int, position: Int) {
+                    override fun deletePokemon(tabIndex: Int, position: Int) {
                         if (mTabIndex == tabIndex) {
                             dataList.removeAt(position)
                             myAdapter?.notifyItemRemoved(position)
                         }
                     }
 
-                    override fun notifyAllPokemonDeleted(tabIndex: Int) {
+                    override fun deleteAllPokemon(tabIndex: Int) {
                         if (mTabIndex == tabIndex) {
                             val length = dataList.size
                             dataList.clear()
                             myAdapter?.notifyItemRangeRemoved(0, length)
                         }
                     }
+
+                    override fun sort(pokemonSortMethod: PokemonSortMethod) {
+                        sortData(pokemonSortMethod)
+                        myAdapter?.notifyDataSetChanged()
+                    }
+
                 })
+//
+//                App.dataChangedListeners.add(mTabIndex, object :
+//                    PokemonListChangedListener {
+////                    override fun notifySortPokemon(sortMethod: PokemonSortMethod) {
+////                        sortData(sortMethod)
+////                        myAdapter?.notifyDataSetChanged()
+////                    }
+//
+//                    override fun notifyPokemonAdded(data: PokemonData) {
+//                        if (mTabIndex == data.tabIndex) {
+//                            dataList.add(data)
+//                            myAdapter?.notifyItemInserted(dataList.size - 1)
+//                        }
+//                    }
+//
+//                    override fun notifyPokemonDeleted(tabIndex: Int, position: Int) {
+//                        if (mTabIndex == tabIndex) {
+//                            dataList.removeAt(position)
+//                            myAdapter?.notifyItemRemoved(position)
+//                        }
+//                    }
+//
+//                    override fun notifyAllPokemonDeleted(tabIndex: Int) {
+//                        if (mTabIndex == tabIndex) {
+//                            val length = dataList.size
+//                            dataList.clear()
+//                            myAdapter?.notifyItemRangeRemoved(0, length)
+//                        }
+//                    }
+//                })
             }
         }
         return view

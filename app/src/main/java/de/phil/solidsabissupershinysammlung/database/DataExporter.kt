@@ -3,9 +3,9 @@ package de.phil.solidsabissupershinysammlung.database
 class DataExporter {
 
     fun export(repository: PokemonRepository) : String? {
-        val pokemonList = repository.getAllPokemonData()
+        val pokemonList = repository.getAllPokemonData().value
 
-        if (pokemonList.isEmpty())
+        if (pokemonList == null || pokemonList.isEmpty())
             return null
 
         val sb = StringBuilder()

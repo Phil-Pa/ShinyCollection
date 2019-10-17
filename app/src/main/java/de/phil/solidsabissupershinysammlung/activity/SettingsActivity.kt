@@ -14,7 +14,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         if (sharedPreferences == null || key == null)
             return
 
-        App.config.isAutoSort = sharedPreferences.getBoolean(key, false)
+//        App.config.isAutoSort = sharedPreferences.getBoolean(key, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

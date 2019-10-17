@@ -5,6 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import de.phil.solidsabissupershinysammlung.core.App
 
+class UpdateStatisticsData(
+    val totalNumberOfShiny: Int,
+    val totalNumberOfEggShiny: Int,
+    val totalNumberOfSosShiny: Int,
+    val averageSos: Float,
+    val totalEggs: Int,
+    val averageEggs: Float
+)
+
 @Entity
 data class PokemonData(
     @PrimaryKey(autoGenerate = true)
@@ -23,10 +32,11 @@ data class PokemonData(
     val encounterNeeded: Int,
 
     @ColumnInfo(name = "hunt_method")
-    val huntMethod: HuntMethod,
+    val huntMethod: HuntMethod = HuntMethod.Other,
 
     @ColumnInfo(name = "tab_index")
     val tabIndex: Int
+
 
 //    @ColumnInfo
 //    val isAlola: Boolean

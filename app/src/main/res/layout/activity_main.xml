@@ -29,10 +29,11 @@
                     app:layout_scrollFlags="scroll|enterAlways|snap"
                     app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
+            <!--                    app:tabMode="scrollable"-->
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabs"
-                    android:animateLayoutChanges="true"
                     app:tabMode="scrollable"
+                    android:animateLayoutChanges="true"
                     app:tabIndicatorColor="@android:color/white"
                     app:tabIndicatorFullWidth="false"
                     android:layout_width="match_parent"
