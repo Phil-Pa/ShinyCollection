@@ -43,7 +43,7 @@ data class PokemonData(
 ) {
 
     // TODO: remove
-    private fun isAlola() = App.pokemonEngine.getAllPokemonAlolaNames().contains(name)
+    private fun isAlola() = false//App.pokemonEngine.getAllPokemonAlolaNames().contains(name)
 
     fun getDownloadUrl(): String {
         val baseString = "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"

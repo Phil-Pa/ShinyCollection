@@ -174,8 +174,12 @@ class MainActivity : AppCompatActivity() {
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     when (item?.itemId) {
                         R.id.delete_entry -> {
-                            if (pokemonToDelete != null)
+                            if (pokemonToDelete != null) {
+                                recyclerViewChangedListeners.forEach {
+                                    it.deletePokemon(getCurrentTabIndex(), pokemonToDelete!!)
+                                }
                                 viewModel.deletePokemon(pokemonToDelete!!)
+                            }
 
                             mode?.finish()
                         }
@@ -224,8 +228,9 @@ class MainActivity : AppCompatActivity() {
     interface OnListChangedListener {
         fun sort(pokemonSortMethod: PokemonSortMethod)
         fun addPokemon(pokemonData: PokemonData)
-        fun deletePokemon(tabIndex: Int, position: Int)
+        fun deletePokemon(tabIndex: Int, pokemonData: PokemonData)
         fun deleteAllPokemon(tabIndex: Int)
+        fun refreshRecyclerView()
     }
 
     lateinit var viewModel: MainViewModel
@@ -353,6 +358,8 @@ class MainActivity : AppCompatActivity() {
                     if (!success)
                         // TODO: use string resources
                         showMessage("Could not import data")
+                    else
+                        recyclerViewChangedListeners.forEach { listener -> listener.refreshRecyclerView() }
                 }
                 R.id.exportData -> {
                     val data = viewModel.export()
@@ -363,12 +370,12 @@ class MainActivity : AppCompatActivity() {
                         copyToClipboard(data)
                 }
                 R.id.sortData -> {
-                    // TODO: handle callbacks
                     showDialog { sortMethod ->
-                        App.setSortMethod(sortMethod)
-                        for (i in 0 until App.NUM_TAB_VIEWS) {
-                            App.dataChangedListeners[i].notifySortPokemon(sortMethod)
-                        }
+                        recyclerViewChangedListeners.forEach { listener -> listener.sort(sortMethod) }
+//                        App.setSortMethod(sortMethod)
+//                        for (i in 0 until App.NUM_TAB_VIEWS) {
+//                            App.dataChangedListeners[i].notifySortPokemon(sortMethod)
+//                        }
                     }
                 }
             }
@@ -405,7 +412,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        // TODO: handle auto sort
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
         //App.performAutoSort()
@@ -435,5 +441,9 @@ class MainActivity : AppCompatActivity() {
 
     fun addRecyclerViewChangedListener(listener: OnListChangedListener) {
         recyclerViewChangedListeners.add(listener)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

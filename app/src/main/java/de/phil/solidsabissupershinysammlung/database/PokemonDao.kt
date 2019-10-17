@@ -41,7 +41,7 @@ interface PokemonDao {
     fun getAllPokemonData(): LiveData<List<PokemonData>>
 
     @Query("SELECT * FROM pokemondata WHERE tab_index = :tabIndex")
-    fun getAllPokemonDataFromTabIndex(tabIndex: Int): LiveData<List<PokemonData>>
+    fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData>
 
     @Query("DELETE FROM pokemondata")
     fun deleteAllPokemonInDatabase()

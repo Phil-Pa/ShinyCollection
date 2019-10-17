@@ -55,7 +55,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getAllPokemonData()
     }
 
-    fun getAllPokemonDataFromTabIndex(tabIndex: Int): LiveData<List<PokemonData>> {
+    fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
         return repository.getAllPokemonDataFromTabIndex(tabIndex)
     }
 

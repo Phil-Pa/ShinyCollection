@@ -33,7 +33,7 @@ class PokemonRepository(private val androidPokemonResources: IAndroidPokemonReso
         return GetAllPokemonDataAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getAllPokemonDataFromTabIndex(tabIndex: Int): LiveData<List<PokemonData>> {
+    fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
         return GetAllPokemonDataFromTabIndexAsyncTask(pokemonDao).execute(tabIndex).get()
     }
 
@@ -158,8 +158,8 @@ class PokemonRepository(private val androidPokemonResources: IAndroidPokemonReso
         }
     }
 
-    class GetAllPokemonDataFromTabIndexAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Int, Unit, LiveData<List<PokemonData>>>() {
-        override fun doInBackground(vararg params: Int?): LiveData<List<PokemonData>> {
+    class GetAllPokemonDataFromTabIndexAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Int, Unit, List<PokemonData>>() {
+        override fun doInBackground(vararg params: Int?): List<PokemonData> {
             val tabIndex = params[0] ?: throw Exception()
             return pokemonDao.getAllPokemonDataFromTabIndex(tabIndex)
         }

@@ -71,19 +71,19 @@ class PokemonListFragment : Fragment() {
 //            val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
 //            itemTouchHelper.attachToRecyclerView(recyclerView)
 
-            // TODO: try and test if we really need this
-            ViewCompat.setNestedScrollingEnabled(recyclerView, true)
+            //ViewCompat.setNestedScrollingEnabled(recyclerView, true)
 
             // get data from the database
             // TODO: use room database
 //            dataList = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
-            getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex).value!!.toMutableList()
+            val liveData = getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex)
+            dataList = liveData.toMutableList()
 
             // sort the data
             // sortData(App.getSortMethod())
             sortData(getMainActivity().viewModel.getSortMethod())
 
-            myAdapter = PokemonDataRecyclerViewAdapter(dataList)
+            myAdapter = PokemonDataRecyclerViewAdapter(dataList, getMainActivity())
 
             with(recyclerView) {
                 layoutManager = LinearLayoutManager(context)
@@ -97,6 +97,10 @@ class PokemonListFragment : Fragment() {
                 adapter = myAdapter
 
                 getMainActivity().addRecyclerViewChangedListener(object : MainActivity.OnListChangedListener {
+                    override fun refreshRecyclerView() {
+                        recyclerView.requestLayout()
+                    }
+
                     override fun addPokemon(pokemonData: PokemonData) {
                         if (mTabIndex == pokemonData.tabIndex) {
                             dataList.add(pokemonData)
@@ -104,8 +108,10 @@ class PokemonListFragment : Fragment() {
                         }
                     }
 
-                    override fun deletePokemon(tabIndex: Int, position: Int) {
+                    override fun deletePokemon(tabIndex: Int, pokemonData: PokemonData) {
                         if (mTabIndex == tabIndex) {
+                            // TODO: check if the position is correct
+                            val position = dataList.indexOf(pokemonData)
                             dataList.removeAt(position)
                             myAdapter?.notifyItemRemoved(position)
                         }

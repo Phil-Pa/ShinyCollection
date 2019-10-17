@@ -16,17 +16,12 @@ import de.phil.solidsabissupershinysammlung.model.toGerman
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 
 class PokemonDataRecyclerViewAdapter(
-    private val mValues: MutableList<PokemonData>
+    private val mValues: MutableList<PokemonData>, private val activity: MainActivity
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewAdapter.ViewHolder>() {
-
-    private var appContext: Context? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_pokemondata, parent, false)
-
-        if (appContext == null)
-            appContext = parent.context
 
         return ViewHolder(view)
     }
@@ -45,13 +40,13 @@ class PokemonDataRecyclerViewAdapter(
         val method: String = item.huntMethod.toGerman()
 
         holder.mHuntMethodView.text = ("Methode: $method")
-        var bitmap: Bitmap? = (appContext as MainActivity).loadSavedBitmap(item.getBitmapFileName())
+        var bitmap: Bitmap? = activity.loadSavedBitmap(item.getBitmapFileName())
 
         if (bitmap == null) {
             bitmap = AppUtil.getDrawableFromURL(item.getDownloadUrl())
 
             if (bitmap != null)
-                (appContext as MainActivity).saveBitmap(item.getBitmapFileName(), bitmap)
+                activity.saveBitmap(item.getBitmapFileName(), bitmap)
         }
 
         holder.mShinyImageView.setImageBitmap(bitmap)
@@ -59,11 +54,11 @@ class PokemonDataRecyclerViewAdapter(
         with(holder.mView) {
             tag = item
             setOnLongClickListener{
-                (appContext as MainActivity).onListEntryLongClick(it.tag as PokemonData)
+                activity.onListEntryLongClick(it.tag as PokemonData)
                 true
             }
             setOnClickListener {
-                (appContext as MainActivity).onListEntryClick(it.tag as PokemonData)
+                activity.onListEntryClick(it.tag as PokemonData)
             }
         }
     }
