@@ -45,12 +45,14 @@ class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
     }
 
     override fun getPokedexIdByName(name: String): Int {
+        val _name = if (name.endsWith("-alola")) name.replace("-alola", "") else name
+
         var index = 0
         for (array in genNamesArray) {
             for (pokemonName in array) {
                 index++
 
-                if (name == pokemonName)
+                if (_name == pokemonName)
                     return index
             }
         }
@@ -60,11 +62,13 @@ class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
 
     override fun getGenerationByName(name: String): Int {
 
+        val _name = if (name.endsWith("-alola")) name.replace("-alola", "") else name
+
         var generation = 1
         for (array in genNamesArray) {
             for (pokemonName in array) {
 
-                if (name == pokemonName)
+                if (_name == pokemonName)
                     return generation
             }
             generation++

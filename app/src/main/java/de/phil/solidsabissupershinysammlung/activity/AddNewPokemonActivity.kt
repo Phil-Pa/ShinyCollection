@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -44,8 +45,14 @@ class AddNewPokemonActivity : AppCompatActivity() {
         add_new_pokemon_activity_button_add.setOnClickListener {
 
             val name = add_new_pokemon_activity_edittext_name.text.toString()
-            val encounters = add_new_pokemon_activity_edittext_eggsNeeded.text.toString().toInt()
-            val huntMethod = HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
+
+            val encountersKnown = add_new_pokemon_activity_checkbox_encounter_known.isChecked
+
+            val encounters =
+                if (encountersKnown) add_new_pokemon_activity_edittext_eggsNeeded.text.toString().toInt() else App.ENCOUNTER_UNKNOWN
+            val huntMethod =
+                HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
+
 
             val pokemonData = PokemonData(name, -1, -1, encounters, huntMethod, tabIndex)
 
@@ -57,6 +64,10 @@ class AddNewPokemonActivity : AppCompatActivity() {
                 showMessage(result.first!!)
             }
 
+
+        }
+        add_new_pokemon_activity_checkbox_encounter_known.setOnCheckedChangeListener { _, isChecked ->
+            add_new_pokemon_activity_edittext_eggsNeeded.isEnabled = isChecked
         }
         add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -78,7 +89,12 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     val url = StringBuilder(urlWithoutAlola)
 
                     val bitmap = if (isAlola)
-                        AppUtil.getDrawableFromURL(url.insert(urlWithoutAlola.length - 4, "-alola").toString())
+                        AppUtil.getDrawableFromURL(
+                            url.insert(
+                                urlWithoutAlola.length - 4,
+                                "-alola"
+                            ).toString()
+                        )
                     else
                         AppUtil.getDrawableFromURL(urlWithoutAlola)
 
@@ -87,8 +103,10 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     add_new_pokemon_activity_imageView_preview.setImageBitmap(null)
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })

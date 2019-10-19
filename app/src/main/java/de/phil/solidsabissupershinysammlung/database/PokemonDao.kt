@@ -31,7 +31,7 @@ interface PokemonDao {
     @Delete
     fun deletePokemonFromDatabase(data: PokemonData)
 
-    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0")
+    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0 AND tab_index = 0")
     fun getAverageEggsCount(): Float
 
     @Query("SELECT SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0")
@@ -52,7 +52,7 @@ interface PokemonDao {
     @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND hunt_method = 1")
     fun getTotalNumberOfSosShinys(): Int
 
-    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 1")
+    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 1 AND tab_index = 0")
     fun getAverageSosCount(): Float
 
     @Query("SELECT * FROM pokemondata WHERE tab_index = 0")

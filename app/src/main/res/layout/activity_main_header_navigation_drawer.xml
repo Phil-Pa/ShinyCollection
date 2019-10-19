@@ -21,7 +21,7 @@
                 android:contentDescription="@string/drawer_image_description"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                app:srcCompat="@drawable/leufeo"
+                app:srcCompat="@drawable/wuffels"
                 android:id="@+id/imageView" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
         />

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
+import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.toGerman
@@ -34,7 +35,10 @@ class PokemonDataRecyclerViewAdapter(
         // "Name: "
         holder.mNameView.text = (item.name)
         // "Encounter: "
-        holder.mEggsNeededView.text = ("Begegnungen: " + item.encounterNeeded.toString())
+        if (item.encounterNeeded == App.ENCOUNTER_UNKNOWN)
+            holder.mEggsNeededView.text = ("Nicht bekannt")
+        else
+            holder.mEggsNeededView.text = ("Begegnungen: " + item.encounterNeeded.toString())
 
         // "Methode: "
         val method: String = item.huntMethod.toGerman()

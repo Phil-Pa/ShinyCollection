@@ -123,10 +123,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun copyToClipboard(data: String) {
+    fun copyToClipboard(data: String) {
         runOnUiThread {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("label", data)
+            val clip = ClipData.newPlainText("Pokemon Data", data)
             clipboard.setPrimaryClip(clip)
             showMessage(getString(R.string.copied_data))
         }
@@ -281,12 +281,12 @@ class MainActivity : AppCompatActivity() {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
-            setTheme(R.style.AppThemeDarkTheme)
-            showMessage("dark theme")
-        } else {
-            setTheme(R.style.AppTheme)
-        }
+//        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
+//            setTheme(R.style.AppThemeDarkTheme)
+//            showMessage("dark theme")
+//        } else {
+//            setTheme(R.style.AppTheme)
+//        }
 
         viewModel.setShouldAutoSort(prefs.getBoolean(App.PREFERENCES_AUTO_SORT, false))
 
@@ -294,7 +294,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showGuide() {
 
-        // TODO: use string resources
+        return
 
         TapTargetSequence(this)
             .targets(
@@ -384,10 +384,11 @@ class MainActivity : AppCompatActivity() {
 
                     val success = viewModel.import(data)
                     if (!success)
-                        // TODO: use string resources
                         showMessage(getString(R.string.import_error))
-                    else
-                        recyclerViewChangedListeners.forEach { listener -> listener.refreshRecyclerView() }
+                    else {
+                        finish()
+                        startActivity(intent)
+                    }
                 }
                 R.id.exportData -> {
                     val data = viewModel.export()
@@ -421,8 +422,8 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
 
         Handler().post {
-            menuItemAdd = findViewById(R.id.add_pokemon)
-            menuItemRandom = findViewById(R.id.random_pokemon)
+//            menuItemAdd = findViewById(R.id.add_pokemon)
+//            menuItemRandom = findViewById(R.id.random_pokemon)
 
             if (!viewModel.isGuideShown()) {
                 showGuide()

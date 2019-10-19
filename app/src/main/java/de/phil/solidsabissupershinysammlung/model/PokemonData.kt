@@ -39,13 +39,17 @@ data class PokemonData(
     @PrimaryKey(autoGenerate = true)
     var internalId: Int = 1
 
-    // TODO
-    private fun isAlola() = false//App.pokemonEngine.getAllPokemonAlolaNames().contains(name)
+    private fun isAlola(): Boolean {
+//        for (pokemon in alolaPokemon)
+//            if (pokemon.contains(name))
+//                return true
+//
+//        return false
+        return name in alolaPokemon
+    }
 
     fun getDownloadUrl(): String {
         val baseString = "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
-
-
         return "$baseString${getBitmapFileName()}"
     }
 
@@ -58,6 +62,16 @@ data class PokemonData(
             generationString.append("-alola")
         }
         return "$generationString.png"
+    }
+
+    companion object {
+
+        private val alolaPokemon = listOf(
+            "Rattfratz", "Rattikarl", "Raichu", "Sandan", "Sandamer",
+            "Vulpix", "Vulnona", "Digda", "Digdri", "Mauzi", "Snobilikat", "Kleinstein",
+            "Georok", "Geowaz", "Sleima", "Sleimok", "Kokowei", "Knogga"
+        ).map { "$it-alola" }
+
     }
 
 }

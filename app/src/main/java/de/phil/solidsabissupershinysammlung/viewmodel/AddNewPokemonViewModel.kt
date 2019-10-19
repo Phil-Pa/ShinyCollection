@@ -26,7 +26,7 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
         if (pokemonData.name.isEmpty() || pokemonData.name.isBlank())
             return Pair("Der Name darf nicht leer sein!", null)
 
-        else if (!pokemonNameExists(pokemonData.name))
+        else if (!pokemonNameExists(pokemonData.name) && !pokemonData.name.endsWith("-alola"))
             return Pair("${pokemonData.name} ist kein Pokemon!", null)
 
         else if (pokemonData.encounterNeeded < 0)
