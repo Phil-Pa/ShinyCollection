@@ -8,86 +8,55 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.core.AppUtil
+import de.phil.solidsabissupershinysammlung.database.AndroidPokemonResources
+import de.phil.solidsabissupershinysammlung.database.IAndroidPokemonResources
+import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.presenter.AddNewPokemonPresenter
-import de.phil.solidsabissupershinysammlung.view.AddNewPokemonView
+import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
-class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
+class AddNewPokemonActivity : AppCompatActivity() {
 
-    companion object {
-        private const val TAG = "AddNewPokemonActivity"
-    }
-
-    override fun getPokemonListTabIndex(): Int {
-        val tabIndex = intent.getIntExtra("tabIndex", App.INT_ERROR_CODE)
-        if (tabIndex == App.INT_ERROR_CODE) {
-            Log.e(TAG, "could not receive tabIndex from intent")
-            throw IllegalStateException()
-        }
-        return tabIndex
-    }
-
-    override fun getPokedexIdAndGeneration(_name: String): Pair<Int, Int>? {
-        var generation: Int = App.INT_ERROR_CODE
-
-        val name = if (_name.endsWith("-alola"))
-            _name.replace("-alola", "")
-        else
-            _name
-
-        for (i in 0..6) {
-            if (App.pokemonEngine.getNamesArray(i).contains(name)) {
-                generation = i
-                break
-            }
-        }
-
-        // if the pokemon with _name does not exist
-        if (generation == App.INT_ERROR_CODE)
-            return null
-
-        val index = App.pokemonEngine.getNamesArray(generation).toList().indexOf(name)
-        val pokedexId = App.pokemonEngine.getPokedexIdsArray(generation)[index]
-        return Pair(pokedexId, generation)
-    }
-
-    override fun clearUserInput() {
-        add_new_pokemon_activity_edittext_eggsNeeded.text?.clear()
-        add_new_pokemon_activity_edittext_name.text?.clear()
-
-    }
-
-    override fun getEncounters(): Int {
-        val encounters = add_new_pokemon_activity_edittext_eggsNeeded.text.toString()
-        return if (encounters.isEmpty() || encounters.isBlank()) App.INT_ERROR_CODE else encounters.toInt()
-    }
-
-    override fun getPokemonName() = add_new_pokemon_activity_edittext_name.text.toString()
-
-    override fun showMessage(message: String) {
+    private fun showMessage(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun getSelectedSpinnerPosition(): Int {
-        return add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition
-    }
+    private lateinit var viewModel: AddNewPokemonViewModel
 
-    override fun returnToMainActivity() {
-        finish()
-    }
-
-    private val presenter: AddNewPokemonPresenter = AddNewPokemonPresenter(this)
+    private var tabIndex = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_pokemon)
+
+        tabIndex = intent.getIntExtra("tabIndex", -1)
+
+        val androidPokemonResources = AndroidPokemonResources(this)
+
+        viewModel = ViewModelProviders.of(this).get(AddNewPokemonViewModel::class.java)
+        viewModel.init(PokemonRepository(androidPokemonResources, application))
+
         add_new_pokemon_activity_button_add.setOnClickListener {
-            presenter.addPokemonButtonClick()
+
+            val name = add_new_pokemon_activity_edittext_name.text.toString()
+            val encounters = add_new_pokemon_activity_edittext_eggsNeeded.text.toString().toInt()
+            val huntMethod = HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
+
+            val pokemonData = PokemonData(name, -1, -1, encounters, huntMethod, tabIndex)
+
+            val result = viewModel.validateInput(pokemonData)
+
+            if (result.first == null && result.second != null) {
+                setActivityResult(result.second!!)
+            } else {
+                showMessage(result.first!!)
+            }
+
         }
         add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -97,13 +66,14 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
                 if (isAlola)
                     text = text.replace("-alola", "")
 
-                if (App.pokemonEngine.pokemonNameExists(text)) {
-                    val id = App.pokemonEngine.getPokedexIdByName(text)
 
-                    if (id == App.INT_ERROR_CODE)
-                        return
 
-                    val invalidData = PokemonData(-1, "-1", id, -1, -1, HuntMethod.Other, -1)
+                if (viewModel.pokemonNameExists(text)) {
+
+                    // needed to get the correct download url
+                    val id = viewModel.getPokedexIdByName(text)
+
+                    val invalidData = PokemonData("-1", id, -1, -1, HuntMethod.Other, -1)
                     val urlWithoutAlola = invalidData.getDownloadUrl()
                     val url = StringBuilder(urlWithoutAlola)
 
@@ -117,15 +87,10 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
                     add_new_pokemon_activity_imageView_preview.setImageBitmap(null)
                 }
             }
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
             }
-
         })
     }
 
@@ -137,6 +102,21 @@ class AddNewPokemonActivity : AppCompatActivity(), AddNewPokemonView {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setActivityResult(pokemonData: PokemonData) {
+        val intent = Intent()
+
+        intent.putExtra("huntMethod", pokemonData.huntMethod.ordinal)
+        intent.putExtra("name", pokemonData.name)
+        intent.putExtra("encounters", pokemonData.encounterNeeded)
+        intent.putExtra("pokedexId", pokemonData.pokedexId)
+        intent.putExtra("generation", pokemonData.generation)
+        intent.putExtra("tabIndex", pokemonData.tabIndex)
+        intent.putExtra("internalId", pokemonData.internalId)
+
+        setResult(App.REQUEST_ADD_POKEMON, intent)
+        finish()
     }
 
 }

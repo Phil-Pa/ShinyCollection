@@ -31,7 +31,7 @@ interface PokemonDao {
     @Delete
     fun deletePokemonFromDatabase(data: PokemonData)
 
-    @Query("SELECT AVG(Cast(encounter_needed as Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0")
+    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0")
     fun getAverageEggsCount(): Float
 
     @Query("SELECT SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0")
@@ -52,9 +52,15 @@ interface PokemonDao {
     @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND hunt_method = 1")
     fun getTotalNumberOfSosShinys(): Int
 
-    @Query("SELECT AVG(Cast(encounter_needed as Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 1")
+    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 1")
     fun getAverageSosCount(): Float
 
     @Query("SELECT * FROM pokemondata WHERE tab_index = 0")
     fun getShinyListData(): LiveData<List<PokemonData>>
+
+    @Query("SELECT MAX(internalId) from PokemonData")
+    fun getMaxInternalId(): Int
+
+    @Query("SELECT * FROM pokemondata WHERE :tabIndex = tab_index ORDER BY RANDOM() LIMIT 1")
+    fun getRandomPokemonData(tabIndex: Int): PokemonData?
 }

@@ -35,17 +35,18 @@ class DataImporter {
             val tabIndex = match.groupValues[6].toInt()
             val internalId = match.groupValues[7].toInt()
 
-            repository.insert(
-                PokemonData(
-                    internalId,
-                    name,
-                    pokedexId,
-                    generation,
-                    encounterNeeded,
-                    huntMethod,
-                    tabIndex
-                )
+            val pokemonData = PokemonData(
+                name,
+                pokedexId,
+                generation,
+                encounterNeeded,
+                huntMethod,
+                tabIndex
             )
+
+            pokemonData.internalId = internalId
+
+            repository.insert(pokemonData)
         }
         return true
     }

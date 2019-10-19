@@ -42,17 +42,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return exporter.export(repository)
     }
 
-    fun getRandomPokemon(): PokemonData? {
-        val pokemonList = repository.getAllPokemonData().value
-
-        if (pokemonList == null || pokemonList.isEmpty())
-            return null
-
-        return pokemonList[Random.nextInt(pokemonList.size)]
-    }
-
-    fun getAllPokemonData(): LiveData<List<PokemonData>> {
-        return repository.getAllPokemonData()
+    fun getRandomPokemon(tabIndex: Int): PokemonData? {
+        return repository.getRandomPokemonData(tabIndex)
     }
 
     fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
@@ -98,6 +89,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun shouldAutoSort(): Boolean {
         return repository.shouldAutoSort()
+    }
+
+    fun getPreferences(): Map<String, String> {
+        return mapOf(
+
+            App.PREFERENCES_GUIDE_SHOWN to repository.isGuideShown().toString(),
+            App.PREFERENCES_AUTO_SORT to repository.shouldAutoSort().toString(),
+            App.PREFERENCES_SORT_METHOD to repository.getSortMethod().toString()
+
+        )
+    }
+
+    fun setShouldAutoSort(value: Boolean) {
+        repository.setShouldAutoSort(value)
     }
 
     //endregion

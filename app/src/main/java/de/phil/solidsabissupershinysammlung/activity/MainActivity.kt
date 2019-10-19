@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.app.Activity
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -20,6 +21,7 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
@@ -30,6 +32,7 @@ import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.IAndroidPokemonResources
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
+import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
@@ -125,7 +128,7 @@ class MainActivity : AppCompatActivity() {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("label", data)
             clipboard.setPrimaryClip(clip)
-            showMessage("Copied data to clipboard")
+            showMessage(getString(R.string.copied_data))
         }
     }
 
@@ -247,7 +250,17 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.init(PokemonRepository(object : IAndroidPokemonResources {
+            override fun getGenerationByName(name: String): Int {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
 
+            override fun getPokedexIdByName(name: String): Int {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun getPokemonNames(): List<String> {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
         }, application))
         viewModel.getShinyListData().observe(this, Observer {
 
@@ -264,6 +277,21 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun initPreferences() {
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
+            setTheme(R.style.AppThemeDarkTheme)
+            showMessage("dark theme")
+        } else {
+            setTheme(R.style.AppTheme)
+        }
+
+        viewModel.setShouldAutoSort(prefs.getBoolean(App.PREFERENCES_AUTO_SORT, false))
+
+    }
+
     private fun showGuide() {
 
         // TODO: use string resources
@@ -272,8 +300,8 @@ class MainActivity : AppCompatActivity() {
             .targets(
                 TapTarget.forView(
                     menuItemRandom,
-                    "Zufälliges Pokemon",
-                    "Hiermit kannst du ein Pokemon aus der Liste zufällig auswählen lassen, in der du dich gerade befindest."
+                    getString(R.string.guide_random_pokemon),
+                    getString(R.string.guide_random_pokemon_description)
                 )
                     .outerCircleColor(R.color.colorAccent)
                     .outerCircleAlpha(0.96f)
@@ -293,8 +321,8 @@ class MainActivity : AppCompatActivity() {
                     .targetRadius(60),
                 TapTarget.forView(
                     menuItemAdd,
-                    "Pokemon hinzufügen",
-                    "Hier kannst du ein Pokemon zu der Liste hinzufügen, in der du dich gerade befindest."
+                    getString(R.string.guide_add_pokemon),
+                    getString(R.string.guide_add_pokemon_description)
                 )
                     .outerCircleColor(R.color.colorAccent)
                     .outerCircleAlpha(0.96f)
@@ -357,7 +385,7 @@ class MainActivity : AppCompatActivity() {
                     val success = viewModel.import(data)
                     if (!success)
                         // TODO: use string resources
-                        showMessage("Could not import data")
+                        showMessage(getString(R.string.import_error))
                     else
                         recyclerViewChangedListeners.forEach { listener -> listener.refreshRecyclerView() }
                 }
@@ -365,17 +393,13 @@ class MainActivity : AppCompatActivity() {
                     val data = viewModel.export()
 
                     if (data == null)
-                        showMessage("there is no data to export")
+                        showMessage(getString(R.string.export_error))
                     else
                         copyToClipboard(data)
                 }
                 R.id.sortData -> {
                     showDialog { sortMethod ->
                         recyclerViewChangedListeners.forEach { listener -> listener.sort(sortMethod) }
-//                        App.setSortMethod(sortMethod)
-//                        for (i in 0 until App.NUM_TAB_VIEWS) {
-//                            App.dataChangedListeners[i].notifySortPokemon(sortMethod)
-//                        }
                     }
                 }
             }
@@ -412,19 +436,29 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        initPreferences()
+
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
-        //App.performAutoSort()
+
+//        val preferences = viewModel.getPreferences()
+//        val sb = StringBuilder()
+//
+//        for (entry in preferences) {
+//            sb.append(entry.key).append("\t").append(entry.value).append("\n")
+//        }
+//
+//        showMessage(sb.toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
             R.id.random_pokemon -> {
-                val pokemon = viewModel.getRandomPokemon()
+                val pokemon = viewModel.getRandomPokemon(getCurrentTabIndex())
                 if (pokemon == null)
                     // TODO: use string resources
-                    showMessage("No pokemon saved")
+                    showMessage(getString(R.string.error_random_pokemon))
                 else
                     showMessage(pokemon.name)
                 true
@@ -445,5 +479,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode != Activity.RESULT_CANCELED) {
+            if (requestCode == App.REQUEST_ADD_POKEMON) {
+                if (data == null)
+                    throw Exception()
+
+                val huntMethod = data.getIntExtra("huntMethod", 0)
+                val name = data.getStringExtra("name") ?: throw Exception()
+                val encounters = data.getIntExtra("encounters", 0)
+                val id = data.getIntExtra("pokedexId", 0)
+                val generation = data.getIntExtra("generation", 0)
+                val tabIndex = data.getIntExtra("tabIndex", 0)
+
+                val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!, tabIndex)
+                pokemonData.internalId = data.getIntExtra("internalId", -1)
+
+                viewModel.addPokemon(pokemonData)
+                for (listener in recyclerViewChangedListeners)
+                    listener.addPokemon(pokemonData)
+            }
+        }
+
     }
+
 }

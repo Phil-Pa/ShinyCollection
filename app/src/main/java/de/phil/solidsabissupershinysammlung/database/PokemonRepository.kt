@@ -82,8 +82,32 @@ class PokemonRepository(private val androidPokemonResources: IAndroidPokemonReso
         return PokemonSortMethod.fromInt(intValue) ?: throw Exception()
     }
 
+    fun setShouldAutoSort(value: Boolean) {
+        preferences.edit().putBoolean(App.PREFERENCES_AUTO_SORT, value).apply()
+    }
+
     fun shouldAutoSort(): Boolean {
         return preferences.getBoolean(App.PREFERENCES_AUTO_SORT, false)
+    }
+
+    fun getPokemonNames(): List<String> {
+        return androidPokemonResources.getPokemonNames()
+    }
+
+    fun getPokedexIdByName(name: String): Int {
+        return androidPokemonResources.getPokedexIdByName(name)
+    }
+
+    fun getGenerationByName(name: String): Int {
+        return androidPokemonResources.getGenerationByName(name)
+    }
+
+    fun getMaxInternalId(): Int {
+        return GetMaxInternalIdAsyncTask(pokemonDao).execute().get()
+    }
+
+    fun getRandomPokemonData(tabIndex: Int): PokemonData? {
+        return GetRandomPokemonDataAsyncTask(pokemonDao).execute(tabIndex).get()
     }
 
     //region async tasks
@@ -162,6 +186,18 @@ class PokemonRepository(private val androidPokemonResources: IAndroidPokemonReso
         override fun doInBackground(vararg params: Int?): List<PokemonData> {
             val tabIndex = params[0] ?: throw Exception()
             return pokemonDao.getAllPokemonDataFromTabIndex(tabIndex)
+        }
+    }
+
+    class GetMaxInternalIdAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Int>() {
+        override fun doInBackground(vararg params: Unit?): Int {
+            return pokemonDao.getMaxInternalId()
+        }
+    }
+
+    class GetRandomPokemonDataAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Int, Unit, PokemonData?>() {
+        override fun doInBackground(vararg params: Int?): PokemonData? {
+            return pokemonDao.getRandomPokemonData(params[0]!!)
         }
     }
 

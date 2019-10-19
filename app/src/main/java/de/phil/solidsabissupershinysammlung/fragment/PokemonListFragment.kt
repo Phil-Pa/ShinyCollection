@@ -22,25 +22,6 @@ class PokemonListFragment : Fragment() {
 
     private var mTabIndex = 0
 
-//    private val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-//        override fun onMove(
-//            recyclerView: RecyclerView,
-//            viewHolder: RecyclerView.ViewHolder,
-//            target: RecyclerView.ViewHolder
-//        ): Boolean {
-//            return false
-//        }
-//
-//        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//            val pokemonData = viewHolder.itemView.tag as PokemonData
-//
-//            if (ItemTouchHelper.LEFT == direction) {
-//                App.pokemonEngine.deletePokemonFromDatabase(pokemonData)
-//                Toast.makeText(activity as MainActivity, "${pokemonData.name} wurde gelöscht!", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-
     private lateinit var recyclerView: RecyclerView
 
     private var myAdapter: PokemonDataRecyclerViewAdapter? = null
@@ -68,19 +49,11 @@ class PokemonListFragment : Fragment() {
         if (view is RecyclerView) {
             recyclerView = view
 
-//            val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-//            itemTouchHelper.attachToRecyclerView(recyclerView)
-
-            //ViewCompat.setNestedScrollingEnabled(recyclerView, true)
-
             // get data from the database
-            // TODO: use room database
-//            dataList = App.pokemonEngine.getAllPokemonInDatabaseFromTabIndex(mTabIndex).toMutableList()
             val liveData = getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex)
             dataList = liveData.toMutableList()
 
             // sort the data
-            // sortData(App.getSortMethod())
             sortData(getMainActivity().viewModel.getSortMethod())
 
             myAdapter = PokemonDataRecyclerViewAdapter(dataList, getMainActivity())
@@ -99,6 +72,7 @@ class PokemonListFragment : Fragment() {
                 getMainActivity().addRecyclerViewChangedListener(object : MainActivity.OnListChangedListener {
                     override fun refreshRecyclerView() {
                         recyclerView.requestLayout()
+                        myAdapter?.notifyDataSetChanged()
                     }
 
                     override fun addPokemon(pokemonData: PokemonData) {
@@ -131,53 +105,16 @@ class PokemonListFragment : Fragment() {
                     }
 
                 })
-//
-//                App.dataChangedListeners.add(mTabIndex, object :
-//                    PokemonListChangedListener {
-////                    override fun notifySortPokemon(sortMethod: PokemonSortMethod) {
-////                        sortData(sortMethod)
-////                        myAdapter?.notifyDataSetChanged()
-////                    }
-//
-//                    override fun notifyPokemonAdded(data: PokemonData) {
-//                        if (mTabIndex == data.tabIndex) {
-//                            dataList.add(data)
-//                            myAdapter?.notifyItemInserted(dataList.size - 1)
-//                        }
-//                    }
-//
-//                    override fun notifyPokemonDeleted(tabIndex: Int, position: Int) {
-//                        if (mTabIndex == tabIndex) {
-//                            dataList.removeAt(position)
-//                            myAdapter?.notifyItemRemoved(position)
-//                        }
-//                    }
-//
-//                    override fun notifyAllPokemonDeleted(tabIndex: Int) {
-//                        if (mTabIndex == tabIndex) {
-//                            val length = dataList.size
-//                            dataList.clear()
-//                            myAdapter?.notifyItemRangeRemoved(0, length)
-//                        }
-//                    }
-//                })
             }
         }
         return view
     }
 
     companion object {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private const val ARG_SECTION_NUMBER = "section_number"
         private const val TAG = "PokemonListFragment"
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         @JvmStatic
         fun newInstance(sectionNumber: Int): PokemonListFragment {
             val fragment = PokemonListFragment()

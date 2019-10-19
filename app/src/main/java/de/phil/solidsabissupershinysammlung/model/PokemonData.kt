@@ -16,8 +16,6 @@ class UpdateStatisticsData(
 
 @Entity
 data class PokemonData(
-    @PrimaryKey(autoGenerate = true)
-    val internalId: Int,
 
     @ColumnInfo(name = "name")
     val name: String,
@@ -36,13 +34,12 @@ data class PokemonData(
 
     @ColumnInfo(name = "tab_index")
     val tabIndex: Int
-
-
-//    @ColumnInfo
-//    val isAlola: Boolean
 ) {
 
-    // TODO: remove
+    @PrimaryKey(autoGenerate = true)
+    var internalId: Int = 1
+
+    // TODO
     private fun isAlola() = false//App.pokemonEngine.getAllPokemonAlolaNames().contains(name)
 
     fun getDownloadUrl(): String {

@@ -1,20 +1,28 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.core.BaseConfig
+import de.phil.solidsabissupershinysammlung.model.HuntMethod
+import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private lateinit var preferences: SharedPreferences
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
 
         if (sharedPreferences == null || key == null)
             return
 
-//        App.config.isAutoSort = sharedPreferences.getBoolean(key, false)
+        when (key) {
+
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,21 +33,38 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
             .replace(R.id.settings, SettingsFragment())
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        preferences = getSharedPreferences(application.packageName + "." + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
+        preferences.registerOnSharedPreferenceChangeListener(this)
+
+        initPreferences()
     }
 
-    override fun onResume() {
-        super.onResume()
-        BaseConfig.prefs.registerOnSharedPreferenceChangeListener(this)
-    }
+    private fun initPreferences() {
 
-    override fun onPause() {
-        super.onPause()
-        BaseConfig.prefs.unregisterOnSharedPreferenceChangeListener(this)
+        with (preferences) {
+
+            if (!contains(App.PREFERENCES_AUTO_SORT))
+                edit().putBoolean(App.PREFERENCES_AUTO_SORT, false).apply()
+
+            if (!contains(App.PREFERENCES_SORT_METHOD))
+                edit().putInt(App.PREFERENCES_SORT_METHOD, PokemonSortMethod.InternalId.ordinal).apply()
+
+            if (!contains(App.PREFERENCES_GUIDE_SHOWN))
+                edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, false).apply()
+        }
+
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        preferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 }
