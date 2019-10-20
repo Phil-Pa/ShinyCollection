@@ -9,7 +9,7 @@ object App {
 
     const val REQUEST_ADD_POKEMON = 1
 
-    const val PREFERENCES_NAME = "MyPreferences"
+    const val PREFERENCES_NAME = "_preferences"
     const val PREFERENCES_GUIDE_SHOWN = "guide_shown"
     const val PREFERENCES_SORT_METHOD = "sort_method"
     const val PREFERENCES_AUTO_SORT = "auto_sort"

@@ -40,11 +40,6 @@ data class PokemonData(
     var internalId: Int = 1
 
     private fun isAlola(): Boolean {
-//        for (pokemon in alolaPokemon)
-//            if (pokemon.contains(name))
-//                return true
-//
-//        return false
         return name in alolaPokemon
     }
 
@@ -62,6 +57,10 @@ data class PokemonData(
             generationString.append("-alola")
         }
         return "$generationString.png"
+    }
+
+    override fun toString(): String {
+        return "PokemonData(name=$name, pokedexId=$pokedexId, generation=$generation, encounterNeeded=$encounterNeeded, huntMethod=$huntMethod, tabIndex=$tabIndex, internalId=$internalId)"
     }
 
     companion object {

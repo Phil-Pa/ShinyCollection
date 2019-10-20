@@ -281,6 +281,10 @@ class MainActivity : AppCompatActivity() {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
+        if (!prefs.contains(App.PREFERENCES_SORT_METHOD)) {
+            viewModel.setSortMethod(PokemonSortMethod.InternalId)
+        }
+
 //        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
 //            setTheme(R.style.AppThemeDarkTheme)
 //            showMessage("dark theme")
@@ -401,6 +405,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.sortData -> {
                     showDialog { sortMethod ->
                         recyclerViewChangedListeners.forEach { listener -> listener.sort(sortMethod) }
+                        viewModel.setSortMethod(sortMethod)
                     }
                 }
             }
@@ -441,15 +446,6 @@ class MainActivity : AppCompatActivity() {
 
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
-
-//        val preferences = viewModel.getPreferences()
-//        val sb = StringBuilder()
-//
-//        for (entry in preferences) {
-//            sb.append(entry.key).append("\t").append(entry.value).append("\n")
-//        }
-//
-//        showMessage(sb.toString())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

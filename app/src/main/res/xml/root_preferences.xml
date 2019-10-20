@@ -1,11 +1,14 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+            app:iconSpaceReserved="false"
             app:title="@string/general">
 
         <SwitchPreferenceCompat
                 app:defaultValue="false"
                 app:key="auto_sort"
+                app:iconSpaceReserved="false"
                 app:summary="@string/sort_automatically_summary"
                 app:title="@string/sort_automatically" />
 

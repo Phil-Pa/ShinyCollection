@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +70,8 @@ class AddNewPokemonActivity : AppCompatActivity() {
         add_new_pokemon_activity_checkbox_encounter_known.setOnCheckedChangeListener { _, isChecked ->
             add_new_pokemon_activity_edittext_eggsNeeded.isEnabled = isChecked
         }
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, androidPokemonResources.getPokemonNames())
+        add_new_pokemon_activity_edittext_name.setAdapter(adapter)
         add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 var text = s.toString()

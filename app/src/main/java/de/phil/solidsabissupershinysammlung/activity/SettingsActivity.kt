@@ -11,19 +11,9 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
-class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsActivity : AppCompatActivity() {
 
     private lateinit var preferences: SharedPreferences
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-
-        if (sharedPreferences == null || key == null)
-            return
-
-        when (key) {
-
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +24,7 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        preferences = getSharedPreferences(application.packageName + "." + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
-        preferences.registerOnSharedPreferenceChangeListener(this)
+        preferences = getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
         initPreferences()
     }
@@ -65,6 +54,5 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
 
     override fun onDestroy() {
         super.onDestroy()
-        preferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 }

@@ -34,7 +34,26 @@ class PokemonListFragment : Fragment() {
             PokemonSortMethod.InternalId -> dataList.sortBy { it.internalId }
             PokemonSortMethod.Name -> dataList.sortBy { it.name }
             PokemonSortMethod.PokedexId -> dataList.sortBy { it.pokedexId }
-            PokemonSortMethod.Encounter -> dataList.sortBy { it.encounterNeeded }
+            PokemonSortMethod.Encounter -> {
+
+                // TODO
+                val zeros = dataList.filter { it.encounterNeeded == App.ENCOUNTER_UNKNOWN }
+
+                if (zeros.isEmpty()) {
+                    dataList.sortBy { it.encounterNeeded }
+                    return
+                } else {
+                    val other = dataList.filter { it.encounterNeeded != App.ENCOUNTER_UNKNOWN }.toMutableList()
+
+                    other.sortBy { it.encounterNeeded }
+                    for (i in zeros.indices)
+                        other.add(zeros[i])
+
+                    dataList.clear()
+                    for (i in other)
+                        dataList.add(i)
+                }
+            }
         }
     }
 
@@ -67,7 +86,7 @@ class PokemonListFragment : Fragment() {
 
                 val dividerItemDecoration = DividerItemDecoration(
                     view.getContext(),
-                    DividerItemDecoration.VERTICAL
+                    DividerItemDecoration.VERTICAL or DividerItemDecoration.HORIZONTAL
                 )
                 recyclerView.addItemDecoration(dividerItemDecoration)
 

@@ -12,7 +12,7 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 class PokemonRepository(private val androidPokemonResources: IAndroidPokemonResources, application: Application) {
 
-    private val preferences: SharedPreferences = application.getSharedPreferences(application.packageName + "." + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
+    private val preferences: SharedPreferences = application.getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
     private val pokemonDao: PokemonDao =
         PokemonRoomDatabase.instance(application.applicationContext).pokemonDao()
@@ -27,10 +27,6 @@ class PokemonRepository(private val androidPokemonResources: IAndroidPokemonReso
 
     fun deleteAll() {
         DeleteAllAsyncTask(pokemonDao).execute()
-    }
-
-    fun getAllPokemonData(): LiveData<List<PokemonData>> {
-        return GetAllPokemonDataAsyncTask(pokemonDao).execute().get()
     }
 
     fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
@@ -131,12 +127,6 @@ class PokemonRepository(private val androidPokemonResources: IAndroidPokemonReso
     class DeleteAllAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Unit>() {
         override fun doInBackground(vararg params: Unit?) {
             pokemonDao.deleteAllPokemonInDatabase()
-        }
-    }
-
-    class GetAllPokemonDataAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, LiveData<List<PokemonData>>>() {
-        override fun doInBackground(vararg params: Unit?) : LiveData<List<PokemonData>> {
-            return pokemonDao.getAllPokemonData()
         }
     }
 
