@@ -31,10 +31,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         val importer = DataImporter()
         return importer.import(repository, data)
-
-        // TODO: observe in activity
-//        App.performAutoSort()
-//        setNavigationViewData()
     }
 
     fun export(): String? {

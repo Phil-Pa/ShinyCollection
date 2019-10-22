@@ -11,6 +11,7 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.core.AppUtil
@@ -36,6 +37,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_pokemon)
 
+        // TODO: don't hardcode
         tabIndex = intent.getIntExtra("tabIndex", -1)
 
         val androidPokemonResources = AndroidPokemonResources(this)
@@ -128,6 +130,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
     private fun setActivityResult(pokemonData: PokemonData) {
         val intent = Intent()
 
+        // TODO: don't hardcode
         intent.putExtra("huntMethod", pokemonData.huntMethod.ordinal)
         intent.putExtra("name", pokemonData.name)
         intent.putExtra("encounters", pokemonData.encounterNeeded)

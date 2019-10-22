@@ -3,7 +3,6 @@ package de.phil.solidsabissupershinysammlung.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import de.phil.solidsabissupershinysammlung.core.App
 
 class UpdateStatisticsData(
     val totalNumberOfShiny: Int,

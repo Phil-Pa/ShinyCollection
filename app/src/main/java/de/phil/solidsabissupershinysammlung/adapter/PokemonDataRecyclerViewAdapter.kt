@@ -35,6 +35,9 @@ class PokemonDataRecyclerViewAdapter(
         // "Name: "
         holder.mNameView.text = (item.name)
         // "Encounter: "
+
+        // TODO: use string resources
+
         if (item.encounterNeeded == App.ENCOUNTER_UNKNOWN)
             holder.mEggsNeededView.text = ("Begegnungen: Nicht bekannt")
         else

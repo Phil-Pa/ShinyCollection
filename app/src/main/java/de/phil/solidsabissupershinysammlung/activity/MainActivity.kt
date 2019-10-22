@@ -5,6 +5,7 @@ import android.content.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -174,6 +175,9 @@ class MainActivity : AppCompatActivity() {
     fun onListEntryLongClick(data: PokemonData) {
         if (actionMode == null) {
             startSupportActionMode(object : ActionMode.Callback {
+
+
+
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     when (item?.itemId) {
                         R.id.delete_entry -> {
@@ -193,6 +197,10 @@ class MainActivity : AppCompatActivity() {
                 override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                     mode?.menuInflater?.inflate(R.menu.menu_actions, menu)
                     actionMode = mode
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        window.statusBarColor = getColor(R.color.colorAccentDark)
+                    }
                     return true
                 }
 
@@ -202,7 +210,9 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onDestroyActionMode(mode: ActionMode?) {
                     actionMode = null
-                    pokemonToDelete = null
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        window.statusBarColor = getColor(R.color.colorPrimaryDark)
+                    }
                 }
             })
         }
@@ -249,6 +259,8 @@ class MainActivity : AppCompatActivity() {
         initNavigationViewViews()
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        // TODO: make one android pokemon resources object in the repository
         viewModel.init(PokemonRepository(object : IAndroidPokemonResources {
             override fun getGenerationByName(name: String): Int {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -284,13 +296,6 @@ class MainActivity : AppCompatActivity() {
         if (!prefs.contains(App.PREFERENCES_SORT_METHOD)) {
             viewModel.setSortMethod(PokemonSortMethod.InternalId)
         }
-
-//        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
-//            setTheme(R.style.AppThemeDarkTheme)
-//            showMessage("dark theme")
-//        } else {
-//            setTheme(R.style.AppTheme)
-//        }
 
         viewModel.setShouldAutoSort(prefs.getBoolean(App.PREFERENCES_AUTO_SORT, false))
 
@@ -454,7 +459,6 @@ class MainActivity : AppCompatActivity() {
             R.id.random_pokemon -> {
                 val pokemon = viewModel.getRandomPokemon(getCurrentTabIndex())
                 if (pokemon == null)
-                    // TODO: use string resources
                     showMessage(getString(R.string.error_random_pokemon))
                 else
                     showMessage(pokemon.name)

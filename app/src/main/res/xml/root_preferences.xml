@@ -14,9 +14,4 @@
 
     </PreferenceCategory>
 
-<!--    <SwitchPreferenceCompat-->
-<!--            app:defaultValue="false"-->
-<!--            app:key="use_dark_mode"-->
-<!--            app:title="@string/use_dark_mode" />-->
-
 </PreferenceScreen>

@@ -23,6 +23,11 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun validateInput(pokemonData: PokemonData): Pair<String?, PokemonData?> {
+
+//        this.getApplication<Application>().getString()
+
+        // TODO: replace hard coded strings
+
         if (pokemonData.name.isEmpty() || pokemonData.name.isBlank())
             return Pair("Der Name darf nicht leer sein!", null)
 

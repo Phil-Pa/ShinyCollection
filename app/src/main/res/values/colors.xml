@@ -3,8 +3,20 @@
 <!--    <color name="colorPrimary">#f57f17</color>-->
 <!--    <color name="colorPrimaryDark">#bc5100</color>-->
 <!--    <color name="colorAccent">#4a148c</color>-->
+<!--    <color name="colorAccentDark">#43038c</color>-->
 
     <color name="colorPrimary">#4a148c</color>
     <color name="colorPrimaryDark">#12005e</color>
     <color name="colorAccent">#f57f17</color>
+    <color name="colorAccentDark">#ff6600</color>
+
+<!--    <color name="colorPrimary">#1a1a1a</color>-->
+<!--    <color name="colorPrimaryDark">#000000</color>-->
+<!--    <color name="colorAccent">#616161</color>-->
+<!--    <color name="colorAccentDark">#303030</color>-->
+
+
+
+    <color name="colorDark">#343434</color>
+    <color name="colorBright">@android:color/white</color>
 </resources>

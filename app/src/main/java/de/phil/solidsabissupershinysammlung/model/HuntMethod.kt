@@ -16,8 +16,6 @@ enum class HuntMethod(val value: Int) {
 
     companion object {
         private val map = values().associateBy(HuntMethod::ordinal)
-
-        // TODO: could have errors because of constant values above
         fun fromInt(type: Int) = map[type]
     }
 

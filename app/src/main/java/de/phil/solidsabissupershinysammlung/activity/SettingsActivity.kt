@@ -51,8 +51,4 @@ class SettingsActivity : AppCompatActivity() {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

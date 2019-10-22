@@ -19,16 +19,27 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
-
+/**
+ * fragment in the main view pager
+ */
 class PokemonListFragment : Fragment() {
 
+    /**
+     * specifies what tab this fragment is in the view pager
+     */
     private var mTabIndex = 0
 
+    /**
+     * the main view of the fragment
+     */
     private lateinit var recyclerView: RecyclerView
 
     private var myAdapter: PokemonDataRecyclerViewAdapter? = null
     private var dataList = mutableListOf<PokemonData>()
 
+    /**
+     * sort the data in the @see [recyclerView]
+     */
     private fun sortData(sortMethod: PokemonSortMethod) {
         when (sortMethod) {
             PokemonSortMethod.InternalId -> dataList.sortBy { it.internalId }
@@ -36,7 +47,6 @@ class PokemonListFragment : Fragment() {
             PokemonSortMethod.PokedexId -> dataList.sortBy { it.pokedexId }
             PokemonSortMethod.Encounter -> {
 
-                // TODO
                 val zeros = dataList.filter { it.encounterNeeded == App.ENCOUNTER_UNKNOWN }
 
                 if (zeros.isEmpty()) {
@@ -107,7 +117,6 @@ class PokemonListFragment : Fragment() {
 
                     override fun deletePokemon(tabIndex: Int, pokemonData: PokemonData) {
                         if (mTabIndex == tabIndex) {
-                            // TODO: check if the position is correct
                             val position = dataList.indexOf(pokemonData)
                             dataList.removeAt(position)
                             myAdapter?.notifyItemRemoved(position)
@@ -136,7 +145,6 @@ class PokemonListFragment : Fragment() {
     companion object {
 
         private const val ARG_SECTION_NUMBER = "section_number"
-        private const val TAG = "PokemonListFragment"
 
         @JvmStatic
         fun newInstance(sectionNumber: Int): PokemonListFragment {
