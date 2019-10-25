@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.core.App
@@ -47,16 +48,10 @@ class PokemonDataRecyclerViewAdapter(
         val method: String = item.huntMethod.toGerman()
 
         holder.mHuntMethodView.text = ("Methode: $method")
-        var bitmap: Bitmap? = activity.loadSavedBitmap(item.getBitmapFileName())
 
-        if (bitmap == null) {
-            bitmap = AppUtil.getDrawableFromURL(item.getDownloadUrl())
-
-            if (bitmap != null)
-                activity.saveBitmap(item.getBitmapFileName(), bitmap)
-        }
-
-        holder.mShinyImageView.setImageBitmap(bitmap)
+        Glide.with(activity)
+            .load(item.getDownloadUrl())
+            .into(holder.mShinyImageView)
 
         with(holder.mView) {
             tag = item

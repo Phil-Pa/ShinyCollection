@@ -46,34 +46,6 @@ import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
-    fun saveBitmap(bitmapFileName: String, bitmap: Bitmap) {
-
-        val contextWrapper = ContextWrapper(this)
-
-        val directory = contextWrapper.getDir("images", Context.MODE_PRIVATE)
-        val path = File(directory, bitmapFileName)
-
-        val fos = FileOutputStream(path)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-        fos.close()
-
-    }
-
-    fun loadSavedBitmap(bitmapFileName: String): Bitmap? {
-
-        val contextWrapper = ContextWrapper(this)
-
-        val directory = contextWrapper.getDir("images", Context.MODE_PRIVATE)
-
-        val file = File(directory, bitmapFileName)
-
-        return try {
-            BitmapFactory.decodeStream(FileInputStream(file))
-        } catch (e: Exception) {
-            null
-        }
-    }
-
     private fun showDialog(action: (PokemonSortMethod) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(resources.getString(R.string.sort_dialog_title))

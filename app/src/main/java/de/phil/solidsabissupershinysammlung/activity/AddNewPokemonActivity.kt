@@ -8,9 +8,9 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.database.AndroidPokemonResources
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
@@ -19,6 +19,7 @@ import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
+
 
 class AddNewPokemonActivity : AppCompatActivity() {
 
@@ -86,17 +87,15 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     val urlWithoutAlola = invalidData.getDownloadUrl()
                     val url = StringBuilder(urlWithoutAlola)
 
-                    val bitmap = if (isAlola)
-                        AppUtil.getDrawableFromURL(
-                            url.insert(
-                                urlWithoutAlola.length - 4,
-                                "-alola"
-                            ).toString()
-                        )
-                    else
-                        AppUtil.getDrawableFromURL(urlWithoutAlola)
+                    if (isAlola)
+                        url.insert(urlWithoutAlola.length - 4,"-alola")
 
-                    add_new_pokemon_activity_imageView_preview.setImageBitmap(bitmap)
+                    val downloadUrl = url.toString()
+
+                    Glide.with(this@AddNewPokemonActivity)
+                        .load(downloadUrl)
+                        .into(add_new_pokemon_activity_imageView_preview)
+
                 } else {
                     add_new_pokemon_activity_imageView_preview.setImageBitmap(null)
                 }
