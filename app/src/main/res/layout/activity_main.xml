@@ -55,7 +55,7 @@
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:itemIconTint="@color/colorAccent"
+            app:itemIconTint="@color/colorPrimary"
             android:layout_gravity="start"
             android:fitsSystemWindows="false"
             app:headerLayout="@layout/activity_main_header_navigation_drawer"

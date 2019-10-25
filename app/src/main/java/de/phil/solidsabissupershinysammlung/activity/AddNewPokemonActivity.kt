@@ -4,30 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
-import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.database.AndroidPokemonResources
-import de.phil.solidsabissupershinysammlung.database.IAndroidPokemonResources
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.utils.MessageType
+import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
 class AddNewPokemonActivity : AppCompatActivity() {
-
-    private fun showMessage(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-    }
 
     private lateinit var viewModel: AddNewPokemonViewModel
 
@@ -64,7 +57,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
             if (result.first == null && result.second != null) {
                 setActivityResult(result.second!!)
             } else {
-                showMessage(result.first!!)
+                showMessage(result.first!!, MessageType.Error)
             }
 
 

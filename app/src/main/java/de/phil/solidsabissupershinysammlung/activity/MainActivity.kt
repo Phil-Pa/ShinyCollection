@@ -36,6 +36,8 @@ import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
+import de.phil.solidsabissupershinysammlung.utils.MessageType
+import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
@@ -129,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("Pokemon Data", data)
             clipboard.setPrimaryClip(clip)
-            showMessage(getString(R.string.copied_data))
+            showMessage(getString(R.string.copied_data), MessageType.Info)
         }
     }
 
@@ -156,16 +158,12 @@ class MainActivity : AppCompatActivity() {
             (resources.getString(R.string.avg_shinys_sos) + ": $averageSosCount")
     }
 
-    private fun showMessage(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-    }
-
     fun onListEntryClick(data: PokemonData) {
         if (actionMode != null) {
             pokemonToDelete = data
             actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
         } else {
-            showMessage(data.toString())
+            showMessage(data.toString(), MessageType.Info)
         }
     }
 
@@ -393,7 +391,7 @@ class MainActivity : AppCompatActivity() {
 
                     val success = viewModel.import(data)
                     if (!success)
-                        showMessage(getString(R.string.import_error))
+                        showMessage(getString(R.string.import_error), MessageType.Error)
                     else {
                         finish()
                         startActivity(intent)
@@ -403,7 +401,7 @@ class MainActivity : AppCompatActivity() {
                     val data = viewModel.export()
 
                     if (data == null)
-                        showMessage(getString(R.string.export_error))
+                        showMessage(getString(R.string.export_error), MessageType.Error)
                     else
                         copyToClipboard(data)
                 }
@@ -459,9 +457,9 @@ class MainActivity : AppCompatActivity() {
             R.id.random_pokemon -> {
                 val pokemon = viewModel.getRandomPokemon(getCurrentTabIndex())
                 if (pokemon == null)
-                    showMessage(getString(R.string.error_random_pokemon))
+                    showMessage(getString(R.string.error_random_pokemon), MessageType.Error)
                 else
-                    showMessage(pokemon.name)
+                    showMessage(pokemon.name, MessageType.Info)
                 true
             }
             R.id.add_pokemon -> {
