@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("Pokemon Data", data)
             clipboard.setPrimaryClip(clip)
-            showMessage(getString(R.string.copied_data), MessageType.Info)
+            showMessage(getString(R.string.copied_data), MessageType.Success)
         }
     }
 
@@ -367,6 +367,7 @@ class MainActivity : AppCompatActivity() {
                     else {
                         finish()
                         startActivity(intent)
+                        showMessage(getString(R.string.import_success), MessageType.Success)
                     }
                 }
                 R.id.exportData -> {
@@ -467,6 +468,7 @@ class MainActivity : AppCompatActivity() {
                 pokemonData.internalId = data.getIntExtra("internalId", -1)
 
                 viewModel.addPokemon(pokemonData)
+                showMessage("$name wurde hinzugefügt.", MessageType.Success)
                 for (listener in recyclerViewChangedListeners)
                     listener.addPokemon(pokemonData)
             }

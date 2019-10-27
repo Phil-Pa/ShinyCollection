@@ -94,5 +94,7 @@
     <string name="export_error">Es gibt keine Daten zum Exportieren</string>
     <string name="error_random_pokemon">Es gibt noch keine Pokemon.</string>
     <string name="checkbox_encounters_known">Anzahl der Begegnungen sind bekannt</string>
+    <string name="import_success">Daten wurden erfolgreich geladen.</string>
+    <string name="no_pokemon_added">Es wurde kein Pokemon hinzugefügt.</string>
 
 </resources>
