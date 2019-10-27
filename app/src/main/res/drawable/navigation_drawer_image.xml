@@ -5,6 +5,6 @@
             android:centerX="50%"
             android:centerY="50%"
             android:angle="270"
-            android:startColor="@color/colorPrimaryDark"
-            android:endColor="@color/colorAccent"/>
+            android:startColor="?attr/colorPrimaryDark"
+            android:endColor="?attr/colorAccent"/>
 </shape>

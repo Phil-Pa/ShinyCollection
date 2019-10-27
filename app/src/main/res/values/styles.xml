@@ -1,22 +1,36 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppThemeSabi" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/color_orange_sabi</item>
+        <item name="colorPrimaryDark">@color/color_orange_dark_sabi</item>
+        <item name="colorAccent">@color/color_purple_sabi</item>
+
+        <item name="windowActionBar">false</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppThemeSabi.NoActionBar">
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/colorAccent</item>
+        <item name="android:actionModeBackground">@color/color_purple_sabi</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppThemeTorben" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_purple_torben</item>
+        <item name="colorPrimaryDark">@color/color_purple_dark_torben</item>
+        <item name="colorAccent">@color/color_orange_torben</item>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+<!--        <item name="windowActionBar">false</item>-->
+    </style>
+
+    <style name="AppThemeTorben.NoActionBar">
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionModeBackground">@color/color_orange_torben</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>

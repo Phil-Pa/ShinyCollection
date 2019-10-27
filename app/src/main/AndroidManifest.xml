@@ -11,7 +11,7 @@
             android:label="@string/app_name"
             android:roundIcon="@drawable/egg"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppThemeTorben"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
                 android:name=".activity.SettingsActivity"
@@ -29,8 +29,8 @@
         <activity
                 android:name=".activity.MainActivity"
                 android:persistent="true"
-                android:label="@string/app_name"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppThemeTorben.NoActionBar"
+                android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

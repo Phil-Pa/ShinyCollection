@@ -12,6 +12,12 @@
                 app:summary="@string/sort_automatically_summary"
                 app:title="@string/sort_automatically" />
 
+        <SwitchPreferenceCompat
+                app:defaultValue="false"
+                app:key="use_dark_mode"
+                app:iconSpaceReserved="false"
+                app:title="Dunkler Modus" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -19,15 +19,17 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:fitsSystemWindows="true"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+<!--
+    important: theme is set to a specific value for white toolbar icons and text, same for tabs
+-->
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                    app:layout_scrollFlags="scroll|enterAlways|snap" />
 
             <!--                    app:tabMode="scrollable"-->
             <com.google.android.material.tabs.TabLayout
@@ -55,7 +57,7 @@
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:itemIconTint="@color/colorPrimary"
+            app:itemIconTint="?attr/colorAccent"
             android:layout_gravity="start"
             android:fitsSystemWindows="false"
             app:headerLayout="@layout/activity_main_header_navigation_drawer"

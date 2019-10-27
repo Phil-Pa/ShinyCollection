@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
@@ -169,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                     actionMode = mode
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        window.statusBarColor = getColor(R.color.colorAccentDark)
+                        window.statusBarColor = Color.YELLOW
                     }
                     return true
                 }
@@ -181,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onDestroyActionMode(mode: ActionMode?) {
                     actionMode = null
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        window.statusBarColor = getColor(R.color.colorPrimaryDark)
+                        window.statusBarColor = Color.BLUE
                     }
                 }
             })
@@ -269,71 +271,82 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.setShouldAutoSort(prefs.getBoolean(App.PREFERENCES_AUTO_SORT, false))
 
+        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Dark
+            }
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Light
+            }
+        }
     }
 
-    private fun showGuide() {
-
-        return
-
-        TapTargetSequence(this)
-            .targets(
-                TapTarget.forView(
-                    menuItemRandom,
-                    getString(R.string.guide_random_pokemon),
-                    getString(R.string.guide_random_pokemon_description)
-                )
-                    .outerCircleColor(R.color.colorAccent)
-                    .outerCircleAlpha(0.96f)
-                    .targetCircleColor(android.R.color.white)
-                    .titleTextSize(20)
-                    .titleTextColor(android.R.color.white)
-                    .descriptionTextSize(16)
-                    .descriptionTextColor(android.R.color.white)
-                    .textColor(android.R.color.white)
-                    .textTypeface(Typeface.SANS_SERIF)
-                    .dimColor(android.R.color.black)
-                    .drawShadow(true)
-                    .cancelable(false)
-                    .tintTarget(true)
-                    .transparentTarget(false)
-                    //.icon()
-                    .targetRadius(60),
-                TapTarget.forView(
-                    menuItemAdd,
-                    getString(R.string.guide_add_pokemon),
-                    getString(R.string.guide_add_pokemon_description)
-                )
-                    .outerCircleColor(R.color.colorAccent)
-                    .outerCircleAlpha(0.96f)
-                    .targetCircleColor(android.R.color.white)
-                    .titleTextSize(20)
-                    .titleTextColor(android.R.color.white)
-                    .descriptionTextSize(16)
-                    .descriptionTextColor(android.R.color.white)
-                    .textColor(android.R.color.white)
-                    .textTypeface(Typeface.SANS_SERIF)
-                    .dimColor(android.R.color.black)
-                    .drawShadow(true)
-                    .cancelable(false)
-                    .tintTarget(true)
-                    .transparentTarget(false)
-                    //.icon()
-                    .targetRadius(60)
-            )
-            .listener(object : TapTargetSequence.Listener {
-                override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {
-
-                }
-
-                override fun onSequenceFinish() {
-                    // Yay
-                }
-
-                override fun onSequenceCanceled(lastTarget: TapTarget) {
-                    // Boo
-                }
-            }).start()
-    }
+//    private fun showGuide() {
+//
+//        return
+//
+//        TapTargetSequence(this)
+//            .targets(
+//                TapTarget.forView(
+//                    menuItemRandom,
+//                    getString(R.string.guide_random_pokemon),
+//                    getString(R.string.guide_random_pokemon_description)
+//                )
+//                    .outerCircleColor(R.color.colorAccent)
+//                    .outerCircleAlpha(0.96f)
+//                    .targetCircleColor(android.R.color.white)
+//                    .titleTextSize(20)
+//                    .titleTextColor(android.R.color.white)
+//                    .descriptionTextSize(16)
+//                    .descriptionTextColor(android.R.color.white)
+//                    .textColor(android.R.color.white)
+//                    .textTypeface(Typeface.SANS_SERIF)
+//                    .dimColor(android.R.color.black)
+//                    .drawShadow(true)
+//                    .cancelable(false)
+//                    .tintTarget(true)
+//                    .transparentTarget(false)
+//                    //.icon()
+//                    .targetRadius(60),
+//                TapTarget.forView(
+//                    menuItemAdd,
+//                    getString(R.string.guide_add_pokemon),
+//                    getString(R.string.guide_add_pokemon_description)
+//                )
+//                    .outerCircleColor(R.color.colorAccent)
+//                    .outerCircleAlpha(0.96f)
+//                    .targetCircleColor(android.R.color.white)
+//                    .titleTextSize(20)
+//                    .titleTextColor(android.R.color.white)
+//                    .descriptionTextSize(16)
+//                    .descriptionTextColor(android.R.color.white)
+//                    .textColor(android.R.color.white)
+//                    .textTypeface(Typeface.SANS_SERIF)
+//                    .dimColor(android.R.color.black)
+//                    .drawShadow(true)
+//                    .cancelable(false)
+//                    .tintTarget(true)
+//                    .transparentTarget(false)
+//                    //.icon()
+//                    .targetRadius(60)
+//            )
+//            .listener(object : TapTargetSequence.Listener {
+//                override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {
+//
+//                }
+//
+//                override fun onSequenceFinish() {
+//                    // Yay
+//                }
+//
+//                override fun onSequenceCanceled(lastTarget: TapTarget) {
+//                    // Boo
+//                }
+//            }).start()
+//    }
 
     private fun initTabs() {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
@@ -407,7 +420,7 @@ class MainActivity : AppCompatActivity() {
 //            menuItemRandom = findViewById(R.id.random_pokemon)
 
             if (!viewModel.isGuideShown()) {
-                showGuide()
+//                showGuide()
                 viewModel.setGuideShown()
             }
         }
@@ -427,6 +440,14 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
+            android.R.id.home -> {
+
+                if (drawerLayout.isDrawerOpen(drawerLayout)) {
+                    drawerLayout.closeDrawers()
+                }
+
+                true
+            }
             R.id.random_pokemon -> {
                 val pokemon = viewModel.getRandomPokemon(getCurrentTabIndex())
                 if (pokemon == null)
