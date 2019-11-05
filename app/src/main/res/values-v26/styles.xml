@@ -18,6 +18,7 @@
         <item name="android:actionModeBackground">@color/color_purple_sabi</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowSplashscreenContent">@color/color_orange_sabi</item>
     </style>
 
     <style name="AppThemeTorben" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -37,6 +38,7 @@
         <item name="android:actionModeBackground">@color/color_orange_torben</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowSplashscreenContent">@color/color_purple_torben</item>
 
     </style>
 
