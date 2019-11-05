@@ -169,10 +169,6 @@ class MainActivity : AppCompatActivity() {
                 override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                     mode?.menuInflater?.inflate(R.menu.menu_actions, menu)
                     actionMode = mode
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        window.statusBarColor = Color.YELLOW
-                    }
                     return true
                 }
 
@@ -182,9 +178,6 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onDestroyActionMode(mode: ActionMode?) {
                     actionMode = null
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        window.statusBarColor = Color.BLUE
-                    }
                 }
             })
         }
@@ -202,9 +195,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textViewAverageSosShinys: TextView
     private lateinit var textViewAverageEggs: TextView
     private lateinit var textViewTotalShinys: TextView
-
-    private lateinit var menuItemRandom: View
-    private lateinit var menuItemAdd: View
 
     companion object {
         private const val TAG = "MainActivity"
