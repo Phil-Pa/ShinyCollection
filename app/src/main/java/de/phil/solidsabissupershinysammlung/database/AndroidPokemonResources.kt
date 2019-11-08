@@ -2,6 +2,7 @@ package de.phil.solidsabissupershinysammlung.database
 
 import android.content.Context
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.core.App
 
 class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
 
@@ -45,7 +46,7 @@ class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
     }
 
     override fun getPokedexIdByName(name: String): Int {
-        val nonAlolaName = if (name.endsWith("-alola")) name.replace("-alola", "") else name
+        val nonAlolaName = if (name.endsWith(App.ALOLA_EXTENSION)) name.replace(App.ALOLA_EXTENSION, "") else name
 
         var index = 0
         for (array in genNamesArray) {
@@ -62,7 +63,7 @@ class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
 
     override fun getGenerationByName(name: String): Int {
 
-        val nonAlolaName = if (name.endsWith("-alola")) name.replace("-alola", "") else name
+        val nonAlolaName = if (name.endsWith(App.ALOLA_EXTENSION)) name.replace(App.ALOLA_EXTENSION, "") else name
 
         var generation = 1
         for (array in genNamesArray) {

@@ -96,5 +96,12 @@
     <string name="checkbox_encounters_known">Anzahl der Begegnungen sind bekannt</string>
     <string name="import_success">Daten wurden erfolgreich geladen.</string>
     <string name="no_pokemon_added">Es wurde kein Pokemon hinzugefügt.</string>
+    <string name="encounter_unknown">Begegnungen: Nicht bekannt</string>
+    <string name="encounter_colon">Begegnungen: </string>
+    <string name="method_colon">Methode: </string>
+    <string name="error_empty_name">Der Name darf nicht leer sein!</string>
+    <string name="error_is_not_a_pokemon">ist kein Pokemon!</string>
+    <string name="error_encounter_lower_zero">Die Encounter müssen größer gleich 0 sein.</string>
+    <string name="message_has_been_added">wurde hinzugefügt.</string>
 
 </resources>

@@ -263,14 +263,10 @@ class MainActivity : AppCompatActivity() {
 
         if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Dark
-            }
+            toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Dark
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Light
-            }
+            toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Light
         }
     }
 
@@ -468,18 +464,19 @@ class MainActivity : AppCompatActivity() {
                 if (data == null)
                     throw Exception()
 
-                val huntMethod = data.getIntExtra("huntMethod", 0)
-                val name = data.getStringExtra("name") ?: throw Exception()
-                val encounters = data.getIntExtra("encounters", 0)
-                val id = data.getIntExtra("pokedexId", 0)
-                val generation = data.getIntExtra("generation", 0)
-                val tabIndex = data.getIntExtra("tabIndex", 0)
+                val huntMethod = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_HUNT_METHOD, 0)
+                val name = data.getStringExtra(AddNewPokemonActivity.INTENT_EXTRA_NAME) ?: throw Exception()
+                val encounters = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_ENCOUNTERS, 0)
+                val id = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEDEX_ID, 0)
+                val generation = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_GENERATION, 0)
+                val tabIndex = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, 0)
 
                 val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!, tabIndex)
-                pokemonData.internalId = data.getIntExtra("internalId", -1)
+                pokemonData.internalId = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_INTERNAL_ID, -1)
 
                 viewModel.addPokemon(pokemonData)
-                showMessage("$name wurde hinzugefügt.", MessageType.Success)
+
+                showMessage("$name " + resources.getString(R.string.message_has_been_added), MessageType.Success)
                 for (listener in recyclerViewChangedListeners)
                     listener.addPokemon(pokemonData)
             }

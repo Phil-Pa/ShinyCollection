@@ -3,6 +3,8 @@ package de.phil.solidsabissupershinysammlung.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import de.phil.solidsabissupershinysammlung.activity.AddNewPokemonActivity
+import de.phil.solidsabissupershinysammlung.core.App
 
 class UpdateStatisticsData(
     val totalNumberOfShiny: Int,
@@ -16,22 +18,22 @@ class UpdateStatisticsData(
 @Entity
 data class PokemonData(
 
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_NAME)
     val name: String,
 
-    @ColumnInfo(name = "pokedex_id")
+    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_POKEDEX_ID)
     val pokedexId: Int,
 
-    @ColumnInfo(name = "generation")
+    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_GENERATION)
     val generation: Int,
 
-    @ColumnInfo(name = "encounter_needed")
+    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_ENCOUNTERS)
     val encounterNeeded: Int,
 
-    @ColumnInfo(name = "hunt_method")
+    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_HUNT_METHOD)
     val huntMethod: HuntMethod = HuntMethod.Other,
 
-    @ColumnInfo(name = "tab_index")
+    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX)
     val tabIndex: Int
 ) {
 
@@ -47,13 +49,13 @@ data class PokemonData(
         return "$baseString${getBitmapFileName()}"
     }
 
-    fun getBitmapFileName(): String {
+    private fun getBitmapFileName(): String {
         val generationString = StringBuilder(pokedexId.toString())
         while (generationString.length < 3)
             generationString.insert(0, '0')
 
         if (isAlola()) {
-            generationString.append("-alola")
+            generationString.append(App.ALOLA_EXTENSION)
         }
         return "$generationString.png"
     }
@@ -68,7 +70,7 @@ data class PokemonData(
             "Rattfratz", "Rattikarl", "Raichu", "Sandan", "Sandamer",
             "Vulpix", "Vulnona", "Digda", "Digdri", "Mauzi", "Snobilikat", "Kleinstein",
             "Georok", "Geowaz", "Sleima", "Sleimok", "Kokowei", "Knogga"
-        ).map { "$it-alola" }
+        ).map { "$it${App.ALOLA_EXTENSION}" }
 
     }
 

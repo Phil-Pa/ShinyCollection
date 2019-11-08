@@ -2,6 +2,7 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 
@@ -24,18 +25,16 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
 
     fun validateInput(pokemonData: PokemonData): Pair<String?, PokemonData?> {
 
-//        this.getApplication<Application>().getString()
-
-        // TODO: replace hard coded strings
+        val context = getApplication<Application>().applicationContext
 
         if (pokemonData.name.isEmpty() || pokemonData.name.isBlank())
-            return Pair("Der Name darf nicht leer sein!", null)
+            return Pair(context.resources.getString(R.string.error_empty_name), null)
 
         else if (!pokemonNameExists(pokemonData.name) && !pokemonData.name.endsWith("-alola"))
-            return Pair("${pokemonData.name} ist kein Pokemon!", null)
+            return Pair("${pokemonData.name} " + context.resources.getString(R.string.error_is_not_a_pokemon), null)
 
         else if (pokemonData.encounterNeeded < 0)
-            return Pair("Die Encounter müssen größer gleich 0 sein.", null)
+            return Pair(context.resources.getString(R.string.error_encounter_lower_zero), null)
 
         val name = pokemonData.name
         val generation = repository.getGenerationByName(name)

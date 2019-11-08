@@ -1,7 +1,5 @@
 package de.phil.solidsabissupershinysammlung.adapter
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.core.AppUtil
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.toGerman
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
@@ -37,17 +34,15 @@ class PokemonDataRecyclerViewAdapter(
         holder.mNameView.text = (item.name)
         // "Encounter: "
 
-        // TODO: use string resources
-
         if (item.encounterNeeded == App.ENCOUNTER_UNKNOWN)
-            holder.mEggsNeededView.text = ("Begegnungen: Nicht bekannt")
+            holder.mEggsNeededView.text = activity.resources.getString(R.string.encounter_unknown)
         else
-            holder.mEggsNeededView.text = ("Begegnungen: " + item.encounterNeeded.toString())
+            holder.mEggsNeededView.text = (activity.resources.getString(R.string.encounter_colon) + item.encounterNeeded.toString())
 
         // "Methode: "
         val method: String = item.huntMethod.toGerman()
 
-        holder.mHuntMethodView.text = ("Methode: $method")
+        holder.mHuntMethodView.text = (activity.resources.getString(R.string.method_colon) + method)
 
         Glide.with(activity)
             .load(item.getDownloadUrl())

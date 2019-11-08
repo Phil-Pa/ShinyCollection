@@ -23,6 +23,18 @@ import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
 class AddNewPokemonActivity : AppCompatActivity() {
 
+    companion object {
+
+        const val INTENT_EXTRA_HUNT_METHOD = "hunt_method"
+        const val INTENT_EXTRA_NAME = "name"
+        const val INTENT_EXTRA_ENCOUNTERS = "encounter_needed"
+        const val INTENT_EXTRA_POKEDEX_ID = "pokedex_id"
+        const val INTENT_EXTRA_GENERATION = "generation"
+        const val INTENT_EXTRA_TAB_INDEX = "tab_index"
+        const val INTENT_EXTRA_INTERNAL_ID = "internal_id"
+
+    }
+
     private lateinit var viewModel: AddNewPokemonViewModel
     private var addedPokemon = false
 
@@ -32,8 +44,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_new_pokemon)
 
-        // TODO: don't hardcode
-        tabIndex = intent.getIntExtra("tabIndex", -1)
+        tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, -1)
 
         val androidPokemonResources = AndroidPokemonResources(this)
 
@@ -136,14 +147,13 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
         addedPokemon = true
 
-        // TODO: don't hardcode
-        intent.putExtra("huntMethod", pokemonData.huntMethod.ordinal)
-        intent.putExtra("name", pokemonData.name)
-        intent.putExtra("encounters", pokemonData.encounterNeeded)
-        intent.putExtra("pokedexId", pokemonData.pokedexId)
-        intent.putExtra("generation", pokemonData.generation)
-        intent.putExtra("tabIndex", pokemonData.tabIndex)
-        intent.putExtra("internalId", pokemonData.internalId)
+        intent.putExtra(INTENT_EXTRA_HUNT_METHOD, pokemonData.huntMethod.ordinal)
+        intent.putExtra(INTENT_EXTRA_NAME, pokemonData.name)
+        intent.putExtra(INTENT_EXTRA_ENCOUNTERS, pokemonData.encounterNeeded)
+        intent.putExtra(INTENT_EXTRA_POKEDEX_ID, pokemonData.pokedexId)
+        intent.putExtra(INTENT_EXTRA_GENERATION, pokemonData.generation)
+        intent.putExtra(INTENT_EXTRA_TAB_INDEX, pokemonData.tabIndex)
+        intent.putExtra(INTENT_EXTRA_INTERNAL_ID, pokemonData.internalId)
 
         setResult(App.REQUEST_ADD_POKEMON, intent)
         finish()

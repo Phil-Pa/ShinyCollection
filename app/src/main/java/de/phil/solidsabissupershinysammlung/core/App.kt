@@ -15,6 +15,8 @@ object App {
     const val PREFERENCES_AUTO_SORT = "auto_sort"
     const val PREFERENCES_USE_DARK_MODE = "use_dark_mode"
 
+    const val ALOLA_EXTENSION = "-alola"
+
     const val ENCOUNTER_UNKNOWN = 0
 
 }

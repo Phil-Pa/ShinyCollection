@@ -7,21 +7,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 
-// TODO: add @Query
-
 @Dao
 interface PokemonDao {
 
-    // TODO: extract the names stuff to an extra part of the repository
-//    fun getAllPokemonAlolaNames(): List<String>
-//    fun getAllPokemonNames(): List<String>
-//    fun pokemonNameExists(name: String): Boolean
-//    fun getNamesArray(index: Int): Array<String>
-//    fun getPokedexIdsArray(index: Int): Array<Int>
-//    fun getPokedexIdByName(text: String): Int
-//    fun finish()
-
-    // TODO: check if equals is done with one =
     @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0")
     fun getTotalNumberOfShinys(): Int
 

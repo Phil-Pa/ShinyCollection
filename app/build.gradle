@@ -17,7 +17,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "de.phil.solidsabissupershinysammlung"
-        minSdkVersion 17
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -95,7 +95,7 @@ dependencies {
 
     // room
     def room_version = "2.2.0"
-    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-runtime:2.2.1"
     kapt "androidx.room:room-compiler:$room_version"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
