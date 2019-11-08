@@ -1,13 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="CustomActivityTransition" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+
     <!-- Base application theme. -->
-    <style name="AppThemeSabi" parent="Theme.AppCompat.Light">
+    <style name="AppThemeSabi" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_orange_sabi</item>
         <item name="colorPrimaryDark">@color/color_orange_dark_sabi</item>
         <item name="colorAccent">@color/color_purple_sabi</item>
 
-        <item name="windowActionBar">false</item>
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
+        <item name="android:windowSplashscreenContent">@color/color_orange_sabi</item>
+        <!--        <item name="windowActionBar">true</item>-->
     </style>
 
     <style name="AppThemeSabi.NoActionBar">
@@ -15,15 +25,19 @@
         <item name="android:actionModeBackground">@color/color_purple_sabi</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowSplashscreenContent">@color/color_orange_sabi</item>
     </style>
 
-    <style name="AppThemeTorben" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeTorben" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_purple_torben</item>
         <item name="colorPrimaryDark">@color/color_purple_dark_torben</item>
         <item name="colorAccent">@color/color_orange_torben</item>
+        <item name="android:windowSplashscreenContent">@color/color_purple_torben</item>
 
-<!--        <item name="windowActionBar">false</item>-->
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
+
+        <!--        <item name="windowActionBar">false</item>-->
     </style>
 
     <style name="AppThemeTorben.NoActionBar">
@@ -31,13 +45,8 @@
         <item name="android:actionModeBackground">@color/color_orange_torben</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
+        <item name="android:windowSplashscreenContent">@color/color_purple_torben</item>
 
-    <style name="CustomActivityTransition" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
-        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
-        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
-        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
     </style>
 
 </resources>
