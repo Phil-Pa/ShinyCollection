@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/color_orange_light_sabi</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
-        <item name="android:windowSplashscreenContent">@color/color_dark_gray</item>
 <!--        <item name="windowActionBar">false</item>-->
     </style>
 
@@ -17,7 +16,6 @@
         <item name="android:actionModeBackground">@color/color_orange_light_sabi</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowSplashscreenContent">@color/color_dark_gray</item>
     </style>
 
     <style name="AppThemeTorben" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -27,7 +25,6 @@
         <item name="colorAccent">@color/color_purple_light_torben</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
-        <item name="android:windowSplashscreenContent">@color/color_dark_gray</item>
 
 <!--        <item name="windowActionBar">false</item>-->
     </style>
@@ -37,7 +34,6 @@
         <item name="android:actionModeBackground">@color/color_purple_light_torben</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowSplashscreenContent">@color/color_dark_gray</item>
     </style>
 
 </resources>

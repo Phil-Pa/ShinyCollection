@@ -2,19 +2,12 @@ package de.phil.solidsabissupershinysammlung.activity
 
 import android.app.Activity
 import android.content.*
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,8 +19,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
-import com.getkeepsafe.taptargetview.TapTarget
-import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
@@ -42,9 +33,6 @@ import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
 
