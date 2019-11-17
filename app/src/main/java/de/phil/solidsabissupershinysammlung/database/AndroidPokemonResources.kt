@@ -13,6 +13,7 @@ class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
     private var gen5Names: Array<String> = context.resources.getStringArray(R.array.gen5Names)
     private var gen6Names: Array<String> = context.resources.getStringArray(R.array.gen6Names)
     private var gen7Names: Array<String> = context.resources.getStringArray(R.array.gen7Names)
+    private var gen8Names: Array<String> = context.resources.getStringArray(R.array.gen8Names)
 
     private var genNamesArray: Array<Array<String>>
 
@@ -23,12 +24,13 @@ class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
     private var gen5PokedexIds: Array<Int>
     private var gen6PokedexIds: Array<Int>
     private var gen7PokedexIds: Array<Int>
+    private var gen8PokedexIds: Array<Int>
 
     private var genPokedexIdsArray: Array<Array<Int>>
 
     init {
 
-        genNamesArray = arrayOf(gen1Names, gen2Names, gen3Names, gen4Names, gen5Names, gen6Names, gen7Names)
+        genNamesArray = arrayOf(gen1Names, gen2Names, gen3Names, gen4Names, gen5Names, gen6Names, gen7Names, gen8Names)
 
         gen1PokedexIds = context.resources.getIntArray(R.array.gen1Ids).toTypedArray()
         gen2PokedexIds = context.resources.getIntArray(R.array.gen2Ids).toTypedArray()
@@ -37,8 +39,9 @@ class AndroidPokemonResources(context:Context) : IAndroidPokemonResources {
         gen5PokedexIds = context.resources.getIntArray(R.array.gen5Ids).toTypedArray()
         gen6PokedexIds = context.resources.getIntArray(R.array.gen6Ids).toTypedArray()
         gen7PokedexIds = context.resources.getIntArray(R.array.gen7Ids).toTypedArray()
+        gen8PokedexIds = context.resources.getIntArray(R.array.gen8Ids).toTypedArray()
 
-        genPokedexIdsArray = arrayOf(gen1PokedexIds, gen2PokedexIds, gen3PokedexIds, gen4PokedexIds, gen5PokedexIds, gen6PokedexIds, gen7PokedexIds)
+        genPokedexIdsArray = arrayOf(gen1PokedexIds, gen2PokedexIds, gen3PokedexIds, gen4PokedexIds, gen5PokedexIds, gen6PokedexIds, gen7PokedexIds, gen8PokedexIds)
     }
 
     override fun getPokemonNames(): List<String> {

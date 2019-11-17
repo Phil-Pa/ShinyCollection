@@ -418,7 +418,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.add_pokemon -> {
                 val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
-                intent.putExtra("tabIndex", view_pager.currentItem)
+                intent.putExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, view_pager.currentItem)
                 startActivityForResult(intent, App.REQUEST_ADD_POKEMON)
                 true
             }

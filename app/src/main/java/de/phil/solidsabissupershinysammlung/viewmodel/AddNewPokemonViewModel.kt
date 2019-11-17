@@ -51,4 +51,8 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
         return repository.getPokedexIdByName(name)
     }
 
+    fun getGenerationByName(name: String): Int {
+        return repository.getGenerationByName(name)
+    }
+
 }

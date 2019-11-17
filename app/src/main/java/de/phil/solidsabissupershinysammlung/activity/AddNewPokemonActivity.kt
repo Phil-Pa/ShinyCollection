@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
@@ -105,8 +106,9 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
                     // needed to get the correct download url
                     val id = viewModel.getPokedexIdByName(text)
+                    val generation = viewModel.getGenerationByName(text)
 
-                    val invalidData = PokemonData("-1", id, -1, -1, HuntMethod.Other, -1)
+                    val invalidData = PokemonData("-1", id, generation, -1, HuntMethod.Other, -1)
                     val urlWithoutAlola = invalidData.getDownloadUrl()
                     val url = StringBuilder(urlWithoutAlola)
 
@@ -117,6 +119,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
                     Glide.with(this@AddNewPokemonActivity)
                         .load(downloadUrl)
+                        .placeholder(ContextCompat.getDrawable(this@AddNewPokemonActivity, R.drawable.placeholder_pokemon))
                         .into(add_new_pokemon_activity_imageView_preview)
 
                 } else {

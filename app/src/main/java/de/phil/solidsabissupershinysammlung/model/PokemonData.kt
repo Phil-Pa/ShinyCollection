@@ -45,7 +45,12 @@ data class PokemonData(
     }
 
     fun getDownloadUrl(): String {
-        val baseString = "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
+
+        val baseString = if (generation == 8) {
+            "https://media.bisafans.de/b947e09/pokemon/gen8/swsh/normal/"
+        } else
+            "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
+
         return "$baseString${getBitmapFileName()}"
     }
 
