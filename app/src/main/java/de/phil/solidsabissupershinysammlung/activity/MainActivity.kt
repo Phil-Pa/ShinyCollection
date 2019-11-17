@@ -24,8 +24,7 @@ import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.database.IAndroidPokemonResources
-import de.phil.solidsabissupershinysammlung.database.PokemonRepository
+import de.phil.solidsabissupershinysammlung.database.DummyRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
@@ -210,20 +209,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        // TODO: make one android pokemon resources object in the repository
-        viewModel.init(PokemonRepository(object : IAndroidPokemonResources {
-            override fun getGenerationByName(name: String): Int {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun getPokedexIdByName(name: String): Int {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun getPokemonNames(): List<String> {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        }, application))
+        viewModel.init(DummyRepository(application))
         viewModel.getShinyListData().observe(this, Observer {
 
             val updateData = viewModel.getStatisticsData()

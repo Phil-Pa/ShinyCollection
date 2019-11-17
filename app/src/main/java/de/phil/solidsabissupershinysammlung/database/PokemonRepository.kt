@@ -10,7 +10,7 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 
-class PokemonRepository(private val androidPokemonResources: IAndroidPokemonResources, application: Application) {
+open class PokemonRepository(private val androidPokemonResources: IAndroidPokemonResources, application: Application) {
 
     private val preferences: SharedPreferences = application.getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 

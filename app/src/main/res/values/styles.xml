@@ -16,6 +16,8 @@
         <item name="colorAccent">@color/color_purple_sabi</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <!--        <item name="windowActionBar">true</item>-->
     </style>
 
@@ -24,6 +26,8 @@
         <item name="android:actionModeBackground">@color/color_purple_sabi</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="AppThemeTorben" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -33,6 +37,8 @@
         <item name="colorAccent">@color/color_orange_torben</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <!--        <item name="windowActionBar">false</item>-->
     </style>
@@ -42,6 +48,8 @@
         <item name="android:actionModeBackground">@color/color_orange_torben</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
     </style>
 
