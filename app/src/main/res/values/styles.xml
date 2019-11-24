@@ -53,4 +53,26 @@
 
     </style>
 
+    <style name="AppThemeJohannes" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_blue_johannes</item>
+        <item name="colorPrimaryDark">@color/color_blue_dark_johannes</item>
+        <item name="colorAccent">@color/color_green_johannes</item>
+
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!--        <item name="windowActionBar">false</item>-->
+    </style>
+
+    <style name="AppThemeJohannes.NoActionBar">
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionModeBackground">@color/color_green_johannes</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
 </resources>

@@ -1,12 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="de.phil.solidsabissupershinysammlung.activity.MainActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="de.phil.solidsabissupershinysammlung.activity.MainActivity">
     <item
             android:id="@+id/delete_entry"
-            android:orderInCategory="100"
             android:icon="@drawable/ic_delete_white_24dp"
+            android:orderInCategory="100"
             android:title="@string/menu_delete"
             app:showAsAction="always" />
+    <item
+        android:id="@+id/decrease_encounter"
+        android:icon="@drawable/ic_decrease_white_24dp"
+        android:orderInCategory="99"
+        android:title="@string/menu_decrease"
+        app:showAsAction="ifRoom" />
 
 </menu>

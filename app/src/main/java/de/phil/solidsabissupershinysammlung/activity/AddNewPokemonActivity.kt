@@ -162,11 +162,4 @@ class AddNewPokemonActivity : AppCompatActivity() {
         finish()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        if (!addedPokemon)
-            showMessage(getString(R.string.no_pokemon_added), MessageType.Info)
-    }
-
 }

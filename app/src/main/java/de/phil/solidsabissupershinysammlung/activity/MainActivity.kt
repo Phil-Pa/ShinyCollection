@@ -121,35 +121,45 @@ class MainActivity : AppCompatActivity() {
 
     fun onListEntryClick(data: PokemonData) {
         if (actionMode != null) {
-            pokemonToDelete = data
+            selectedPokemon = data
             actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
         } else {
-            showMessage(data.toString(), MessageType.Info)
+            data.encounterNeeded++
+            recyclerViewChangedListeners.forEach { it.updatePokemonEncounter(data) }
+            viewModel.updatePokemon(data)
         }
     }
 
     private var actionMode: ActionMode? = null
-    private var pokemonToDelete: PokemonData? = null
+    private var selectedPokemon: PokemonData? = null
 
     fun onListEntryLongClick(data: PokemonData) {
         if (actionMode == null) {
             startSupportActionMode(object : ActionMode.Callback {
 
 
-
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     when (item?.itemId) {
                         R.id.delete_entry -> {
-                            if (pokemonToDelete != null) {
+                            if (selectedPokemon != null) {
                                 recyclerViewChangedListeners.forEach {
-                                    it.deletePokemon(getCurrentTabIndex(), pokemonToDelete!!)
+                                    it.deletePokemon(selectedPokemon!!)
                                 }
-                                viewModel.deletePokemon(pokemonToDelete!!)
+                                viewModel.deletePokemon(selectedPokemon!!)
                             }
-
-                            mode?.finish()
+                        }
+                        R.id.decrease_encounter -> {
+                            if (selectedPokemon != null) {
+                                if (selectedPokemon!!.encounterNeeded > 0) {
+                                    selectedPokemon!!.encounterNeeded--
+                                    recyclerViewChangedListeners.forEach {
+                                        it.updatePokemonEncounter(selectedPokemon!!) }
+                                    viewModel.updatePokemon(data)
+                                }
+                            }
                         }
                     }
+                    mode?.finish()
                     return true
                 }
 
@@ -169,7 +179,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        pokemonToDelete = data
+        selectedPokemon = data
         actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
     }
 
@@ -190,7 +200,8 @@ class MainActivity : AppCompatActivity() {
     interface OnListChangedListener {
         fun sort(pokemonSortMethod: PokemonSortMethod)
         fun addPokemon(pokemonData: PokemonData)
-        fun deletePokemon(tabIndex: Int, pokemonData: PokemonData)
+        fun updatePokemonEncounter(pokemonData: PokemonData)
+        fun deletePokemon(pokemonData: PokemonData)
         fun deleteAllPokemon(tabIndex: Int)
         fun refreshRecyclerView()
     }
@@ -454,6 +465,8 @@ class MainActivity : AppCompatActivity() {
                 for (listener in recyclerViewChangedListeners)
                     listener.addPokemon(pokemonData)
             }
+        } else {
+            showMessage(getString(R.string.no_pokemon_added), MessageType.Info)
         }
 
     }

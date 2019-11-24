@@ -1,10 +1,7 @@
 package de.phil.solidsabissupershinysammlung.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 @Dao
@@ -15,6 +12,9 @@ interface PokemonDao {
 
     @Insert
     fun addPokemon(vararg data: PokemonData)
+
+    @Update
+    fun updatePokemon(data: PokemonData)
 
     @Delete
     fun deletePokemonFromDatabase(data: PokemonData)

@@ -103,5 +103,6 @@
     <string name="error_is_not_a_pokemon">ist kein Pokemon!</string>
     <string name="error_encounter_lower_zero">Die Encounter müssen größer gleich 0 sein.</string>
     <string name="message_has_been_added">wurde hinzugefügt.</string>
+    <string name="menu_decrease">Begegnungen um 1 verringern</string>
 
 </resources>

@@ -117,8 +117,15 @@ class PokemonListFragment : Fragment() {
                         }
                     }
 
-                    override fun deletePokemon(tabIndex: Int, pokemonData: PokemonData) {
-                        if (mTabIndex == tabIndex) {
+                    override fun updatePokemonEncounter(pokemonData: PokemonData) {
+                        if (mTabIndex == pokemonData.tabIndex) {
+                            val position = dataList.indexOfFirst { it.internalId == pokemonData.internalId }
+                            myAdapter?.notifyItemChanged(position)
+                        }
+                    }
+
+                    override fun deletePokemon(pokemonData: PokemonData) {
+                        if (mTabIndex == pokemonData.tabIndex) {
                             val position = dataList.indexOf(pokemonData)
                             dataList.removeAt(position)
                             myAdapter?.notifyItemRemoved(position)

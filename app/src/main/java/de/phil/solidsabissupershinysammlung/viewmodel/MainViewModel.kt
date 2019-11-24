@@ -28,6 +28,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repository.insert(pokemonData)
     }
 
+    fun updatePokemon(pokemonData: PokemonData) {
+        repository.update(pokemonData)
+    }
+
     fun import(data: String?): Boolean {
 
         val importer = DataImporter()

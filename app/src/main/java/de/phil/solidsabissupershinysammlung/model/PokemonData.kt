@@ -28,7 +28,7 @@ data class PokemonData(
     val generation: Int,
 
     @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_ENCOUNTERS)
-    val encounterNeeded: Int,
+    var encounterNeeded: Int,
 
     @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_HUNT_METHOD)
     val huntMethod: HuntMethod = HuntMethod.Other,

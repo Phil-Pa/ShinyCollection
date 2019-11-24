@@ -11,6 +11,12 @@
     <color name="color_purple_dark_torben">#12005e</color>
     <color name="color_orange_torben">#f57f17</color>
 
+    <color name="color_green_johannes">#009688</color>
+    <color name="color_green_dark_johannes">#00675b</color>
+    <color name="color_blue_johannes">#0277bd</color>
+    <color name="color_blue_dark_johannes">#004c8c</color>
+
+
 <!--    <color name="colorPrimary">#4a148c</color>-->
 <!--    <color name="colorPrimaryDark">#12005e</color>-->
 <!--    <color name="colorAccent">#f57f17</color>-->

@@ -106,6 +106,10 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
         return GetRandomPokemonDataAsyncTask(pokemonDao).execute(tabIndex).get()
     }
 
+    fun update(pokemonData: PokemonData) {
+        UpdateAsyncTask(pokemonDao).execute(pokemonData)
+    }
+
     //region async tasks
 
     class InsertAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonData, Unit, Unit>() {
@@ -113,6 +117,14 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
             for (param in params)
                 if (param != null)
                     pokemonDao.addPokemon(param)
+        }
+    }
+
+    class UpdateAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonData, Unit, Unit>() {
+        override fun doInBackground(vararg params: PokemonData?) {
+            for (param in params)
+                if (param != null)
+                    pokemonDao.updatePokemon(param)
         }
     }
 
