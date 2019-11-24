@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getCurrentTabIndex(): Int {
+    private fun getCurrentTabIndex(): Int {
         return view_pager.currentItem
     }
 
@@ -156,6 +156,19 @@ class MainActivity : AppCompatActivity() {
                                         it.updatePokemonEncounter(selectedPokemon!!) }
                                     viewModel.updatePokemon(data)
                                 }
+                            }
+                        }
+                        R.id.move_to_shiny_list -> {
+                            if (selectedPokemon != null && selectedPokemon?.tabIndex != App.TAB_INDEX_SHINY_LIST) {
+                                recyclerViewChangedListeners.forEach {
+                                    it.deletePokemon(selectedPokemon!!) }
+                                viewModel.deletePokemon(selectedPokemon!!)
+
+                                selectedPokemon!!.tabIndex = App.TAB_INDEX_SHINY_LIST
+
+                                recyclerViewChangedListeners.forEach {
+                                    it.addPokemon(selectedPokemon!!) }
+                                viewModel.addPokemon(selectedPokemon!!)
                             }
                         }
                     }

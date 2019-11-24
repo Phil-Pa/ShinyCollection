@@ -34,7 +34,7 @@ data class PokemonData(
     val huntMethod: HuntMethod = HuntMethod.Other,
 
     @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX)
-    val tabIndex: Int
+    var tabIndex: Int
 ) {
 
     @PrimaryKey(autoGenerate = true)

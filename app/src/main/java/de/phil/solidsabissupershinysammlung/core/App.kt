@@ -19,4 +19,6 @@ object App {
 
     const val ENCOUNTER_UNKNOWN = 0
 
+    const val TAB_INDEX_SHINY_LIST = 0
+
 }

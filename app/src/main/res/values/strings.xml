@@ -104,5 +104,6 @@
     <string name="error_encounter_lower_zero">Die Encounter müssen größer gleich 0 sein.</string>
     <string name="message_has_been_added">wurde hinzugefügt.</string>
     <string name="menu_decrease">Begegnungen um 1 verringern</string>
+    <string name="menu_move_to_shiny_list">In die Shiny Liste verschieben</string>
 
 </resources>
