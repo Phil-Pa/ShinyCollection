@@ -38,12 +38,12 @@ class PokemonDataRecyclerViewAdapter(
         if (item.encounterNeeded == App.ENCOUNTER_UNKNOWN)
             holder.mEggsNeededView.text = activity.resources.getString(R.string.encounter_unknown)
         else
-            holder.mEggsNeededView.text = (activity.resources.getString(R.string.encounter_colon) + item.encounterNeeded.toString())
+            holder.mEggsNeededView.text = (activity.resources.getString(R.string.encounter_colon) + " " + item.encounterNeeded.toString())
 
         // "Methode: "
         val method: String = item.huntMethod.toGerman()
 
-        holder.mHuntMethodView.text = (activity.resources.getString(R.string.method_colon) + method)
+        holder.mHuntMethodView.text = (activity.resources.getString(R.string.method_colon) + " " + method)
 
         Glide.with(activity)
             .load(item.getDownloadUrl())
