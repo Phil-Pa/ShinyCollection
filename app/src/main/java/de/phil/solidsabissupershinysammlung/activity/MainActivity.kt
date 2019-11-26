@@ -35,6 +35,30 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private fun showConfirmDeleteDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.dialog_watch_out))
+
+        // refactor
+        builder.setMessage("Möchtest du ${selectedPokemon!!.name} wirklich löschen?")
+
+        builder.setNegativeButton(R.string.sort_dialog_negative_button,
+            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+
+        builder.setPositiveButton(
+            R.string.sort_dialog_positive_button
+        ) { _, _ ->
+            recyclerViewChangedListeners.forEach {
+                it.deletePokemon(selectedPokemon!!)
+            }
+            viewModel.deletePokemon(selectedPokemon!!)
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+
+    }
+
     private fun showDialog(action: (PokemonSortMethod) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(resources.getString(R.string.sort_dialog_title))
@@ -142,10 +166,7 @@ class MainActivity : AppCompatActivity() {
                     when (item?.itemId) {
                         R.id.delete_entry -> {
                             if (selectedPokemon != null) {
-                                recyclerViewChangedListeners.forEach {
-                                    it.deletePokemon(selectedPokemon!!)
-                                }
-                                viewModel.deletePokemon(selectedPokemon!!)
+                                showConfirmDeleteDialog()
                             }
                         }
                         R.id.decrease_encounter -> {
@@ -267,70 +288,6 @@ class MainActivity : AppCompatActivity() {
             toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Light
         }
     }
-
-//    private fun showGuide() {
-//
-//        return
-//
-//        TapTargetSequence(this)
-//            .targets(
-//                TapTarget.forView(
-//                    menuItemRandom,
-//                    getString(R.string.guide_random_pokemon),
-//                    getString(R.string.guide_random_pokemon_description)
-//                )
-//                    .outerCircleColor(R.color.colorAccent)
-//                    .outerCircleAlpha(0.96f)
-//                    .targetCircleColor(android.R.color.white)
-//                    .titleTextSize(20)
-//                    .titleTextColor(android.R.color.white)
-//                    .descriptionTextSize(16)
-//                    .descriptionTextColor(android.R.color.white)
-//                    .textColor(android.R.color.white)
-//                    .textTypeface(Typeface.SANS_SERIF)
-//                    .dimColor(android.R.color.black)
-//                    .drawShadow(true)
-//                    .cancelable(false)
-//                    .tintTarget(true)
-//                    .transparentTarget(false)
-//                    //.icon()
-//                    .targetRadius(60),
-//                TapTarget.forView(
-//                    menuItemAdd,
-//                    getString(R.string.guide_add_pokemon),
-//                    getString(R.string.guide_add_pokemon_description)
-//                )
-//                    .outerCircleColor(R.color.colorAccent)
-//                    .outerCircleAlpha(0.96f)
-//                    .targetCircleColor(android.R.color.white)
-//                    .titleTextSize(20)
-//                    .titleTextColor(android.R.color.white)
-//                    .descriptionTextSize(16)
-//                    .descriptionTextColor(android.R.color.white)
-//                    .textColor(android.R.color.white)
-//                    .textTypeface(Typeface.SANS_SERIF)
-//                    .dimColor(android.R.color.black)
-//                    .drawShadow(true)
-//                    .cancelable(false)
-//                    .tintTarget(true)
-//                    .transparentTarget(false)
-//                    //.icon()
-//                    .targetRadius(60)
-//            )
-//            .listener(object : TapTargetSequence.Listener {
-//                override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {
-//
-//                }
-//
-//                override fun onSequenceFinish() {
-//                    // Yay
-//                }
-//
-//                override fun onSequenceCanceled(lastTarget: TapTarget) {
-//                    // Boo
-//                }
-//            }).start()
-//    }
 
     private fun initTabs() {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)

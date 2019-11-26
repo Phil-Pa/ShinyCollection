@@ -17,7 +17,11 @@ class DataExporter {
 
         val sb = StringBuilder()
         pokemonList.forEach { sb.append(it.toString()).append("\n") }
+
         return sb.toString()
+
+
+
     }
 
 }
