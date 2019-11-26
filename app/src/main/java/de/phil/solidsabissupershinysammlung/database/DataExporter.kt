@@ -7,7 +7,7 @@ class DataExporter {
 
     var shouldCompressData = false
 
-    fun export(repository: PokemonRepository): Pair<String, LitheString?>? {
+    fun export(repository: PokemonRepository): String? {
 
         val pokemonList = mutableListOf<PokemonData>()
 
@@ -18,17 +18,8 @@ class DataExporter {
             return null
 
         val sb = StringBuilder()
-        pokemonList.forEach { sb.append(it.toString()).append("\n") }
+        pokemonList.forEach { sb.append(if (shouldCompressData) it.toShortString() else it.toString()).append("\n") }
 
-        val result = sb.toString()
-        return if (shouldCompressData)
-            Pair(result, compress(result))
-        else
-            Pair(result, null)
+        return sb.toString()
     }
-
-    private fun compress(str: String): LitheString {
-        return LitheString(str)
-    }
-
 }

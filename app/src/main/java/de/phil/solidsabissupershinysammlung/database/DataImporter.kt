@@ -10,7 +10,7 @@ class DataImporter {
     companion object {
         private const val defaultRegex =
             "PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)"
-//        private const val compressedRegex = "\\(([\\w+\\-\\d:]+), (\\d+), (\\d), (\\d+), (\\w+), (\\d), (\\d+)\\)"
+        private const val compressedRegex = "\\(([\\w+\\-\\d:]+), (\\d+), (\\d), (\\d+), (\\w+), (\\d), (\\d+)\\)"
     }
 
     fun import(repository: PokemonRepository, data: String?): Boolean {
@@ -19,11 +19,9 @@ class DataImporter {
 
         val isCompressed = checkCompressed(data)
 
-        val dataList = if (isCompressed)
-            decompress(data).split("\n")
-        else data.split("\n")
+        val dataList = data.split("\n")
 
-        val regex = Regex(defaultRegex)
+        val regex = Regex(if (isCompressed) compressedRegex else defaultRegex)
 
         repository.deleteAll()
 
@@ -66,20 +64,6 @@ class DataImporter {
 
     private fun checkCompressed(data: String): Boolean {
         return !data.contains("PokemonData")
-    }
-
-    private fun decompress(str: String): String {
-        if (str.isEmpty()) {
-            return str
-        }
-
-        val b = ByteArray(str.length)
-        var i = 0
-        for (c in str)
-            b[i++] = c.toByte()
-
-
-        return "hi"
     }
 
 }

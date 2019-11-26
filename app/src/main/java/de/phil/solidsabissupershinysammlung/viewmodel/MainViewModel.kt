@@ -1,7 +1,6 @@
 package de.phil.solidsabissupershinysammlung.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import de.phil.solidsabissupershinysammlung.core.App
@@ -12,7 +11,6 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
-import kotlin.math.exp
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -38,9 +36,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun export(): String? {
         exporter.shouldCompressData = repository.shouldCompressData()
-        val res = exporter.export(repository)!!
-        Log.d("MainViewModel", res.second?.string!!)
-        return null
+        return exporter.export(repository)
     }
 
     fun getRandomPokemon(tabIndex: Int): PokemonData? {

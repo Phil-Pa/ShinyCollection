@@ -329,7 +329,7 @@ class MainActivity : AppCompatActivity() {
                     val data = viewModel.export()
 
                     if (data == null)
-                        showMessage(getString(R.string.export_error), MessageType.Error)
+                        showMessage(getString(R.string.export_error), MessageType.Info)
                     else
                         copyToClipboard(data)
                 }
