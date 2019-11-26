@@ -86,6 +86,14 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
         return preferences.getBoolean(App.PREFERENCES_AUTO_SORT, false)
     }
 
+    fun setDataCompression(value: Boolean) {
+        preferences.edit().putBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, value).apply()
+    }
+
+    fun shouldCompressData(): Boolean {
+        return preferences.getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, false)
+    }
+
     fun getPokemonNames(): List<String> {
         return androidPokemonResources.getPokemonNames()
     }

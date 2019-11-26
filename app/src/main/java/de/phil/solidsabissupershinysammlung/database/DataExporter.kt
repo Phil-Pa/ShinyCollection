@@ -5,7 +5,9 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 class DataExporter {
 
-    fun export(repository: PokemonRepository) : String? {
+    var shouldCompressData = false
+
+    fun export(repository: PokemonRepository): Pair<String, LitheString?>? {
 
         val pokemonList = mutableListOf<PokemonData>()
 
@@ -18,10 +20,15 @@ class DataExporter {
         val sb = StringBuilder()
         pokemonList.forEach { sb.append(it.toString()).append("\n") }
 
-        return sb.toString()
+        val result = sb.toString()
+        return if (shouldCompressData)
+            Pair(result, compress(result))
+        else
+            Pair(result, null)
+    }
 
-
-
+    private fun compress(str: String): LitheString {
+        return LitheString(str)
     }
 
 }

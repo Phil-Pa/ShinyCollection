@@ -279,6 +279,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.setShouldAutoSort(prefs.getBoolean(App.PREFERENCES_AUTO_SORT, false))
+        viewModel.setDataCompression(prefs.getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, true))
 
         if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

@@ -69,6 +69,10 @@ data class PokemonData(
         return "PokemonData(name=$name, pokedexId=$pokedexId, generation=$generation, encounterNeeded=$encounterNeeded, huntMethod=$huntMethod, tabIndex=$tabIndex, internalId=$internalId)"
     }
 
+    fun toShortString(): String {
+        return "($name, $pokedexId, $generation, $encounterNeeded, $huntMethod, $tabIndex, $internalId)"
+    }
+
     companion object {
 
         private val alolaPokemon = listOf(

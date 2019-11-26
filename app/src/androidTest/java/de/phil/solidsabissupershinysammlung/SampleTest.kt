@@ -88,7 +88,7 @@ class SampleTest {
 
             onView(withId(R.id.delete_entry)).perform(click())
 
-            delay()
+            delay(1000)
 
             val afterData = activityRule.activity.viewModel.getAllPokemonDataFromTabIndex(i)
 

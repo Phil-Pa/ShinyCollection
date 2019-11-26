@@ -1,24 +1,24 @@
 package de.phil.solidsabissupershinysammlung.viewmodel
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.DataExporter
 import de.phil.solidsabissupershinysammlung.database.DataImporter
-import de.phil.solidsabissupershinysammlung.database.DummyRepository
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
-import kotlin.random.Random
+import kotlin.math.exp
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private lateinit var repository: PokemonRepository
+    private val exporter = DataExporter()
+    private val importer = DataImporter()
 
     fun init(repository: PokemonRepository) {
         this.repository = repository
@@ -33,14 +33,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun import(data: String?): Boolean {
-
-        val importer = DataImporter()
         return importer.import(repository, data)
     }
 
     fun export(): String? {
-        val exporter = DataExporter()
-        return exporter.export(repository)
+        exporter.shouldCompressData = repository.shouldCompressData()
+        val res = exporter.export(repository)!!
+        Log.d("MainViewModel", res.second?.string!!)
+        return null
     }
 
     fun getRandomPokemon(tabIndex: Int): PokemonData? {
@@ -104,6 +104,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setShouldAutoSort(value: Boolean) {
         repository.setShouldAutoSort(value)
+    }
+
+    fun setDataCompression(value: Boolean) {
+        repository.setDataCompression(value)
     }
 
     //endregion

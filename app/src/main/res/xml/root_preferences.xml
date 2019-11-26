@@ -18,6 +18,14 @@
                 app:iconSpaceReserved="false"
                 app:title="Dunkler Modus" />
 
+        <SwitchPreferenceCompat
+                app:defaultValue="true"
+                app:key="compress_export_import"
+                app:iconSpaceReserved="false"
+                app:title="Daten komprimieren"
+                app:summary="Die Größe deiner exportieren und importieren Daten wird verkleinert."
+            />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

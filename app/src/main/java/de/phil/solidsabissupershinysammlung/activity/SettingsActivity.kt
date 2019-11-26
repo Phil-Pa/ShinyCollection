@@ -40,6 +40,9 @@ class SettingsActivity : AppCompatActivity() {
 
             if (!contains(App.PREFERENCES_GUIDE_SHOWN))
                 edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, false).apply()
+
+            if (!contains(App.PREFERENCES_COMPRESS_EXPORT_IMPORT))
+                edit().putBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, true).apply()
         }
 
     }
