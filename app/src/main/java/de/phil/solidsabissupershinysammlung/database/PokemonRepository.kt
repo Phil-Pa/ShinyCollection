@@ -7,6 +7,7 @@ import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 
@@ -59,6 +60,15 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
 
     fun getShinyListData(): LiveData<List<PokemonData>> {
         return GetShinyListDataAsyncTask(pokemonDao).execute().get()
+    }
+
+    fun setPokemonEdition(edition: PokemonEdition) {
+        preferences.edit().putInt(App.PREFERENCES_POKEMON_EDITION, edition.ordinal).apply()
+    }
+
+    fun getPokemonEdition(): PokemonEdition {
+        val int = preferences.getInt(App.PREFERENCES_POKEMON_EDITION, PokemonEdition.SWSH.ordinal)
+        return PokemonEdition.fromInt(int)!!
     }
 
     fun setGuideShown() {

@@ -103,6 +103,10 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun updatePokemonEdition(edition: PokemonEdition) {
+        textViewPokemonEdition.text = edition.toString()
+    }
+
     private fun changeEdition() {
 
         drawerLayout.closeDrawers()
@@ -114,13 +118,25 @@ class MainActivity : AppCompatActivity() {
         val customView = layoutInflater.inflate(R.layout.dialog_change_edition, drawerLayout, false)
         builder.setView(customView)
 
-        val imageViews = listOf<AppCompatImageView>(dialog_edition_oras, dialog_edition_sm, dialog_edition_usum, dialog_edition_swsh)
-
-        for (view in imageViews) {
-            
-        }
+        val imageViews = listOf<AppCompatImageView>(
+            customView.findViewById(R.id.dialog_edition_oras),
+            customView.findViewById(R.id.dialog_edition_sm),
+            customView.findViewById(R.id.dialog_edition_usum),
+            customView.findViewById(R.id.dialog_edition_swsh)
+        )
 
         val dialog = builder.create()
+
+        for ((index, view) in imageViews.withIndex()) {
+            view.setOnClickListener {
+                val updatedPokemonEdition = PokemonEdition.fromInt(index)!!
+                viewModel.setPokemonEdition(updatedPokemonEdition)
+                updatePokemonEdition(updatedPokemonEdition)
+                dialog.dismiss()
+            }
+        }
+
+
         dialog.show()
     }
 
@@ -259,6 +275,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
+    private lateinit var textViewPokemonEdition: TextView
+
     private lateinit var textViewTotalEggs: TextView
     private lateinit var textViewTotalEggShinys: TextView
     private lateinit var textViewTotalSosShinys: TextView
@@ -287,9 +305,6 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "App started")
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        initTabs()
-        initNavigationDrawer()
-        initNavigationViewViews()
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
@@ -307,6 +322,10 @@ class MainActivity : AppCompatActivity() {
                 updateData.averageEggs
             )
         })
+
+        initTabs()
+        initNavigationDrawer()
+        initNavigationViewViews()
     }
 
     private fun initPreferences() {
@@ -388,12 +407,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigationViewViews() {
         val headerView = navigationView.getHeaderView(0)
+        textViewPokemonEdition = headerView.findViewById(R.id.textView_pokemon_edition)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
         textViewTotalEggShinys = headerView.findViewById(R.id.textView_number_shinys_eggs)
         textViewTotalSosShinys = headerView.findViewById(R.id.textView_number_shinys_sos)
         textViewAverageSosShinys = headerView.findViewById(R.id.textView_average_shinys_sos)
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
+
+        textViewPokemonEdition.text = viewModel.getPokemonEdition().toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
