@@ -113,5 +113,6 @@
     <string name="menu_decrease">Begegnungen um 1 verringern</string>
     <string name="menu_move_to_shiny_list">In die Shiny Liste verschieben</string>
     <string name="dialog_watch_out">Achtung</string>
+    <string name="change_edition">Edition ändern</string>
 
 </resources>

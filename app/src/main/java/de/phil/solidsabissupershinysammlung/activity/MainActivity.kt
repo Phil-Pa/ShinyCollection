@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -35,6 +38,7 @@ import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_change_edition.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -93,6 +97,27 @@ class MainActivity : AppCompatActivity() {
             }
 
             action(sortMethod)
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun changeEdition() {
+
+        drawerLayout.closeDrawers()
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Edition ändern")
+        builder.setMessage("Wähle, zu welcher Edition du wechseln möchtest")
+
+        val customView = layoutInflater.inflate(R.layout.dialog_change_edition, drawerLayout, false)
+        builder.setView(customView)
+
+        val imageViews = listOf<AppCompatImageView>(dialog_edition_oras, dialog_edition_sm, dialog_edition_usum, dialog_edition_swsh)
+
+        for (view in imageViews) {
+            
         }
 
         val dialog = builder.create()
@@ -353,6 +378,9 @@ class MainActivity : AppCompatActivity() {
                         viewModel.setSortMethod(sortMethod)
                     }
                 }
+                R.id.changeEdition -> {
+                    changeEdition()
+                }
             }
             true
         }
@@ -391,6 +419,14 @@ class MainActivity : AppCompatActivity() {
 
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
+    }
+
+    @SuppressLint("RtlHardcoded")
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT))
+            drawerLayout.closeDrawers()
+        else
+            super.onBackPressed()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
