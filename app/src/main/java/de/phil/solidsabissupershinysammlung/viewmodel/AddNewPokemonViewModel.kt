@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 
 class AddNewPokemonViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -41,7 +42,10 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
         val pokedexId = repository.getPokedexIdByName(name)
         val internalId = repository.getMaxInternalId() + 1
 
-        val validatedData = PokemonData(name, pokedexId, generation, pokemonData.encounterNeeded, pokemonData.huntMethod, pokemonData.tabIndex)
+        val validatedData = PokemonData(name, pokedexId, generation,
+            pokemonData.encounterNeeded, pokemonData.huntMethod,
+            pokemonData.pokemonEdition, pokemonData.tabIndex)
+
         validatedData.internalId = internalId
 
         return Pair(null, validatedData)

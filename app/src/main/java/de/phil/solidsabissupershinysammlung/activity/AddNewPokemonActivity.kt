@@ -16,6 +16,7 @@ import de.phil.solidsabissupershinysammlung.database.AndroidPokemonResources
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
@@ -33,6 +34,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         const val INTENT_EXTRA_GENERATION = "generation"
         const val INTENT_EXTRA_TAB_INDEX = "tab_index"
         const val INTENT_EXTRA_INTERNAL_ID = "internal_id"
+        const val INTENT_EXTRA_POKEMON_EDITION = "pokemon_edition"
 
     }
 
@@ -70,8 +72,9 @@ class AddNewPokemonActivity : AppCompatActivity() {
             val huntMethod =
                 HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
 
+            val pokemonEdition = PokemonEdition.fromInt(add_new_pokemon_activity_spinner_pokemon_editions.selectedItemPosition)!!
 
-            val pokemonData = PokemonData(name, -1, -1, encounters, huntMethod, tabIndex)
+            val pokemonData = PokemonData(name, -1, -1, encounters, huntMethod, pokemonEdition, tabIndex)
 
             val result = viewModel.validateInput(pokemonData)
 
@@ -108,7 +111,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     val id = viewModel.getPokedexIdByName(text)
                     val generation = viewModel.getGenerationByName(text)
 
-                    val invalidData = PokemonData("-1", id, generation, -1, HuntMethod.Other, -1)
+                    val invalidData = PokemonData("-1", id, generation, -1, HuntMethod.Other, PokemonEdition.ORAS,-1)
                     val urlWithoutAlola = invalidData.getDownloadUrl()
                     val url = StringBuilder(urlWithoutAlola)
 
@@ -157,6 +160,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         intent.putExtra(INTENT_EXTRA_GENERATION, pokemonData.generation)
         intent.putExtra(INTENT_EXTRA_TAB_INDEX, pokemonData.tabIndex)
         intent.putExtra(INTENT_EXTRA_INTERNAL_ID, pokemonData.internalId)
+        intent.putExtra(INTENT_EXTRA_POKEMON_EDITION, pokemonData.pokemonEdition.ordinal)
 
         setResult(App.REQUEST_ADD_POKEMON, intent)
         finish()
