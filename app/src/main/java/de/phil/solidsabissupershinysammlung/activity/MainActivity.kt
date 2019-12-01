@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.*
 import android.os.Bundle
 import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -36,6 +38,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private fun showConfirmDeleteDialog() {
+
+        // vibrate to get attention from the user for deleting a pokemon
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_watch_out))
 

@@ -37,8 +37,8 @@ class AddNewPokemonActivity : AppCompatActivity() {
     }
 
     private lateinit var viewModel: AddNewPokemonViewModel
-    private var addedPokemon = false
 
+    private var addedPokemon = false
     private var tabIndex = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
