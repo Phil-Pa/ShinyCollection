@@ -151,6 +151,9 @@ class MainActivity : AppCompatActivity() {
             data.encounterNeeded++
             recyclerViewChangedListeners.forEach { it.updatePokemonEncounter(data) }
             viewModel.updatePokemon(data)
+
+            if (viewModel.shouldAutoSort())
+                recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
         }
     }
 
@@ -190,6 +193,9 @@ class MainActivity : AppCompatActivity() {
                                 recyclerViewChangedListeners.forEach {
                                     it.addPokemon(selectedPokemon!!) }
                                 viewModel.addPokemon(selectedPokemon!!)
+
+                                if (viewModel.shouldAutoSort())
+                                    recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
                             }
                         }
                     }
