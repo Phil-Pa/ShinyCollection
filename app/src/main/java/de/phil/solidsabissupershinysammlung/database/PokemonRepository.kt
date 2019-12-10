@@ -128,6 +128,10 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
         UpdateAsyncTask(pokemonDao).execute(pokemonData)
     }
 
+    fun isOnlyCurrentEdition(): Boolean {
+        return preferences.getBoolean(App.PREFERENCES_SHOW_ONLY_CURRENT_EDITION, false)
+    }
+
     //region async tasks
 
     class InsertAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonData, Unit, Unit>() {

@@ -1,5 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
             app:iconSpaceReserved="false"
@@ -7,24 +7,30 @@
 
         <SwitchPreferenceCompat
                 app:defaultValue="false"
-                app:key="auto_sort"
                 app:iconSpaceReserved="false"
+                app:key="auto_sort"
                 app:summary="@string/sort_automatically_summary"
                 app:title="@string/sort_automatically" />
 
         <SwitchPreferenceCompat
                 app:defaultValue="false"
-                app:key="use_dark_mode"
                 app:iconSpaceReserved="false"
+                app:key="use_dark_mode"
                 app:title="Dunkler Modus" />
 
         <SwitchPreferenceCompat
                 app:defaultValue="true"
-                app:key="compress_export_import"
                 app:iconSpaceReserved="false"
-                app:title="Daten komprimieren"
+                app:key="compress_export_import"
                 app:summary="Die Größe deiner exportieren und importieren Daten wird verkleinert."
-            />
+                app:title="Daten komprimieren" />
+
+        <SwitchPreferenceCompat
+                app:defaultValue="false"
+                app:iconSpaceReserved="false"
+                app:key="show_only_current_edition"
+                app:summary="Es werden nur die Pokemon deiner aktuell ausgewählten Edition angezeigt. Diese Änderung wirkt sich auch auf die Statistik aus."
+                app:title="Nur die Pokemon der ausgewählten Edition anzeigen" />
 
     </PreferenceCategory>
 

@@ -104,7 +104,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePokemonEdition(edition: PokemonEdition) {
+        val onlyCurrentEdition = viewModel.isOnlyCurrentEdition()
+
         textViewPokemonEdition.text = edition.toString()
+
+        recyclerViewChangedListeners.forEach {
+            it.refreshRecyclerView()
+        }
+
     }
 
     private fun changeEdition() {
@@ -135,7 +142,6 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
         }
-
 
         dialog.show()
     }

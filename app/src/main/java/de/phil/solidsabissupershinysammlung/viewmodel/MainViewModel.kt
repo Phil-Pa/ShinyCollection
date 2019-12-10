@@ -3,6 +3,7 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.DataExporter
 import de.phil.solidsabissupershinysammlung.database.DataImporter
@@ -20,7 +21,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val importer = DataImporter()
 
     // use live data
-//    private lateinit var pokemonEdition: LiveData<PokemonEdition>
+    private lateinit var pokemonEdition: LiveData<PokemonEdition>
 
     fun init(repository: PokemonRepository) {
         this.repository = repository
@@ -117,6 +118,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setDataCompression(value: Boolean) {
         repository.setDataCompression(value)
+    }
+
+    fun isOnlyCurrentEdition(): Boolean {
+        return repository.isOnlyCurrentEdition()
     }
 
     //endregion
