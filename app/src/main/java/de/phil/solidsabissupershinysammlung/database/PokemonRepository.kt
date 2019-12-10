@@ -14,6 +14,7 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 open class PokemonRepository(private val androidPokemonResources: IAndroidPokemonResources, application: Application) {
 
     private val preferences: SharedPreferences = application.getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
+    private var currentEdition = SharedPreferencesPokemonEditionLiveData(preferences, App.PREFERENCES_POKEMON_EDITION, PokemonEdition.SWSH)
 
     private val pokemonDao: PokemonDao =
         PokemonRoomDatabase.instance(application.applicationContext).pokemonDao()
@@ -66,9 +67,8 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
         preferences.edit().putInt(App.PREFERENCES_POKEMON_EDITION, edition.ordinal).apply()
     }
 
-    fun getPokemonEdition(): PokemonEdition {
-        val int = preferences.getInt(App.PREFERENCES_POKEMON_EDITION, PokemonEdition.SWSH.ordinal)
-        return PokemonEdition.fromInt(int)!!
+    fun getPokemonEdition(): SharedPreferencesPokemonEditionLiveData {
+        return currentEdition
     }
 
     fun setGuideShown() {

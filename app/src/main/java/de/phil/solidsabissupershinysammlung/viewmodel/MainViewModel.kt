@@ -5,9 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.database.DataExporter
-import de.phil.solidsabissupershinysammlung.database.DataImporter
-import de.phil.solidsabissupershinysammlung.database.PokemonRepository
+import de.phil.solidsabissupershinysammlung.database.*
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
@@ -20,15 +18,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val exporter = DataExporter()
     private val importer = DataImporter()
 
-    // use live data
-    private lateinit var pokemonEdition: LiveData<PokemonEdition>
-
     fun init(repository: PokemonRepository) {
         this.repository = repository
 
     }
 
-    fun getPokemonEdition(): PokemonEdition {
+    fun getPokemonEdition(): SharedPreferencesPokemonEditionLiveData {
         return repository.getPokemonEdition()
     }
 
@@ -66,7 +61,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getStatisticsData(): UpdateStatisticsData {
-        val pokemonEdition = getPokemonEdition()
+        val pokemonEdition = getPokemonEdition().value!!
         if (isOnlyCurrentEdition()) {
             val totalShinys = repository.getTotalNumberOfShinys(pokemonEdition)
             val totalEggShinys = repository.getTotalNumberOfEggShinys(pokemonEdition)

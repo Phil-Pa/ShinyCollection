@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -36,6 +37,7 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_header_navigation_drawer.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -114,9 +116,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePokemonEdition(edition: PokemonEdition) {
-        val onlyCurrentEdition = viewModel.isOnlyCurrentEdition()
 
-        textViewPokemonEdition.text = edition.toString()
+        with (imageViewPokemonEdition) {
+            when (edition) {
+                PokemonEdition.ORAS -> setImageResource(R.drawable.cover_oras)
+                PokemonEdition.SM -> setImageResource(R.drawable.cover_sm)
+                PokemonEdition.USUM -> setImageResource(R.drawable.cover_usum)
+                PokemonEdition.SWSH -> setImageResource(R.drawable.cover_swsh)
+            }
+        }
 
         recyclerViewChangedListeners.forEach {
             it.refreshRecyclerView()
@@ -264,7 +272,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
-    private lateinit var textViewPokemonEdition: TextView
+    private lateinit var imageViewPokemonEdition: ImageView
 
     private lateinit var textViewTotalEggs: TextView
     private lateinit var textViewTotalEggShinys: TextView
@@ -299,9 +307,11 @@ class MainActivity : AppCompatActivity() {
             )
         })
 
-//        viewModel.getPokemonEdition().observe(this, Observer {
-//
-//        })
+        viewModel.getPokemonEdition().observe(this, Observer {
+
+            updatePokemonEdition(it)
+
+        })
 
         initTabs()
         initNavigationDrawer()
@@ -387,16 +397,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavigationViewViews() {
         val headerView = navigationView.getHeaderView(0)
-        textViewPokemonEdition = headerView.findViewById(R.id.textView_pokemon_edition)
+        imageViewPokemonEdition = headerView.findViewById(R.id.imageView_pokemon_edition)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
         textViewTotalEggShinys = headerView.findViewById(R.id.textView_number_shinys_eggs)
         textViewTotalSosShinys = headerView.findViewById(R.id.textView_number_shinys_sos)
         textViewAverageSosShinys = headerView.findViewById(R.id.textView_average_shinys_sos)
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
-
-        // TODO: leverage mvvm pattern
-        textViewPokemonEdition.text = viewModel.getPokemonEdition().toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
