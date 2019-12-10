@@ -12,6 +12,7 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.toGerman
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 
@@ -28,6 +29,9 @@ class PokemonDataRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
+
+        // "Edition: "
+        holder.mPokemonEditionView.text = ("Edition: " + item.pokemonEdition.toString())
 
         // "ID: "
         holder.mPokedexIdView.text = ("ID: " + item.pokedexId.toString())
@@ -65,6 +69,7 @@ class PokemonDataRecyclerViewAdapter(
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+        val mPokemonEditionView: TextView = mView.fragment_pokemondata_edition
         val mPokedexIdView: TextView = mView.fragment_pokemondata_pokedex_id
         val mNameView: TextView = mView.fragment_pokemondata_name
         val mEggsNeededView: TextView = mView.fragment_pokemondata_eggs_needed

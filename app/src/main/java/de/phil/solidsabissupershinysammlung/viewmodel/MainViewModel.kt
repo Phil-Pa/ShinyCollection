@@ -53,7 +53,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
-        return repository.getAllPokemonDataFromTabIndex(tabIndex)
+        var result = repository.getAllPokemonDataFromTabIndex(tabIndex)
+
+        if (isOnlyCurrentEdition())
+            result = result.filter { it.pokemonEdition == getPokemonEdition().value!! }
+
+        return result
     }
 
     fun deletePokemon(pokemonToDelete: PokemonData) {

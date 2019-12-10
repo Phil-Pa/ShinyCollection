@@ -33,6 +33,7 @@ class PokemonListFragment : Fragment() {
 
     private var myAdapter: PokemonDataRecyclerViewAdapter? = null
     private var dataList = mutableListOf<PokemonData>()
+    private var dataListToShow = mutableListOf<PokemonData>()
 
     /**
      * sort the data in the @see [recyclerView]
@@ -72,6 +73,7 @@ class PokemonListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // TODO: document why this is needed
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_pokemondata_list, container, false)
 
@@ -101,6 +103,9 @@ class PokemonListFragment : Fragment() {
 
                 getMainActivity().addRecyclerViewChangedListener(object : MainActivity.OnListChangedListener {
                     override fun refreshRecyclerView() {
+
+                        dataList = getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex).toMutableList()
+
                         recyclerView.requestLayout()
                         myAdapter?.notifyDataSetChanged()
                     }
