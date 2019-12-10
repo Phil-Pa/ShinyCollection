@@ -11,7 +11,8 @@ class DataImporter {
     companion object {
         private const val defaultRegex =
             "PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), pokemonEdition=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)"
-        private const val compressedRegex = "\\(([\\w+\\-\\d:]+), (\\d+), (\\d), (\\d+), (\\w+), (\\w+), (\\d), (\\d+)\\)"
+        private const val compressedRegex =
+            "\\(([\\w+\\-\\d:]+), (\\d+), (\\d), (\\d+), (\\w+), (\\w+), (\\d), (\\d+)\\)"
     }
 
     fun import(repository: PokemonRepository, data: String?): Boolean {

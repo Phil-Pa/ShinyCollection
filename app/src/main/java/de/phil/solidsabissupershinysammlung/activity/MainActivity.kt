@@ -2,11 +2,10 @@ package de.phil.solidsabissupershinysammlung.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.*
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -35,18 +34,30 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
-import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_change_edition.*
 
 class MainActivity : AppCompatActivity() {
+
+    //region global stuff
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
+    interface OnListChangedListener {
+        fun sort(pokemonSortMethod: PokemonSortMethod)
+        fun addPokemon(pokemonData: PokemonData)
+        fun updatePokemonEncounter(pokemonData: PokemonData)
+        fun deletePokemon(pokemonData: PokemonData)
+        fun deleteAllPokemon(tabIndex: Int)
+        fun refreshRecyclerView()
+    }
+    //endregion
 
     private fun showConfirmDeleteDialog() {
 
         // vibrate to get attention from the user for deleting a pokemon
-        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        vibrate(200)
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_watch_out))
@@ -71,33 +82,32 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // TODO: give better method name
     private fun showDialog(action: (PokemonSortMethod) -> Unit) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(resources.getString(R.string.sort_dialog_title))
-        builder.setMessage(R.string.dialog_sort_message)
-
         val customView = layoutInflater.inflate(R.layout.dialog_sort, drawerLayout, false)
-        builder.setView(customView)
 
-        builder.setNegativeButton(R.string.sort_dialog_negative_button,
-            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+        val builder = AlertDialog.Builder(this)
+            .setTitle(resources.getString(R.string.sort_dialog_title))
+            .setMessage(R.string.dialog_sort_message)
+            .setView(customView)
+            .setNegativeButton(R.string.sort_dialog_negative_button,
+                DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+            .setPositiveButton(
+                R.string.sort_dialog_positive_button
+            ) { _, _ ->
+                val spinner = customView.findViewById<AppCompatSpinner>(R.id.dialog_sort_spinner)
 
-        builder.setPositiveButton(
-            R.string.sort_dialog_positive_button
-        ) { _, _ ->
-            val spinner = customView.findViewById<AppCompatSpinner>(R.id.dialog_sort_spinner)
+                // 0 = name, 1 = encounter, 2 = pokedexId, 3 = original
+                val sortMethod = when (spinner.selectedItemPosition) {
+                    0 -> PokemonSortMethod.Name
+                    1 -> PokemonSortMethod.Encounter
+                    2 -> PokemonSortMethod.PokedexId
+                    3 -> PokemonSortMethod.InternalId
+                    else -> PokemonSortMethod.InternalId
+                }
 
-            // 0 = name, 1 = encounter, 2 = pokedexId, 3 = original
-            val sortMethod = when (spinner.selectedItemPosition) {
-                0 -> PokemonSortMethod.Name
-                1 -> PokemonSortMethod.Encounter
-                2 -> PokemonSortMethod.PokedexId
-                3 -> PokemonSortMethod.InternalId
-                else -> PokemonSortMethod.InternalId
+                action(sortMethod)
             }
-
-            action(sortMethod)
-        }
 
         val dialog = builder.create()
         dialog.show()
@@ -117,13 +127,12 @@ class MainActivity : AppCompatActivity() {
     private fun changeEdition() {
 
         drawerLayout.closeDrawers()
+        val customView = layoutInflater.inflate(R.layout.dialog_change_edition, drawerLayout, false)
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Edition ändern")
-        builder.setMessage("Wähle, zu welcher Edition du wechseln möchtest")
-
-        val customView = layoutInflater.inflate(R.layout.dialog_change_edition, drawerLayout, false)
-        builder.setView(customView)
+            .setTitle("Edition ändern")
+            .setMessage("Wähle, zu welcher Edition du wechseln möchtest")
+            .setView(customView)
 
         val imageViews = listOf<AppCompatImageView>(
             customView.findViewById(R.id.dialog_edition_oras),
@@ -144,35 +153,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.show()
-    }
-
-    private fun getClipboardStringData(): String? {
-        var result: String? = null
-
-        var finished = false
-
-        runOnUiThread {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-            // 0 -> text, 1 -> uri, 2 -> intent
-
-            result = clipboard.primaryClip?.getItemAt(0)?.text?.toString()
-            finished = true
-        }
-
-        while (true) {
-            if (finished)
-                return result
-        }
-    }
-
-    fun copyToClipboard(data: String) {
-        runOnUiThread {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Pokemon Data", data)
-            clipboard.setPrimaryClip(clip)
-            showMessage(getString(R.string.copied_data), MessageType.Success)
-        }
     }
 
     private fun getCurrentTabIndex(): Int {
@@ -232,7 +212,8 @@ class MainActivity : AppCompatActivity() {
                                 if (selectedPokemon!!.encounterNeeded > 0) {
                                     selectedPokemon!!.encounterNeeded--
                                     recyclerViewChangedListeners.forEach {
-                                        it.updatePokemonEncounter(selectedPokemon!!) }
+                                        it.updatePokemonEncounter(selectedPokemon!!)
+                                    }
                                     viewModel.updatePokemon(data)
                                 }
                             }
@@ -240,13 +221,15 @@ class MainActivity : AppCompatActivity() {
                         R.id.move_to_shiny_list -> {
                             if (selectedPokemon != null && selectedPokemon?.tabIndex != App.TAB_INDEX_SHINY_LIST) {
                                 recyclerViewChangedListeners.forEach {
-                                    it.deletePokemon(selectedPokemon!!) }
+                                    it.deletePokemon(selectedPokemon!!)
+                                }
                                 viewModel.deletePokemon(selectedPokemon!!)
 
                                 selectedPokemon!!.tabIndex = App.TAB_INDEX_SHINY_LIST
 
                                 recyclerViewChangedListeners.forEach {
-                                    it.addPokemon(selectedPokemon!!) }
+                                    it.addPokemon(selectedPokemon!!)
+                                }
                                 viewModel.addPokemon(selectedPokemon!!)
 
                                 if (viewModel.shouldAutoSort())
@@ -290,19 +273,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var textViewAverageEggs: TextView
     private lateinit var textViewTotalShinys: TextView
 
-    companion object {
-        private const val TAG = "MainActivity"
-    }
-
-    interface OnListChangedListener {
-        fun sort(pokemonSortMethod: PokemonSortMethod)
-        fun addPokemon(pokemonData: PokemonData)
-        fun updatePokemonEncounter(pokemonData: PokemonData)
-        fun deletePokemon(pokemonData: PokemonData)
-        fun deleteAllPokemon(tabIndex: Int)
-        fun refreshRecyclerView()
-    }
-
     lateinit var viewModel: MainViewModel
     private val recyclerViewChangedListeners = mutableListOf<OnListChangedListener>()
 
@@ -328,6 +298,10 @@ class MainActivity : AppCompatActivity() {
                 updateData.averageEggs
             )
         })
+
+//        viewModel.getPokemonEdition().observe(this, Observer {
+//
+//        })
 
         initTabs()
         initNavigationDrawer()
@@ -395,7 +369,7 @@ class MainActivity : AppCompatActivity() {
                     if (data == null)
                         showMessage(getString(R.string.export_error), MessageType.Info)
                     else
-                        copyToClipboard(data)
+                        copyToClipboard("Pokemon Data", data)
                 }
                 R.id.sortData -> {
                     showDialog { sortMethod ->
@@ -421,6 +395,7 @@ class MainActivity : AppCompatActivity() {
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
 
+        // TODO: leverage mvvm pattern
         textViewPokemonEdition.text = viewModel.getPokemonEdition().toString()
     }
 
@@ -428,7 +403,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
 
         Handler().post {
-//            menuItemAdd = findViewById(R.id.add_pokemon)
+            //            menuItemAdd = findViewById(R.id.add_pokemon)
 //            menuItemRandom = findViewById(R.id.random_pokemon)
 
             if (!viewModel.isGuideShown()) {
@@ -461,25 +436,15 @@ class MainActivity : AppCompatActivity() {
 
         return when (item.itemId) {
             android.R.id.home -> {
-
-                if (drawerLayout.isDrawerOpen(drawerLayout)) {
-                    drawerLayout.closeDrawers()
-                }
-
+                closeDrawer()
                 true
             }
             R.id.random_pokemon -> {
-                val pokemon = viewModel.getRandomPokemon(getCurrentTabIndex())
-                if (pokemon == null)
-                    showMessage(getString(R.string.error_random_pokemon), MessageType.Error)
-                else
-                    showMessage(pokemon.name, MessageType.Info)
+                onRandomPokemonClicked()
                 true
             }
             R.id.add_pokemon -> {
-                val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
-                intent.putExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, view_pager.currentItem)
-                startActivityForResult(intent, App.REQUEST_ADD_POKEMON)
+                startAddNewPokemonActivity()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -499,20 +464,28 @@ class MainActivity : AppCompatActivity() {
                     throw Exception()
 
                 val huntMethod = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_HUNT_METHOD, 0)
-                val name = data.getStringExtra(AddNewPokemonActivity.INTENT_EXTRA_NAME) ?: throw Exception()
+                val name = data.getStringExtra(AddNewPokemonActivity.INTENT_EXTRA_NAME)
+                    ?: throw Exception()
                 val encounters = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_ENCOUNTERS, 0)
                 val id = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEDEX_ID, 0)
                 val generation = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_GENERATION, 0)
                 val tabIndex = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, 0)
-                val pokemonEdition = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEMON_EDITION, 0)
+                val pokemonEdition =
+                    data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEMON_EDITION, 0)
 
-                val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!,
-                    PokemonEdition.fromInt(pokemonEdition)!!, tabIndex)
-                pokemonData.internalId = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_INTERNAL_ID, -1)
+                val pokemonData = PokemonData(
+                    name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!,
+                    PokemonEdition.fromInt(pokemonEdition)!!, tabIndex
+                )
+                pokemonData.internalId =
+                    data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_INTERNAL_ID, -1)
 
                 viewModel.addPokemon(pokemonData)
 
-                showMessage("$name " + resources.getString(R.string.message_has_been_added), MessageType.Success)
+                showMessage(
+                    "$name " + resources.getString(R.string.message_has_been_added),
+                    MessageType.Success
+                )
                 for (listener in recyclerViewChangedListeners)
                     listener.addPokemon(pokemonData)
             }
@@ -520,6 +493,29 @@ class MainActivity : AppCompatActivity() {
             showMessage(getString(R.string.no_pokemon_added), MessageType.Info)
         }
 
+    }
+
+    private fun closeDrawer() {
+        if (drawerLayout.isDrawerOpen(drawerLayout)) {
+            drawerLayout.closeDrawers()
+        }
+    }
+
+    private fun onRandomPokemonClicked() {
+        val pokemon = viewModel.getRandomPokemon(getCurrentTabIndex())
+        if (pokemon == null)
+            showMessage(getString(R.string.error_random_pokemon), MessageType.Error)
+        else
+            showMessage(pokemon.name, MessageType.Info)
+    }
+
+    private fun startAddNewPokemonActivity() {
+        val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
+        intent.putExtra(
+            AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX,
+            view_pager.currentItem
+        )
+        startActivityForResult(intent, App.REQUEST_ADD_POKEMON)
     }
 
 }

@@ -18,7 +18,9 @@ class DataExporter {
             return null
 
         val sb = StringBuilder()
-        pokemonList.forEach { sb.append(if (shouldCompressData) it.toShortString() else it.toString()).append("\n") }
+        pokemonList.forEach {
+            sb.append(if (shouldCompressData) it.toShortString() else it.toString()).append("\n")
+        }
 
         return sb.toString()
     }

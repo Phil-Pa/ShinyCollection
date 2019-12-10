@@ -18,13 +18,13 @@ import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.utils.MessageType
-import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
 
 class AddNewPokemonActivity : AppCompatActivity() {
 
+    //region global stuff
     companion object {
 
         const val INTENT_EXTRA_HUNT_METHOD = "hunt_method"
@@ -37,6 +37,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         const val INTENT_EXTRA_POKEMON_EDITION = "pokemon_edition"
 
     }
+    //endregion
 
     private lateinit var viewModel: AddNewPokemonViewModel
 
@@ -57,9 +58,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         add_new_pokemon_activity_button_add.setOnClickListener {
 
             val name = add_new_pokemon_activity_edittext_name.text.toString()
-
             val encountersKnown = add_new_pokemon_activity_checkbox_encounter_known.isChecked
-
             val encountersNeededText = add_new_pokemon_activity_edittext_eggsNeeded.text
 
             val encounters =

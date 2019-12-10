@@ -34,28 +34,28 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
         return GetAllPokemonDataFromTabIndexAsyncTask(pokemonDao).execute(tabIndex).get()
     }
 
-    fun getTotalNumberOfShinys(): Int {
-        return GetTotalNumberOfShinysAsyncTask(pokemonDao).execute().get()
+    fun getTotalNumberOfShinys(pokemonEdition: PokemonEdition): Int {
+        return GetTotalNumberOfShinysAsyncTask(pokemonDao).execute(pokemonEdition).get()
     }
 
-    fun getTotalNumberOfEggShinys(): Int {
-        return GetTotalNumberOfEggShinysAsyncTask(pokemonDao).execute().get()
+    fun getTotalNumberOfEggShinys(pokemonEdition: PokemonEdition): Int {
+        return GetTotalNumberOfEggShinysAsyncTask(pokemonDao).execute(pokemonEdition).get()
     }
 
-    fun getTotalNumberOfSosShinys(): Int {
-        return GetTotalNumberOfSosShinysAsyncTask(pokemonDao).execute().get()
+    fun getTotalNumberOfSosShinys(pokemonEdition: PokemonEdition): Int {
+        return GetTotalNumberOfSosShinysAsyncTask(pokemonDao).execute(pokemonEdition).get()
     }
 
-    fun getAverageSosEncounter(): Float {
-        return GetAverageSosEncounterAsyncTask(pokemonDao).execute().get()
+    fun getAverageSosEncounter(pokemonEdition: PokemonEdition): Float {
+        return GetAverageSosEncounterAsyncTask(pokemonDao).execute(pokemonEdition).get()
     }
 
-    fun getTotalNumberOfHatchedEggs(): Int {
-        return GetTotalNumberOfHatchedEggsAsyncTask(pokemonDao).execute().get()
+    fun getTotalNumberOfHatchedEggs(pokemonEdition: PokemonEdition): Int {
+        return GetTotalNumberOfHatchedEggsAsyncTask(pokemonDao).execute(pokemonEdition).get()
     }
 
-    fun getAverageEggsEncounter(): Float {
-        return GetAverageEggsEncounterAsyncTask(pokemonDao).execute().get()
+    fun getAverageEggsEncounter(pokemonEdition: PokemonEdition): Float {
+        return GetAverageEggsEncounterAsyncTask(pokemonDao).execute(pokemonEdition).get()
     }
 
     fun getShinyListData(): LiveData<List<PokemonData>> {
@@ -164,39 +164,39 @@ open class PokemonRepository(private val androidPokemonResources: IAndroidPokemo
         }
     }
 
-    class GetTotalNumberOfShinysAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Int>() {
-        override fun doInBackground(vararg params: Unit?): Int {
-            return pokemonDao.getTotalNumberOfShinys()
+    class GetTotalNumberOfShinysAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonEdition, Unit, Int>() {
+        override fun doInBackground(vararg params: PokemonEdition?): Int {
+            return pokemonDao.getTotalNumberOfShinys(params[0]!!)
         }
     }
 
-    class GetTotalNumberOfEggShinysAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Int>() {
-        override fun doInBackground(vararg params: Unit?): Int {
-            return pokemonDao.getTotalNumberOfEggShinys()
+    class GetTotalNumberOfEggShinysAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonEdition, Unit, Int>() {
+        override fun doInBackground(vararg params: PokemonEdition?): Int {
+            return pokemonDao.getTotalNumberOfEggShinys(params[0]!!)
         }
     }
 
-    class GetTotalNumberOfSosShinysAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Int>() {
-        override fun doInBackground(vararg params: Unit?): Int {
-            return pokemonDao.getTotalNumberOfSosShinys()
+    class GetTotalNumberOfSosShinysAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonEdition, Unit, Int>() {
+        override fun doInBackground(vararg params: PokemonEdition?): Int {
+            return pokemonDao.getTotalNumberOfSosShinys(params[0]!!)
         }
     }
 
-    class GetAverageSosEncounterAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Float>() {
-        override fun doInBackground(vararg params: Unit?): Float {
-            return pokemonDao.getAverageSosCount()
+    class GetAverageSosEncounterAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonEdition, Unit, Float>() {
+        override fun doInBackground(vararg params: PokemonEdition?): Float {
+            return pokemonDao.getAverageSosCount(params[0]!!)
         }
     }
 
-    class GetTotalNumberOfHatchedEggsAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Int>() {
-        override fun doInBackground(vararg params: Unit?): Int {
-            return pokemonDao.getTotalEggsCount()
+    class GetTotalNumberOfHatchedEggsAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonEdition, Unit, Int>() {
+        override fun doInBackground(vararg params: PokemonEdition?): Int {
+            return pokemonDao.getTotalEggsCount(params[0]!!)
         }
     }
 
-    class GetAverageEggsEncounterAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, Float>() {
-        override fun doInBackground(vararg params: Unit?): Float {
-            return pokemonDao.getAverageEggsCount()
+    class GetAverageEggsEncounterAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonEdition, Unit, Float>() {
+        override fun doInBackground(vararg params: PokemonEdition?): Float {
+            return pokemonDao.getAverageEggsCount(params[0]!!)
         }
     }
 

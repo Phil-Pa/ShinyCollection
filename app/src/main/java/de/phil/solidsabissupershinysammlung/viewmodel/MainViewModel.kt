@@ -66,14 +66,39 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getStatisticsData(): UpdateStatisticsData {
-        val totalShinys = repository.getTotalNumberOfShinys()
-        val totalEggShinys = repository.getTotalNumberOfEggShinys()
-        val totalSosShinys = repository.getTotalNumberOfSosShinys()
-        val averageSos = repository.getAverageSosEncounter().round(2)
-        val totalEggs = repository.getTotalNumberOfHatchedEggs()
-        val averageEggs = repository.getAverageEggsEncounter().round(2)
+        val pokemonEdition = getPokemonEdition()
+        if (isOnlyCurrentEdition()) {
+            val totalShinys = repository.getTotalNumberOfShinys(pokemonEdition)
+            val totalEggShinys = repository.getTotalNumberOfEggShinys(pokemonEdition)
+            val totalSosShinys = repository.getTotalNumberOfSosShinys(pokemonEdition)
+            val averageSos = repository.getAverageSosEncounter(pokemonEdition).round(2)
+            val totalEggs = repository.getTotalNumberOfHatchedEggs(pokemonEdition)
+            val averageEggs = repository.getAverageEggsEncounter(pokemonEdition).round(2)
+            return UpdateStatisticsData(totalShinys, totalEggShinys, totalSosShinys, averageSos, totalEggs, averageEggs)
+        } else {
+            val editions = PokemonEdition.getPokemonEditionUpTo(pokemonEdition)
+            var totalShinys = 0
+            var totalEggShinys = 0
+            var totalSosShinys = 0
+            var averageSos = 0f
+            var totalEggs = 0
+            var averageEggs = 0f
 
-        return UpdateStatisticsData(totalShinys, totalEggShinys, totalSosShinys, averageSos, totalEggs, averageEggs)
+            for (edition in editions) {
+                totalShinys += repository.getTotalNumberOfShinys(edition)
+                totalEggShinys += repository.getTotalNumberOfEggShinys(edition)
+                totalSosShinys += repository.getTotalNumberOfSosShinys(edition)
+                averageSos += repository.getAverageSosEncounter(edition)
+                totalEggs += repository.getTotalNumberOfHatchedEggs(edition)
+                averageEggs += repository.getAverageEggsEncounter(edition)
+            }
+
+            // we summed up the avg, now divide by number of summands
+            averageEggs /= editions.size.toFloat()
+            averageSos /= editions.size.toFloat()
+
+            return UpdateStatisticsData(totalShinys, totalEggShinys, totalSosShinys, averageSos, totalEggs, averageEggs)
+        }
     }
 
     fun getShinyListData(): LiveData<List<PokemonData>> {

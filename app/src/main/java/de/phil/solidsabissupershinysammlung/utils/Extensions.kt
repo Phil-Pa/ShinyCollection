@@ -16,12 +16,3 @@ enum class MessageType {
     Info,
     Error
 }
-
-fun Activity.showMessage(message: String, type: MessageType) {
-    when (type) {
-        MessageType.Success -> Toasty.success(this, message, Toast.LENGTH_LONG).show()
-        MessageType.Warning -> Toasty.warning(this, message, Toast.LENGTH_LONG).show()
-        MessageType.Info -> Toasty.info(this, message, Toast.LENGTH_LONG).show()
-        MessageType.Error -> Toasty.error(this, message, Toast.LENGTH_LONG).show()
-    }
-}
