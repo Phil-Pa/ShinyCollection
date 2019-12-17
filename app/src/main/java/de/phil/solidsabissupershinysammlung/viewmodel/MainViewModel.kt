@@ -18,10 +18,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val exporter = DataExporter()
     private val importer = DataImporter()
 
-    fun init(repository: PokemonRepository) {
-        this.repository = repository
-    }
-
     fun addPokemon(pokemonData: PokemonData) {
         repository.insert(pokemonData)
     }

@@ -24,11 +24,12 @@ import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.database.DummyRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
+import de.phil.solidsabissupershinysammlung.utils.copyToClipboard
+import de.phil.solidsabissupershinysammlung.utils.getClipboardStringData
 import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -89,35 +90,6 @@ class MainActivity : AppCompatActivity() {
 
         val dialog = builder.create()
         dialog.show()
-    }
-
-    private fun getClipboardStringData(): String? {
-        var result: String? = null
-
-        var finished = false
-
-        runOnUiThread {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-            // 0 -> text, 1 -> uri, 2 -> intent
-
-            result = clipboard.primaryClip?.getItemAt(0)?.text?.toString()
-            finished = true
-        }
-
-        while (true) {
-            if (finished)
-                return result
-        }
-    }
-
-    fun copyToClipboard(data: String) {
-        runOnUiThread {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Pokemon Data", data)
-            clipboard.setPrimaryClip(clip)
-            showMessage(getString(R.string.copied_data), MessageType.Success)
-        }
     }
 
     private fun getCurrentTabIndex(): Int {
@@ -254,7 +226,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        viewModel.init(DummyRepository(application))
         viewModel.getShinyListData().observe(this, Observer {
 
             val updateData = viewModel.getStatisticsData()
