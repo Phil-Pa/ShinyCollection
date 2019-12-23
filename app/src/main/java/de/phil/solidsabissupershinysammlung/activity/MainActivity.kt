@@ -15,12 +15,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
@@ -32,8 +37,15 @@ import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     private fun showConfirmDeleteDialog() {
         val builder = AlertDialog.Builder(this)
@@ -252,9 +264,12 @@ class MainActivity : AppCompatActivity() {
         initNavigationDrawer()
         initNavigationViewViews()
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+       // viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        viewModel.init(DummyRepository(application))
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+
+        //viewModel.init(DummyRepository(application))
+
         viewModel.getShinyListData().observe(this, Observer {
 
             val updateData = viewModel.getStatisticsData()
@@ -442,4 +457,5 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 }

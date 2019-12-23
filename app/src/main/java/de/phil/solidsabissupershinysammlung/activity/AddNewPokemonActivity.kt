@@ -8,8 +8,12 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.AndroidPokemonResources
@@ -20,9 +24,16 @@ import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
+import javax.inject.Inject
 
 
-class AddNewPokemonActivity : AppCompatActivity() {
+class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     companion object {
 
@@ -47,10 +58,12 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
         tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, -1)
 
-        val androidPokemonResources = AndroidPokemonResources(this)
+        val androidPokemonResources = AndroidPokemonResources()
 
-        viewModel = ViewModelProviders.of(this).get(AddNewPokemonViewModel::class.java)
-        viewModel.init(PokemonRepository(androidPokemonResources, application))
+        //viewModel = ViewModelProviders.of(this).get(AddNewPokemonViewModel::class.java)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddNewPokemonViewModel::class.java)
+       // viewModel.init(PokemonRepository(androidPokemonResources, application))
 
         add_new_pokemon_activity_button_add.setOnClickListener {
 
@@ -161,5 +174,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         setResult(App.REQUEST_ADD_POKEMON, intent)
         finish()
     }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
 }

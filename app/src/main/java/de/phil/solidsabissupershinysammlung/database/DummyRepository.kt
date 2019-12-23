@@ -1,8 +1,9 @@
 package de.phil.solidsabissupershinysammlung.database
 
 import android.app.Application
+import javax.inject.Inject
 
-class DummyRepository(application: Application) : PokemonRepository(object : IAndroidPokemonResources {
+class DummyRepository @Inject constructor(application: Application) : PokemonRepository(object : IAndroidPokemonResources {
     override fun getPokemonNames(): List<String> {
         throw Exception()
     }

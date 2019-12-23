@@ -8,9 +8,10 @@ import androidx.lifecycle.LiveData
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
+import javax.inject.Inject
 
 
-open class PokemonRepository(private val androidPokemonResources: IAndroidPokemonResources, application: Application) {
+open class PokemonRepository @Inject constructor (private val androidPokemonResources: IAndroidPokemonResources, application: Application) {
 
     private val preferences: SharedPreferences = application.getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 

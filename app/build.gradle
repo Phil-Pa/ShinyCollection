@@ -105,4 +105,11 @@ dependencies {
     implementation "androidx.room:room-guava:$room_version"
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
+
+
+    implementation "com.google.dagger:dagger:2.21"
+    kapt "com.google.dagger:dagger-compiler:2.21"
+    implementation "com.google.dagger:dagger-android-support:2.21"
+    kapt "com.google.dagger:dagger-android-processor:2.21"
 }
