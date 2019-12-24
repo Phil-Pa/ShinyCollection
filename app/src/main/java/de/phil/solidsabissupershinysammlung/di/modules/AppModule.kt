@@ -4,7 +4,6 @@ import android.app.Application
 import dagger.Module
 import dagger.Provides
 import de.phil.solidsabissupershinysammlung.database.AndroidPokemonResources
-import de.phil.solidsabissupershinysammlung.database.DummyRepository
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import javax.inject.Singleton
 
@@ -13,11 +12,11 @@ import javax.inject.Singleton
 class AppModule {
 
 
-    @Provides
-    @Singleton
-    fun provideDummyRepository(application: Application): DummyRepository {
-        return DummyRepository(application)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideDummyRepository(application: Application): DummyRepository {
+//        return DummyRepository(application)
+//    }
 
 
     @Provides

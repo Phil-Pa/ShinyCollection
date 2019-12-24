@@ -23,13 +23,11 @@ import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.database.DummyRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
@@ -48,27 +46,31 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     private fun showConfirmDeleteDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.dialog_watch_out))
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle(getString(R.string.dialog_watch_out))
+//
+//        // refactor
+//        builder.setMessage("Möchtest du ${selectedPokemon!!.name} wirklich löschen?")
+//
+//        builder.setNegativeButton(R.string.sort_dialog_negative_button,
+//            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+//
+//        builder.setPositiveButton(
+//            R.string.sort_dialog_positive_button
+//        ) { _, _ ->
+//            recyclerViewChangedListeners.forEach {
+//                it.deletePokemon(selectedPokemon!!)
+//            }
+//            viewModel.deletePokemon(selectedPokemon!!)
+//        }
+//
+//        val dialog = builder.create()
+//        dialog.show()
 
-        // refactor
-        builder.setMessage("Möchtest du ${selectedPokemon!!.name} wirklich löschen?")
-
-        builder.setNegativeButton(R.string.sort_dialog_negative_button,
-            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
-
-        builder.setPositiveButton(
-            R.string.sort_dialog_positive_button
-        ) { _, _ ->
-            recyclerViewChangedListeners.forEach {
-                it.deletePokemon(selectedPokemon!!)
-            }
-            viewModel.deletePokemon(selectedPokemon!!)
+        recyclerViewChangedListeners.forEach {
+            it.deletePokemon(selectedPokemon!!)
         }
-
-        val dialog = builder.create()
-        dialog.show()
-
+        viewModel.deletePokemon(selectedPokemon!!)
     }
 
     private fun showDialog(action: (PokemonSortMethod) -> Unit) {
