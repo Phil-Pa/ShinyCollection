@@ -90,6 +90,10 @@ class SampleTest {
 
             delay(1000)
 
+            onView(withText("Bestätigen")).perform(click())
+
+            delay(1000)
+
             val afterData = activityRule.activity.viewModel.getAllPokemonDataFromTabIndex(i)
 
             assert(beforeData.size == afterData.size + 1)

@@ -67,9 +67,17 @@ class AndroidPokemonResources @Inject constructor() : IAndroidPokemonResources {
         return genNamesArray.flatten()
     }
 
+    private fun getPurePokemonName(name: String): String {
+        return when {
+            name.endsWith(App.ALOLA_EXTENSION) -> name.replace(App.ALOLA_EXTENSION, "")
+            name.endsWith(App.GALAR_EXTENSION) -> name.replace(App.GALAR_EXTENSION, "")
+            else -> name
+        }
+    }
+
     override fun getPokedexIdByName(name: String): Int {
-        val nonAlolaName =
-            if (name.endsWith(App.ALOLA_EXTENSION)) name.replace(App.ALOLA_EXTENSION, "") else name
+
+        val nonAlolaName = getPurePokemonName(name)
 
         var index = 0
         for (array in genNamesArray) {
@@ -86,8 +94,7 @@ class AndroidPokemonResources @Inject constructor() : IAndroidPokemonResources {
 
     override fun getGenerationByName(name: String): Int {
 
-        val nonAlolaName =
-            if (name.endsWith(App.ALOLA_EXTENSION)) name.replace(App.ALOLA_EXTENSION, "") else name
+        val nonAlolaName = getPurePokemonName(name)
 
         var generation = 1
         for (array in genNamesArray) {

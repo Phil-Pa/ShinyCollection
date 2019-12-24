@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.*
 import android.os.Bundle
 import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -46,31 +48,30 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     private fun showConfirmDeleteDialog() {
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle(getString(R.string.dialog_watch_out))
-//
-//        // refactor
-//        builder.setMessage("Möchtest du ${selectedPokemon!!.name} wirklich löschen?")
-//
-//        builder.setNegativeButton(R.string.sort_dialog_negative_button,
-//            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
-//
-//        builder.setPositiveButton(
-//            R.string.sort_dialog_positive_button
-//        ) { _, _ ->
-//            recyclerViewChangedListeners.forEach {
-//                it.deletePokemon(selectedPokemon!!)
-//            }
-//            viewModel.deletePokemon(selectedPokemon!!)
-//        }
-//
-//        val dialog = builder.create()
-//        dialog.show()
 
-        recyclerViewChangedListeners.forEach {
-            it.deletePokemon(selectedPokemon!!)
+        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.dialog_watch_out))
+
+        // refactor
+        builder.setMessage("Möchtest du ${selectedPokemon!!.name} wirklich löschen?")
+
+        builder.setNegativeButton(R.string.sort_dialog_negative_button,
+            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+
+        builder.setPositiveButton(
+            R.string.sort_dialog_positive_button
+        ) { _, _ ->
+            recyclerViewChangedListeners.forEach {
+                it.deletePokemon(selectedPokemon!!)
+            }
+            viewModel.deletePokemon(selectedPokemon!!)
         }
-        viewModel.deletePokemon(selectedPokemon!!)
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun showDialog(action: (PokemonSortMethod) -> Unit) {
@@ -165,6 +166,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             data.encounterNeeded++
             recyclerViewChangedListeners.forEach { it.updatePokemonEncounter(data) }
             viewModel.updatePokemon(data)
+
+            if (viewModel.shouldAutoSort())
+                recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
         }
     }
 
@@ -201,9 +205,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
                                 selectedPokemon!!.tabIndex = App.TAB_INDEX_SHINY_LIST
 
+                                viewModel.addPokemon(selectedPokemon!!)
                                 recyclerViewChangedListeners.forEach {
                                     it.addPokemon(selectedPokemon!!) }
-                                viewModel.addPokemon(selectedPokemon!!)
+
+                                if (viewModel.shouldAutoSort())
+                                    recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
                             }
                         }
                     }

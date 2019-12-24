@@ -16,8 +16,6 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.database.AndroidPokemonResources
-import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.utils.MessageType
@@ -58,12 +56,7 @@ class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, -1)
 
-        val androidPokemonResources = AndroidPokemonResources()
-
-        //viewModel = ViewModelProviders.of(this).get(AddNewPokemonViewModel::class.java)
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddNewPokemonViewModel::class.java)
-       // viewModel.init(PokemonRepository(androidPokemonResources, application))
 
         add_new_pokemon_activity_button_add.setOnClickListener {
 
@@ -102,31 +95,40 @@ class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
         val adapter = ArrayAdapter<String>(
             this,
             android.R.layout.simple_dropdown_item_1line,
-            androidPokemonResources.getPokemonNames()
+            viewModel.getPokemonNames()
         )
         add_new_pokemon_activity_edittext_name.setAdapter(adapter)
         add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 var text = s.toString()
 
-                val isAlola = text.endsWith("-alola")
+                val isAlola = text.endsWith(App.ALOLA_EXTENSION)
                 if (isAlola)
-                    text = text.replace("-alola", "")
+                    text = text.replace(App.ALOLA_EXTENSION, "")
 
-
+                val isGalar = text.endsWith(App.GALAR_EXTENSION)
+                if (isGalar)
+                    text = text.replace(App.GALAR_EXTENSION, "")
 
                 if (viewModel.pokemonNameExists(text)) {
 
                     // needed to get the correct download url
                     val id = viewModel.getPokedexIdByName(text)
-                    val generation = viewModel.getGenerationByName(text)
+                    val generation = when {
+                        !isAlola && !isGalar -> viewModel.getGenerationByName(text)
+                        !isGalar -> 7
+                        !isAlola -> 8
+                        else -> throw Exception()
+                    }
 
                     val invalidData = PokemonData("-1", id, generation, -1, HuntMethod.Other, -1)
                     val urlWithoutAlola = invalidData.getDownloadUrl()
                     val url = StringBuilder(urlWithoutAlola)
 
-                    if (isAlola)
-                        url.insert(urlWithoutAlola.length - 4, "-alola")
+                    when {
+                        isAlola -> url.insert(urlWithoutAlola.length - 4, App.ALOLA_EXTENSION)
+                        isGalar -> url.insert(urlWithoutAlola.length - 4, App.GALAR_EXTENSION)
+                    }
 
                     val downloadUrl = url.toString()
 

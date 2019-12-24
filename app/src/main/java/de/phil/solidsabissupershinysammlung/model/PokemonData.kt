@@ -44,12 +44,16 @@ data class PokemonData(
         return name in alolaPokemon
     }
 
+    private fun isGalar(): Boolean {
+        return name in galarPokemon
+    }
+
     fun getDownloadUrl(): String {
 
-        val baseString = if (generation == 8) {
-            "https://media.bisafans.de/b947e09/pokemon/gen8/swsh/normal/"
-        } else
-            "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
+        val baseString = when {
+            generation == 8 || isGalar() -> "https://media.bisafans.de/67fac06/pokemon/gen8/swsh/shiny/"
+            else -> "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
+        }
 
         return "$baseString${getBitmapFileName()}"
     }
@@ -59,9 +63,11 @@ data class PokemonData(
         while (generationString.length < 3)
             generationString.insert(0, '0')
 
-        if (isAlola()) {
-            generationString.append(App.ALOLA_EXTENSION)
+        when {
+            isAlola() -> generationString.append(App.ALOLA_EXTENSION)
+            isGalar() -> generationString.append(App.GALAR_EXTENSION)
         }
+
         return "$generationString.png"
     }
 
@@ -80,6 +86,12 @@ data class PokemonData(
             "Vulpix", "Vulnona", "Digda", "Digdri", "Mauzi", "Snobilikat", "Kleinstein",
             "Georok", "Geowaz", "Sleima", "Sleimok", "Kokowei", "Knogga"
         ).map { "$it${App.ALOLA_EXTENSION}" }
+
+        private val galarPokemon = listOf(
+            "Mauzi", "Ponita", "Gallopa", "Porenta", "Smogmog", "Pantimos",
+            "Corasonn", "Zigzachs", "Geradaks", "Flampion", "Flampivian",
+            "Makabaja", "Flunschlik"
+        ).map { "$it${App.GALAR_EXTENSION}" }
 
     }
 
