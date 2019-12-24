@@ -7,7 +7,7 @@ class DataExporter {
 
     var shouldCompressData = false
 
-    fun export(repository: PokemonRepository): String? {
+    fun export(repository: IPokemonRepository): String? {
 
         val pokemonList = mutableListOf<PokemonData>()
 

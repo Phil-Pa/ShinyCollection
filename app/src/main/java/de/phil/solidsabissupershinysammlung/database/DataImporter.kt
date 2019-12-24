@@ -13,7 +13,7 @@ class DataImporter {
         private const val compressedRegex = "\\(([\\w+\\-\\d:]+), (\\d+), (\\d), (\\d+), (\\w+), (\\d), (\\d+)\\)"
     }
 
-    fun import(repository: PokemonRepository, data: String?): Boolean {
+    fun import(repository: IPokemonRepository, data: String?): Boolean {
         if (data == null)
             return false
 

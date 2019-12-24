@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
+import de.phil.solidsabissupershinysammlung.MyApplication
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
@@ -12,112 +13,113 @@ import javax.inject.Inject
 
 
 open class PokemonRepository @Inject constructor (private val androidPokemonResources: IAndroidPokemonResources,
-                                                  private val pokemonDao: PokemonDao,
-                                                  application: Application) {
+                                                  private val pokemonDao: PokemonDao) : IPokemonRepository {
+
+    private val application = MyApplication.applicationContext()
 
     private val preferences: SharedPreferences = application.getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
 //    private val pokemonDao: PokemonDao =
 //        PokemonRoomDatabase.instance(application.applicationContext).pokemonDao()
 
-    fun insert(pokemonData: PokemonData) {
+    override fun insert(pokemonData: PokemonData) {
         InsertAsyncTask(pokemonDao).execute(pokemonData)
     }
 
-    fun delete(pokemonData: PokemonData) {
+    override fun delete(pokemonData: PokemonData) {
         DeleteAsyncTask(pokemonDao).execute(pokemonData)
     }
 
-    fun deleteAll() {
+    override fun deleteAll() {
         DeleteAllAsyncTask(pokemonDao).execute()
     }
 
-    fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
+    override fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
         return GetAllPokemonDataFromTabIndexAsyncTask(pokemonDao).execute(tabIndex).get()
     }
 
-    fun getTotalNumberOfShinys(): Int {
+    override fun getTotalNumberOfShinys(): Int {
         return GetTotalNumberOfShinysAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getTotalNumberOfEggShinys(): Int {
+    override fun getTotalNumberOfEggShinys(): Int {
         return GetTotalNumberOfEggShinysAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getTotalNumberOfSosShinys(): Int {
+    override fun getTotalNumberOfSosShinys(): Int {
         return GetTotalNumberOfSosShinysAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getAverageSosEncounter(): Float {
+    override fun getAverageSosEncounter(): Float {
         return GetAverageSosEncounterAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getTotalNumberOfHatchedEggs(): Int {
+    override fun getTotalNumberOfHatchedEggs(): Int {
         return GetTotalNumberOfHatchedEggsAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getAverageEggsEncounter(): Float {
+    override fun getAverageEggsEncounter(): Float {
         return GetAverageEggsEncounterAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getShinyListData(): LiveData<List<PokemonData>> {
+    override fun getShinyListData(): LiveData<List<PokemonData>> {
         return GetShinyListDataAsyncTask(pokemonDao).execute().get()
     }
 
-    fun setGuideShown() {
+    override fun setGuideShown() {
         preferences.edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, true).apply()
     }
 
-    fun isGuideShown(): Boolean {
+    override fun isGuideShown(): Boolean {
         return preferences.getBoolean(App.PREFERENCES_GUIDE_SHOWN, false)
     }
 
-    fun setSortMethod(sortMethod: PokemonSortMethod) {
+    override fun setSortMethod(sortMethod: PokemonSortMethod) {
         preferences.edit().putInt(App.PREFERENCES_SORT_METHOD, sortMethod.ordinal).apply()
     }
 
-    fun getSortMethod(): PokemonSortMethod {
+    override fun getSortMethod(): PokemonSortMethod {
         val intValue = preferences.getInt(App.PREFERENCES_SORT_METHOD, PokemonSortMethod.InternalId.ordinal)
         return PokemonSortMethod.fromInt(intValue) ?: throw Exception()
     }
 
-    fun setShouldAutoSort(value: Boolean) {
+    override fun setShouldAutoSort(value: Boolean) {
         preferences.edit().putBoolean(App.PREFERENCES_AUTO_SORT, value).apply()
     }
 
-    fun shouldAutoSort(): Boolean {
+    override fun shouldAutoSort(): Boolean {
         return preferences.getBoolean(App.PREFERENCES_AUTO_SORT, false)
     }
 
-    fun setDataCompression(value: Boolean) {
+    override fun setDataCompression(value: Boolean) {
         preferences.edit().putBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, value).apply()
     }
 
-    fun shouldCompressData(): Boolean {
+    override fun shouldCompressData(): Boolean {
         return preferences.getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, false)
     }
 
-    fun getPokemonNames(): List<String> {
+    override fun getPokemonNames(): List<String> {
         return androidPokemonResources.getPokemonNames()
     }
 
-    fun getPokedexIdByName(name: String): Int {
+    override fun getPokedexIdByName(name: String): Int {
         return androidPokemonResources.getPokedexIdByName(name)
     }
 
-    fun getGenerationByName(name: String): Int {
+    override fun getGenerationByName(name: String): Int {
         return androidPokemonResources.getGenerationByName(name)
     }
 
-    fun getMaxInternalId(): Int {
+    override fun getMaxInternalId(): Int {
         return GetMaxInternalIdAsyncTask(pokemonDao).execute().get()
     }
 
-    fun getRandomPokemonData(tabIndex: Int): PokemonData? {
+    override fun getRandomPokemonData(tabIndex: Int): PokemonData? {
         return GetRandomPokemonDataAsyncTask(pokemonDao).execute(tabIndex).get()
     }
 
-    fun update(pokemonData: PokemonData) {
+    override fun update(pokemonData: PokemonData) {
         UpdateAsyncTask(pokemonDao).execute(pokemonData)
     }
 

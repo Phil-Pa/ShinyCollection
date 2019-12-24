@@ -2,10 +2,9 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.database.DataExporter
 import de.phil.solidsabissupershinysammlung.database.DataImporter
-import de.phil.solidsabissupershinysammlung.database.PokemonRepository
+import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
@@ -13,15 +12,10 @@ import de.phil.solidsabissupershinysammlung.utils.round
 import javax.inject.Inject
 
 class MainViewModel @Inject
-constructor(private val pokemonRepository: PokemonRepository) : ViewModel() {
+constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
 
- //   private lateinit var repository: PokemonRepository
     private val exporter = DataExporter()
     private val importer = DataImporter()
-
-//    fun init(repository: PokemonRepository) {
-       // this.repository = repository
-//    }
 
     fun addPokemon(pokemonData: PokemonData) {
         pokemonRepository.insert(pokemonData)
@@ -94,16 +88,6 @@ constructor(private val pokemonRepository: PokemonRepository) : ViewModel() {
 
     fun shouldAutoSort(): Boolean {
         return pokemonRepository.shouldAutoSort()
-    }
-
-    fun getPreferences(): Map<String, String> {
-        return mapOf(
-
-            App.PREFERENCES_GUIDE_SHOWN to pokemonRepository.isGuideShown().toString(),
-            App.PREFERENCES_AUTO_SORT to pokemonRepository.shouldAutoSort().toString(),
-            App.PREFERENCES_SORT_METHOD to pokemonRepository.getSortMethod().toString()
-
-        )
     }
 
     fun setShouldAutoSort(value: Boolean) {

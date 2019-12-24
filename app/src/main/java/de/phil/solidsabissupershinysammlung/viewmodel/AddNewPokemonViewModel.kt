@@ -3,11 +3,12 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
 import de.phil.solidsabissupershinysammlung.database.PokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import javax.inject.Inject
 
-class AddNewPokemonViewModel @Inject constructor(private val pokemonRepository: PokemonRepository,application: Application
+class AddNewPokemonViewModel @Inject constructor(private val pokemonRepository: IPokemonRepository, application: Application
 ) : AndroidViewModel(application) {
 
 //    private lateinit var repository: PokemonRepository
