@@ -11,12 +11,14 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import javax.inject.Inject
 
 
-open class PokemonRepository @Inject constructor (private val androidPokemonResources: IAndroidPokemonResources, application: Application) {
+open class PokemonRepository @Inject constructor (private val androidPokemonResources: IAndroidPokemonResources,
+                                                  private val pokemonDao: PokemonDao,
+                                                  application: Application) {
 
     private val preferences: SharedPreferences = application.getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
-    private val pokemonDao: PokemonDao =
-        PokemonRoomDatabase.instance(application.applicationContext).pokemonDao()
+//    private val pokemonDao: PokemonDao =
+//        PokemonRoomDatabase.instance(application.applicationContext).pokemonDao()
 
     fun insert(pokemonData: PokemonData) {
         InsertAsyncTask(pokemonDao).execute(pokemonData)
