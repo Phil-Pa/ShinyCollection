@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import de.phil.solidsabissupershinysammlung.ViewModelFactory
+import de.phil.solidsabissupershinysammlung.viewmodel.ViewModelFactory
 import de.phil.solidsabissupershinysammlung.di.key.ViewModelKey
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel

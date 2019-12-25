@@ -19,16 +19,15 @@ import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.utils.MessageType
-import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 import javax.inject.Inject
 
 
 class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>

@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
-import de.phil.solidsabissupershinysammlung.MyApplication
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 
 
 /**
@@ -17,10 +17,10 @@ import de.phil.solidsabissupershinysammlung.MyApplication
  **/
 
 object AppInjector {
-    fun init(myApplication: MyApplication) {
-        DaggerAppComponent.builder().application(myApplication)
-            .build().inject(myApplication)
-        myApplication.registerActivityLifecycleCallbacks(object :
+    fun init(shinyPokemonApplication: ShinyPokemonApplication) {
+        DaggerAppComponent.builder().application(shinyPokemonApplication)
+            .build().inject(shinyPokemonApplication)
+        shinyPokemonApplication.registerActivityLifecycleCallbacks(object :
             Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivity(activity)

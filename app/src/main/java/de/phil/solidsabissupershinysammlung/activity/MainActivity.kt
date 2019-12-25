@@ -1,11 +1,10 @@
 package de.phil.solidsabissupershinysammlung.activity
 
 import android.app.Activity
-import android.content.*
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -34,7 +33,6 @@ import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
-import de.phil.solidsabissupershinysammlung.utils.showMessage
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -49,24 +47,17 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private fun showConfirmDeleteDialog() {
 
-        val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        vibrate(200)
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_watch_out))
-
-        // refactor
         builder.setMessage("Möchtest du ${selectedPokemon!!.name} wirklich löschen?")
-
         builder.setNegativeButton(R.string.sort_dialog_negative_button,
             DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
-
         builder.setPositiveButton(
             R.string.sort_dialog_positive_button
         ) { _, _ ->
-            recyclerViewChangedListeners.forEach {
-                it.deletePokemon(selectedPokemon!!)
-            }
+            recyclerViewChangedListeners.forEach { it.deletePokemon(selectedPokemon!!) }
             viewModel.deletePokemon(selectedPokemon!!)
         }
 
@@ -81,10 +72,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         val customView = layoutInflater.inflate(R.layout.dialog_sort, drawerLayout, false)
         builder.setView(customView)
-
         builder.setNegativeButton(R.string.sort_dialog_negative_button,
             DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
-
         builder.setPositiveButton(
             R.string.sort_dialog_positive_button
         ) { _, _ ->
@@ -104,35 +93,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         val dialog = builder.create()
         dialog.show()
-    }
-
-    private fun getClipboardStringData(): String? {
-        var result: String? = null
-
-        var finished = false
-
-        runOnUiThread {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-            // 0 -> text, 1 -> uri, 2 -> intent
-
-            result = clipboard.primaryClip?.getItemAt(0)?.text?.toString()
-            finished = true
-        }
-
-        while (true) {
-            if (finished)
-                return result
-        }
-    }
-
-    fun copyToClipboard(data: String) {
-        runOnUiThread {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Pokemon Data", data)
-            clipboard.setPrimaryClip(clip)
-            showMessage(getString(R.string.copied_data), MessageType.Success)
-        }
     }
 
     private fun getCurrentTabIndex(): Int {
@@ -178,8 +138,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     fun onListEntryLongClick(data: PokemonData) {
         if (actionMode == null) {
             startSupportActionMode(object : ActionMode.Callback {
-
-
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
                     when (item?.itemId) {
                         R.id.delete_entry -> {

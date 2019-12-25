@@ -4,7 +4,7 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
-import de.phil.solidsabissupershinysammlung.MyApplication
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.di.modules.ActivityBuilderModule
 import de.phil.solidsabissupershinysammlung.di.modules.AppModule
 import javax.inject.Singleton
@@ -21,5 +21,5 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun inject(myApplication: MyApplication)
+    fun inject(shinyPokemonApplication: ShinyPokemonApplication)
 }

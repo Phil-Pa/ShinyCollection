@@ -8,18 +8,17 @@ import dagger.android.HasActivityInjector
 import de.phil.solidsabissupershinysammlung.di.AppInjector
 import javax.inject.Inject
 
-class MyApplication : Application(), HasActivityInjector {
+class ShinyPokemonApplication : Application(), HasActivityInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-
 
     init {
         instance = this
     }
 
     companion object {
-        private var instance: MyApplication? = null
+        private var instance: ShinyPokemonApplication? = null
         fun applicationContext(): Context {
             return instance!!.applicationContext
         }

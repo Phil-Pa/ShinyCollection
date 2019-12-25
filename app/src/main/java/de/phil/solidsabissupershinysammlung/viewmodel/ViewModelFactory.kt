@@ -1,4 +1,4 @@
-package de.phil.solidsabissupershinysammlung
+package de.phil.solidsabissupershinysammlung.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

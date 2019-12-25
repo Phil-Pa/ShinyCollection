@@ -1,20 +1,20 @@
 package de.phil.solidsabissupershinysammlung.database
 
-import de.phil.solidsabissupershinysammlung.MyApplication
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import javax.inject.Inject
 
 class AndroidPokemonResources @Inject constructor() : IAndroidPokemonResources {
 
-    private var gen1Names: Array<String> = MyApplication.applicationContext() .resources.getStringArray(R.array.gen1Names)
-    private var gen2Names: Array<String> = MyApplication.applicationContext().resources.getStringArray(R.array.gen2Names)
-    private var gen3Names: Array<String> = MyApplication.applicationContext().resources.getStringArray(R.array.gen3Names)
-    private var gen4Names: Array<String> = MyApplication.applicationContext().resources.getStringArray(R.array.gen4Names)
-    private var gen5Names: Array<String> = MyApplication.applicationContext().resources.getStringArray(R.array.gen5Names)
-    private var gen6Names: Array<String> = MyApplication.applicationContext().resources.getStringArray(R.array.gen6Names)
-    private var gen7Names: Array<String> = MyApplication.applicationContext().resources.getStringArray(R.array.gen7Names)
-    private var gen8Names: Array<String> = MyApplication.applicationContext().resources.getStringArray(R.array.gen8Names)
+    private var gen1Names: Array<String> = ShinyPokemonApplication.applicationContext() .resources.getStringArray(R.array.gen1Names)
+    private var gen2Names: Array<String> = ShinyPokemonApplication.applicationContext().resources.getStringArray(R.array.gen2Names)
+    private var gen3Names: Array<String> = ShinyPokemonApplication.applicationContext().resources.getStringArray(R.array.gen3Names)
+    private var gen4Names: Array<String> = ShinyPokemonApplication.applicationContext().resources.getStringArray(R.array.gen4Names)
+    private var gen5Names: Array<String> = ShinyPokemonApplication.applicationContext().resources.getStringArray(R.array.gen5Names)
+    private var gen6Names: Array<String> = ShinyPokemonApplication.applicationContext().resources.getStringArray(R.array.gen6Names)
+    private var gen7Names: Array<String> = ShinyPokemonApplication.applicationContext().resources.getStringArray(R.array.gen7Names)
+    private var gen8Names: Array<String> = ShinyPokemonApplication.applicationContext().resources.getStringArray(R.array.gen8Names)
 
     private var genNamesArray: Array<Array<String>>
 
@@ -42,14 +42,14 @@ class AndroidPokemonResources @Inject constructor() : IAndroidPokemonResources {
             gen8Names
         )
 
-        gen1PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen1Ids).toTypedArray()
-        gen2PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen2Ids).toTypedArray()
-        gen3PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen3Ids).toTypedArray()
-        gen4PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen4Ids).toTypedArray()
-        gen5PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen5Ids).toTypedArray()
-        gen6PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen6Ids).toTypedArray()
-        gen7PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen7Ids).toTypedArray()
-        gen8PokedexIds = MyApplication.applicationContext().resources.getIntArray(R.array.gen8Ids).toTypedArray()
+        gen1PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen1Ids).toTypedArray()
+        gen2PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen2Ids).toTypedArray()
+        gen3PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen3Ids).toTypedArray()
+        gen4PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen4Ids).toTypedArray()
+        gen5PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen5Ids).toTypedArray()
+        gen6PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen6Ids).toTypedArray()
+        gen7PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen7Ids).toTypedArray()
+        gen8PokedexIds = ShinyPokemonApplication.applicationContext().resources.getIntArray(R.array.gen8Ids).toTypedArray()
 
         genPokedexIdsArray = arrayOf(
             gen1PokedexIds,
