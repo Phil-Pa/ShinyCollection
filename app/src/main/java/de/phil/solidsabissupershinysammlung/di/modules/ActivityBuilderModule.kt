@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import de.phil.solidsabissupershinysammlung.activity.AddNewPokemonActivity
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
+import de.phil.solidsabissupershinysammlung.activity.StatisticsActivity
 
 /*
  * The module which provides the android injection service to activities
@@ -16,5 +17,8 @@ abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector(modules = [FragmentBuilderModule::class])
     abstract fun contributeAddNewPokemonActivity(): AddNewPokemonActivity
+
+    @ContributesAndroidInjector(modules = [FragmentBuilderModule::class])
+    abstract fun contributeStatisticsActivity(): StatisticsActivity
 
 }

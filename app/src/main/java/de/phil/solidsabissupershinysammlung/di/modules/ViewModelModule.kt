@@ -9,6 +9,7 @@ import de.phil.solidsabissupershinysammlung.viewmodel.ViewModelFactory
 import de.phil.solidsabissupershinysammlung.di.key.ViewModelKey
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
+import de.phil.solidsabissupershinysammlung.viewmodel.StatisticsViewModel
 
 /**
  * View Model module which provides the viewmodelfactory and viewmodel instances
@@ -25,6 +26,11 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(AddNewPokemonViewModel::class)
     fun bindAddNewPokemonViewModel(addNewPokemonViewModel: AddNewPokemonViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(StatisticsViewModel::class)
+    fun bindStatisticsViewModel(statisticsViewModel: StatisticsViewModel): ViewModel
 
     @Binds
     fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
