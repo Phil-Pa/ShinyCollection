@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="de.phil.solidsabissupershinysammlung">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="de.phil.solidsabissupershinysammlung">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
             android:name=".ShinyPokemonApplication"
-
             android:allowBackup="false"
             android:icon="@drawable/egg"
             android:label="@string/app_name"
@@ -16,28 +15,28 @@
             android:supportsRtl="true"
             android:theme="@style/AppThemeTorben"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.StatisticsActivity"></activity>
         <activity
                 android:name=".activity.SettingsActivity"
                 android:label="@string/title_activity_settings"
                 android:parentActivityName=".activity.MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="de.phil.solidsabissupershinysammlung.activity.MainActivity"/>
+                    android:value="de.phil.solidsabissupershinysammlung.activity.MainActivity" />
         </activity>
         <activity
-                android:label="@string/title_activity_addNewPokemon"
                 android:name=".activity.AddNewPokemonActivity"
-                android:parentActivityName=".activity.MainActivity">
-        </activity>
+                android:label="@string/title_activity_addNewPokemon"
+                android:parentActivityName=".activity.MainActivity"></activity>
         <activity
                 android:name=".activity.MainActivity"
+                android:label="@string/app_name"
                 android:persistent="true"
-                android:theme="@style/AppThemeTorben.NoActionBar"
-                android:label="@string/app_name">
+                android:theme="@style/AppThemeTorben.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

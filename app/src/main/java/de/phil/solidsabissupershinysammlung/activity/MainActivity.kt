@@ -292,6 +292,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.view_statistics -> {
+                    startActivity(Intent(this, StatisticsActivity::class.java))
+                }
                 R.id.settings -> {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
                 }
