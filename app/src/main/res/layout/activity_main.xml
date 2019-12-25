@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="false"
-        tools:openDrawer="end">
+        tools:openDrawer="left">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -58,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:itemIconTint="?attr/colorAccent"
+            app:itemTextColor="?attr/colorAccent"
             android:layout_gravity="start"
             android:fitsSystemWindows="false"
             app:headerLayout="@layout/activity_main_header_navigation_drawer"
