@@ -36,34 +36,24 @@ class StatisticsActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(StatisticsViewModel::class.java)
+        viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(StatisticsViewModel::class.java)
 
-        val lineDataSet = LineDataSet(getData(), "Inducesmile")
-//        lineDataSet.setGradientColor(android.R.color.white, android.R.color.holo_red_dark)
-        lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
-        lineDataSet.fillColor = R.color.color_purple_sabi
-        lineDataSet.valueTextColor = ContextCompat.getColor(this, R.color.color_purple_sabi)
-        val xAxis: XAxis = lineChart.xAxis
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.granularity = 1f
-//        xAxis.valueFormatter = formatter
-        val yAxisRight: YAxis = lineChart.axisRight
-        yAxisRight.isEnabled = false
-        val yAxisLeft: YAxis = lineChart.axisLeft
-        yAxisLeft.granularity = 1f
-        val data = LineData(lineDataSet)
-        lineChart.data = data
-        lineChart.animateX(2500)
-        lineChart.invalidate()
+        val entries = viewModel.getDataEntries()
+        setupChart(entries)
     }
 
-    private fun getData(): List<Entry> {
-        val entries = mutableListOf<Entry>()
-        for (i in 0..100) {
-            val temp = i.toFloat()
-            entries.add(Entry(temp, kotlin.random.Random.nextFloat() * 10f))
-        }
-        return entries
+    private fun setupChart(entries: List<Entry>) {
+
+        val lineData = LineDataSet(entries, "Durchschnitt")
+        lineData.setDrawFilled(true)
+        lineData.setFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+        lineData.mode = LineDataSet.Mode.CUBIC_BEZIER
+
+        lineChart.setBackgroundColor(resources.getColor(android.R.color.white, theme))
+        lineChart.setDrawGridBackground(false)
+        lineChart.axisRight.isEnabled = false
+        lineChart.data = LineData(lineData)
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

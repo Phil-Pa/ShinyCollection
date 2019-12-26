@@ -35,5 +35,6 @@ interface IPokemonRepository {
 
     fun setPokemonEdition(pokemonEdition: PokemonEdition)
     fun getPokemonEdition(): PokemonEdition
+    fun getAllPokemonData(): List<PokemonData>
 
 }

@@ -25,8 +25,8 @@ interface PokemonDao {
     @Query("SELECT SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0 AND pokemon_edition = :pokemonEditionOrdinal")
     fun getTotalEggsCount(pokemonEditionOrdinal: Int): Int
 
-    @Query("SELECT * FROM pokemondata ORDER BY tab_index")
-    fun getAllPokemonData(): LiveData<List<PokemonData>>
+    @Query("SELECT * FROM pokemondata")
+    fun getAllPokemonData(): List<PokemonData>
 
     @Query("SELECT * FROM pokemondata WHERE tab_index = :tabIndex")
     fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData>

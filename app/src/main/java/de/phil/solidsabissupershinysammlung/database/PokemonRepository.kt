@@ -123,6 +123,10 @@ open class PokemonRepository @Inject constructor (private val androidPokemonReso
         UpdateAsyncTask(pokemonDao).execute(pokemonData)
     }
 
+    override fun getAllPokemonData(): List<PokemonData> {
+        return GetAllPokemonDataAsyncTask(pokemonDao).execute().get()
+    }
+
     override fun setPokemonEdition(pokemonEdition: PokemonEdition) {
         preferences.edit().putInt(App.PREFERENCES_POKEMON_EDITION, pokemonEdition.ordinal).apply()
     }
@@ -133,6 +137,12 @@ open class PokemonRepository @Inject constructor (private val androidPokemonReso
     }
 
     //region async tasks
+
+    class GetAllPokemonDataAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Unit, Unit, List<PokemonData>>() {
+        override fun doInBackground(vararg params: Unit?): List<PokemonData> {
+            return pokemonDao.getAllPokemonData()
+        }
+    }
 
     class InsertAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<PokemonData, Unit, Unit>() {
         override fun doInBackground(vararg params: PokemonData?) {
