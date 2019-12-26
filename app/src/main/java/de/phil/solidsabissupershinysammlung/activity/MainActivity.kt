@@ -48,6 +48,19 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
+        val updateData = viewModel.getStatisticsData()
+
+        updateShinyStatistics(
+            updateData.totalNumberOfShiny,
+            updateData.totalNumberOfEggShiny,
+            updateData.totalNumberOfSosShiny,
+            updateData.averageSos,
+            updateData.totalEggs,
+            updateData.averageEggs
+        )
+    }
+
     private fun changeEdition() {
 
         drawerLayout.closeDrawers()
@@ -68,9 +81,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         for ((index, view) in imageViews.withIndex()) {
             view.setOnClickListener {
                 val updatedPokemonEdition = PokemonEdition.fromInt(index)!!
-                // TODO
-//                viewModel.setPokemonEdition(updatedPokemonEdition)
-//                updatePokemonEdition(updatedPokemonEdition)
+                viewModel.setPokemonEdition(updatedPokemonEdition)
                 dialog.dismiss()
             }
         }
@@ -251,6 +262,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         fun deletePokemon(pokemonData: PokemonData)
         fun deleteAllPokemon(tabIndex: Int)
         fun refreshRecyclerView()
+        fun reload()
     }
 
     lateinit var viewModel: MainViewModel
@@ -283,6 +295,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 updateData.totalEggs,
                 updateData.averageEggs
             )
+        })
+
+        viewModel.getPokemonEditionLiveData().observe(this, Observer {
+            recyclerViewChangedListeners.forEach { listener -> listener.reload() }
+            applyPokemonEdition(it)
         })
     }
 
@@ -393,6 +410,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onResume()
 
         initPreferences()
+        recyclerViewChangedListeners.forEach { it.reload() }
+        applyPokemonEdition(viewModel.getPokemonEdition())
 
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
