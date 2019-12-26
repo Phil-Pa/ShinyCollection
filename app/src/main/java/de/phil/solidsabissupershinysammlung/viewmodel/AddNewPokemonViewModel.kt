@@ -53,6 +53,7 @@ class AddNewPokemonViewModel @Inject constructor(
             generation,
             pokemonData.encounterNeeded,
             pokemonData.huntMethod,
+            pokemonData.pokemonEdition,
             pokemonData.tabIndex
         )
         validatedData.internalId = internalId

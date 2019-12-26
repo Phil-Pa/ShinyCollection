@@ -8,12 +8,14 @@ import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -31,6 +33,7 @@ import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
@@ -44,6 +47,59 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
+        val updateData = viewModel.getStatisticsData()
+
+        updateShinyStatistics(
+            updateData.totalNumberOfShiny,
+            updateData.totalNumberOfEggShiny,
+            updateData.totalNumberOfSosShiny,
+            updateData.averageSos,
+            updateData.totalEggs,
+            updateData.averageEggs
+        )
+
+        with (imageViewPokemonEdition) {
+            when (pokemonEdition) {
+                PokemonEdition.ORAS -> setImageResource(R.drawable.cover_oras)
+                    PokemonEdition.SM -> setImageResource(R.drawable.cover_sm)
+                PokemonEdition.USUM -> setImageResource(R.drawable.cover_usum)
+                PokemonEdition.SWSH -> setImageResource(R.drawable.cover_swsh)
+                PokemonEdition.GO -> setImageResource(R.drawable.cover_go)
+                PokemonEdition.LETSGO -> setImageResource(R.drawable.cover_letsgo)
+            }
+        }
+    }
+
+    private fun changeEdition() {
+
+        drawerLayout.closeDrawers()
+        val customView = layoutInflater.inflate(R.layout.dialog_change_edition, drawerLayout, false)
+
+        val builder = AlertDialog.Builder(this)
+            .setTitle("Edition ändern")
+            .setMessage("Wähle, zu welcher Edition du wechseln möchtest")
+            .setView(customView)
+
+        val imageViews = listOf<AppCompatImageView>(
+            customView.findViewById(R.id.dialog_edition_oras),
+            customView.findViewById(R.id.dialog_edition_sm),
+            customView.findViewById(R.id.dialog_edition_usum),
+            customView.findViewById(R.id.dialog_edition_swsh)
+        )
+        val dialog = builder.create()
+        for ((index, view) in imageViews.withIndex()) {
+            view.setOnClickListener {
+                val updatedPokemonEdition = PokemonEdition.fromInt(index)!!
+                viewModel.setPokemonEdition(updatedPokemonEdition)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+
 
     private fun showConfirmDeleteDialog() {
 
@@ -199,6 +255,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
+    private lateinit var imageViewPokemonEdition: ImageView
     private lateinit var textViewTotalEggs: TextView
     private lateinit var textViewTotalEggShinys: TextView
     private lateinit var textViewTotalSosShinys: TextView
@@ -217,6 +274,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         fun deletePokemon(pokemonData: PokemonData)
         fun deleteAllPokemon(tabIndex: Int)
         fun refreshRecyclerView()
+        fun reload()
     }
 
     lateinit var viewModel: MainViewModel
@@ -249,6 +307,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 updateData.totalEggs,
                 updateData.averageEggs
             )
+        })
+
+        viewModel.getPokemonEditionLiveData().observe(this, Observer {
+            recyclerViewChangedListeners.forEach { listener -> listener.reload() }
+            applyPokemonEdition(it)
         })
     }
 
@@ -318,6 +381,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     else
                         copyToClipboard(data)
                 }
+                R.id.changeEdition -> {
+                    changeEdition()
+                }
                 R.id.sortData -> {
                     showDialog { sortMethod ->
                         recyclerViewChangedListeners.forEach { listener -> listener.sort(sortMethod) }
@@ -331,6 +397,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private fun initNavigationViewViews() {
         val headerView = navigationView.getHeaderView(0)
+        imageViewPokemonEdition = headerView.findViewById(R.id.imageView_pokemon_edition)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
         textViewTotalEggShinys = headerView.findViewById(R.id.textView_number_shinys_eggs)
         textViewTotalSosShinys = headerView.findViewById(R.id.textView_number_shinys_sos)
@@ -359,6 +426,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onResume()
 
         initPreferences()
+        recyclerViewChangedListeners.forEach { it.reload() }
+        applyPokemonEdition(viewModel.getPokemonEdition())
 
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
@@ -411,8 +480,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 val id = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEDEX_ID, 0)
                 val generation = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_GENERATION, 0)
                 val tabIndex = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, 0)
+                val pokemonEdition = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEMON_EDITION, 0)
 
-                val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!, tabIndex)
+                val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!, PokemonEdition.fromInt(pokemonEdition)!!, tabIndex)
                 pokemonData.internalId = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_INTERNAL_ID, -1)
 
                 viewModel.addPokemon(pokemonData)

@@ -67,6 +67,15 @@
         <item>Anderes</item>
     </string-array>
 
+    <string-array name="pokemon_editions">
+        <item>Omega-Rubin/Alpha-Saphir</item>
+        <item>Sonne/Mond</item>
+        <item>Ultrasonne/Ultramond</item>
+        <item>Schwert/Schild</item>
+        <item>Go</item>
+        <item>Let\'s Go</item>
+    </string-array>
+
     <!-- sort methods -->
     <string-array name="sort_methods">
         <item>Name</item>
@@ -107,5 +116,7 @@
     <string name="menu_move_to_shiny_list">In die Shiny Liste verschieben</string>
     <string name="dialog_watch_out">Achtung</string>
     <string name="view_statistics">Statistiken ansehen</string>
+    <string name="change_edition">Edition ändern</string>
+    <string name="statistics">Statistik</string>
 
 </resources>

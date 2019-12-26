@@ -7,8 +7,8 @@ import de.phil.solidsabissupershinysammlung.model.PokemonData
 @Dao
 interface PokemonDao {
 
-    @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0")
-    fun getTotalNumberOfShinys(): Int
+    @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND pokemon_edition = :pokemonEditionOrdinal")
+    fun getTotalNumberOfShinys(pokemonEditionOrdinal: Int): Int
 
     @Insert
     fun addPokemon(vararg data: PokemonData)
@@ -19,11 +19,11 @@ interface PokemonDao {
     @Delete
     fun deletePokemonFromDatabase(data: PokemonData)
 
-    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0 AND tab_index = 0")
-    fun getAverageEggsCount(): Float
+    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0 AND tab_index = 0 AND pokemon_edition = :pokemonEditionOrdinal")
+    fun getAverageEggsCount(pokemonEditionOrdinal: Int): Float
 
-    @Query("SELECT SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0")
-    fun getTotalEggsCount(): Int
+    @Query("SELECT SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 0 AND pokemon_edition = :pokemonEditionOrdinal")
+    fun getTotalEggsCount(pokemonEditionOrdinal: Int): Int
 
     @Query("SELECT * FROM pokemondata ORDER BY tab_index")
     fun getAllPokemonData(): LiveData<List<PokemonData>>
@@ -34,14 +34,14 @@ interface PokemonDao {
     @Query("DELETE FROM pokemondata")
     fun deleteAllPokemonInDatabase()
 
-    @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND hunt_method = 0")
-    fun getTotalNumberOfEggShinys(): Int
+    @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND hunt_method = 0 AND pokemon_edition = :pokemonEditionOrdinal")
+    fun getTotalNumberOfEggShinys(pokemonEditionOrdinal: Int): Int
 
-    @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND hunt_method = 1")
-    fun getTotalNumberOfSosShinys(): Int
+    @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND hunt_method = 1 AND pokemon_edition = :pokemonEditionOrdinal")
+    fun getTotalNumberOfSosShinys(pokemonEditionOrdinal: Int): Int
 
-    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 1 AND tab_index = 0")
-    fun getAverageSosCount(): Float
+    @Query("SELECT AVG(CAST(encounter_needed AS Float)), SUM(encounter_needed) FROM pokemondata WHERE hunt_method = 1 AND tab_index = 0 AND pokemon_edition = :pokemonEditionOrdinal")
+    fun getAverageSosCount(pokemonEditionOrdinal: Int): Float
 
     @Query("SELECT * FROM pokemondata WHERE tab_index = 0")
     fun getShinyListData(): LiveData<List<PokemonData>>

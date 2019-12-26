@@ -1,11 +1,13 @@
 package de.phil.solidsabissupershinysammlung.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import de.phil.solidsabissupershinysammlung.database.DataExporter
 import de.phil.solidsabissupershinysammlung.database.DataImporter
 import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
@@ -16,6 +18,8 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
 
     private val exporter = DataExporter()
     private val importer = DataImporter()
+
+    private val pokemonEditionLiveData = MutableLiveData<PokemonEdition>()
 
     fun addPokemon(pokemonData: PokemonData) {
         pokemonRepository.insert(pokemonData)
@@ -39,7 +43,7 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
     }
 
     fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
-        return pokemonRepository.getAllPokemonDataFromTabIndex(tabIndex)
+        return pokemonRepository.getAllPokemonDataFromTabIndex(tabIndex).filter { it.pokemonEdition == getPokemonEdition() }
     }
 
     fun deletePokemon(pokemonToDelete: PokemonData) {
@@ -47,12 +51,12 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
     }
 
     fun getStatisticsData(): UpdateStatisticsData {
-        val totalShinys = pokemonRepository.getTotalNumberOfShinys()
-        val totalEggShinys = pokemonRepository.getTotalNumberOfEggShinys()
-        val totalSosShinys = pokemonRepository.getTotalNumberOfSosShinys()
-        val averageSos = pokemonRepository.getAverageSosEncounter().round(2)
-        val totalEggs = pokemonRepository.getTotalNumberOfHatchedEggs()
-        val averageEggs = pokemonRepository.getAverageEggsEncounter().round(2)
+        val totalShinys = pokemonRepository.getTotalNumberOfShinys(getPokemonEdition())
+        val totalEggShinys = pokemonRepository.getTotalNumberOfEggShinys(getPokemonEdition())
+        val totalSosShinys = pokemonRepository.getTotalNumberOfSosShinys(getPokemonEdition())
+        val averageSos = pokemonRepository.getAverageSosEncounter(getPokemonEdition()).round(2)
+        val totalEggs = pokemonRepository.getTotalNumberOfHatchedEggs(getPokemonEdition())
+        val averageEggs = pokemonRepository.getAverageEggsEncounter(getPokemonEdition()).round(2)
 
         return UpdateStatisticsData(
             totalShinys,
@@ -96,6 +100,19 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
 
     fun setDataCompression(value: Boolean) {
         pokemonRepository.setDataCompression(value)
+    }
+
+    fun setPokemonEdition(pokemonEdition: PokemonEdition) {
+        pokemonRepository.setPokemonEdition(pokemonEdition)
+        pokemonEditionLiveData.value = pokemonEdition
+    }
+
+    fun getPokemonEdition(): PokemonEdition {
+        return pokemonRepository.getPokemonEdition()
+    }
+
+    fun getPokemonEditionLiveData(): LiveData<PokemonEdition> {
+        return pokemonEditionLiveData
     }
 
     //endregion

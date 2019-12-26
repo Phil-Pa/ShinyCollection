@@ -83,14 +83,7 @@ class PokemonListFragment : Fragment() {
         if (view is RecyclerView) {
             recyclerView = view
 
-            // get data from the database
-            val liveData = getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex)
-            dataList = liveData.toMutableList()
-
-            // sort the data
-            sortData(getMainActivity().viewModel.getSortMethod())
-
-            myAdapter = PokemonDataRecyclerViewAdapter(dataList, getMainActivity())
+            loadData()
 
             with(recyclerView) {
                 layoutManager = GridLayoutManager(context, if (activity!!.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2)
@@ -115,6 +108,14 @@ class PokemonListFragment : Fragment() {
                             dataList.add(pokemonData)
                             myAdapter?.notifyItemInserted(dataList.size - 1)
                         }
+                    }
+
+                    override fun reload() {
+                        // reload data and update adapter
+                        loadData()
+
+                        // set new adapter
+                        adapter = myAdapter
                     }
 
                     override fun updatePokemonEncounter(pokemonData: PokemonData) {
@@ -149,6 +150,17 @@ class PokemonListFragment : Fragment() {
             }
         }
         return view
+    }
+
+    private fun loadData() {
+        // get data from the database
+        val liveData = getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex)
+        dataList = liveData.toMutableList()
+
+        // sort the data
+        sortData(getMainActivity().viewModel.getSortMethod())
+
+        myAdapter = PokemonDataRecyclerViewAdapter(dataList, getMainActivity())
     }
 
     companion object {
