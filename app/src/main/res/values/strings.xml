@@ -68,6 +68,7 @@
     </string-array>
 
     <string-array name="pokemon_editions">
+        <item>X/Y</item>
         <item>Omega-Rubin/Alpha-Saphir</item>
         <item>Sonne/Mond</item>
         <item>Ultrasonne/Ultramond</item>

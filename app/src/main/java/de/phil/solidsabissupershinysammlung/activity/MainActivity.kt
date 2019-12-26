@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         with (imageViewPokemonEdition) {
             when (pokemonEdition) {
+                PokemonEdition.XY -> setImageResource(R.drawable.cover_xy)
                 PokemonEdition.ORAS -> setImageResource(R.drawable.cover_oras)
                     PokemonEdition.SM -> setImageResource(R.drawable.cover_sm)
                 PokemonEdition.USUM -> setImageResource(R.drawable.cover_usum)
@@ -83,10 +84,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             .setView(customView)
 
         val imageViews = listOf<AppCompatImageView>(
+            customView.findViewById(R.id.dialog_edition_xy),
             customView.findViewById(R.id.dialog_edition_oras),
             customView.findViewById(R.id.dialog_edition_sm),
             customView.findViewById(R.id.dialog_edition_usum),
-            customView.findViewById(R.id.dialog_edition_swsh)
+            customView.findViewById(R.id.dialog_edition_swsh),
+            customView.findViewById(R.id.dialog_edition_go),
+            customView.findViewById(R.id.dialog_edition_letsgo)
         )
         val dialog = builder.create()
         for ((index, view) in imageViews.withIndex()) {

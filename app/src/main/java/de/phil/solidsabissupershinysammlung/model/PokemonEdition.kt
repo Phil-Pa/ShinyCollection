@@ -1,12 +1,13 @@
 package de.phil.solidsabissupershinysammlung.model
 
 enum class PokemonEdition(val value: Int) {
-    ORAS(0),
-    SM(1),
-    USUM(2),
-    SWSH(3),
-    GO(4),
-    LETSGO(5);
+    XY(0),
+    ORAS(1),
+    SM(2),
+    USUM(3),
+    SWSH(4),
+    GO(5),
+    LETSGO(6);
 
     companion object {
         private val map = values().associateBy(PokemonEdition::ordinal)
