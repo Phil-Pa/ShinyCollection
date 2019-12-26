@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -31,10 +32,12 @@ import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_change_edition.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
@@ -44,6 +47,37 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    private fun changeEdition() {
+
+        drawerLayout.closeDrawers()
+        val customView = layoutInflater.inflate(R.layout.dialog_change_edition, drawerLayout, false)
+
+        val builder = AlertDialog.Builder(this)
+            .setTitle("Edition ändern")
+            .setMessage("Wähle, zu welcher Edition du wechseln möchtest")
+            .setView(customView)
+
+        val imageViews = listOf<AppCompatImageView>(
+            customView.findViewById(R.id.dialog_edition_oras),
+            customView.findViewById(R.id.dialog_edition_sm),
+            customView.findViewById(R.id.dialog_edition_usum),
+            customView.findViewById(R.id.dialog_edition_swsh)
+        )
+        val dialog = builder.create()
+        for ((index, view) in imageViews.withIndex()) {
+            view.setOnClickListener {
+                val updatedPokemonEdition = PokemonEdition.fromInt(index)!!
+                // TODO
+//                viewModel.setPokemonEdition(updatedPokemonEdition)
+//                updatePokemonEdition(updatedPokemonEdition)
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+
 
     private fun showConfirmDeleteDialog() {
 
@@ -315,6 +349,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     else
                         copyToClipboard(data)
                 }
+                R.id.changeEdition -> {
+                    changeEdition()
+                }
                 R.id.sortData -> {
                     showDialog { sortMethod ->
                         recyclerViewChangedListeners.forEach { listener -> listener.sort(sortMethod) }
@@ -408,8 +445,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 val id = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEDEX_ID, 0)
                 val generation = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_GENERATION, 0)
                 val tabIndex = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, 0)
+                val pokemonEdition = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEMON_EDITION, 0)
 
-                val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!, tabIndex)
+                val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!, PokemonEdition.fromInt(pokemonEdition)!!, tabIndex)
                 pokemonData.internalId = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_INTERNAL_ID, -1)
 
                 viewModel.addPokemon(pokemonData)

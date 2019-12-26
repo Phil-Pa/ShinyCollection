@@ -33,6 +33,9 @@ data class PokemonData(
     @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_HUNT_METHOD)
     val huntMethod: HuntMethod = HuntMethod.Other,
 
+    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_POKEMON_EDITION)
+    val pokemonEdition: PokemonEdition,
+
     @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX)
     var tabIndex: Int
 ) {
@@ -72,11 +75,11 @@ data class PokemonData(
     }
 
     override fun toString(): String {
-        return "PokemonData(name=$name, pokedexId=$pokedexId, generation=$generation, encounterNeeded=$encounterNeeded, huntMethod=$huntMethod, tabIndex=$tabIndex, internalId=$internalId)"
+        return "PokemonData(name=$name, pokedexId=$pokedexId, generation=$generation, encounterNeeded=$encounterNeeded, huntMethod=$huntMethod, pokemonEdition=$pokemonEdition, tabIndex=$tabIndex, internalId=$internalId)"
     }
 
     fun toShortString(): String {
-        return "($name, $pokedexId, $generation, $encounterNeeded, $huntMethod, $tabIndex, $internalId)"
+        return "($name, $pokedexId, $generation, $encounterNeeded, $huntMethod, $pokemonEdition, $tabIndex, $internalId)"
     }
 
     companion object {
