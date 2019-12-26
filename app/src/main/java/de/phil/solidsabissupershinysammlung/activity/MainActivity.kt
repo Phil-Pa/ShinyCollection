@@ -66,6 +66,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     PokemonEdition.SM -> setImageResource(R.drawable.cover_sm)
                 PokemonEdition.USUM -> setImageResource(R.drawable.cover_usum)
                 PokemonEdition.SWSH -> setImageResource(R.drawable.cover_swsh)
+                PokemonEdition.GO -> setImageResource(R.drawable.cover_go)
+                PokemonEdition.LETSGO -> setImageResource(R.drawable.cover_letsgo)
             }
         }
     }

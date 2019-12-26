@@ -72,6 +72,8 @@
         <item>Sonne/Mond</item>
         <item>Ultrasonne/Ultramond</item>
         <item>Schwert/Schild</item>
+        <item>Go</item>
+        <item>Let\'s Go</item>
     </string-array>
 
     <!-- sort methods -->
