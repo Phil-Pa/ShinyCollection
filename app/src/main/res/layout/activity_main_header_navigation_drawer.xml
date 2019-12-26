@@ -31,7 +31,7 @@
                 android:contentDescription="@string/drawer_image_description"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                app:srcCompat="@drawable/wuffels"
+                app:srcCompat="@drawable/scytherold"
                 android:id="@+id/imageView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
