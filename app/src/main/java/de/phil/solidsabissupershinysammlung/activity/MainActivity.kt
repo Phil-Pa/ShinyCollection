@@ -8,6 +8,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -37,7 +38,6 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_change_edition.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
@@ -59,6 +59,15 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             updateData.totalEggs,
             updateData.averageEggs
         )
+
+        with (imageViewPokemonEdition) {
+            when (pokemonEdition) {
+                PokemonEdition.ORAS -> setImageResource(R.drawable.cover_oras)
+                    PokemonEdition.SM -> setImageResource(R.drawable.cover_sm)
+                PokemonEdition.USUM -> setImageResource(R.drawable.cover_usum)
+                PokemonEdition.SWSH -> setImageResource(R.drawable.cover_swsh)
+            }
+        }
     }
 
     private fun changeEdition() {
@@ -244,6 +253,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
 
+    private lateinit var imageViewPokemonEdition: ImageView
     private lateinit var textViewTotalEggs: TextView
     private lateinit var textViewTotalEggShinys: TextView
     private lateinit var textViewTotalSosShinys: TextView
@@ -382,6 +392,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private fun initNavigationViewViews() {
         val headerView = navigationView.getHeaderView(0)
+        imageViewPokemonEdition = headerView.findViewById(R.id.imageView_pokemon_edition)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
         textViewTotalEggShinys = headerView.findViewById(R.id.textView_number_shinys_eggs)
         textViewTotalSosShinys = headerView.findViewById(R.id.textView_number_shinys_sos)
