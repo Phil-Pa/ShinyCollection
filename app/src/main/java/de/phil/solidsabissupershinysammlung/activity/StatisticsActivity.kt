@@ -1,12 +1,14 @@
 package de.phil.solidsabissupershinysammlung.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -48,7 +50,7 @@ class StatisticsActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         val statistics = viewModel.getStatistics()
 
-        statistics_textView_number_shinys.text = (getString(R.string.num_shinys) + ": ${statistics.totalNumberOfEggShiny}")
+        statistics_textView_number_shinys.text = (getString(R.string.num_shinys) + ": ${statistics.totalNumberOfShiny}")
         statistics_textView_number_shinys_eggs.text = (getString(R.string.num_shinys_eggs) + ": ${statistics.totalNumberOfEggShiny}")
         statistics_textView_number_shinys_sos.text = (getString(R.string.num_shinys_sos) + ": ${statistics.totalNumberOfSosShiny}")
         statistics_textView_average_shinys_sos.text = (getString(R.string.avg_shinys_sos) + ": ${statistics.averageSos}")
@@ -58,15 +60,28 @@ class StatisticsActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private fun setupChart(entries: List<Entry>) {
 
-        val lineData = LineDataSet(entries, "Durchschnitt")
+        val lineData = LineDataSet(entries, "Durchschnitt gebrüteter Eier")
+        lineData.setDrawCircleHole(false)
+        lineData.setDrawCircles(false)
         lineData.setDrawFilled(true)
-        lineData.setFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
+        lineData.fillDrawable = resources.getDrawable(R.drawable.navigation_drawer_image, theme)
         lineData.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineData.setDrawValues(false)
+        lineData.disableDashedLine()
+        lineData.disableDashedHighlightLine()
 
+        lineChart.description.isEnabled = false
         lineChart.setBackgroundColor(resources.getColor(android.R.color.white, theme))
         lineChart.setDrawGridBackground(false)
         lineChart.axisRight.isEnabled = false
+        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         lineChart.data = LineData(lineData)
+        lineChart.isDragEnabled = true
+        lineChart.setScaleEnabled(true)
+
+
+        lineChart.animateX(1500)
+        lineChart.invalidate()
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

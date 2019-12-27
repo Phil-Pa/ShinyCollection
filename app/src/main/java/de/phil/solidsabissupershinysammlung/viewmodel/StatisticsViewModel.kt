@@ -7,6 +7,7 @@ import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
+import de.phil.solidsabissupershinysammlung.utils.round
 import javax.inject.Inject
 
 class StatisticsViewModel @Inject constructor
@@ -47,17 +48,18 @@ class StatisticsViewModel @Inject constructor
         var numSosShinys = 0
         var avgSos = 0f
         var numEggs = 0
-        var avgEggs = 0f
+        val avgEggs: Float
 
         for (edition in PokemonEdition.values()) {
             numEggsShinys += pokemonRepository.getTotalNumberOfEggShinys(edition)
             numSosShinys += pokemonRepository.getTotalNumberOfSosShinys(edition)
             numEggs += pokemonRepository.getTotalNumberOfHatchedEggs(edition)
+            avgSos += pokemonRepository.getAverageSosEncounter(edition)
         }
 
         numShinys = numEggsShinys + numSosShinys
-        avgSos /= PokemonEdition.values().size
-        avgEggs /= PokemonEdition.values().size
+        avgSos = (avgSos / PokemonEdition.values().size).round(2)
+        avgEggs = (numEggs.toFloat() / numEggsShinys).round(2)
 
         return UpdateStatisticsData(numShinys, numEggsShinys, numSosShinys, avgSos, numEggs, avgEggs)
     }

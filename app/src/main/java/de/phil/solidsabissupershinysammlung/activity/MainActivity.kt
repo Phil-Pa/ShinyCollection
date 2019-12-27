@@ -1,13 +1,16 @@
 package de.phil.solidsabissupershinysammlung.activity
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.util.Pair
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -260,6 +263,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private lateinit var navigationView: NavigationView
 
     private lateinit var imageViewPokemonEdition: ImageView
+    private lateinit var imageViewSignaturePokemon: ImageView
     private lateinit var textViewTotalEggs: TextView
     private lateinit var textViewTotalEggShinys: TextView
     private lateinit var textViewTotalSosShinys: TextView
@@ -339,6 +343,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
     }
 
+    private val MIN_SCALE = 0.95f
+
+
     private fun initTabs() {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
@@ -360,7 +367,16 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.view_statistics -> {
-                    startActivity(Intent(this, StatisticsActivity::class.java))
+                    val intent = Intent(this, StatisticsActivity::class.java)
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,
+                        Pair(textViewTotalShinys, "transitionNameNumShinys"),
+                        Pair(textViewTotalEggShinys, "transitionNameNumEggShinys"),
+                        Pair(textViewTotalSosShinys, "transitionNameNumSosShinys"),
+                        Pair(textViewAverageSosShinys, "transitionNameAvgSosShinys"),
+                        Pair(textViewTotalEggs, "transitionNameNumEggs"),
+                        Pair(textViewAverageEggs, "transitionNameAvgEggs"),
+                        Pair(imageViewSignaturePokemon, "transitionNameImageView")
+                        ).toBundle())
                 }
                 R.id.settings -> {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
@@ -402,6 +418,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private fun initNavigationViewViews() {
         val headerView = navigationView.getHeaderView(0)
         imageViewPokemonEdition = headerView.findViewById(R.id.imageView_pokemon_edition)
+        imageViewSignaturePokemon = headerView.findViewById(R.id.imageView)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
         textViewTotalEggShinys = headerView.findViewById(R.id.textView_number_shinys_eggs)
         textViewTotalSosShinys = headerView.findViewById(R.id.textView_number_shinys_sos)

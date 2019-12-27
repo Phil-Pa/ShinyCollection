@@ -73,6 +73,16 @@
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightNavigationBar">true</item>
+
     </style>
+
+<!--    <item name="android:windowEnterTransition">@transition/my_transition</item>-->
+<!--    <item name="android:windowExitTransition">@transition/my_transition</item>-->
+
+<!--    &lt;!&ndash; specify shared element transitions &ndash;&gt;-->
+<!--    <item name="android:windowSharedElementEnterTransition">-->
+<!--        @transition/my_transition</item>-->
+<!--    <item name="android:windowSharedElementExitTransition">-->
+<!--        @transition/my_transition</item>-->
 
 </resources>
