@@ -30,7 +30,7 @@ interface IPokemonRepository {
     fun getPokedexIdByName(name: String): Int
     fun getGenerationByName(name: String): Int
     fun getMaxInternalId(): Int
-    fun getRandomPokemonData(tabIndex: Int): PokemonData?
+    fun getRandomPokemonData(tabIndex: Int, pokemonEdition: PokemonEdition): PokemonData?
     fun update(pokemonData: PokemonData)
 
     fun setPokemonEdition(pokemonEdition: PokemonEdition)

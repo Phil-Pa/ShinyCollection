@@ -41,7 +41,7 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
     }
 
     fun getRandomPokemon(tabIndex: Int): PokemonData? {
-        return pokemonRepository.getRandomPokemonData(tabIndex)
+        return pokemonRepository.getRandomPokemonData(tabIndex, getPokemonEdition())
     }
 
     fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {

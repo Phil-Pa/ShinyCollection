@@ -115,8 +115,8 @@ open class PokemonRepository @Inject constructor (private val androidPokemonReso
         return GetMaxInternalIdAsyncTask(pokemonDao).execute().get()
     }
 
-    override fun getRandomPokemonData(tabIndex: Int): PokemonData? {
-        return GetRandomPokemonDataAsyncTask(pokemonDao).execute(tabIndex).get()
+    override fun getRandomPokemonData(tabIndex: Int, pokemonEdition: PokemonEdition): PokemonData? {
+        return GetRandomPokemonDataAsyncTask(pokemonDao).execute(tabIndex, pokemonEdition.ordinal).get()
     }
 
     override fun update(pokemonData: PokemonData) {
@@ -231,7 +231,7 @@ open class PokemonRepository @Inject constructor (private val androidPokemonReso
 
     class GetRandomPokemonDataAsyncTask(private val pokemonDao: PokemonDao) : AsyncTask<Int, Unit, PokemonData?>() {
         override fun doInBackground(vararg params: Int?): PokemonData? {
-            return pokemonDao.getRandomPokemonData(params[0]!!)
+            return pokemonDao.getRandomPokemonData(params[0]!!, params[1]!!)
         }
     }
 
