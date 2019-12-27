@@ -89,10 +89,6 @@ class StatisticsActivity : AppCompatActivity(), HasSupportFragmentInjector {
         lineChart.data = LineData(lineData)
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
-
-
-        lineChart.animateX(1500)
-        lineChart.invalidate()
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
