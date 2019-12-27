@@ -16,16 +16,10 @@
     <color name="color_blue_johannes">#0277bd</color>
     <color name="color_blue_dark_johannes">#004c8c</color>
 
-
-<!--    <color name="colorPrimary">#4a148c</color>-->
-<!--    <color name="colorPrimaryDark">#12005e</color>-->
-<!--    <color name="colorAccent">#f57f17</color>-->
-<!--    <color name="colorAccentDark">#ff6600</color>-->
-
-<!--    <color name="colorPrimary">#1a1a1a</color>-->
-<!--    <color name="colorPrimaryDark">#000000</color>-->
-<!--    <color name="colorAccent">#616161</color>-->
-<!--    <color name="colorAccentDark">#303030</color>-->
+    <color name="color_red_phil">#ff0000</color>
+    <color name="color_red_dark_phil">#cc0000</color>
+    <color name="color_purple_phil">#4a148c</color>
+    <color name="color_purple_dark_phil">#12005e</color>
 
     <color name="color_dark_gray">#1a1a1a</color>
     <color name="color_black">#000000</color>

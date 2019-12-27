@@ -66,4 +66,25 @@
         <item name="android:windowLightNavigationBar">false</item>
     </style>
 
+    <style name="AppThemePhil" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_dark_gray</item>
+        <item name="colorPrimaryDark">@color/color_black</item>
+        <item name="colorAccent">@color/color_red_dark_phil</item>
+
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <!--        <item name="windowActionBar">false</item>-->
+    </style>
+
+    <style name="AppThemePhil.NoActionBar">
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionModeBackground">@color/color_red_dark_phil</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
 </resources>

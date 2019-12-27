@@ -16,6 +16,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initTheme()
         setContentView(R.layout.settings_activity)
         supportFragmentManager
             .beginTransaction()
@@ -43,7 +44,11 @@ class SettingsActivity : AppCompatActivity() {
 
             if (!contains(App.PREFERENCES_COMPRESS_EXPORT_IMPORT))
                 edit().putBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, true).apply()
+
+            if (!contains(App.PREFERENCES_CURRENT_THEME))
+                edit().putString(App.PREFERENCES_CURRENT_THEME, "Sabi").apply()
         }
+
 
     }
 

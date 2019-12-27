@@ -26,7 +26,12 @@
                 app:summary="Die Größe deiner exportieren und importieren Daten wird verkleinert."
             />
 
-
+        <ListPreference
+                app:key="current_theme"
+                app:iconSpaceReserved="false"
+                app:entries="@array/color_themes"
+                app:entryValues="@array/color_themes"
+                app:title="@string/change_current_color_theme"/>
 
     </PreferenceCategory>
 

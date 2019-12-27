@@ -77,6 +77,13 @@
         <item>Let\'s Go</item>
     </string-array>
 
+    <string-array name="color_themes">
+        <item>Sabi</item>
+        <item>Torben</item>
+        <item>Johannes</item>
+        <item>Phil</item>
+    </string-array>
+
     <!-- sort methods -->
     <string-array name="sort_methods">
         <item>Name</item>
@@ -119,5 +126,6 @@
     <string name="view_statistics">Statistiken ansehen</string>
     <string name="change_edition">Edition ändern</string>
     <string name="statistics">Statistik</string>
+    <string name="change_current_color_theme">Aktuelles Farbschema ändern</string>
 
 </resources>

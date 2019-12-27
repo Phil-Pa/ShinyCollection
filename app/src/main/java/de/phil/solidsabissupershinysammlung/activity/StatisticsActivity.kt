@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
@@ -19,6 +20,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.viewmodel.StatisticsViewModel
 import kotlinx.android.synthetic.main.activity_statistics.*
 import javax.inject.Inject
@@ -36,6 +38,7 @@ class StatisticsActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initTheme()
         setContentView(R.layout.activity_statistics)
 
         viewModel =
@@ -56,6 +59,14 @@ class StatisticsActivity : AppCompatActivity(), HasSupportFragmentInjector {
         statistics_textView_average_shinys_sos.text = (getString(R.string.avg_shinys_sos) + ": ${statistics.averageSos}")
         statistics_textView_all_eggs.text = (getString(R.string.num_eggs) + ": ${statistics.totalEggs}")
         statistics_textView_average_eggs.text = (getString(R.string.avg_eggs) + ": ${statistics.averageEggs}")
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        when (prefs.getString(App.PREFERENCES_CURRENT_THEME, null)) {
+            "Sabi" -> statistics_imageView.setImageResource(R.drawable.leufeo)
+            "Torben" -> statistics_imageView.setImageResource(R.drawable.wuffels)
+            "Johannes" -> statistics_imageView.setImageResource(R.drawable.scytherold)
+            "Phil" -> statistics_imageView.setImageResource(R.drawable.leufeo)
+        }
     }
 
     private fun setupChart(entries: List<Entry>) {

@@ -53,6 +53,7 @@ class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initTheme()
         setContentView(R.layout.activity_add_new_pokemon)
 
         tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, -1)

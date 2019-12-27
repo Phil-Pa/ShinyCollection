@@ -290,19 +290,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i(TAG, "App started")
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
-        initTabs()
-        initNavigationDrawer()
-        initNavigationViewViews()
-
-       // viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
-
-        //viewModel.init(DummyRepository(application))
-
         viewModel.getShinyListData().observe(this, Observer {
 
             val updateData = viewModel.getStatisticsData()
@@ -316,23 +304,35 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 updateData.averageEggs
             )
         })
-
         viewModel.getPokemonEditionLiveData().observe(this, Observer {
             recyclerViewChangedListeners.forEach { listener -> listener.reload() }
             applyPokemonEdition(it)
         })
+
+        initPreferences()
+        viewModel.currentTheme = initTheme()
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+        initTabs()
+        initNavigationDrawer()
+        initNavigationViewViews()
     }
 
     private fun initPreferences() {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        if (!prefs.contains(App.PREFERENCES_SORT_METHOD)) {
+        if (!prefs.contains(App.PREFERENCES_SORT_METHOD))
             viewModel.setSortMethod(PokemonSortMethod.InternalId)
-        }
+        if (!prefs.contains(App.PREFERENCES_CURRENT_THEME))
+            prefs.edit().putString(App.PREFERENCES_CURRENT_THEME, "Sabi").apply()
 
         viewModel.setShouldAutoSort(prefs.getBoolean(App.PREFERENCES_AUTO_SORT, false))
         viewModel.setDataCompression(prefs.getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, true))
+    }
+
+    private fun initDarkMode() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
         if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -342,9 +342,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Light
         }
     }
-
-    private val MIN_SCALE = 0.95f
-
 
     private fun initTabs() {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
@@ -425,6 +422,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         textViewAverageSosShinys = headerView.findViewById(R.id.textView_average_shinys_sos)
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        when (prefs.getString(App.PREFERENCES_CURRENT_THEME, null)) {
+            "Sabi" -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
+            "Torben" -> imageViewSignaturePokemon.setImageResource(R.drawable.wuffels)
+            "Johannes" -> imageViewSignaturePokemon.setImageResource(R.drawable.scytherold)
+            "Phil" -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -446,7 +451,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun onResume() {
         super.onResume()
 
-        initPreferences()
+        // if theme has been changes in the settings activity
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        if (prefs.getString(App.PREFERENCES_CURRENT_THEME, null) != viewModel.currentTheme)
+            recreate()
+
+        initDarkMode()
         recyclerViewChangedListeners.forEach { it.reload() }
         applyPokemonEdition(viewModel.getPokemonEdition())
 

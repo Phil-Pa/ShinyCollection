@@ -7,7 +7,9 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import es.dmoral.toasty.Toasty
 
@@ -52,4 +54,21 @@ fun Activity.showMessage(message: String, type: MessageType) {
         MessageType.Info -> Toasty.info(this, message, Toast.LENGTH_LONG).show()
         MessageType.Error -> Toasty.error(this, message, Toast.LENGTH_LONG).show()
     }
+}
+
+fun Activity.initTheme(): String? {
+
+    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+    val isMainActivity = this is MainActivity
+
+    val themeAsString = prefs.getString(App.PREFERENCES_CURRENT_THEME, null)
+
+    when (themeAsString) {
+        "Sabi" -> if (isMainActivity) setTheme(R.style.AppThemeSabi_NoActionBar) else setTheme(R.style.AppThemeSabi)
+        "Torben" -> if (isMainActivity) setTheme(R.style.AppThemeTorben_NoActionBar) else setTheme(R.style.AppThemeTorben)
+        "Johannes" -> if (isMainActivity) setTheme(R.style.AppThemeJohannes_NoActionBar) else setTheme(R.style.AppThemeJohannes)
+        "Phil" -> if (isMainActivity) setTheme(R.style.AppThemePhil_NoActionBar) else setTheme(R.style.AppThemePhil)
+    }
+
+    return themeAsString
 }

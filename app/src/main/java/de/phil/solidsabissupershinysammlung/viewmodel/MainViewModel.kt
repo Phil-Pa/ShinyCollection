@@ -19,6 +19,8 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
     private val exporter = DataExporter()
     private val importer = DataImporter()
 
+    var currentTheme: String? = null
+
     private val pokemonEditionLiveData = MutableLiveData<PokemonEdition>()
 
     fun addPokemon(pokemonData: PokemonData) {
