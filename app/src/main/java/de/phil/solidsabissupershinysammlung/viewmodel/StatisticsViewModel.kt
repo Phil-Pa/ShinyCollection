@@ -5,6 +5,8 @@ import com.github.mikephil.charting.data.Entry
 import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
+import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import javax.inject.Inject
 
 class StatisticsViewModel @Inject constructor
@@ -26,7 +28,8 @@ class StatisticsViewModel @Inject constructor
 
     fun getDataEntries(): List<Entry> {
         val data =
-            pokemonRepository.getAllPokemonData().filter { it.huntMethod == HuntMethod.Hatch && it.encounterNeeded != 0 }
+            pokemonRepository.getAllPokemonData()
+                .filter{ it.huntMethod == HuntMethod.Hatch && it.encounterNeeded != 0 }
                 .sortedBy { it.internalId }
 
         val list = mutableListOf<Entry>()
@@ -37,5 +40,26 @@ class StatisticsViewModel @Inject constructor
         return list
     }
 
+    fun getStatistics(): UpdateStatisticsData {
+
+        val numShinys: Int
+        var numEggsShinys = 0
+        var numSosShinys = 0
+        var avgSos = 0f
+        var numEggs = 0
+        var avgEggs = 0f
+
+        for (edition in PokemonEdition.values()) {
+            numEggsShinys += pokemonRepository.getTotalNumberOfEggShinys(edition)
+            numSosShinys += pokemonRepository.getTotalNumberOfSosShinys(edition)
+            numEggs += pokemonRepository.getTotalNumberOfHatchedEggs(edition)
+        }
+
+        numShinys = numEggsShinys + numSosShinys
+        avgSos /= PokemonEdition.values().size
+        avgEggs /= PokemonEdition.values().size
+
+        return UpdateStatisticsData(numShinys, numEggsShinys, numSosShinys, avgSos, numEggs, avgEggs)
+    }
 
 }
