@@ -27,7 +27,8 @@ class DataManager {
     )
 
     private val shannonAlgorithm = ShannonAlgorithm(map)
-    private val compressor = Base64StringCompression(shannonAlgorithm)
+    private val nativeNumberConverter = NativeNumberConverter()
+    private val compressor = Base64StringCompression(shannonAlgorithm, nativeNumberConverter)
 
     fun import(pokemonRepository: IPokemonRepository, data: String?): Boolean {
 
@@ -39,7 +40,7 @@ class DataManager {
             val str = compressor.decompress(data)
             dataImporter.import(pokemonRepository, str)
         } else {
-            return dataImporter.import(pokemonRepository, data)
+            dataImporter.import(pokemonRepository, data)
         }
     }
 
