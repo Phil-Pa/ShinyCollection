@@ -127,6 +127,10 @@ open class PokemonRepository @Inject constructor (private val androidPokemonReso
         return GetAllPokemonDataAsyncTask(pokemonDao).execute().get()
     }
 
+    override fun getNameByPokedexId(pokedexId: Int): String {
+        return androidPokemonResources.getNameByPokedexId(pokedexId)
+    }
+
     override fun setPokemonEdition(pokemonEdition: PokemonEdition) {
         preferences.edit().putInt(App.PREFERENCES_POKEMON_EDITION, pokemonEdition.ordinal).apply()
     }

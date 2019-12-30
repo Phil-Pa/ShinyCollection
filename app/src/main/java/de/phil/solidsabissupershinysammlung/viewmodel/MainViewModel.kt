@@ -3,8 +3,7 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import de.phil.solidsabissupershinysammlung.database.DataExporter
-import de.phil.solidsabissupershinysammlung.database.DataImporter
+import de.phil.solidsabissupershinysammlung.database.DataManager
 import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
@@ -16,8 +15,7 @@ import javax.inject.Inject
 class MainViewModel @Inject
 constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
 
-    private val exporter = DataExporter()
-    private val importer = DataImporter()
+    private val dataManager = DataManager()
 
     var currentTheme: String? = null
 
@@ -32,12 +30,12 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
     }
 
     fun import(data: String?): Boolean {
-        return importer.import(pokemonRepository, data)
+        return dataManager.import(pokemonRepository, data)
     }
 
     fun export(): String? {
-        exporter.shouldCompressData = pokemonRepository.shouldCompressData()
-        return exporter.export(pokemonRepository)
+        val shouldCompressData = pokemonRepository.shouldCompressData()
+        return dataManager.export(shouldCompressData, pokemonRepository)
     }
 
     fun getRandomPokemon(tabIndex: Int): PokemonData? {

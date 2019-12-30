@@ -11,7 +11,7 @@ class DataImporter {
     companion object {
         private const val defaultRegex =
             "PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), pokemonEdition=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)"
-        private const val compressedRegex = "\\(([\\w+\\-\\d:]+), (\\d+), (\\d), (\\d+), (\\w+), (\\w+), (\\d), (\\d+)\\)"
+        private const val compressedRegex = "\\((\\d+), (\\d), (\\d+), (\\w+), (\\w+), (\\d), (\\d+)\\)"
     }
 
     fun import(repository: IPokemonRepository, data: String?): Boolean {
@@ -39,29 +39,53 @@ class DataImporter {
 
             val match: MatchResult = regex.matchEntire(dataString) ?: return false
 
-            val name = match.groupValues[1]
-            val pokedexId = match.groupValues[2].toInt()
-            val generation = match.groupValues[3].toInt()
-            val encounterNeeded = match.groupValues[4].toInt()
-            val huntMethod = HuntMethod.valueOf(match.groupValues[5])
-            val pokemonEdition = PokemonEdition.valueOf(match.groupValues[6])
-            val tabIndex = match.groupValues[7].toInt()
-            val internalId = match.groupValues[8].toInt()
+            if (isCompressed) {
+                val pokedexId = match.groupValues[1].toInt()
+                val name = repository.getNameByPokedexId(pokedexId)
+                val generation = match.groupValues[2].toInt()
+                val encounterNeeded = match.groupValues[3].toInt()
+                val huntMethod = HuntMethod.fromInt(match.groupValues[4].toInt())!!
+                val pokemonEdition = PokemonEdition.fromInt(match.groupValues[5].toInt())!!
+                val tabIndex = match.groupValues[6].toInt()
+                val internalId = match.groupValues[7].toInt()
 
-            val pokemonData = PokemonData(
-                name,
-                pokedexId,
-                generation,
-                encounterNeeded,
-                huntMethod,
-                pokemonEdition,
-                tabIndex
-            )
+                val pokemonData = PokemonData(
+                    name,
+                    pokedexId,
+                    generation,
+                    encounterNeeded,
+                    huntMethod,
+                    pokemonEdition,
+                    tabIndex
+                )
 
-            pokemonData.internalId = internalId
+                pokemonData.internalId = internalId
+                repository.insert(pokemonData)
+            } else {
+                val name = match.groupValues[1]
+                val pokedexId = match.groupValues[2].toInt()
+                val generation = match.groupValues[3].toInt()
+                val encounterNeeded = match.groupValues[4].toInt()
+                val huntMethod = HuntMethod.valueOf(match.groupValues[5])
+                val pokemonEdition = PokemonEdition.valueOf(match.groupValues[6])
+                val tabIndex = match.groupValues[7].toInt()
+                val internalId = match.groupValues[8].toInt()
 
-            repository.insert(pokemonData)
+                val pokemonData = PokemonData(
+                    name,
+                    pokedexId,
+                    generation,
+                    encounterNeeded,
+                    huntMethod,
+                    pokemonEdition,
+                    tabIndex
+                )
+
+                pokemonData.internalId = internalId
+                repository.insert(pokemonData)
+            }
         }
+
         return true
     }
 

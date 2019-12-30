@@ -79,7 +79,7 @@ data class PokemonData(
     }
 
     fun toShortString(): String {
-        return "($name, $pokedexId, $generation, $encounterNeeded, $huntMethod, $pokemonEdition, $tabIndex, $internalId)"
+        return "($pokedexId, $generation, $encounterNeeded, ${huntMethod.ordinal}, ${pokemonEdition.ordinal}, $tabIndex, $internalId)"
     }
 
     companion object {

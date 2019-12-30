@@ -110,4 +110,12 @@ class AndroidPokemonResources @Inject constructor() : IAndroidPokemonResources {
 
     }
 
+    override fun getNameByPokedexId(pokedexId: Int): String {
+
+        if (pokedexId !in genPokedexIdsArray.flatten())
+            throw Exception("$pokedexId is not a valid pokedex id")
+
+        return getPokemonNames()[pokedexId - 1]
+    }
+
 }
