@@ -2,6 +2,7 @@ package de.phil.solidsabissupershinysammlung.database
 
 import de.phil.android.lib.encoding.Base64StringCompression
 import de.phil.android.lib.encoding.shannon.ShannonAlgorithm
+import de.phil.android.lib.math.NativeNumberConverter
 
 class DataManager {
 
@@ -27,8 +28,8 @@ class DataManager {
     )
 
     private val shannonAlgorithm = ShannonAlgorithm(map)
-    private val nativeNumberConverter = NativeNumberConverter()
-    private val compressor = Base64StringCompression(shannonAlgorithm, nativeNumberConverter)
+
+    private val compressor = Base64StringCompression(shannonAlgorithm, NativeNumberConverter())
 
     fun import(pokemonRepository: IPokemonRepository, data: String?): Boolean {
 
