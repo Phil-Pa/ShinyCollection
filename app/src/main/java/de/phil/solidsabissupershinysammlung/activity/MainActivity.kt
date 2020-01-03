@@ -25,10 +25,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import androidx.work.Worker
-import androidx.work.WorkerParameters
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import dagger.android.DispatchingAndroidInjector
@@ -52,6 +48,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    private fun vibrateAfterLongImportExport() {
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, false))
+            vibrate(200)
+    }
 
     private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
         val updateData = viewModel.getStatisticsData()
@@ -107,8 +108,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
         dialog.show()
     }
-
-
 
     private fun showConfirmDeleteDialog() {
 
@@ -273,10 +272,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private lateinit var textViewAverageEggs: TextView
     private lateinit var textViewTotalShinys: TextView
 
-    companion object {
-        private const val TAG = "MainActivity"
-    }
-
     interface OnListChangedListener {
         fun sort(pokemonSortMethod: PokemonSortMethod)
         fun addPokemon(pokemonData: PokemonData)
@@ -382,30 +377,26 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 }
                 R.id.importData -> {
                     val data = getClipboardStringData()
-
-                    val success = viewModel.import(data)
-                    if (!success)
-                        showMessage(getString(R.string.import_error), MessageType.Error)
-                    else {
-                        finish()
-                        startActivity(intent)
-                        showMessage(getString(R.string.import_success), MessageType.Success)
+                    viewModel.import(data) { importSuccessful ->
+                        if (!importSuccessful)
+                            showMessage(getString(R.string.import_error), MessageType.Error)
+                        else {
+                            finish()
+                            startActivity(intent)
+                            showMessage(getString(R.string.import_success), MessageType.Success)
+                            vibrateAfterLongImportExport()
+                        }
                     }
                 }
                 R.id.exportData -> {
-
-
-
-//                    val workerManager = WorkManager.getInstance()
-//                    val request = OneTimeWorkRequest.Builder(MyWorker::class.java).build()
-//                    workerManager.enqueue(request)
-
-                    val data = viewModel.export()
-
-                    if (data == null)
-                        showMessage(getString(R.string.export_error), MessageType.Info)
-                    else
-                        copyToClipboard(data)
+                    viewModel.export { data ->
+                        if (data == null)
+                            showMessage(getString(R.string.export_error), MessageType.Info)
+                        else {
+                            copyToClipboard(data)
+                            vibrateAfterLongImportExport()
+                        }
+                    }
                 }
                 R.id.changeEdition -> {
                     changeEdition()

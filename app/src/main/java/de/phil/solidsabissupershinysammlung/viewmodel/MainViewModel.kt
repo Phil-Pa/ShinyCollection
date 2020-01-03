@@ -3,23 +3,24 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import de.phil.solidsabissupershinysammlung.database.DataManager
 import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
+import de.phil.solidsabissupershinysammlung.worker.BackgroundDataManager
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class MainViewModel @Inject
-constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
-
-    private val dataManager = DataManager()
+constructor(private val pokemonRepository: IPokemonRepository,
+            private val dataManager: BackgroundDataManager) : ViewModel() {
 
     var currentTheme: String? = null
 
     private val pokemonEditionLiveData = MutableLiveData<PokemonEdition>()
+    private var importExportInProgress = false
 
     fun addPokemon(pokemonData: PokemonData) {
         pokemonRepository.insert(pokemonData)
@@ -29,13 +30,34 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
         pokemonRepository.update(pokemonData)
     }
 
-    fun import(data: String?): Boolean {
-        return dataManager.import(pokemonRepository, data)
+    fun import(data: String?, action: (Boolean) -> Unit) {
+        if (importExportInProgress)
+            return
+
+        importExportInProgress = true
+
+        val service = Executors.newSingleThreadExecutor()
+        service.submit {
+            val value = dataManager.import(pokemonRepository, data)
+            action(value)
+            importExportInProgress = false
+        }
     }
 
-    fun export(): String? {
-        val shouldCompressData = pokemonRepository.shouldCompressData()
-        return dataManager.export(shouldCompressData, pokemonRepository)
+    fun export(action: (String?) -> Unit) {
+        if (importExportInProgress)
+            return
+
+        importExportInProgress = true
+
+        val service = Executors.newSingleThreadExecutor()
+        service.submit {
+            val shouldCompressData = pokemonRepository.shouldCompressData()
+            val value = dataManager.export(shouldCompressData, pokemonRepository)
+            action(value)
+            importExportInProgress = false
+        }
+
     }
 
     fun getRandomPokemon(tabIndex: Int): PokemonData? {
