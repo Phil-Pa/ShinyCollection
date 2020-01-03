@@ -28,8 +28,8 @@ class DataManager {
     )
 
     private val shannonAlgorithm = ShannonAlgorithm(map)
-
-    private val compressor = Base64StringCompression(shannonAlgorithm, NativeNumberConverter())
+    private val nativeNumberConverter = NativeNumberConverter()
+    private val compressor = Base64StringCompression(shannonAlgorithm, nativeNumberConverter)
 
     fun import(pokemonRepository: IPokemonRepository, data: String?): Boolean {
 
