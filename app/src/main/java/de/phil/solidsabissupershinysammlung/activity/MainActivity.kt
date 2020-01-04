@@ -378,8 +378,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 R.id.importData -> {
                     val data = getClipboardStringData()
                     viewModel.import(data) { importSuccessful ->
-                        if (!importSuccessful)
+
+                        if (!importSuccessful) {
                             showMessage(getString(R.string.import_error), MessageType.Error)
+                            toolbar.title = getString(R.string.app_name)
+                        }
                         else {
                             finish()
                             startActivity(intent)
@@ -390,13 +393,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 }
                 R.id.exportData -> {
                     viewModel.export { data ->
-                        if (data == null)
+                        if (data == null) {
                             showMessage(getString(R.string.export_error), MessageType.Info)
+                        }
                         else {
                             copyToClipboard(data)
-                            vibrateAfterLongImportExport()
                         }
                     }
+
                 }
                 R.id.changeEdition -> {
                     changeEdition()
