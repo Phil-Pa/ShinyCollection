@@ -187,6 +187,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             selectedPokemon = data
             actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
         } else {
+            if (getCurrentTabIndex() == App.TAB_INDEX_SHINY_LIST)
+                return
+
             data.encounterNeeded++
             recyclerViewChangedListeners.forEach { it.updatePokemonEncounter(data) }
             viewModel.updatePokemon(data)
