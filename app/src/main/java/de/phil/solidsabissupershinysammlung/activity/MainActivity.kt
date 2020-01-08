@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                         }
                         R.id.decrease_encounter -> {
                             if (selectedPokemon != null) {
-                                if (selectedPokemon!!.encounterNeeded > 0) {
+                                if (selectedPokemon!!.encounterNeeded > 0 && selectedPokemon?.tabIndex != App.TAB_INDEX_SHINY_LIST) {
                                     selectedPokemon!!.encounterNeeded--
                                     recyclerViewChangedListeners.forEach {
                                         it.updatePokemonEncounter(selectedPokemon!!) }
