@@ -1,7 +1,5 @@
 package de.phil.solidsabissupershinysammlung.database
 
-import de.phil.android.lib.encoding.Base64StringCompression
-import de.phil.android.lib.encoding.shannon.ShannonAlgorithm
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 

@@ -91,14 +91,6 @@ open class PokemonRepository @Inject constructor (private val androidPokemonReso
         return preferences.getBoolean(App.PREFERENCES_AUTO_SORT, false)
     }
 
-    override fun setDataCompression(value: Boolean) {
-        preferences.edit().putBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, value).apply()
-    }
-
-    override fun shouldCompressData(): Boolean {
-        return preferences.getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, false)
-    }
-
     override fun getPokemonNames(): List<String> {
         return androidPokemonResources.getPokemonNames()
     }

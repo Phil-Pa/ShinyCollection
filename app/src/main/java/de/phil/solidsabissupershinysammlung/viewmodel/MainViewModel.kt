@@ -10,7 +10,6 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
 import de.phil.solidsabissupershinysammlung.worker.BackgroundDataManager
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class MainViewModel @Inject
@@ -20,7 +19,6 @@ constructor(private val pokemonRepository: IPokemonRepository,
     var currentTheme: String? = null
 
     private val pokemonEditionLiveData = MutableLiveData<PokemonEdition>()
-    private var importExportInProgress = false
 
     fun addPokemon(pokemonData: PokemonData) {
         pokemonRepository.insert(pokemonData)
@@ -31,33 +29,14 @@ constructor(private val pokemonRepository: IPokemonRepository,
     }
 
     fun import(data: String?, action: (Boolean) -> Unit) {
-        if (importExportInProgress)
-            return
-
-        importExportInProgress = true
-
-        val service = Executors.newSingleThreadExecutor()
-        service.submit {
-            val value = dataManager.import(pokemonRepository, data)
-            action(value)
-            importExportInProgress = false
-        }
+        val value = dataManager.import(pokemonRepository, data)
+        action(value)
     }
 
     fun export(action: (String?) -> Unit) {
-        if (importExportInProgress)
-            return
 
-        importExportInProgress = true
-
-        val service = Executors.newSingleThreadExecutor()
-        service.submit {
-            val shouldCompressData = pokemonRepository.shouldCompressData()
-            val value = dataManager.export(shouldCompressData, pokemonRepository)
-            action(value)
-            importExportInProgress = false
-        }
-
+        val value = dataManager.export(pokemonRepository)
+        action(value)
     }
 
     fun getRandomPokemon(tabIndex: Int): PokemonData? {
@@ -114,14 +93,6 @@ constructor(private val pokemonRepository: IPokemonRepository,
 
     fun shouldAutoSort(): Boolean {
         return pokemonRepository.shouldAutoSort()
-    }
-
-    fun setShouldAutoSort(value: Boolean) {
-        pokemonRepository.setShouldAutoSort(value)
-    }
-
-    fun setDataCompression(value: Boolean) {
-        pokemonRepository.setDataCompression(value)
     }
 
     fun setPokemonEdition(pokemonEdition: PokemonEdition) {

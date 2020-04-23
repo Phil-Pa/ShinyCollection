@@ -14,7 +14,6 @@ object App {
     const val PREFERENCES_SORT_METHOD = "sort_method"
     const val PREFERENCES_AUTO_SORT = "auto_sort"
     const val PREFERENCES_USE_DARK_MODE = "use_dark_mode"
-    const val PREFERENCES_COMPRESS_EXPORT_IMPORT = "compress_export_import"
     const val PREFERENCES_POKEMON_EDITION = "pokemon_edition"
     const val PREFERENCES_SHOW_ONLY_CURRENT_EDITION = "show_only_current_edition"
     const val PREFERENCES_CURRENT_THEME = "current_theme"

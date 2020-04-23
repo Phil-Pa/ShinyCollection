@@ -5,10 +5,15 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreferenceCompat
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
+import kotlinx.android.synthetic.main.activity_main.*
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -27,6 +32,17 @@ class SettingsActivity : AppCompatActivity() {
         preferences = getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
         initPreferences()
+        initDarkMode()
+    }
+
+    private fun initDarkMode() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private fun initPreferences() {
@@ -42,11 +58,9 @@ class SettingsActivity : AppCompatActivity() {
             if (!contains(App.PREFERENCES_GUIDE_SHOWN))
                 edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, false).apply()
 
-            if (!contains(App.PREFERENCES_COMPRESS_EXPORT_IMPORT))
-                edit().putBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, true).apply()
-
-            if (!contains(App.PREFERENCES_CURRENT_THEME))
+            if (!contains(App.PREFERENCES_CURRENT_THEME)) {
                 edit().putString(App.PREFERENCES_CURRENT_THEME, "Sabi").apply()
+            }
         }
 
 
@@ -56,6 +70,27 @@ class SettingsActivity : AppCompatActivity() {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+            val themePref = this.findPreference<ListPreference>("current_theme")!!
+
+            themePref.setOnPreferenceChangeListener { preference, newValue ->
+                val newTheme = newValue as String
+                initTheme(newTheme)
+
+                activity?.recreate()
+
+                true
+            }
+
+            val darkModePref = this.findPreference<SwitchPreferenceCompat>("use_dark_mode")!!
+            darkModePref.setOnPreferenceChangeListener { preference, newValue ->
+
+                val preferences = activity?.getSharedPreferences(activity?.application?.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)!!
+
+                preferences.edit().putBoolean(App.PREFERENCES_USE_DARK_MODE, newValue as Boolean).apply()
+
+                activity?.recreate()
+                true
+            }
         }
     }
 

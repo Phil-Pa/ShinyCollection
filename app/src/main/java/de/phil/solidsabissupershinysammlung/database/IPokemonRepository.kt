@@ -24,8 +24,6 @@ interface IPokemonRepository {
     fun getSortMethod(): PokemonSortMethod
     fun setShouldAutoSort(value: Boolean)
     fun shouldAutoSort(): Boolean
-    fun setDataCompression(value: Boolean)
-    fun shouldCompressData(): Boolean
     fun getPokemonNames(): List<String>
     fun getPokedexIdByName(name: String): Int
     fun getGenerationByName(name: String): Int

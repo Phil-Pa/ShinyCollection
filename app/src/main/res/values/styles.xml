@@ -6,6 +6,8 @@
         <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
         <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
         <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
     <!-- Base application theme. -->
@@ -28,6 +30,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightNavigationBar">true</item>
+
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
     </style>
 
     <style name="AppThemeTorben" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -51,6 +55,7 @@
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightNavigationBar">true</item>
 
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
     </style>
 
     <style name="AppThemeJohannes" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -74,6 +79,7 @@
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightNavigationBar">true</item>
 
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
     </style>
 
     <style name="AppThemePhil" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -95,6 +101,8 @@
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightNavigationBar">true</item>
+
+        <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
     </style>
 
 <!--    <item name="android:windowEnterTransition">@transition/my_transition</item>-->

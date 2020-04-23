@@ -1,5 +1,7 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import Deadline
+import Task
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.DialogInterface
@@ -39,7 +41,11 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -48,11 +54,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    private fun vibrateAfterLongImportExport() {
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, false))
-            vibrate(200)
-    }
 
     private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
         val updateData = viewModel.getStatisticsData()
@@ -326,9 +327,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             viewModel.setSortMethod(PokemonSortMethod.InternalId)
         if (!prefs.contains(App.PREFERENCES_CURRENT_THEME))
             prefs.edit().putString(App.PREFERENCES_CURRENT_THEME, "Sabi").apply()
-
-        viewModel.setShouldAutoSort(prefs.getBoolean(App.PREFERENCES_AUTO_SORT, false))
-        viewModel.setDataCompression(prefs.getBoolean(App.PREFERENCES_COMPRESS_EXPORT_IMPORT, true))
     }
 
     private fun initDarkMode() {
@@ -390,7 +388,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                             finish()
                             startActivity(intent)
                             showMessage(getString(R.string.import_success), MessageType.Success)
-                            vibrateAfterLongImportExport()
                         }
                     }
                 }

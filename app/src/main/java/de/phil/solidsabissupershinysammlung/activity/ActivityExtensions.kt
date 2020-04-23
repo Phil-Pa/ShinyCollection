@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
@@ -53,6 +54,20 @@ fun Activity.showMessage(message: String, type: MessageType) {
         MessageType.Warning -> Toasty.warning(this, message, Toast.LENGTH_LONG).show()
         MessageType.Info -> Toasty.info(this, message, Toast.LENGTH_LONG).show()
         MessageType.Error -> Toasty.error(this, message, Toast.LENGTH_LONG).show()
+    }
+}
+
+fun Fragment.initTheme(themeAsString: String) {
+
+//    val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
+//
+//    val themeAsString = prefs.getString(App.PREFERENCES_CURRENT_THEME, null)
+
+    when (themeAsString) {
+        "Sabi" -> activity?.setTheme(R.style.AppThemeSabi)
+        "Torben" -> activity?.setTheme(R.style.AppThemeTorben)
+        "Johannes" -> activity?.setTheme(R.style.AppThemeJohannes)
+        "Phil" -> activity?.setTheme(R.style.AppThemePhil)
     }
 }
 
