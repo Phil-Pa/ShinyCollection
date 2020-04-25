@@ -4,8 +4,6 @@ import android.app.Application
 import dagger.Module
 import dagger.Provides
 import de.phil.solidsabissupershinysammlung.database.*
-import de.phil.solidsabissupershinysammlung.worker.BackgroundDataManager
-import de.phil.solidsabissupershinysammlung.worker.DataManager
 import javax.inject.Singleton
 
 
@@ -31,12 +29,6 @@ class AppModule {
     @Singleton
     fun provideAndroidPokemonResources(): IAndroidPokemonResources {
         return AndroidPokemonResources()
-    }
-
-    @Provides
-    @Singleton
-    fun provideBackgroundDataManager(): BackgroundDataManager {
-        return DataManager()
     }
 
 }
