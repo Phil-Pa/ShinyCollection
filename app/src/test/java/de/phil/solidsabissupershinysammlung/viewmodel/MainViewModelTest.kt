@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.withContext
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.`when`
@@ -25,8 +28,7 @@ class MainViewModelTest {
         val list = mutableListOf<PokemonData>()
 
         val pokemonData = PokemonData(
-            "Bisasam", 1, 1, 342,
-            HuntMethod.Hatch, 0
+            "Bisasam", 1, 1, 342, HuntMethod.Hatch, PokemonEdition.ORAS, 0
         )
 
         `when`(repository.insert(pokemonData)).then {

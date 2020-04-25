@@ -9,16 +9,17 @@ import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
-import de.phil.solidsabissupershinysammlung.worker.BackgroundDataManager
+import de.phil.solidsabissupershinysammlung.database.DataManager
 import javax.inject.Inject
 
 class MainViewModel @Inject
-constructor(private val pokemonRepository: IPokemonRepository,
-            private val dataManager: BackgroundDataManager) : ViewModel() {
+constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
 
     var currentTheme: String? = null
 
     private val pokemonEditionLiveData = MutableLiveData<PokemonEdition>()
+    private val dataManager =
+        DataManager()
 
     fun addPokemon(pokemonData: PokemonData) {
         pokemonRepository.insert(pokemonData)
