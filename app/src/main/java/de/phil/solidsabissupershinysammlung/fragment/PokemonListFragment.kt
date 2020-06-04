@@ -1,18 +1,13 @@
 package de.phil.solidsabissupershinysammlung.fragment
 
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
@@ -86,7 +81,7 @@ class PokemonListFragment : Fragment() {
             loadData()
 
             with(recyclerView) {
-                layoutManager = GridLayoutManager(context, if (activity!!.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2)
+                layoutManager = GridLayoutManager(context, if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2)
 
                 val dividerItemDecoration = DividerItemDecoration(
                     view.getContext(),

@@ -3,8 +3,6 @@ package de.phil.solidsabissupershinysammlung.database
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
-import java.io.ByteArrayInputStream
-import java.util.zip.GZIPInputStream
 
 class DataImporter {
 
@@ -13,7 +11,7 @@ class DataImporter {
             "PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), pokemonEdition=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)"
     }
 
-    fun import(repository: IPokemonRepository, data: String?): Boolean {
+    fun import(pokemonDao: PokemonDao, data: String?): Boolean {
         if (data == null)
             return false
 
@@ -21,7 +19,7 @@ class DataImporter {
 
         val regex = Regex(defaultRegex)
 
-        repository.deleteAll()
+        pokemonDao.deleteAllPokemonInDatabase()
 
         for (dataString in dataList) {
 
@@ -56,7 +54,7 @@ class DataImporter {
             )
 
             pokemonData.internalId = internalId
-            repository.insert(pokemonData)
+            pokemonDao.addPokemon(pokemonData)
         }
 
         return true

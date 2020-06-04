@@ -1,20 +1,24 @@
 package de.phil.solidsabissupershinysammlung.viewmodel
 
+import android.app.Application
+import android.os.AsyncTask
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
+import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.database.DataManager
+import de.phil.solidsabissupershinysammlung.database.PokemonDao
+import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
-import de.phil.solidsabissupershinysammlung.database.DataManager
-import javax.inject.Inject
 
-class MainViewModel @Inject
-constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val pokemonDao: PokemonDao =
+        PokemonDatabase.instance(application.applicationContext).pokemonDao()
     var currentTheme: String? = null
 
     private val pokemonEditionLiveData = MutableLiveData<PokemonEdition>()
@@ -22,43 +26,43 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
         DataManager()
 
     fun addPokemon(pokemonData: PokemonData) {
-        pokemonRepository.insert(pokemonData)
+        pokemonDao.addPokemon(pokemonData)
     }
 
     fun updatePokemon(pokemonData: PokemonData) {
-        pokemonRepository.update(pokemonData)
+        pokemonDao.updatePokemon(pokemonData)
     }
 
     fun import(data: String?, action: (Boolean) -> Unit) {
-        val value = dataManager.import(pokemonRepository, data)
+        val value = dataManager.import(pokemonDao, data)
         action(value)
     }
 
     fun export(action: (String?) -> Unit) {
 
-        val value = dataManager.export(pokemonRepository)
+        val value = dataManager.export(pokemonDao)
         action(value)
     }
 
     fun getRandomPokemon(tabIndex: Int): PokemonData? {
-        return pokemonRepository.getRandomPokemonData(tabIndex, getPokemonEdition())
+        return pokemonDao.getRandomPokemonData(tabIndex, getPokemonEdition().ordinal)
     }
 
     fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
-        return pokemonRepository.getAllPokemonDataFromTabIndex(tabIndex).filter { it.pokemonEdition == getPokemonEdition() }
+        return pokemonDao.getAllPokemonDataFromTabIndex(tabIndex).filter { it.pokemonEdition == getPokemonEdition() }
     }
 
     fun deletePokemon(pokemonToDelete: PokemonData) {
-        pokemonRepository.delete(pokemonToDelete)
+        pokemonDao.deletePokemonFromDatabase(pokemonToDelete)
     }
 
     fun getStatisticsData(): UpdateStatisticsData {
-        val totalShinys = pokemonRepository.getTotalNumberOfShinys(getPokemonEdition())
-        val totalEggShinys = pokemonRepository.getTotalNumberOfEggShinys(getPokemonEdition())
-        val totalSosShinys = pokemonRepository.getTotalNumberOfSosShinys(getPokemonEdition())
-        val averageSos = pokemonRepository.getAverageSosEncounter(getPokemonEdition()).round(2)
-        val totalEggs = pokemonRepository.getTotalNumberOfHatchedEggs(getPokemonEdition())
-        val averageEggs = pokemonRepository.getAverageEggsEncounter(getPokemonEdition()).round(2)
+        val totalShinys = pokemonDao.getTotalNumberOfShinys(getPokemonEdition().ordinal)
+        val totalEggShinys = pokemonDao.getTotalNumberOfEggShinys(getPokemonEdition().ordinal)
+        val totalSosShinys = pokemonDao.getTotalNumberOfSosShinys(getPokemonEdition().ordinal)
+        val averageSos = pokemonDao.getAverageSosCount(getPokemonEdition().ordinal).round(2)
+        val totalEggs = pokemonDao.getTotalEggsCount(getPokemonEdition().ordinal)
+        val averageEggs = pokemonDao.getAverageEggsCount(getPokemonEdition().ordinal).round(2)
 
         return UpdateStatisticsData(
             totalShinys,
@@ -71,38 +75,40 @@ constructor(private val pokemonRepository: IPokemonRepository) : ViewModel() {
     }
 
     fun getShinyListData(): LiveData<List<PokemonData>> {
-        return pokemonRepository.getShinyListData()
+        return pokemonDao.getShinyListData()
     }
 
     //region preferences
 
     fun setGuideShown() {
-        pokemonRepository.setGuideShown()
+        PokemonDatabase.preferences(getApplication()).edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, true).apply()
     }
 
     fun isGuideShown(): Boolean {
-        return pokemonRepository.isGuideShown()
+        return PokemonDatabase.preferences(getApplication()).getBoolean(App.PREFERENCES_GUIDE_SHOWN, false)
     }
 
     fun setSortMethod(pokemonSortMethod: PokemonSortMethod) {
-        pokemonRepository.setSortMethod(pokemonSortMethod)
+        PokemonDatabase.preferences(getApplication()).edit().putInt(App.PREFERENCES_SORT_METHOD, pokemonSortMethod.ordinal).apply()
     }
 
     fun getSortMethod(): PokemonSortMethod {
-        return pokemonRepository.getSortMethod()
+        val intValue = PokemonDatabase.preferences(getApplication()).getInt(App.PREFERENCES_SORT_METHOD, PokemonSortMethod.InternalId.ordinal)
+        return PokemonSortMethod.fromInt(intValue)!!
     }
 
     fun shouldAutoSort(): Boolean {
-        return pokemonRepository.shouldAutoSort()
+        return PokemonDatabase.preferences(getApplication()).getBoolean(App.PREFERENCES_AUTO_SORT, false)
     }
 
     fun setPokemonEdition(pokemonEdition: PokemonEdition) {
-        pokemonRepository.setPokemonEdition(pokemonEdition)
+        PokemonDatabase.preferences(getApplication()).edit().putInt(App.PREFERENCES_POKEMON_EDITION, pokemonEdition.ordinal).apply()
         pokemonEditionLiveData.value = pokemonEdition
     }
 
     fun getPokemonEdition(): PokemonEdition {
-        return pokemonRepository.getPokemonEdition()
+        val ordinal = PokemonDatabase.preferences(getApplication()).getInt(App.PREFERENCES_POKEMON_EDITION, PokemonEdition.USUM.ordinal)
+        return PokemonEdition.fromInt(ordinal)!!
     }
 
     fun getPokemonEditionLiveData(): LiveData<PokemonEdition> {

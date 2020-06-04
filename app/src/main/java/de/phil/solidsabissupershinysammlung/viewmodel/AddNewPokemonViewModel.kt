@@ -4,26 +4,27 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
+import de.phil.solidsabissupershinysammlung.database.PokemonDao
+import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import javax.inject.Inject
 
 // TODO: make something like an interface with class to store string messages to get rid of the application
-class AddNewPokemonViewModel @Inject constructor(
-    private val pokemonRepository: IPokemonRepository, application: Application
-) : AndroidViewModel(application) {
+class AddNewPokemonViewModel(application: Application) : AndroidViewModel(application) {
 
-    fun getPokemonNames(): List<String> {
-        return pokemonRepository.getPokemonNames()
-    }
+    private val pokemonDao: PokemonDao =
+        PokemonDatabase.instance(application.applicationContext).pokemonDao()
 
     fun pokemonNameExists(name: String): Boolean {
-        val pokemonNames = pokemonRepository.getPokemonNames()
+        val pokemonNames = PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
         for (pokemonName in pokemonNames)
             if (name == pokemonName)
                 return true
 
         return false
+    }
+
+    fun getPokemonNames(): List<String> {
+        return PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
     }
 
     fun validateInput(pokemonData: PokemonData): Pair<String?, PokemonData?> {
@@ -43,9 +44,9 @@ class AddNewPokemonViewModel @Inject constructor(
             return Pair(context.resources.getString(R.string.error_encounter_lower_zero), null)
 
         val name = pokemonData.name
-        val generation = pokemonRepository.getGenerationByName(name)
-        val pokedexId = pokemonRepository.getPokedexIdByName(name)
-        val internalId = pokemonRepository.getMaxInternalId() + 1
+        val generation = PokemonDatabase.androidPokemonResources(getApplication()).getGenerationByName(name)
+        val pokedexId = PokemonDatabase.androidPokemonResources(getApplication()).getPokedexIdByName(name)
+        val internalId = pokemonDao.getMaxInternalId() + 1
 
         val validatedData = PokemonData(
             name,
@@ -62,11 +63,11 @@ class AddNewPokemonViewModel @Inject constructor(
     }
 
     fun getPokedexIdByName(name: String): Int {
-        return pokemonRepository.getPokedexIdByName(name)
+        return PokemonDatabase.androidPokemonResources(getApplication()).getPokedexIdByName(name)
     }
 
     fun getGenerationByName(name: String): Int {
-        return pokemonRepository.getGenerationByName(name)
+        return PokemonDatabase.androidPokemonResources(getApplication()).getGenerationByName(name)
     }
 
 }

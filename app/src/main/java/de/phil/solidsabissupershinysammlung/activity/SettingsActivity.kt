@@ -13,7 +13,6 @@ import androidx.preference.SwitchPreferenceCompat
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
-import kotlinx.android.synthetic.main.activity_main.*
 
 class SettingsActivity : AppCompatActivity() {
 

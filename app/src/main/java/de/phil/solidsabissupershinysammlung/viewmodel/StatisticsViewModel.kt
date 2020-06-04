@@ -1,17 +1,20 @@
 package de.phil.solidsabissupershinysammlung.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import com.github.mikephil.charting.data.Entry
-import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
+import de.phil.solidsabissupershinysammlung.database.PokemonDao
+import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
-import javax.inject.Inject
 
-class StatisticsViewModel @Inject constructor
-    (private val pokemonRepository: IPokemonRepository) : ViewModel() {
+class StatisticsViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val pokemonDao: PokemonDao =
+        PokemonDatabase.instance(application.applicationContext).pokemonDao()
 
     private fun getAverageEncounterUpTo(data: List<PokemonData>, n: Int): Float {
 
@@ -29,7 +32,7 @@ class StatisticsViewModel @Inject constructor
 
     fun getDataEntries(): List<Entry> {
         val data =
-            pokemonRepository.getAllPokemonData()
+            pokemonDao.getAllPokemonData()
                 .filter{ it.huntMethod == HuntMethod.Hatch && it.encounterNeeded != 0 }
                 .sortedBy { it.internalId }
 
@@ -51,10 +54,10 @@ class StatisticsViewModel @Inject constructor
         val avgEggs: Float
 
         for (edition in PokemonEdition.values()) {
-            numEggsShinys += pokemonRepository.getTotalNumberOfEggShinys(edition)
-            numSosShinys += pokemonRepository.getTotalNumberOfSosShinys(edition)
-            numEggs += pokemonRepository.getTotalNumberOfHatchedEggs(edition)
-            avgSos += pokemonRepository.getAverageSosEncounter(edition)
+            numEggsShinys += pokemonDao.getTotalNumberOfEggShinys(edition.ordinal)
+            numSosShinys += pokemonDao.getTotalNumberOfSosShinys(edition.ordinal)
+            numEggs += pokemonDao.getTotalEggsCount(edition.ordinal)
+            avgSos += pokemonDao.getAverageSosCount(edition.ordinal)
         }
 
         numShinys = numEggsShinys + numSosShinys

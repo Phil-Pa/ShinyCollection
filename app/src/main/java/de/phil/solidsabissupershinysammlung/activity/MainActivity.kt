@@ -1,7 +1,5 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import Deadline
-import Task
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.DialogInterface
@@ -21,16 +19,12 @@ import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
@@ -41,19 +35,8 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDate
-import java.time.LocalTime
-import javax.inject.Inject
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+class MainActivity : AppCompatActivity() {
 
     private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
         val updateData = viewModel.getStatisticsData()
@@ -291,7 +274,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.getShinyListData().observe(this, Observer {
 
             val updateData = viewModel.getStatisticsData()
@@ -531,6 +514,4 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
 
     }
-
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
 }

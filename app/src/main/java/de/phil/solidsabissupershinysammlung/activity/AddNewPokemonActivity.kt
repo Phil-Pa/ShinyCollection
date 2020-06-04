@@ -1,6 +1,7 @@
 package de.phil.solidsabissupershinysammlung.activity
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,12 +9,8 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
@@ -22,16 +19,9 @@ import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
-import javax.inject.Inject
 
 
-class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+class AddNewPokemonActivity : AppCompatActivity() {
 
     companion object {
 
@@ -58,7 +48,7 @@ class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, -1)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AddNewPokemonViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(AddNewPokemonViewModel::class.java)
 
         add_new_pokemon_activity_button_add.setOnClickListener {
 
@@ -180,7 +170,5 @@ class AddNewPokemonActivity : AppCompatActivity(), HasSupportFragmentInjector {
         setResult(App.REQUEST_ADD_POKEMON, intent)
         finish()
     }
-
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
 }

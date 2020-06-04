@@ -1,18 +1,12 @@
 package de.phil.solidsabissupershinysammlung.database
 
-import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.model.PokemonData
-
 class DataExporter {
 
     var shouldCompressData = false
 
-    fun export(repository: IPokemonRepository): String? {
+    fun export(pokemonDao: PokemonDao): String? {
 
-        val pokemonList = mutableListOf<PokemonData>()
-
-        for (i in 0 until App.NUM_TAB_VIEWS)
-            pokemonList.addAll(repository.getAllPokemonDataFromTabIndex(i))
+        val pokemonList = pokemonDao.getAllPokemonData()
 
         if (pokemonList.isEmpty())
             return null

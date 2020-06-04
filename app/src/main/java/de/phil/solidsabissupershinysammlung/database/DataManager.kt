@@ -11,12 +11,12 @@ class DataManager {
     private val dataExporter =
         DataExporter()
 
-    fun import(pokemonRepository: IPokemonRepository, data: String?): Boolean {
-        return dataImporter.import(pokemonRepository, data)
+    fun import(pokemonDao: PokemonDao, data: String?): Boolean {
+        return dataImporter.import(pokemonDao, data)
     }
 
-    fun export(pokemonRepository: IPokemonRepository): String? {
-        return dataExporter.export(pokemonRepository)
+    fun export(pokemonDao: PokemonDao): String? {
+        return dataExporter.export(pokemonDao)
     }
 
 }
