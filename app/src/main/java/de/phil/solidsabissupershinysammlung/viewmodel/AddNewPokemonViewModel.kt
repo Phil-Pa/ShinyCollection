@@ -8,7 +8,6 @@ import de.phil.solidsabissupershinysammlung.database.PokemonDao
 import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 
-// TODO: make something like an interface with class to store string messages to get rid of the application
 class AddNewPokemonViewModel(application: Application) : AndroidViewModel(application) {
 
     private val pokemonDao: PokemonDao =

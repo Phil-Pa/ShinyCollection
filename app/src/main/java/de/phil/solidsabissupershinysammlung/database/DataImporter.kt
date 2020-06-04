@@ -23,8 +23,6 @@ class DataImporter {
 
         for (dataString in dataList) {
 
-            // TODO find better solution
-
             if (dataString == "\n" || dataString.isEmpty() || dataString.isBlank())
                 continue
 

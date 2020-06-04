@@ -7,10 +7,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Pair
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +28,9 @@ import androidx.viewpager.widget.ViewPager
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.SnackbarContentLayout
 import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
@@ -38,6 +43,7 @@ import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_pokemondata_list.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -413,6 +419,8 @@ class MainActivity : AppCompatActivity() {
         textViewTotalEggs = headerView.findViewById(R.id.textView_all_eggs)
         textViewAverageEggs = headerView.findViewById(R.id.textView_average_eggs)
 
+        imageViewPokemonEdition.setOnClickListener { changeEdition() }
+
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         when (prefs.getString(App.PREFERENCES_CURRENT_THEME, null)) {
             "Sabi" -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
@@ -431,6 +439,8 @@ class MainActivity : AppCompatActivity() {
         Handler().post {
             val menuItemAdd = menu.findItem(R.id.add_pokemon)
             val menuItemRandom = menu.findItem(R.id.random_pokemon)
+
+//            showGuide(menuItemAdd, menuItemRandom)
 
             if (!viewModel.isGuideShown()) {
                 showGuide(menuItemAdd, menuItemRandom)
@@ -521,3 +531,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+
+//                val accentColor = TypedValue()
+//                theme.resolveAttribute(R.attr.colorAccent, accentColor, true)
+//
+//                val primaryColor = TypedValue()
+//                theme.resolveAttribute(R.attr.colorPrimary, primaryColor, true)
+
+//                Snackbar.make(drawerLayout, "Hello!", Snackbar.LENGTH_LONG)
+//                    .setActionTextColor(resources.getColor(android.R.color.holo_red_light, theme))
+//                    .setAction("Undo") {
+//                        Toast.makeText(this, "Test Toast", Toast.LENGTH_SHORT).show()
+//                    }.show()
