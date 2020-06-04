@@ -3,7 +3,7 @@ package de.phil.solidsabissupershinysammlung.core
 object App {
 
     // constants
-    const val NUM_TAB_VIEWS = 6
+    const val NUM_TAB_VIEWS = 5
     const val INT_ERROR_CODE = -1
 
     const val REQUEST_ADD_POKEMON = 1

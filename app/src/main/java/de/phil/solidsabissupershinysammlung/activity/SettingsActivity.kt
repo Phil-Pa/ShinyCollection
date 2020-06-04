@@ -71,7 +71,7 @@ class SettingsActivity : AppCompatActivity() {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
             val themePref = this.findPreference<ListPreference>("current_theme")!!
 
-            themePref.setOnPreferenceChangeListener { preference, newValue ->
+            themePref.setOnPreferenceChangeListener { _, newValue ->
                 val newTheme = newValue as String
                 initTheme(newTheme)
 
@@ -81,7 +81,7 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             val darkModePref = this.findPreference<SwitchPreferenceCompat>("use_dark_mode")!!
-            darkModePref.setOnPreferenceChangeListener { preference, newValue ->
+            darkModePref.setOnPreferenceChangeListener { _, newValue ->
 
                 val preferences = activity?.getSharedPreferences(activity?.application?.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)!!
 

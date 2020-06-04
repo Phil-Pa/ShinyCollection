@@ -44,11 +44,10 @@
     <!-- tabs titles -->
     <string-array name="tab_titles">
         <item>Shiny Liste</item>
-        <item>15er Zyklus</item>
-        <item>20er Zyklus</item>
-        <item>20er+ Zyklus</item>
+        <item>Züchten</item>
         <item>SOS</item>
         <item>Softreset</item>
+        <item>Anderes</item>
     </string-array>
 
     <!-- hunt methods -->
@@ -107,8 +106,8 @@
     <string name="guide_random_pokemon_description">Hiermit kannst du ein Pokemon aus der Liste zufällig auswählen lassen, in der du dich gerade befindest.</string>
     <string name="guide_add_pokemon">Pokemon hinzufügen</string>
     <string name="guide_add_pokemon_description">Hier kannst du ein Pokemon zu der Liste hinzufügen, in der du dich gerade befindest.</string>
-    <string name="import_error">Konnte Daten nicht importieren.</string>
-    <string name="export_error">Es gibt keine Daten zum Exportieren</string>
+    <string name="import_error">Konnte Daten aus der Zwischenablage nicht importieren.</string>
+    <string name="export_error">Es gibt keine Daten zum Exportieren.</string>
     <string name="error_random_pokemon">Es gibt noch keine Pokemon.</string>
     <string name="checkbox_encounters_known">Anzahl der Begegnungen sind bekannt</string>
     <string name="import_success">Daten wurden erfolgreich geladen.</string>
@@ -127,5 +126,7 @@
     <string name="change_edition">Edition ändern</string>
     <string name="statistics">Statistik</string>
     <string name="change_current_color_theme">Aktuelles Farbschema ändern</string>
+    <string name="shiny_methode_textView_text">Shiny-Methode</string>
+    <string name="edition_textView_text">Edition</string>
 
 </resources>

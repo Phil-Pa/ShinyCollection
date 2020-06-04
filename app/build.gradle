@@ -125,5 +125,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     // worker manager
-    implementation "android.arch.work:work-runtime:1.0.1"
+    //implementation "android.arch.work:work-runtime:1.0.1"
+
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0'
 }

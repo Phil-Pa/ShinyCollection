@@ -23,6 +23,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
@@ -35,6 +37,7 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -422,12 +425,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
+        if (menu == null)
+            return true
+
         Handler().post {
-//            menuItemAdd = findViewById(R.id.add_pokemon)
-//            menuItemRandom = findViewById(R.id.random_pokemon)
+            val menuItemAdd = menu.findItem(R.id.add_pokemon)
+            val menuItemRandom = menu.findItem(R.id.random_pokemon)
 
             if (!viewModel.isGuideShown()) {
-//                showGuide()
+                showGuide(menuItemAdd, menuItemRandom)
                 viewModel.setGuideShown()
             }
         }

@@ -13,11 +13,32 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:src="@drawable/placeholder_pokemon"
             app:layout_constraintBottom_toTopOf="@id/add_new_pokemon_activity_spinner_hunt_methods"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shiny_methode_textView_text"
+            app:layout_constraintBottom_toTopOf="@+id/add_new_pokemon_activity_spinner_hunt_methods"
+            app:layout_constraintEnd_toStartOf="@+id/add_new_pokemon_activity_spinner_pokemon_editions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_new_pokemon_activity_imageView_preview" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edition_textView_text"
+            app:layout_constraintBottom_toTopOf="@+id/add_new_pokemon_activity_spinner_pokemon_editions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/add_new_pokemon_activity_spinner_hunt_methods"
+            app:layout_constraintTop_toBottomOf="@+id/add_new_pokemon_activity_imageView_preview" />
 
     <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/add_new_pokemon_activity_spinner_hunt_methods"
@@ -65,10 +86,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:hint="@string/editText_encounter_hint"
             android:inputType="number"
-            app:layout_constraintBottom_toTopOf="@id/add_new_pokemon_activity_button_add"
+            app:layout_constraintBottom_toTopOf="@+id/add_new_pokemon_activity_button_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +103,8 @@
             android:text="@string/checkbox_encounters_known"
             app:layout_constraintBottom_toTopOf="@+id/add_new_pokemon_activity_edittext_eggsNeeded"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_new_pokemon_activity_edittext_name" />
 
     <Button
             android:id="@+id/add_new_pokemon_activity_button_add"
