@@ -1,6 +1,7 @@
 package de.phil.solidsabissupershinysammlung.viewmodel
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.os.AsyncTask
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -14,6 +15,10 @@ import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.model.UpdateStatisticsData
 import de.phil.solidsabissupershinysammlung.utils.round
+
+fun AndroidViewModel.getPreferences(): SharedPreferences {
+    return PokemonDatabase.preferences(getApplication())
+}
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -81,33 +86,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     //region preferences
 
     fun setGuideShown() {
-        PokemonDatabase.preferences(getApplication()).edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, true).apply()
+        getPreferences().edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, true).apply()
     }
 
     fun isGuideShown(): Boolean {
-        return PokemonDatabase.preferences(getApplication()).getBoolean(App.PREFERENCES_GUIDE_SHOWN, false)
+        return getPreferences().getBoolean(App.PREFERENCES_GUIDE_SHOWN, false)
     }
 
     fun setSortMethod(pokemonSortMethod: PokemonSortMethod) {
-        PokemonDatabase.preferences(getApplication()).edit().putInt(App.PREFERENCES_SORT_METHOD, pokemonSortMethod.ordinal).apply()
+        getPreferences().edit().putInt(App.PREFERENCES_SORT_METHOD, pokemonSortMethod.ordinal).apply()
     }
 
     fun getSortMethod(): PokemonSortMethod {
-        val intValue = PokemonDatabase.preferences(getApplication()).getInt(App.PREFERENCES_SORT_METHOD, PokemonSortMethod.InternalId.ordinal)
+        val intValue = getPreferences().getInt(App.PREFERENCES_SORT_METHOD, PokemonSortMethod.InternalId.ordinal)
         return PokemonSortMethod.fromInt(intValue)!!
     }
 
     fun shouldAutoSort(): Boolean {
-        return PokemonDatabase.preferences(getApplication()).getBoolean(App.PREFERENCES_AUTO_SORT, false)
+        return getPreferences().getBoolean(App.PREFERENCES_AUTO_SORT, false)
     }
 
     fun setPokemonEdition(pokemonEdition: PokemonEdition) {
-        PokemonDatabase.preferences(getApplication()).edit().putInt(App.PREFERENCES_POKEMON_EDITION, pokemonEdition.ordinal).apply()
+        getPreferences().edit().putInt(App.PREFERENCES_POKEMON_EDITION, pokemonEdition.ordinal).apply()
         pokemonEditionLiveData.value = pokemonEdition
     }
 
     fun getPokemonEdition(): PokemonEdition {
-        val ordinal = PokemonDatabase.preferences(getApplication()).getInt(App.PREFERENCES_POKEMON_EDITION, PokemonEdition.USUM.ordinal)
+        val ordinal = getPreferences().getInt(App.PREFERENCES_POKEMON_EDITION, PokemonEdition.USUM.ordinal)
         return PokemonEdition.fromInt(ordinal)!!
     }
 

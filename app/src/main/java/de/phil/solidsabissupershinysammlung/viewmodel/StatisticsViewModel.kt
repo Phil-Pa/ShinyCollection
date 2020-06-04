@@ -23,11 +23,6 @@ class StatisticsViewModel(application: Application) : AndroidViewModel(applicati
 
         val res = getAverageEncounterUpTo(data, n - 1)
         return (res * (n - 1) + data[n - 1].encounterNeeded.toFloat()) / n
-//        var sum = 0f
-//        for (i in 0 until n)
-//            sum += data[i].encounterNeeded
-//
-//        return sum / n.toFloat()
     }
 
     fun getDataEntries(): List<Entry> {
