@@ -164,7 +164,7 @@ class TestData {
                 "PokemonData(name=Vulpix-alola, pokedexId=37, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=144)\n" +
                 "PokemonData(name=Larvitar, pokedexId=246, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=159)\n" +
                 "PokemonData(name=Knacklion, pokedexId=328, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=167)\n" +
-                "PokemonData(name=Muramura, pokedexId=805, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=5, internalId=161)\n"
+                "PokemonData(name=Muramura, pokedexId=805, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=161)\n"
 
     }
 

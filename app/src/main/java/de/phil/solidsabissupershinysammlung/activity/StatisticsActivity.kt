@@ -3,16 +3,10 @@ package de.phil.solidsabissupershinysammlung.activity
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.viewmodel.StatisticsViewModel
@@ -28,11 +22,8 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
         initTheme()
         setContentView(R.layout.activity_statistics)
 
-        viewModel =
-            ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
 
-        val entries = viewModel.getDataEntries()
-        setupChart(entries)
         initStatistics()
     }
 
@@ -54,28 +45,6 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
             "Johannes" -> statistics_imageView.setImageResource(R.drawable.scytherold)
             "Phil" -> statistics_imageView.setImageResource(R.drawable.leufeo)
         }
-    }
-
-    private fun setupChart(entries: List<Entry>) {
-
-        val lineData = LineDataSet(entries, "Durchschnitt gebrüteter Eier")
-        lineData.setDrawCircleHole(false)
-        lineData.setDrawCircles(false)
-        lineData.setDrawFilled(true)
-        lineData.fillDrawable = resources.getDrawable(R.drawable.navigation_drawer_image, theme)
-        lineData.mode = LineDataSet.Mode.CUBIC_BEZIER
-        lineData.setDrawValues(false)
-        lineData.disableDashedLine()
-        lineData.disableDashedHighlightLine()
-
-        lineChart.description.isEnabled = false
-        lineChart.setBackgroundColor(resources.getColor(android.R.color.white, theme))
-        lineChart.setDrawGridBackground(false)
-        lineChart.axisRight.isEnabled = false
-        lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-        lineChart.data = LineData(lineData)
-        lineChart.isDragEnabled = true
-        lineChart.setScaleEnabled(true)
     }
 
     override fun showSmallIcons(): Boolean {

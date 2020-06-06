@@ -121,9 +121,6 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-    // graph library
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
     // worker manager
     //implementation "android.arch.work:work-runtime:1.0.1"
 

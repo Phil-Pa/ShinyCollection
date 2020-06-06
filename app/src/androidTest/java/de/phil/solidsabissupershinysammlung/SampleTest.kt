@@ -2,8 +2,8 @@ package de.phil.solidsabissupershinysammlung
 
 import android.view.Gravity
 import android.view.View
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
@@ -14,7 +14,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.activity.copyToClipboard
@@ -22,6 +21,7 @@ import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapt
 import de.phil.solidsabissupershinysammlung.core.App
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
@@ -38,40 +38,68 @@ class SampleTest {
     private val delayTime: Long = 200
 
     @Test
-    fun testAdd() {
+    // test add
+    fun a() {
+
+        onView(withId(R.id.drawer_layout))
+            .check(matches(isClosed(Gravity.LEFT)))
+            .perform(DrawerActions.open())
+        delay(500)
+
+        onView(withId(R.id.imageView_pokemon_edition))
+            .perform(click())
+        delay(500)
+
+        onView(withId(R.id.dialog_edition_xy))
+            .perform(swipeUp())
+        delay(1000)
+        onView(withId(R.id.dialog_edition_sm))
+            .perform(swipeUp())
+        delay(1000)
+
+        onView(withId(R.id.dialog_edition_go))
+            .perform(click())
+        delay(delayTime)
 
         for (i in 0 until App.NUM_TAB_VIEWS) {
             val beforeData = activityRule.activity.viewModel.getAllPokemonDataFromTabIndex(i)
 
-            openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
-            delay(delayTime)
+//            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
+            delay()
 
-            onView(withText(activityRule.activity.getString(R.string.menu_add))).perform(click())
-
-            delay(delayTime)
+            onView(withId(R.id.add_pokemon)).perform(click())
+            delay()
 
             onView(withId(R.id.add_new_pokemon_activity_edittext_name)).perform(replaceText("Bisasam"))
+            delay()
 
-            delay(delayTime)
+            onView(withId(R.id.add_new_pokemon_activity_spinner_pokemon_editions)).perform(click())
+            delay()
+            onData(allOf(`is`(instanceOf(String::class.java)), `is`("Go")))
+                .perform(click())
+
+            delay()
+
             onView(withId(R.id.add_new_pokemon_activity_edittext_eggsNeeded)).perform(typeText("123"))
             androidx.test.espresso.Espresso.closeSoftKeyboard()
 
-            delay(delayTime)
+            delay()
 
             onView(withId(R.id.add_new_pokemon_activity_button_add)).perform(click())
 
-            delay(delayTime)
+            delay()
             val afterData = activityRule.activity.viewModel.getAllPokemonDataFromTabIndex(i)
 
             assert(beforeData.size + 1 == afterData.size)
 
             onView(withId(R.id.view_pager)).perform(swipeLeft())
-            delay(delayTime)
+            delay()
         }
     }
 
     @Test
-    fun testDelete() {
+    // test delete
+    fun b() {
 
         for (i in 0 until App.NUM_TAB_VIEWS) {
 
@@ -107,7 +135,8 @@ class SampleTest {
     }
 
     @Test
-    fun testDataImport() {
+    // test import
+    fun c() {
         activityRule.activity.copyToClipboard(TestData.CLIPBOARD_DATA)
 
         delay(500)
