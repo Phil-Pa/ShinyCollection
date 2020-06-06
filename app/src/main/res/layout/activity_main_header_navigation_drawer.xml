@@ -5,8 +5,6 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:background="@drawable/navigation_drawer_image"
-
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:orientation="vertical"
         android:gravity="bottom">
 
@@ -40,65 +38,65 @@
 
         <TextView
                 android:transitionName="transitionNameNumShinys"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/num_shinys"
-                android:textColor="@android:color/white"
                 android:id="@+id/textView_number_shinys"
                 app:layout_constraintBottom_toTopOf="@+id/textView_number_shinys_eggs"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@android:color/white"
                 android:transitionName="transitionNameNumEggShinys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/num_shinys_eggs"
-                android:textColor="@android:color/white"
                 android:id="@+id/textView_number_shinys_eggs"
                 app:layout_constraintBottom_toTopOf="@+id/textView_number_shinys_sos"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@android:color/white"
                 android:transitionName="transitionNameNumSosShinys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/num_shinys_sos"
-                android:textColor="@android:color/white"
                 android:id="@+id/textView_number_shinys_sos"
                 app:layout_constraintBottom_toTopOf="@+id/textView_average_shinys_sos"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@android:color/white"
                 android:transitionName="transitionNameAvgSosShinys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/avg_shinys_sos"
-                android:textColor="@android:color/white"
                 android:id="@+id/textView_average_shinys_sos"
                 app:layout_constraintBottom_toTopOf="@+id/textView_all_eggs"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@android:color/white"
                 android:transitionName="transitionNameNumEggs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
                 android:id="@+id/textView_all_eggs"
                 android:text="@string/num_eggs"
                 app:layout_constraintBottom_toTopOf="@+id/textView_average_eggs"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@android:color/white"
                 android:transitionName="transitionNameAvgEggs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/avg_eggs"
-                android:textColor="@android:color/white"
                 android:id="@+id/textView_average_eggs" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
                 app:layout_constraintStart_toStartOf="parent"

@@ -539,15 +539,3 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
     }
 }
-
-//                val accentColor = TypedValue()
-//                theme.resolveAttribute(R.attr.colorAccent, accentColor, true)
-//
-//                val primaryColor = TypedValue()
-//                theme.resolveAttribute(R.attr.colorPrimary, primaryColor, true)
-
-//                Snackbar.make(drawerLayout, "Hello!", Snackbar.LENGTH_LONG)
-//                    .setActionTextColor(resources.getColor(android.R.color.holo_red_light, theme))
-//                    .setAction("Undo") {
-//                        Toast.makeText(this, "Test Toast", Toast.LENGTH_SHORT).show()
-//                    }.show()

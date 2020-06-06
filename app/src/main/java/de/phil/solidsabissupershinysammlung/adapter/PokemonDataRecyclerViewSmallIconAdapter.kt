@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,6 +21,7 @@ class PokemonDataRecyclerViewSmallIconAdapter(
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mShinyImageView: ImageView = mView.fragment_pokemondata_small_icon
+        val mEncounterTextView: TextView = mView.fragment_pokemondata_small_icon_encounter_text
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,6 +41,7 @@ class PokemonDataRecyclerViewSmallIconAdapter(
             .load(item.getDownloadUrl())
             .placeholder(ContextCompat.getDrawable(activity.getContext(), R.drawable.placeholder_pokemon))
             .into(holder.mShinyImageView)
+        holder.mEncounterTextView.text = item.encounterNeeded.toString()
     }
 
 }
