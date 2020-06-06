@@ -100,6 +100,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/pokemon_statistic_list_fragment"
+                android:name="de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
         <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
                 android:layout_height="400dp"

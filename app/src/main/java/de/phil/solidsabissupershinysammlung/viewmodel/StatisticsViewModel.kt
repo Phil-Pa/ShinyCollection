@@ -39,6 +39,10 @@ class StatisticsViewModel(application: Application) : AndroidViewModel(applicati
         return list
     }
 
+    fun getAllPokemon(): List<PokemonData> {
+        return pokemonDao.getAllPokemonDataFromTabIndex(0)
+    }
+
     fun getStatistics(): UpdateStatisticsData {
 
         val numShinys: Int

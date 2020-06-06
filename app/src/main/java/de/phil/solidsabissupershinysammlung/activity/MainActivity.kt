@@ -2,17 +2,16 @@ package de.phil.solidsabissupershinysammlung.activity
 
 import android.app.Activity
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Pair
-import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,12 +24,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
-import com.getkeepsafe.taptargetview.TapTarget
-import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.SnackbarContentLayout
 import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
@@ -42,10 +36,8 @@ import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.fragment_pokemondata_list.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
     private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
         val updateData = viewModel.getStatisticsData()
@@ -175,17 +167,17 @@ class MainActivity : AppCompatActivity() {
             (resources.getString(R.string.avg_shinys_sos) + ": $averageSosCount")
     }
 
-    fun onListEntryClick(data: PokemonData) {
+    override fun onListEntryClick(pokemonData: PokemonData) {
         if (actionMode != null) {
-            selectedPokemon = data
-            actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
+            selectedPokemon = pokemonData
+            actionMode?.title = pokemonData.name + " " + resources.getString(R.string.action_mode_title)
         } else {
             if (getCurrentTabIndex() == App.TAB_INDEX_SHINY_LIST)
                 return
 
-            data.encounterNeeded++
-            recyclerViewChangedListeners.forEach { it.updatePokemonEncounter(data) }
-            viewModel.updatePokemon(data)
+            pokemonData.encounterNeeded++
+            recyclerViewChangedListeners.forEach { it.updatePokemonEncounter(pokemonData) }
+            viewModel.updatePokemon(pokemonData)
 
             if (viewModel.shouldAutoSort())
                 recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
@@ -195,7 +187,7 @@ class MainActivity : AppCompatActivity() {
     private var actionMode: ActionMode? = null
     private var selectedPokemon: PokemonData? = null
 
-    fun onListEntryLongClick(data: PokemonData) {
+    override fun onListEntryLongClick(pokemonData: PokemonData) {
         if (actionMode == null) {
             startSupportActionMode(object : ActionMode.Callback {
                 override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
@@ -211,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                                     selectedPokemon!!.encounterNeeded--
                                     recyclerViewChangedListeners.forEach {
                                         it.updatePokemonEncounter(selectedPokemon!!) }
-                                    viewModel.updatePokemon(data)
+                                    viewModel.updatePokemon(pokemonData)
                                 }
                             }
                         }
@@ -252,8 +244,8 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        selectedPokemon = data
-        actionMode?.title = data.name + " " + resources.getString(R.string.action_mode_title)
+        selectedPokemon = pokemonData
+        actionMode?.title = pokemonData.name + " " + resources.getString(R.string.action_mode_title)
     }
 
     private lateinit var drawerLayout: DrawerLayout
@@ -496,8 +488,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun addRecyclerViewChangedListener(listener: OnListChangedListener) {
+    override fun addRecyclerViewChangedListener(listener: OnListChangedListener) {
         recyclerViewChangedListeners.add(listener)
+    }
+
+    override fun getAllPokemonDataFromTabIndex(mTabIndex: Int): List<PokemonData> {
+        return viewModel.getAllPokemonDataFromTabIndex(mTabIndex)
+    }
+
+    override fun getSortMethod(): PokemonSortMethod {
+        return viewModel.getSortMethod()
+    }
+
+    override fun getContext(): Context {
+        return this
+    }
+
+    override fun showSmallIcons(): Boolean {
+        return false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.activity.IPokemonListActivity
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
@@ -16,7 +17,7 @@ import de.phil.solidsabissupershinysammlung.model.toGerman
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 
 class PokemonDataRecyclerViewAdapter(
-    private val mValues: MutableList<PokemonData>, private val activity: MainActivity
+    private val mValues: MutableList<PokemonData>, private val activity: IPokemonListActivity
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,18 +37,18 @@ class PokemonDataRecyclerViewAdapter(
         // "Encounter: "
 
         if (item.encounterNeeded == App.ENCOUNTER_UNKNOWN)
-            holder.mEggsNeededView.text = activity.resources.getString(R.string.encounter_unknown)
+            holder.mEggsNeededView.text = activity.getContext().resources.getString(R.string.encounter_unknown)
         else
-            holder.mEggsNeededView.text = (activity.resources.getString(R.string.encounter_colon) + " " + item.encounterNeeded.toString())
+            holder.mEggsNeededView.text = (activity.getContext().resources.getString(R.string.encounter_colon) + " " + item.encounterNeeded.toString())
 
         // "Methode: "
         val method: String = item.huntMethod.toGerman()
 
-        holder.mHuntMethodView.text = (activity.resources.getString(R.string.method_colon) + " " + method)
+        holder.mHuntMethodView.text = (activity.getContext().resources.getString(R.string.method_colon) + " " + method)
 
-        Glide.with(activity)
+        Glide.with(activity.getContext())
             .load(item.getDownloadUrl())
-            .placeholder(ContextCompat.getDrawable(activity, R.drawable.placeholder_pokemon))
+            .placeholder(ContextCompat.getDrawable(activity.getContext(), R.drawable.placeholder_pokemon))
             .into(holder.mShinyImageView)
 
         with(holder.mView) {
@@ -70,6 +71,5 @@ class PokemonDataRecyclerViewAdapter(
         val mEggsNeededView: TextView = mView.fragment_pokemondata_eggs_needed
         val mHuntMethodView: TextView = mView.fragment_pokemondata_hunt_method
         val mShinyImageView: ImageView = mView.fragment_pokemondata_shiny_image
-
     }
 }

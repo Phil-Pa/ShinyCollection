@@ -5,19 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginLeft
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import de.phil.solidsabissupershinysammlung.R
+import de.phil.solidsabissupershinysammlung.activity.IPokemonListActivity
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
+import de.phil.solidsabissupershinysammlung.adapter.PokemonDataAdapter
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
+import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewSmallIconAdapter
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 /**
- * fragment in the main view pager
+ * fragment in the main view pager. every activity using this fragment needs to implement [IPokemonListActivity]
  */
 class PokemonListFragment : Fragment() {
 
@@ -31,7 +36,8 @@ class PokemonListFragment : Fragment() {
      */
     private lateinit var recyclerView: RecyclerView
 
-    private var myAdapter: PokemonDataRecyclerViewAdapter? = null
+    private val masterAdapter = PokemonDataAdapter()
+
     private var dataList = mutableListOf<PokemonData>()
 
     /**
@@ -64,8 +70,8 @@ class PokemonListFragment : Fragment() {
         }
     }
 
-    private fun getMainActivity(): MainActivity {
-        return (activity as MainActivity)
+    private fun getPokemonListActivity(): IPokemonListActivity {
+        return activity as IPokemonListActivity
     }
 
     override fun onCreateView(
@@ -73,6 +79,9 @@ class PokemonListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         retainInstance = true
+
+
+
         val view = inflater.inflate(R.layout.fragment_pokemondata_list, container, false)
 
         if (view is RecyclerView) {
@@ -81,7 +90,31 @@ class PokemonListFragment : Fragment() {
             loadData()
 
             with(recyclerView) {
-                layoutManager = GridLayoutManager(context, if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2)
+                layoutManager = if (getPokemonListActivity().showSmallIcons()) {
+                    GridLayoutManager(context, 4).apply {
+                        orientation = HORIZONTAL
+                    }
+                } else {
+                    GridLayoutManager(context, if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2)
+                }
+
+                adapter = if (getPokemonListActivity().showSmallIcons())
+                    masterAdapter.smallIconAdapter
+                else
+                    masterAdapter.normalAdapter
+
+                if (getPokemonListActivity().showSmallIcons()) {
+                    recyclerView.background = null
+                    val layoutParams = RecyclerView.LayoutParams(
+                        RecyclerView.LayoutParams.WRAP_CONTENT,
+                        RecyclerView.LayoutParams.MATCH_PARENT
+                    )
+                    layoutParams.setMargins(0, 0, 0, 0)
+                    recyclerView.layoutParams = layoutParams
+                    recyclerView.isVerticalScrollBarEnabled = false
+                    recyclerView.isHorizontalScrollBarEnabled = true
+                    return view
+                }
 
                 val dividerItemDecoration = DividerItemDecoration(
                     view.getContext(),
@@ -90,18 +123,16 @@ class PokemonListFragment : Fragment() {
 
                 recyclerView.addItemDecoration(dividerItemDecoration)
 
-                adapter = myAdapter
-
-                getMainActivity().addRecyclerViewChangedListener(object : MainActivity.OnListChangedListener {
+                getPokemonListActivity().addRecyclerViewChangedListener(object : MainActivity.OnListChangedListener {
                     override fun refreshRecyclerView() {
                         recyclerView.requestLayout()
-                        myAdapter?.notifyDataSetChanged()
+                        masterAdapter.normalAdapter?.notifyDataSetChanged()
                     }
 
                     override fun addPokemon(pokemonData: PokemonData) {
                         if (mTabIndex == pokemonData.tabIndex) {
                             dataList.add(pokemonData)
-                            myAdapter?.notifyItemInserted(dataList.size - 1)
+                            masterAdapter.normalAdapter?.notifyItemInserted(dataList.size - 1)
                         }
                     }
 
@@ -110,13 +141,13 @@ class PokemonListFragment : Fragment() {
                         loadData()
 
                         // set new adapter
-                        adapter = myAdapter
+                        adapter = masterAdapter.normalAdapter
                     }
 
                     override fun updatePokemonEncounter(pokemonData: PokemonData) {
                         if (mTabIndex == pokemonData.tabIndex) {
                             val position = dataList.indexOfFirst { it.internalId == pokemonData.internalId }
-                            myAdapter?.notifyItemChanged(position)
+                            masterAdapter.normalAdapter?.notifyItemChanged(position)
                         }
                     }
 
@@ -124,7 +155,7 @@ class PokemonListFragment : Fragment() {
                         if (mTabIndex == pokemonData.tabIndex) {
                             val position = dataList.indexOf(pokemonData)
                             dataList.removeAt(position)
-                            myAdapter?.notifyItemRemoved(position)
+                            masterAdapter.normalAdapter?.notifyItemRemoved(position)
                         }
                     }
 
@@ -132,13 +163,13 @@ class PokemonListFragment : Fragment() {
                         if (mTabIndex == tabIndex) {
                             val length = dataList.size
                             dataList.clear()
-                            myAdapter?.notifyItemRangeRemoved(0, length)
+                            masterAdapter.normalAdapter?.notifyItemRangeRemoved(0, length)
                         }
                     }
 
                     override fun sort(pokemonSortMethod: PokemonSortMethod) {
                         sortData(pokemonSortMethod)
-                        myAdapter?.notifyDataSetChanged()
+                        masterAdapter.normalAdapter?.notifyDataSetChanged()
                     }
 
                 })
@@ -149,13 +180,16 @@ class PokemonListFragment : Fragment() {
 
     private fun loadData() {
         // get data from the database
-        val liveData = getMainActivity().viewModel.getAllPokemonDataFromTabIndex(mTabIndex)
-        dataList = liveData.toMutableList()
+        val data = getPokemonListActivity().getAllPokemonDataFromTabIndex(mTabIndex)
+        dataList = data.toMutableList()
 
         // sort the data
-        sortData(getMainActivity().viewModel.getSortMethod())
+        sortData(getPokemonListActivity().getSortMethod())
 
-        myAdapter = PokemonDataRecyclerViewAdapter(dataList, getMainActivity())
+        if (getPokemonListActivity().showSmallIcons())
+            masterAdapter.smallIconAdapter = PokemonDataRecyclerViewSmallIconAdapter(dataList, getPokemonListActivity())
+        else
+            masterAdapter.normalAdapter = PokemonDataRecyclerViewAdapter(dataList, getPokemonListActivity())
     }
 
     companion object {

@@ -124,7 +124,7 @@
     <string name="dialog_watch_out">Achtung</string>
     <string name="view_statistics">Statistiken ansehen</string>
     <string name="change_edition">Edition ändern</string>
-    <string name="statistics">Statistik</string>
+    <string name="statistics">Statistik aller Shiny Pokemon</string>
     <string name="change_current_color_theme">Aktuelles Farbschema ändern</string>
     <string name="shiny_methode_textView_text">Shiny-Methode</string>
     <string name="edition_textView_text">Edition</string>

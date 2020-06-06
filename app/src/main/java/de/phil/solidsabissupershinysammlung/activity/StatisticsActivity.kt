@@ -1,7 +1,9 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.XAxis
@@ -10,11 +12,14 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
+import de.phil.solidsabissupershinysammlung.model.PokemonData
+import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.viewmodel.StatisticsViewModel
 import kotlinx.android.synthetic.main.activity_statistics.*
 
 
-class StatisticsActivity : AppCompatActivity() {
+class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
 
     private lateinit var viewModel: StatisticsViewModel
 
@@ -71,5 +76,33 @@ class StatisticsActivity : AppCompatActivity() {
         lineChart.data = LineData(lineData)
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
+    }
+
+    override fun showSmallIcons(): Boolean {
+        return true
+    }
+
+    override fun addRecyclerViewChangedListener(listener: MainActivity.OnListChangedListener) {
+
+    }
+
+    override fun getAllPokemonDataFromTabIndex(mTabIndex: Int): List<PokemonData> {
+        return viewModel.getAllPokemon()
+    }
+
+    override fun getSortMethod(): PokemonSortMethod {
+        return PokemonSortMethod.InternalId
+    }
+
+    override fun getContext(): Context {
+        return this
+    }
+
+    override fun onListEntryLongClick(pokemonData: PokemonData) {
+
+    }
+
+    override fun onListEntryClick(pokemonData: PokemonData) {
+
     }
 }
