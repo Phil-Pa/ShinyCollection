@@ -4,18 +4,25 @@
         tools:context="de.phil.solidsabissupershinysammlung.activity.MainActivity">
 
     <item
+        android:id="@+id/edit_pokemon_data"
+        android:icon="@drawable/ic_edit_24dp"
+        android:orderInCategory="97"
+        android:title="@string/edit_pokemon_data"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/move_to_shiny_list"
         android:icon="@drawable/ic_compare_arrows_white_24dp"
         android:orderInCategory="98"
         android:title="@string/menu_move_to_shiny_list"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/decrease_encounter"
         android:icon="@drawable/ic_decrease_white_24dp"
         android:orderInCategory="99"
         android:title="@string/menu_decrease"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
             android:id="@+id/delete_entry"

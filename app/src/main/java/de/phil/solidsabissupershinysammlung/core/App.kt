@@ -7,6 +7,7 @@ object App {
     const val INT_ERROR_CODE = -1
 
     const val REQUEST_ADD_POKEMON = 1
+    const val REQUEST_EDIT_POKEMON = 2
 
     const val PREFERENCES_NAME = "_preferences"
 

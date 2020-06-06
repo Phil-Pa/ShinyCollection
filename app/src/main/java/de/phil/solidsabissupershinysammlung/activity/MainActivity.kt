@@ -1,6 +1,5 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.DialogInterface
@@ -29,7 +28,7 @@ import com.google.android.material.tabs.TabLayout
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
-import de.phil.solidsabissupershinysammlung.model.HuntMethod
+import de.phil.solidsabissupershinysammlung.model.INTENT_EXTRA_TAB_INDEX
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
@@ -222,6 +221,9 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                                 if (viewModel.shouldAutoSort())
                                     recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
                             }
+                        }
+                        R.id.edit_pokemon_data -> {
+                            startActivity(Intent(this@MainActivity, EditPokemonDataActivity::class.java))
                         }
                     }
                     mode?.finish()
@@ -480,8 +482,8 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
             }
             R.id.add_pokemon -> {
                 val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
-                intent.putExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, view_pager.currentItem)
-                startActivityForResult(intent, App.REQUEST_ADD_POKEMON)
+                intent.putExtra(INTENT_EXTRA_TAB_INDEX, view_pager.currentItem)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -506,36 +508,5 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
     override fun showSmallIcons(): Boolean {
         return false
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode != Activity.RESULT_CANCELED) {
-            if (requestCode == App.REQUEST_ADD_POKEMON) {
-                if (data == null)
-                    throw Exception()
-
-                val huntMethod = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_HUNT_METHOD, 0)
-                val name = data.getStringExtra(AddNewPokemonActivity.INTENT_EXTRA_NAME) ?: throw Exception()
-                val encounters = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_ENCOUNTERS, 0)
-                val id = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEDEX_ID, 0)
-                val generation = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_GENERATION, 0)
-                val tabIndex = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX, 0)
-                val pokemonEdition = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_POKEMON_EDITION, 0)
-
-                val pokemonData = PokemonData(name, id, generation, encounters, HuntMethod.fromInt(huntMethod)!!, PokemonEdition.fromInt(pokemonEdition)!!, tabIndex)
-                pokemonData.internalId = data.getIntExtra(AddNewPokemonActivity.INTENT_EXTRA_INTERNAL_ID, -1)
-
-                viewModel.addPokemon(pokemonData)
-
-                showMessage("$name " + resources.getString(R.string.message_has_been_added), MessageType.Success)
-                for (listener in recyclerViewChangedListeners)
-                    listener.addPokemon(pokemonData)
-            }
-        } else {
-            showMessage(getString(R.string.no_pokemon_added), MessageType.Info)
-        }
-
     }
 }

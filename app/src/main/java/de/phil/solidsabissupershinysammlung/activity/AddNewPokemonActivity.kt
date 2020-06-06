@@ -1,7 +1,5 @@
 package de.phil.solidsabissupershinysammlung.activity
 
-import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +12,7 @@ import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.core.App
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
+import de.phil.solidsabissupershinysammlung.model.INTENT_EXTRA_TAB_INDEX
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
 import de.phil.solidsabissupershinysammlung.utils.MessageType
@@ -23,21 +22,7 @@ import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 
 class AddNewPokemonActivity : AppCompatActivity() {
 
-    companion object {
-
-        const val INTENT_EXTRA_HUNT_METHOD = "hunt_method"
-        const val INTENT_EXTRA_NAME = "name"
-        const val INTENT_EXTRA_ENCOUNTERS = "encounter_needed"
-        const val INTENT_EXTRA_POKEDEX_ID = "pokedex_id"
-        const val INTENT_EXTRA_GENERATION = "generation"
-        const val INTENT_EXTRA_TAB_INDEX = "tab_index"
-        const val INTENT_EXTRA_INTERNAL_ID = "internal_id"
-        const val INTENT_EXTRA_POKEMON_EDITION = "pokemon_edition"
-
-    }
-
     private lateinit var viewModel: AddNewPokemonViewModel
-    private var addedPokemon = false
 
     private var tabIndex = -1
 
@@ -72,12 +57,13 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
             val pokemonData = PokemonData(name, -1, -1, encounters, huntMethod, pokemonEdition, tabIndex)
 
-            val result = viewModel.validateInput(pokemonData)
+            val (success, message) = viewModel.addPokemonToDatabase(pokemonData)
 
-            if (result.first == null && result.second != null) {
-                setActivityResult(result.second!!)
+            if (!success) {
+                showMessage(message, MessageType.Error)
             } else {
-                showMessage(result.first!!, MessageType.Error)
+                showMessage(message, MessageType.Success)
+                finish()
             }
 
 
@@ -85,7 +71,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         add_new_pokemon_activity_checkbox_encounter_known.setOnCheckedChangeListener { _, isChecked ->
             add_new_pokemon_activity_edittext_eggsNeeded.isEnabled = isChecked
         }
-        val adapter = ArrayAdapter<String>(
+        val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_dropdown_item_1line,
             viewModel.getPokemonNames()
@@ -151,24 +137,6 @@ class AddNewPokemonActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun setActivityResult(pokemonData: PokemonData) {
-        val intent = Intent()
-
-        addedPokemon = true
-
-        intent.putExtra(INTENT_EXTRA_HUNT_METHOD, pokemonData.huntMethod.ordinal)
-        intent.putExtra(INTENT_EXTRA_NAME, pokemonData.name)
-        intent.putExtra(INTENT_EXTRA_ENCOUNTERS, pokemonData.encounterNeeded)
-        intent.putExtra(INTENT_EXTRA_POKEDEX_ID, pokemonData.pokedexId)
-        intent.putExtra(INTENT_EXTRA_GENERATION, pokemonData.generation)
-        intent.putExtra(INTENT_EXTRA_TAB_INDEX, pokemonData.tabIndex)
-        intent.putExtra(INTENT_EXTRA_INTERNAL_ID, pokemonData.internalId)
-        intent.putExtra(INTENT_EXTRA_POKEMON_EDITION, pokemonData.pokemonEdition.ordinal)
-
-        setResult(App.REQUEST_ADD_POKEMON, intent)
-        finish()
     }
 
 }

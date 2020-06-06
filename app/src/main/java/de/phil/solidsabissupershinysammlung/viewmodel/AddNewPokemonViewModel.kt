@@ -69,4 +69,19 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
         return PokemonDatabase.androidPokemonResources(getApplication()).getGenerationByName(name)
     }
 
+    fun addPokemonToDatabase(pokemonData: PokemonData): Pair<Boolean, String> {
+
+        val (message, data) = validateInput(pokemonData)
+
+        return if (message == null && data != null) {
+            pokemonData.internalId = pokemonDao.getMaxInternalId() + 1
+            pokemonData.generation = PokemonDatabase.androidPokemonResources(getApplication()).getGenerationByName(pokemonData.name)
+            pokemonData.pokedexId = PokemonDatabase.androidPokemonResources(getApplication()).getPokedexIdByName(pokemonData.name)
+            pokemonDao.addPokemon(pokemonData)
+            Pair(true, "${pokemonData.name} " + getApplication<Application>().applicationContext.resources.getString(R.string.message_has_been_added))
+        } else {
+            Pair(false, message!!)
+        }
+    }
+
 }

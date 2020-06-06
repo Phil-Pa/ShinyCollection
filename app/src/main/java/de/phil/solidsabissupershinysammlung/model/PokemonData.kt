@@ -3,7 +3,6 @@ package de.phil.solidsabissupershinysammlung.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import de.phil.solidsabissupershinysammlung.activity.AddNewPokemonActivity
 import de.phil.solidsabissupershinysammlung.core.App
 
 class UpdateStatisticsData(
@@ -15,28 +14,36 @@ class UpdateStatisticsData(
     val averageEggs: Float
 )
 
+const val INTENT_EXTRA_HUNT_METHOD = "hunt_method"
+const val INTENT_EXTRA_NAME = "name"
+const val INTENT_EXTRA_ENCOUNTERS = "encounter_needed"
+const val INTENT_EXTRA_POKEDEX_ID = "pokedex_id"
+const val INTENT_EXTRA_GENERATION = "generation"
+const val INTENT_EXTRA_TAB_INDEX = "tab_index"
+const val INTENT_EXTRA_POKEMON_EDITION = "pokemon_edition"
+
 @Entity
 data class PokemonData(
 
-    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_NAME)
+    @ColumnInfo(name = INTENT_EXTRA_NAME)
     val name: String,
 
-    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_POKEDEX_ID)
-    val pokedexId: Int,
+    @ColumnInfo(name = INTENT_EXTRA_POKEDEX_ID)
+    var pokedexId: Int,
 
-    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_GENERATION)
-    val generation: Int,
+    @ColumnInfo(name = INTENT_EXTRA_GENERATION)
+    var generation: Int,
 
-    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_ENCOUNTERS)
+    @ColumnInfo(name = INTENT_EXTRA_ENCOUNTERS)
     var encounterNeeded: Int,
 
-    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_HUNT_METHOD)
-    val huntMethod: HuntMethod = HuntMethod.Other,
+    @ColumnInfo(name = INTENT_EXTRA_HUNT_METHOD)
+    var huntMethod: HuntMethod = HuntMethod.Other,
 
-    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_POKEMON_EDITION)
-    val pokemonEdition: PokemonEdition,
+    @ColumnInfo(name = INTENT_EXTRA_POKEMON_EDITION)
+    var pokemonEdition: PokemonEdition,
 
-    @ColumnInfo(name = AddNewPokemonActivity.INTENT_EXTRA_TAB_INDEX)
+    @ColumnInfo(name = INTENT_EXTRA_TAB_INDEX)
     var tabIndex: Int
 ) {
 

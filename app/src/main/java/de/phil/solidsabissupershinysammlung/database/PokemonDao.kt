@@ -51,4 +51,7 @@ interface PokemonDao {
 
     @Query("SELECT * FROM pokemondata WHERE :tabIndex = tab_index AND :pokemonEditionOrdinal = pokemon_edition ORDER BY RANDOM() LIMIT 1")
     fun getRandomPokemonData(tabIndex: Int, pokemonEditionOrdinal: Int): PokemonData?
+
+    @Query("SELECT * FROM pokemondata WHERE :internalId = internalId LIMIT 1")
+    fun getPokemonDataByInternalId(internalId: Int): PokemonData?
 }

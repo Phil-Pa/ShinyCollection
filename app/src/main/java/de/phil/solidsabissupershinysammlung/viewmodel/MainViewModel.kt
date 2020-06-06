@@ -2,7 +2,6 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.os.AsyncTask
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
