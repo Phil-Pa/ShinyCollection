@@ -106,7 +106,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_new_pokemon_activity_edittext_name" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_new_pokemon_activity_button_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

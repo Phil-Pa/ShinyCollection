@@ -14,9 +14,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppThemeSabi"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.EditPokemonDataActivity"
-                android:label="@string/label_edit_pokemon_data"
-                android:parentActivityName=".activity.MainActivity"/>
         <activity
                 android:name=".activity.StatisticsActivity"
                 android:label="@string/statistics"

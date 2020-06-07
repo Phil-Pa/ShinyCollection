@@ -130,5 +130,6 @@
     <string name="edition_textView_text">Edition</string>
     <string name="edit_pokemon_data">Pokemon Daten bearbeiten</string>
     <string name="label_edit_pokemon_data">Pokemon Daten bearbeiten</string>
+    <string name="edit_pokemon_button_save_text">Änderungen speichern</string>
 
 </resources>
