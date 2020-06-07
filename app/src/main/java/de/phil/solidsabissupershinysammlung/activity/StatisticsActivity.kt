@@ -21,9 +21,7 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
         super.onCreate(savedInstanceState)
         initTheme()
         setContentView(R.layout.activity_statistics)
-
         viewModel = ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
-
         initStatistics()
     }
 

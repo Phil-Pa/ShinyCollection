@@ -183,6 +183,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         }
     }
 
+    // TODO: use bottom sheet instead of action mode
     private var actionMode: ActionMode? = null
     private var selectedPokemon: PokemonData? = null
 
@@ -357,7 +358,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                         Pair(textViewTotalEggs, "transitionNameNumEggs"),
                         Pair(textViewAverageEggs, "transitionNameAvgEggs"),
                         Pair(imageViewSignaturePokemon, "transitionNameImageView")
-                        ).toBundle())
+                    ).toBundle())
                 }
                 R.id.settings -> {
                     startActivity(Intent(applicationContext, SettingsActivity::class.java))
