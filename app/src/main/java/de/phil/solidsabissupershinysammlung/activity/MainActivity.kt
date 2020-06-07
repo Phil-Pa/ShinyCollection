@@ -9,7 +9,9 @@ import android.os.Handler
 import android.util.Pair
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -23,8 +25,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
-import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragment
-import com.commit451.modalbottomsheetdialogfragment.Option
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
@@ -36,7 +36,7 @@ import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), IPokemonListActivity, ModalBottomSheetDialogFragment.Listener {
+class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
     private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
         val updateData = viewModel.getStatisticsData()
@@ -180,16 +180,119 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity, ModalBottomSheet
 
     private var selectedPokemon: PokemonData? = null
 
-    override fun onListEntryLongClick(pokemonData: PokemonData) {
+    override fun onListEntryLongClick(view: View) {
+
+        val pokemonData = view.tag as PokemonData
 
         selectedPokemon = pokemonData
 
-        val dialog = ModalBottomSheetDialogFragment.Builder()
-            .add(R.menu.menu_actions)
-            .build()
+        val popup = PopupMenu(this, view)
+        popup.menuInflater.inflate(R.menu.menu_actions, popup.menu)
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.delete_entry -> {
+                    if (selectedPokemon != null) {
+                        showConfirmDeleteDialog()
+                    }
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.decrease_encounter -> {
+                    if (selectedPokemon != null) {
+                        if (selectedPokemon!!.encounterNeeded > 0 && selectedPokemon!!.tabIndex != App.TAB_INDEX_SHINY_LIST) {
+                            selectedPokemon!!.encounterNeeded--
+                            recyclerViewChangedListeners.forEach {
+                                it.updatePokemonEncounter(selectedPokemon!!) }
+                            viewModel.updatePokemon(selectedPokemon!!)
+                        }
+                    }
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.move_to_shiny_list -> {
+                    if (selectedPokemon != null && selectedPokemon?.tabIndex != App.TAB_INDEX_SHINY_LIST) {
+                        recyclerViewChangedListeners.forEach {
+                            it.deletePokemon(selectedPokemon!!) }
+                        viewModel.deletePokemon(selectedPokemon!!)
 
-        dialog.show(supportFragmentManager, "options")
+                        selectedPokemon!!.tabIndex = App.TAB_INDEX_SHINY_LIST
 
+                        viewModel.addPokemon(selectedPokemon!!)
+                        recyclerViewChangedListeners.forEach {
+                            it.addPokemon(selectedPokemon!!) }
+
+                        if (viewModel.shouldAutoSort())
+                            recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
+                    }
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.edit_pokemon_data -> {
+
+                    if (selectedPokemon != null) {
+
+                        val pokemon = selectedPokemon!!
+
+                        val customView = layoutInflater.inflate(R.layout.dialog_edit_pokemon, drawerLayout, false)
+
+                        val spinnerEditions = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_pokemon_editions)
+                        val spinnerMethods = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_hunt_methods)
+                        val spinnerTabTitles = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_tab_titles)
+                        val editTextEncounter = customView.findViewById<TextInputEditText>(R.id.edit_pokemon_edittext_eggsNeeded)
+                        val saveButton = customView.findViewById<AppCompatButton>(R.id.edit_pokemon_button_save)
+
+                        spinnerEditions.setSelection(pokemon.pokemonEdition.ordinal)
+                        spinnerMethods.setSelection(pokemon.huntMethod.ordinal)
+                        spinnerTabTitles.setSelection(pokemon.tabIndex)
+                        editTextEncounter.setText(pokemon.encounterNeeded.toString())
+
+                        val dialog = AlertDialog.Builder(this)
+                            .setTitle("Daten von ${pokemon.name} bearbeiten")
+                            .setView(customView)
+                            .create()
+
+                        dialog.show()
+
+                        saveButton.setOnClickListener {
+
+                            val pokemonEdition = PokemonEdition.fromInt(spinnerEditions.selectedItemPosition)
+                            val huntMethod = HuntMethod.fromInt(spinnerMethods.selectedItemPosition)
+                            val tabIndex = spinnerTabTitles.selectedItemPosition
+                            val encountersString = editTextEncounter.text.toString()
+
+                            if (encountersString.isEmpty()) {
+                                showMessage("Du musst die Anzahl der Begegnungen eingeben.", MessageType.Info)
+                                return@setOnClickListener
+                            }
+
+                            val encounters = encountersString.toInt()
+
+                            if (pokemonEdition == null || huntMethod == null) {
+                                showMessage("Unerwarteter Fehler", MessageType.Error)
+                                dialog.dismiss()
+                                return@setOnClickListener
+                            }
+
+                            pokemon.pokemonEdition = pokemonEdition
+                            pokemon.huntMethod = huntMethod
+                            pokemon.tabIndex = tabIndex
+                            pokemon.encounterNeeded = encounters
+
+                            viewModel.updatePokemon(pokemon)
+
+                            recyclerViewChangedListeners.forEach {
+                                it.reload()
+                            }
+
+                            showMessage("Änderungen wurden gespeichert", MessageType.Info)
+                            dialog.dismiss()
+                        }
+                    }
+
+                    return@setOnMenuItemClickListener true
+                }
+                else -> false
+            }
+        }
+
+        popup.show()
     }
 
     private lateinit var drawerLayout: DrawerLayout
@@ -450,97 +553,5 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity, ModalBottomSheet
 
     override fun showSmallIcons(): Boolean {
         return false
-    }
-
-    override fun onModalOptionSelected(tag: String?, option: Option) {
-
-        when (option.id) {
-            R.id.delete_entry -> {
-                if (selectedPokemon != null) {
-                    showConfirmDeleteDialog()
-                }
-            }
-            R.id.decrease_encounter -> {
-                if (selectedPokemon != null) {
-                    if (selectedPokemon!!.encounterNeeded > 0 && selectedPokemon!!.tabIndex != App.TAB_INDEX_SHINY_LIST) {
-                        selectedPokemon!!.encounterNeeded--
-                        recyclerViewChangedListeners.forEach {
-                            it.updatePokemonEncounter(selectedPokemon!!) }
-                        viewModel.updatePokemon(selectedPokemon!!)
-                    }
-                }
-            }
-            R.id.move_to_shiny_list -> {
-                if (selectedPokemon != null && selectedPokemon?.tabIndex != App.TAB_INDEX_SHINY_LIST) {
-                    recyclerViewChangedListeners.forEach {
-                        it.deletePokemon(selectedPokemon!!) }
-                    viewModel.deletePokemon(selectedPokemon!!)
-
-                    selectedPokemon!!.tabIndex = App.TAB_INDEX_SHINY_LIST
-
-                    viewModel.addPokemon(selectedPokemon!!)
-                    recyclerViewChangedListeners.forEach {
-                        it.addPokemon(selectedPokemon!!) }
-
-                    if (viewModel.shouldAutoSort())
-                        recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
-                }
-            }
-            R.id.edit_pokemon_data -> {
-
-                if (selectedPokemon != null) {
-
-                    val pokemon = selectedPokemon!!
-
-                    val customView = layoutInflater.inflate(R.layout.dialog_edit_pokemon, drawerLayout, false)
-
-                    val spinnerEditions = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_pokemon_editions)
-                    val spinnerMethods = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_hunt_methods)
-                    val spinnerTabTitles = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_tab_titles)
-                    val editTextEncounter = customView.findViewById<TextInputEditText>(R.id.edit_pokemon_edittext_eggsNeeded)
-                    val saveButton = customView.findViewById<AppCompatButton>(R.id.edit_pokemon_button_save)
-
-                    spinnerEditions.setSelection(pokemon.pokemonEdition.ordinal)
-                    spinnerMethods.setSelection(pokemon.huntMethod.ordinal)
-                    spinnerTabTitles.setSelection(pokemon.tabIndex)
-                    editTextEncounter.setText(pokemon.encounterNeeded.toString())
-
-                    val dialog = AlertDialog.Builder(this)
-                        .setTitle("Daten von ${pokemon.name} bearbeiten")
-                        .setView(customView)
-                        .create()
-
-                    dialog.show()
-
-                    saveButton.setOnClickListener {
-
-                        val pokemonEdition = PokemonEdition.fromInt(spinnerEditions.selectedItemPosition)
-                        val huntMethod = HuntMethod.fromInt(spinnerMethods.selectedItemPosition)
-                        val tabIndex = spinnerTabTitles.selectedItemPosition
-                        val encounters = editTextEncounter.text.toString().toInt()
-
-                        if (pokemonEdition == null || huntMethod == null) {
-                            showMessage("Unerwarteter Fehler", MessageType.Error)
-                            dialog.dismiss()
-                            return@setOnClickListener
-                        }
-
-                        pokemon.pokemonEdition = pokemonEdition
-                        pokemon.huntMethod = huntMethod
-                        pokemon.tabIndex = tabIndex
-                        pokemon.encounterNeeded = encounters
-
-                        viewModel.updatePokemon(pokemon)
-
-                        recyclerViewChangedListeners.forEach {
-                            it.reload()
-                        }
-
-                        showMessage("Änderungen wurden gespeichert", MessageType.Info)
-                        dialog.dismiss()
-                    }
-                }
-            }
-        }
     }
 }

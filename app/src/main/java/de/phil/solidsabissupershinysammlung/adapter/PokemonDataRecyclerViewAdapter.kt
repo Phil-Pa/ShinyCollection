@@ -54,7 +54,7 @@ class PokemonDataRecyclerViewAdapter(
         with(holder.mView) {
             tag = item
             setOnLongClickListener{
-                activity.onListEntryLongClick(it.tag as PokemonData)
+                activity.onListEntryLongClick(it)
                 true
             }
             setOnClickListener {

@@ -47,7 +47,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             android:entries="@array/hunt_methods"
-            app:layout_constraintBottom_toTopOf="@id/add_new_pokemon_activity_edittext_name"
+            app:layout_constraintBottom_toTopOf="@id/autocomplete_input_layout"
             app:layout_constraintEnd_toStartOf="@+id/add_new_pokemon_activity_spinner_pokemon_editions"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,27 +59,33 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:entries="@array/pokemon_editions"
-            app:layout_constraintBottom_toTopOf="@id/add_new_pokemon_activity_edittext_name"
+            app:layout_constraintBottom_toTopOf="@id/autocomplete_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/add_new_pokemon_activity_spinner_hunt_methods"
             app:layout_constraintTop_toBottomOf="@id/add_new_pokemon_activity_imageView_preview" />
 
-    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            android:id="@+id/add_new_pokemon_activity_edittext_name"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="7dp"
-            android:hint="@string/editText_pokemonName_hint"
-            android:inputType="text"
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/autocomplete_input_layout"
             app:layout_constraintBottom_toTopOf="@id/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_new_pokemon_activity_spinner_hunt_methods" />
+            app:layout_constraintTop_toBottomOf="@id/add_new_pokemon_activity_spinner_hunt_methods"
+            android:hint="@string/editText_pokemonName_hint">
 
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/add_new_pokemon_activity_edittext_name"
+                android:layout_width="200dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="7dp"
+                android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
@@ -89,7 +95,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_new_pokemon_activity_edittext_name"
+            app:layout_constraintTop_toBottomOf="@id/autocomplete_input_layout"
             android:hint="@string/editText_encounter_hint">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -112,7 +118,7 @@
             app:layout_constraintBottom_toTopOf="@+id/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_new_pokemon_activity_edittext_name" />
+            app:layout_constraintTop_toBottomOf="@+id/autocomplete_input_layout" />
 
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_new_pokemon_activity_button_add"

@@ -2,6 +2,7 @@ package de.phil.solidsabissupershinysammlung.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
@@ -65,7 +66,7 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
         return this
     }
 
-    override fun onListEntryLongClick(pokemonData: PokemonData) {
+    override fun onListEntryLongClick(view: View) {
 
     }
 
