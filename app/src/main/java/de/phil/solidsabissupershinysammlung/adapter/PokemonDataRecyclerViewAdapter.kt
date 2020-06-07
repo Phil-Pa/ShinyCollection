@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.IPokemonListActivity
-import de.phil.solidsabissupershinysammlung.activity.MainActivity
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.toGerman
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
@@ -36,7 +35,7 @@ class PokemonDataRecyclerViewAdapter(
         holder.mNameView.text = (item.name)
         // "Encounter: "
 
-        if (item.encounterNeeded == App.ENCOUNTER_UNKNOWN)
+        if (item.encounterNeeded == ShinyPokemonApplication.ENCOUNTER_UNKNOWN)
             holder.mEggsNeededView.text = activity.getContext().resources.getString(R.string.encounter_unknown)
         else
             holder.mEggsNeededView.text = (activity.getContext().resources.getString(R.string.encounter_colon) + " " + item.encounterNeeded.toString())

@@ -3,7 +3,7 @@ package de.phil.solidsabissupershinysammlung.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.database.PokemonDao
 import de.phil.solidsabissupershinysammlung.database.PokemonDatabase
 import de.phil.solidsabissupershinysammlung.model.PokemonData
@@ -32,8 +32,9 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
 
         if (pokemonData.name.isEmpty() || pokemonData.name.isBlank())
             return Pair(context.resources.getString(R.string.error_empty_name), null)
-        else if (!pokemonNameExists(pokemonData.name) && !pokemonData.name.endsWith(App.ALOLA_EXTENSION) &&
-            !pokemonData.name.endsWith(App.GALAR_EXTENSION)
+        else if (!pokemonNameExists(pokemonData.name) && !pokemonData.name.endsWith(
+                ShinyPokemonApplication.ALOLA_EXTENSION) &&
+            !pokemonData.name.endsWith(ShinyPokemonApplication.GALAR_EXTENSION)
         )
             return Pair(
                 "${pokemonData.name} " + context.resources.getString(R.string.error_is_not_a_pokemon),

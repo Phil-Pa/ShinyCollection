@@ -124,4 +124,6 @@ dependencies {
     //implementation "android.arch.work:work-runtime:1.0.1"
 
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0'
+
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
 }

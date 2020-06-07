@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 import de.phil.solidsabissupershinysammlung.viewmodel.StatisticsViewModel
@@ -38,7 +38,7 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
         statistics_textView_average_eggs.text = (getString(R.string.avg_eggs) + ": ${statistics.averageEggs}")
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        when (prefs.getString(App.PREFERENCES_CURRENT_THEME, null)) {
+        when (prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null)) {
             "Sabi" -> statistics_imageView.setImageResource(R.drawable.leufeo)
             "Torben" -> statistics_imageView.setImageResource(R.drawable.wuffels)
             "Johannes" -> statistics_imageView.setImageResource(R.drawable.scytherold)

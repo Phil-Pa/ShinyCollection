@@ -7,7 +7,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 
 @TypeConverters(Converters::class)
@@ -27,7 +27,7 @@ abstract class PokemonDatabase : RoomDatabase() {
                 return temp
 
             synchronized(this) {
-                val prefs = application.getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
+                val prefs = application.getSharedPreferences(application.packageName + ShinyPokemonApplication.PREFERENCES_NAME, Context.MODE_PRIVATE)
                 _preferences = prefs
                 return prefs
             }

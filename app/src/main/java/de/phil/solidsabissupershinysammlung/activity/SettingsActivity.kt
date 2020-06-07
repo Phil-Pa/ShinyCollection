@@ -11,7 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
 class SettingsActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class SettingsActivity : AppCompatActivity() {
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        preferences = getSharedPreferences(application.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)
+        preferences = getSharedPreferences(application.packageName + ShinyPokemonApplication.PREFERENCES_NAME, Context.MODE_PRIVATE)
 
         initPreferences()
         initDarkMode()
@@ -37,7 +37,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun initDarkMode() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
+        if (prefs.getBoolean(ShinyPokemonApplication.PREFERENCES_USE_DARK_MODE, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -48,17 +48,17 @@ class SettingsActivity : AppCompatActivity() {
 
         with (preferences) {
 
-            if (!contains(App.PREFERENCES_AUTO_SORT))
-                edit().putBoolean(App.PREFERENCES_AUTO_SORT, false).apply()
+            if (!contains(ShinyPokemonApplication.PREFERENCES_AUTO_SORT))
+                edit().putBoolean(ShinyPokemonApplication.PREFERENCES_AUTO_SORT, false).apply()
 
-            if (!contains(App.PREFERENCES_SORT_METHOD))
-                edit().putInt(App.PREFERENCES_SORT_METHOD, PokemonSortMethod.InternalId.ordinal).apply()
+            if (!contains(ShinyPokemonApplication.PREFERENCES_SORT_METHOD))
+                edit().putInt(ShinyPokemonApplication.PREFERENCES_SORT_METHOD, PokemonSortMethod.InternalId.ordinal).apply()
 
-            if (!contains(App.PREFERENCES_GUIDE_SHOWN))
-                edit().putBoolean(App.PREFERENCES_GUIDE_SHOWN, false).apply()
+            if (!contains(ShinyPokemonApplication.PREFERENCES_GUIDE_SHOWN))
+                edit().putBoolean(ShinyPokemonApplication.PREFERENCES_GUIDE_SHOWN, false).apply()
 
-            if (!contains(App.PREFERENCES_CURRENT_THEME)) {
-                edit().putString(App.PREFERENCES_CURRENT_THEME, "Sabi").apply()
+            if (!contains(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME)) {
+                edit().putString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, "Sabi").apply()
             }
         }
 
@@ -83,9 +83,9 @@ class SettingsActivity : AppCompatActivity() {
             val darkModePref = this.findPreference<SwitchPreferenceCompat>("use_dark_mode")!!
             darkModePref.setOnPreferenceChangeListener { _, newValue ->
 
-                val preferences = activity?.getSharedPreferences(activity?.application?.packageName + App.PREFERENCES_NAME, Context.MODE_PRIVATE)!!
+                val preferences = activity?.getSharedPreferences(activity?.application?.packageName + ShinyPokemonApplication.PREFERENCES_NAME, Context.MODE_PRIVATE)!!
 
-                preferences.edit().putBoolean(App.PREFERENCES_USE_DARK_MODE, newValue as Boolean).apply()
+                preferences.edit().putBoolean(ShinyPokemonApplication.PREFERENCES_USE_DARK_MODE, newValue as Boolean).apply()
 
                 activity?.recreate()
                 true

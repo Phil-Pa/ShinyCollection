@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment
 
 class SectionsPagerAdapter(context: Context, fm: FragmentManager) :
@@ -32,6 +32,6 @@ class SectionsPagerAdapter(context: Context, fm: FragmentManager) :
     }
 
     override fun getPageTitle(position: Int) = tabTitles[position]
-    override fun getCount() = App.NUM_TAB_VIEWS
+    override fun getCount() = ShinyPokemonApplication.NUM_TAB_VIEWS
 
 }

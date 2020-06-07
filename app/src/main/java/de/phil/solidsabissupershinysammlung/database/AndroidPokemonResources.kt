@@ -2,7 +2,7 @@ package de.phil.solidsabissupershinysammlung.database
 
 import android.content.Context
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 
 class AndroidPokemonResources(context: Context) : IAndroidPokemonResources {
 
@@ -68,8 +68,10 @@ class AndroidPokemonResources(context: Context) : IAndroidPokemonResources {
 
     private fun getPurePokemonName(name: String): String {
         return when {
-            name.endsWith(App.ALOLA_EXTENSION) -> name.replace(App.ALOLA_EXTENSION, "")
-            name.endsWith(App.GALAR_EXTENSION) -> name.replace(App.GALAR_EXTENSION, "")
+            name.endsWith(ShinyPokemonApplication.ALOLA_EXTENSION) -> name.replace(
+                ShinyPokemonApplication.ALOLA_EXTENSION, "")
+            name.endsWith(ShinyPokemonApplication.GALAR_EXTENSION) -> name.replace(
+                ShinyPokemonApplication.GALAR_EXTENSION, "")
             else -> name
         }
     }

@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.database
 
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonEdition
@@ -21,6 +22,8 @@ class DataImporter {
 
         pokemonDao.deleteAllPokemonInDatabase()
 
+        var importSuccess = true
+
         for (dataString in dataList) {
 
             if (dataString == "\n" || dataString.isEmpty() || dataString.isBlank())
@@ -41,6 +44,9 @@ class DataImporter {
             val tabIndex = match.groupValues[7].toInt()
             val internalId = match.groupValues[8].toInt()
 
+            if (tabIndex >= ShinyPokemonApplication.NUM_TAB_VIEWS)
+                importSuccess = false
+
             val pokemonData = PokemonData(
                 name,
                 pokedexId,
@@ -55,7 +61,7 @@ class DataImporter {
             pokemonDao.addPokemon(pokemonData)
         }
 
-        return true
+        return  importSuccess
     }
 
 }

@@ -3,7 +3,7 @@ package de.phil.solidsabissupershinysammlung.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 
 class UpdateStatisticsData(
     val totalNumberOfShiny: Int,
@@ -74,8 +74,8 @@ data class PokemonData(
             generationString.insert(0, '0')
 
         when {
-            isAlola() -> generationString.append(App.ALOLA_EXTENSION)
-            isGalar() -> generationString.append(App.GALAR_EXTENSION)
+            isAlola() -> generationString.append(ShinyPokemonApplication.ALOLA_EXTENSION)
+            isGalar() -> generationString.append(ShinyPokemonApplication.GALAR_EXTENSION)
         }
 
         return "$generationString.png"
@@ -95,13 +95,13 @@ data class PokemonData(
             "Rattfratz", "Rattikarl", "Raichu", "Sandan", "Sandamer",
             "Vulpix", "Vulnona", "Digda", "Digdri", "Mauzi", "Snobilikat", "Kleinstein",
             "Georok", "Geowaz", "Sleima", "Sleimok", "Kokowei", "Knogga"
-        ).map { "$it${App.ALOLA_EXTENSION}" }
+        ).map { "$it${ShinyPokemonApplication.ALOLA_EXTENSION}" }
 
         private val galarPokemon = listOf(
             "Mauzi", "Ponita", "Gallopa", "Porenta", "Smogmog", "Pantimos",
             "Corasonn", "Zigzachs", "Geradaks", "Flampion", "Flampivian",
             "Makabaja", "Flunschlik"
-        ).map { "$it${App.GALAR_EXTENSION}" }
+        ).map { "$it${ShinyPokemonApplication.GALAR_EXTENSION}" }
 
     }
 

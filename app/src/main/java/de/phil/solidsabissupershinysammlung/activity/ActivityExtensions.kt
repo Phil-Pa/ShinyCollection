@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import es.dmoral.toasty.Toasty
 
@@ -78,7 +78,7 @@ fun Activity.initTheme(): String? {
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
     val isMainActivity = this is MainActivity
 
-    val themeAsString = prefs.getString(App.PREFERENCES_CURRENT_THEME, null)
+    val themeAsString = prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null)
 
     when (themeAsString) {
         "Sabi" -> if (isMainActivity) setTheme(R.style.AppThemeSabi_NoActionBar) else setTheme(R.style.AppThemeSabi)

@@ -30,7 +30,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.*
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
     }
 
     override fun onListEntryClick(pokemonData: PokemonData) {
-        if (getCurrentTabIndex() == App.TAB_INDEX_SHINY_LIST)
+        if (getCurrentTabIndex() == ShinyPokemonApplication.TAB_INDEX_SHINY_LIST)
             return
 
         pokemonData.encounterNeeded++
@@ -198,7 +198,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                 }
                 R.id.decrease_encounter -> {
                     if (selectedPokemon != null) {
-                        if (selectedPokemon!!.encounterNeeded > 0 && selectedPokemon!!.tabIndex != App.TAB_INDEX_SHINY_LIST) {
+                        if (selectedPokemon!!.encounterNeeded > 0 && selectedPokemon!!.tabIndex != ShinyPokemonApplication.TAB_INDEX_SHINY_LIST) {
                             selectedPokemon!!.encounterNeeded--
                             recyclerViewChangedListeners.forEach {
                                 it.updatePokemonEncounter(selectedPokemon!!) }
@@ -208,12 +208,12 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                     return@setOnMenuItemClickListener true
                 }
                 R.id.move_to_shiny_list -> {
-                    if (selectedPokemon != null && selectedPokemon?.tabIndex != App.TAB_INDEX_SHINY_LIST) {
+                    if (selectedPokemon != null && selectedPokemon?.tabIndex != ShinyPokemonApplication.TAB_INDEX_SHINY_LIST) {
                         recyclerViewChangedListeners.forEach {
                             it.deletePokemon(selectedPokemon!!) }
                         viewModel.deletePokemon(selectedPokemon!!)
 
-                        selectedPokemon!!.tabIndex = App.TAB_INDEX_SHINY_LIST
+                        selectedPokemon!!.tabIndex = ShinyPokemonApplication.TAB_INDEX_SHINY_LIST
 
                         viewModel.addPokemon(selectedPokemon!!)
                         recyclerViewChangedListeners.forEach {
@@ -354,16 +354,16 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        if (!prefs.contains(App.PREFERENCES_SORT_METHOD))
+        if (!prefs.contains(ShinyPokemonApplication.PREFERENCES_SORT_METHOD))
             viewModel.setSortMethod(PokemonSortMethod.InternalId)
-        if (!prefs.contains(App.PREFERENCES_CURRENT_THEME))
-            prefs.edit().putString(App.PREFERENCES_CURRENT_THEME, "Sabi").apply()
+        if (!prefs.contains(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME))
+            prefs.edit().putString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, "Sabi").apply()
     }
 
     private fun initDarkMode() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        if (prefs.getBoolean(App.PREFERENCES_USE_DARK_MODE, false)) {
+        if (prefs.getBoolean(ShinyPokemonApplication.PREFERENCES_USE_DARK_MODE, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             toolbar.popupTheme = android.R.style.ThemeOverlay_Material_Dark
         } else {
@@ -376,7 +376,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
-        viewPager.offscreenPageLimit = App.NUM_TAB_VIEWS
+        viewPager.offscreenPageLimit = ShinyPokemonApplication.NUM_TAB_VIEWS
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
     }
@@ -461,7 +461,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         imageViewPokemonEdition.setOnClickListener { changeEdition() }
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        when (prefs.getString(App.PREFERENCES_CURRENT_THEME, null)) {
+        when (prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null)) {
             "Sabi" -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
             "Torben" -> imageViewSignaturePokemon.setImageResource(R.drawable.wuffels)
             "Johannes" -> imageViewSignaturePokemon.setImageResource(R.drawable.scytherold)
@@ -495,7 +495,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
         // if theme has been changes in the settings activity
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        if (prefs.getString(App.PREFERENCES_CURRENT_THEME, null) != viewModel.currentTheme)
+        if (prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null) != viewModel.currentTheme)
             recreate()
 
         initDarkMode()

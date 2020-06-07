@@ -18,7 +18,6 @@ import androidx.test.rule.ActivityTestRule
 import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.activity.copyToClipboard
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
-import de.phil.solidsabissupershinysammlung.core.App
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
@@ -61,7 +60,7 @@ class SampleTest {
             .perform(click())
         delay(delayTime)
 
-        for (i in 0 until App.NUM_TAB_VIEWS) {
+        for (i in 0 until ShinyPokemonApplication.NUM_TAB_VIEWS) {
             val beforeData = activityRule.activity.viewModel.getAllPokemonDataFromTabIndex(i)
 
 //            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
@@ -101,7 +100,7 @@ class SampleTest {
     // test delete
     fun b() {
 
-        for (i in 0 until App.NUM_TAB_VIEWS) {
+        for (i in 0 until ShinyPokemonApplication.NUM_TAB_VIEWS) {
 
             val beforeData = activityRule.activity.viewModel.getAllPokemonDataFromTabIndex(i)
 

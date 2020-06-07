@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.marginLeft
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +16,7 @@ import de.phil.solidsabissupershinysammlung.activity.MainActivity
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataAdapter
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewAdapter
 import de.phil.solidsabissupershinysammlung.adapter.PokemonDataRecyclerViewSmallIconAdapter
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 import de.phil.solidsabissupershinysammlung.model.PokemonSortMethod
 
@@ -50,13 +49,13 @@ class PokemonListFragment : Fragment() {
             PokemonSortMethod.PokedexId -> dataList.sortBy { it.pokedexId }
             PokemonSortMethod.Encounter -> {
 
-                val zeros = dataList.filter { it.encounterNeeded == App.ENCOUNTER_UNKNOWN }
+                val zeros = dataList.filter { it.encounterNeeded == ShinyPokemonApplication.ENCOUNTER_UNKNOWN }
 
                 if (zeros.isEmpty()) {
                     dataList.sortBy { it.encounterNeeded }
                     return
                 } else {
-                    val other = dataList.filter { it.encounterNeeded != App.ENCOUNTER_UNKNOWN }.toMutableList()
+                    val other = dataList.filter { it.encounterNeeded != ShinyPokemonApplication.ENCOUNTER_UNKNOWN }.toMutableList()
 
                     other.sortBy { it.encounterNeeded }
                     for (i in zeros.indices)

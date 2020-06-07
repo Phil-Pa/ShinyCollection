@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.core.App
+import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.HuntMethod
 import de.phil.solidsabissupershinysammlung.model.INTENT_EXTRA_TAB_INDEX
 import de.phil.solidsabissupershinysammlung.model.PokemonData
@@ -49,7 +49,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     encountersNeededText.isNotEmpty() &&
                     encountersNeededText.isNotBlank()
                 )
-                    encountersNeededText.toString().toInt() else App.ENCOUNTER_UNKNOWN
+                    encountersNeededText.toString().toInt() else ShinyPokemonApplication.ENCOUNTER_UNKNOWN
             val huntMethod =
                 HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
 
@@ -85,13 +85,13 @@ class AddNewPokemonActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 var text = s.toString()
 
-                val isAlola = text.endsWith(App.ALOLA_EXTENSION)
+                val isAlola = text.endsWith(ShinyPokemonApplication.ALOLA_EXTENSION)
                 if (isAlola)
-                    text = text.replace(App.ALOLA_EXTENSION, "")
+                    text = text.replace(ShinyPokemonApplication.ALOLA_EXTENSION, "")
 
-                val isGalar = text.endsWith(App.GALAR_EXTENSION)
+                val isGalar = text.endsWith(ShinyPokemonApplication.GALAR_EXTENSION)
                 if (isGalar)
-                    text = text.replace(App.GALAR_EXTENSION, "")
+                    text = text.replace(ShinyPokemonApplication.GALAR_EXTENSION, "")
 
                 if (viewModel.pokemonNameExists(text)) {
 
@@ -109,8 +109,8 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     val url = StringBuilder(urlWithoutAlola)
 
                     when {
-                        isAlola -> url.insert(urlWithoutAlola.length - 4, App.ALOLA_EXTENSION)
-                        isGalar -> url.insert(urlWithoutAlola.length - 4, App.GALAR_EXTENSION)
+                        isAlola -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.ALOLA_EXTENSION)
+                        isGalar -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.GALAR_EXTENSION)
                     }
 
                     val downloadUrl = url.toString()
