@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.drawerlayout.widget.DrawerLayout
@@ -28,6 +27,7 @@ import com.commit451.modalbottomsheetdialogfragment.ModalBottomSheetDialogFragme
 import com.commit451.modalbottomsheetdialogfragment.Option
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.textfield.TextInputEditText
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.core.App
@@ -497,7 +497,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity, ModalBottomSheet
                     val spinnerEditions = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_pokemon_editions)
                     val spinnerMethods = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_hunt_methods)
                     val spinnerTabTitles = customView.findViewById<AppCompatSpinner>(R.id.edit_pokemon_spinner_tab_titles)
-                    val editTextEncounter = customView.findViewById<AppCompatEditText>(R.id.edit_pokemon_edittext_eggsNeeded)
+                    val editTextEncounter = customView.findViewById<TextInputEditText>(R.id.edit_pokemon_edittext_eggsNeeded)
                     val saveButton = customView.findViewById<AppCompatButton>(R.id.edit_pokemon_button_save)
 
                     spinnerEditions.setSelection(pokemon.pokemonEdition.ordinal)

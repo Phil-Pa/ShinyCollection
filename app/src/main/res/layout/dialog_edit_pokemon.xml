@@ -10,7 +10,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:entries="@array/hunt_methods"
-            app:layout_constraintBottom_toTopOf="@+id/edit_pokemon_edittext_eggsNeeded"
+            app:layout_constraintBottom_toTopOf="@+id/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_pokemon_spinner_pokemon_editions" />
@@ -26,16 +26,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/edit_pokemon_edittext_eggsNeeded"
-            android:layout_width="100dp"
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/editText_encounter_hint"
-            android:inputType="number"
+            android:id="@+id/text_input_layout"
             app:layout_constraintBottom_toTopOf="@+id/edit_pokemon_spinner_tab_titles"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_pokemon_spinner_hunt_methods" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_pokemon_spinner_hunt_methods"
+            android:hint="@string/editText_encounter_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_pokemon_edittext_eggsNeeded"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/edit_pokemon_spinner_tab_titles"
@@ -46,7 +56,7 @@
             app:layout_constraintBottom_toTopOf="@+id/edit_pokemon_button_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_pokemon_edittext_eggsNeeded" />
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout" />
 
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/edit_pokemon_button_save"
