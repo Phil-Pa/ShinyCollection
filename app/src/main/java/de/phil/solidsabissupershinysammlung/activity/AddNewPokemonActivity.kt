@@ -76,7 +76,11 @@ class AddNewPokemonActivity : AppCompatActivity() {
             android.R.layout.simple_dropdown_item_1line,
             viewModel.getPokemonNames()
         )
+
         add_new_pokemon_activity_edittext_name.setAdapter(adapter)
+        add_new_pokemon_activity_edittext_name.setOnItemClickListener { parent, view, position, id ->
+            hideKeyboard()
+        }
         add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 var text = s.toString()

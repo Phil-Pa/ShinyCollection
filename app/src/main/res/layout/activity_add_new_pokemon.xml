@@ -74,25 +74,33 @@
             android:layout_marginBottom="7dp"
             android:hint="@string/editText_pokemonName_hint"
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@id/add_new_pokemon_activity_edittext_eggsNeeded"
+            app:layout_constraintBottom_toTopOf="@id/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_new_pokemon_activity_spinner_hunt_methods" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/add_new_pokemon_activity_edittext_eggsNeeded"
-            android:layout_width="200dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:hint="@string/editText_encounter_hint"
-            android:inputType="number"
+            android:id="@+id/text_input_layout"
             app:layout_constraintBottom_toTopOf="@+id/add_new_pokemon_activity_button_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_new_pokemon_activity_edittext_name" />
+            app:layout_constraintTop_toBottomOf="@id/add_new_pokemon_activity_edittext_name"
+            android:hint="@string/editText_encounter_hint">
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/add_new_pokemon_activity_edittext_eggsNeeded"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/add_new_pokemon_activity_checkbox_encounter_known"
@@ -101,7 +109,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/checkbox_encounters_known"
-            app:layout_constraintBottom_toTopOf="@+id/add_new_pokemon_activity_edittext_eggsNeeded"
+            app:layout_constraintBottom_toTopOf="@+id/text_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_new_pokemon_activity_edittext_name" />
