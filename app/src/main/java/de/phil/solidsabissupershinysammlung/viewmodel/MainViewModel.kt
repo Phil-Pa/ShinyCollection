@@ -42,9 +42,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         action(value)
     }
 
-    fun export(action: (String?) -> Unit) {
-
-        val value = dataManager.export(pokemonDao)
+    fun export(shouldCompressData: Boolean, action: (String?) -> Unit) {
+        val value = dataManager.export(pokemonDao, shouldCompressData)
         action(value)
     }
 

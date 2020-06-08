@@ -1,9 +1,5 @@
 package de.phil.solidsabissupershinysammlung.database
 
-import de.phil.solidsabissupershinysammlung.database.DataExporter
-import de.phil.solidsabissupershinysammlung.database.DataImporter
-import de.phil.solidsabissupershinysammlung.database.IPokemonRepository
-
 class DataManager {
 
     private val dataImporter =
@@ -15,8 +11,11 @@ class DataManager {
         return dataImporter.import(pokemonDao, data)
     }
 
-    fun export(pokemonDao: PokemonDao): String? {
-        return dataExporter.export(pokemonDao)
+    fun export(
+        pokemonDao: PokemonDao,
+        shouldCompressData: Boolean
+    ): String? {
+        return dataExporter.export(pokemonDao, shouldCompressData)
     }
 
 }

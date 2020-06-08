@@ -29,8 +29,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import de.phil.solidsabissupershinysammlung.R
-import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
+import de.phil.solidsabissupershinysammlung.adapter.SectionsPagerAdapter
 import de.phil.solidsabissupershinysammlung.model.*
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import de.phil.solidsabissupershinysammlung.viewmodel.MainViewModel
@@ -423,15 +423,16 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                     }
                 }
                 R.id.exportData -> {
-                    viewModel.export { data ->
-                        if (data == null) {
-                            showMessage(getString(R.string.export_error), MessageType.Info)
-                        }
-                        else {
-                            copyToClipboard(data)
+
+                    showYesNoDialog("Sollen die Daten komprimiert werden?") { shouldCompressData ->
+                        viewModel.export(shouldCompressData) { data ->
+                            if (data == null) {
+                                showMessage(getString(R.string.export_error), MessageType.Info)
+                            } else {
+                                copyToClipboard(data)
+                            }
                         }
                     }
-
                 }
                 R.id.changeEdition -> {
                     changeEdition()

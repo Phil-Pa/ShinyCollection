@@ -4,17 +4,20 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.DialogInterface
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.utils.MessageType
 import es.dmoral.toasty.Toasty
+
 
 fun Activity.vibrate(millis: Long) {
     val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -102,4 +105,29 @@ fun Activity.hideKeyboard() {
         view = View(activity)
     }
     imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+// yes = true, no = false
+fun Activity.showYesNoDialog(title: String, action: (answer: Boolean) -> Unit) {
+    val dialogClickListener =
+        DialogInterface.OnClickListener { _, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    action(true)
+                }
+                DialogInterface.BUTTON_NEGATIVE -> {
+                    action(false)
+                }
+                DialogInterface.BUTTON_NEUTRAL -> {
+                    showMessage("Die Aktion wurde abgebrochen.", MessageType.Info)
+                }
+            }
+        }
+
+    val builder = AlertDialog.Builder(this)
+    builder.setMessage(title)
+        .setNeutralButton("Abbrechen", dialogClickListener)
+        .setPositiveButton("Ja", dialogClickListener)
+        .setNegativeButton("Nein", dialogClickListener)
+        .show()
 }
