@@ -211,11 +211,10 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                     if (selectedPokemon != null && selectedPokemon?.tabIndex != ShinyPokemonApplication.TAB_INDEX_SHINY_LIST) {
                         recyclerViewChangedListeners.forEach {
                             it.deletePokemon(selectedPokemon!!) }
-                        viewModel.deletePokemon(selectedPokemon!!)
 
                         selectedPokemon!!.tabIndex = ShinyPokemonApplication.TAB_INDEX_SHINY_LIST
+                        viewModel.updatePokemon(selectedPokemon!!)
 
-                        viewModel.addPokemon(selectedPokemon!!)
                         recyclerViewChangedListeners.forEach {
                             it.addPokemon(selectedPokemon!!) }
 
