@@ -114,7 +114,7 @@ class SampleTest {
 
             delay(1000)
 
-            onView(withId(R.id.delete_entry)).perform(click())
+            onView(withText("Pokemon löschen")).perform(click())
 
             delay(1000)
 
