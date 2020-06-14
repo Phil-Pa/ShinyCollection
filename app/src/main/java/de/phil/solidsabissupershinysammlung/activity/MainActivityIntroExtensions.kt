@@ -1,5 +1,6 @@
 package de.phil.solidsabissupershinysammlung.activity
 
+import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -82,6 +83,7 @@ internal fun MainActivity.showGuide(
         .start()
 }
 
+@SuppressLint("RtlHardcoded")
 internal fun MainActivity.showNavigationDrawerGuide() {
 
     drawer_layout.openDrawer(Gravity.LEFT)
@@ -91,7 +93,7 @@ internal fun MainActivity.showNavigationDrawerGuide() {
             TapTarget
                 .forView(imageView_pokemon_edition,
                     "Pokemon Edition",
-                    "Hier siehst du die aktuell ausgewählte Pokemon Edition. Wenn du Pokemon der Shiny Liste oder einer Wunschliste hinzufügst, wird sie in die hier angezeigte Edition gespeichert. So kannst du über mehrere Pokemon Spiele hinweg deine Shiny Pokemon verwalten."
+                    "Hier siehst du die aktuell ausgewählte Pokemon Edition. Wenn du Pokemon der Shiny Liste oder einer Wunschliste hinzufügst, werden sie in die hier angezeigte Edition gespeichert. So kannst du über mehrere Pokemon Spiele hinweg deine Shiny Pokemon verwalten."
                 )
                 .setDefaultTapTargetValues()
                 .cancelable(true)

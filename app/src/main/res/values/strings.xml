@@ -94,7 +94,7 @@
     <string name="title_activity_settings">Einstellungen</string>
 
     <string name="fragment_pokemondata_image_content_description">Bild des Shiny Pokemon</string>
-    <string name="title_activity_addNewPokemon">Pokemon hinzufügen</string>
+    <string name="title_activity_addNewPokemon">Neues Pokemon hinzufügen</string>
     <string name="title_activity_edit_pokemon">Pokemon bearbeiten</string>
     <string name="avg_shinys_sos">SOS durchschnittlich</string>
     <string name="general">Allgemein</string>
@@ -102,10 +102,7 @@
     <string name="use_dark_mode">Dunkelmodus verwenden</string>
     <string name="sort_automatically_summary">Pokemon werden nach dem Hinzufügen automatisch sortiert</string>
     <string name="copied_data">Daten wurden in die Zwischenablage kopiert.</string>
-    <string name="guide_random_pokemon">Zufälliges Pokemon</string>
-    <string name="guide_random_pokemon_description">Hiermit kannst du ein Pokemon aus der Liste zufällig auswählen lassen, in der du dich gerade befindest.</string>
     <string name="guide_add_pokemon">Pokemon hinzufügen</string>
-    <string name="guide_add_pokemon_description">Hier kannst du ein Pokemon zu der Liste hinzufügen, in der du dich gerade befindest.</string>
     <string name="import_error">Konnte Daten aus der Zwischenablage nicht importieren.</string>
     <string name="export_error">Es gibt keine Daten zum Exportieren.</string>
     <string name="error_random_pokemon">Es gibt noch keine Pokemon.</string>
@@ -147,5 +144,6 @@
     <string name="dialog_message_unknown_error">Unerwarteter Fehler</string>
     <string name="dialog_message_saved_changes">Änderungen wurden gespeichert</string>
     <string name="dialog_message_compress_data">Sollen die Daten komprimiert werden?</string>
+    <string name="enable_dark_mode">Dunklen Modus benutzen</string>
 
 </resources>

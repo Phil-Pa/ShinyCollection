@@ -16,7 +16,9 @@
                 app:defaultValue="false"
                 app:key="use_dark_mode"
                 app:iconSpaceReserved="false"
-                app:title="Dunkler Modus" />
+                app:title="@string/enable_dark_mode" />
+
+        <!-- TODO -->
 
         <ListPreference
                 app:key="current_theme"
