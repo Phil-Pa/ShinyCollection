@@ -823,7 +823,6 @@
         <item>Meltan</item>
         <item>Melmetal</item>
     </string-array>
-    <!-- TODO: update 8th gen names to english -->
     <string-array name="gen8Names">
         <item>Grookey</item>
         <item>Thwackey</item>

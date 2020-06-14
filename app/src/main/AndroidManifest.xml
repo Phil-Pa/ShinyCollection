@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        package="de.phil.solidsabissupershinysammlung">
+        package="de.phil.shinycollection">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -11,27 +11,27 @@
             android:icon="@drawable/egg"
             android:label="@string/app_name"
             android:roundIcon="@drawable/egg"
-            android:name=".ShinyPokemonApplication"
+            android:name="de.phil.shinycollection.ShinyPokemonApplication"
             android:theme="@style/AppThemeSabi"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".activity.StatisticsActivity"
+                android:name="de.phil.shinycollection.activity.StatisticsActivity"
                 android:label="@string/statistics"
-                android:parentActivityName=".activity.MainActivity" />
+                android:parentActivityName="de.phil.shinycollection.activity.MainActivity" />
         <activity
-                android:name=".activity.SettingsActivity"
+                android:name="de.phil.shinycollection.activity.SettingsActivity"
                 android:label="@string/title_activity_settings"
-                android:parentActivityName=".activity.MainActivity">
+                android:parentActivityName="de.phil.shinycollection.activity.MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="de.phil.solidsabissupershinysammlung.activity.MainActivity" />
+                    android:value="de.phil.shinycollection.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.AddNewPokemonActivity"
+                android:name="de.phil.shinycollection.activity.AddNewPokemonActivity"
                 android:label="@string/title_activity_addNewPokemon"
-                android:parentActivityName=".activity.MainActivity" />
+                android:parentActivityName="de.phil.shinycollection.activity.MainActivity" />
         <activity
-                android:name=".activity.MainActivity"
+                android:name="de.phil.shinycollection.activity.MainActivity"
                 android:label="@string/app_name"
                 android:persistent="true"
                 android:theme="@style/AppThemeSabi.NoActionBar">
