@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SolidSabisShinySammlung</string>
+    <string name="app_name">ShinySammlung</string>
     <string name="action_settings">Einstellungen</string>
 
     <!-- navigation view -->
@@ -40,56 +40,6 @@
 
     <!-- action mode -->
     <string name="action_mode_title">ausgewählt</string>
-
-    <!-- tabs titles -->
-    <string-array name="tab_titles">
-        <item>Shiny Liste</item>
-        <item>Züchten</item>
-        <item>SOS</item>
-        <item>Softreset</item>
-        <item>Anderes</item>
-    </string-array>
-
-    <!-- hunt methods -->
-    <string-array name="hunt_methods">
-        <item>Gezüchtet</item>
-        <item>SOS-Methode</item>
-        <item>Kontaktsafari</item>
-        <item>Softreset</item>
-        <item>Zufall</item>
-        <item>DexNav</item>
-        <item>Massenbegegnung</item>
-        <item>PokeRadar</item>
-        <item>RNGManipulation</item>
-        <item>Chain Fishing</item>
-        <item>Ultradimension</item>
-        <item>Anderes</item>
-    </string-array>
-
-    <string-array name="pokemon_editions">
-        <item>X/Y</item>
-        <item>Omega-Rubin/Alpha-Saphir</item>
-        <item>Sonne/Mond</item>
-        <item>Ultrasonne/Ultramond</item>
-        <item>Schwert/Schild</item>
-        <item>Go</item>
-        <item>Let\'s Go</item>
-    </string-array>
-
-    <string-array name="color_themes">
-        <item>Orange</item>
-        <item>Violett</item>
-        <item>Blau</item>
-        <item>Rot</item>
-    </string-array>
-
-    <!-- sort methods -->
-    <string-array name="sort_methods">
-        <item>Name</item>
-        <item>Anzahl Begegnungen</item>
-        <item>PokedexId</item>
-        <item>Ursprüngliche Reihenfolge</item>
-    </string-array>
 
     <string name="title_activity_settings">Einstellungen</string>
 
@@ -145,5 +95,57 @@
     <string name="dialog_message_saved_changes">Änderungen wurden gespeichert</string>
     <string name="dialog_message_compress_data">Sollen die Daten komprimiert werden?</string>
     <string name="enable_dark_mode">Dunklen Modus benutzen</string>
+
+    <!-- string arrays -->
+
+    <!-- tabs titles -->
+    <string-array name="tab_titles">
+        <item>Shiny Liste</item>
+        <item>Züchten</item>
+        <item>SOS</item>
+        <item>Softreset</item>
+        <item>Anderes</item>
+    </string-array>
+
+    <!-- hunt methods -->
+    <string-array name="hunt_methods">
+        <item>Gezüchtet</item>
+        <item>SOS-Methode</item>
+        <item>Kontaktsafari</item>
+        <item>Softreset</item>
+        <item>Zufall</item>
+        <item>DexNav</item>
+        <item>Massenbegegnung</item>
+        <item>PokeRadar</item>
+        <item>RNGManipulation</item>
+        <item>Chain Fishing</item>
+        <item>Ultradimension</item>
+        <item>Anderes</item>
+    </string-array>
+
+    <string-array name="pokemon_editions">
+        <item>X/Y</item>
+        <item>Omega-Rubin/Alpha-Saphir</item>
+        <item>Sonne/Mond</item>
+        <item>Ultrasonne/Ultramond</item>
+        <item>Schwert/Schild</item>
+        <item>Go</item>
+        <item>Let\'s Go</item>
+    </string-array>
+
+    <string-array name="color_themes">
+        <item>Orange</item>
+        <item>Violett</item>
+        <item>Blau</item>
+        <item>Rot</item>
+    </string-array>
+
+    <!-- sort methods -->
+    <string-array name="sort_methods">
+        <item>Name</item>
+        <item>Anzahl Begegnungen</item>
+        <item>PokedexId</item>
+        <item>Ursprüngliche Reihenfolge</item>
+    </string-array>
 
 </resources>

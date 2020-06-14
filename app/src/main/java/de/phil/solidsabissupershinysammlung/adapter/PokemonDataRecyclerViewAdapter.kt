@@ -12,7 +12,7 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.IPokemonListActivity
 import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.model.translateToLanguage
+import de.phil.solidsabissupershinysammlung.model.translateToCurrentLocaleLanguage
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
 import java.util.*
 
@@ -43,7 +43,7 @@ class PokemonDataRecyclerViewAdapter(
 
         // TODO:
         // "Methode: "
-        val method: String = item.huntMethod.translateToLanguage(Locale.getDefault().language)
+        val method: String = item.huntMethod.translateToCurrentLocaleLanguage()
 
         holder.mHuntMethodView.text = (activity.getContext().resources.getString(R.string.method_colon) + " " + method)
 

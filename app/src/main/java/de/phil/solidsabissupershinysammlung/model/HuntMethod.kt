@@ -1,5 +1,7 @@
 package de.phil.solidsabissupershinysammlung.model
 
+import java.util.*
+
 enum class HuntMethod(val value: Int) {
     Hatch(0),
     SOS(1),
@@ -21,7 +23,8 @@ enum class HuntMethod(val value: Int) {
 
 }
 
-fun HuntMethod.translateToLanguage(language: String): String {
+fun HuntMethod.translateToCurrentLocaleLanguage(): String {
+    val language = Locale.getDefault().language
     return when (language) {
         "de" -> toGerman()
         "en" -> toEnglish()
@@ -48,7 +51,7 @@ private fun HuntMethod.toGerman(): String {
 
 private fun HuntMethod.toEnglish(): String {
     return when (this) {
-        HuntMethod.Hatch -> "Breeded"
+        HuntMethod.Hatch -> "Breeding"
         HuntMethod.SOS -> "SOS-Method"
         HuntMethod.FriendSafari -> "Friend Safari"
         HuntMethod.SoftReset -> "Softreset"
