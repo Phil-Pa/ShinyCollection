@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
@@ -22,7 +22,7 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
         super.onCreate(savedInstanceState)
         initTheme()
         setContentView(R.layout.activity_statistics)
-        viewModel = ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(StatisticsViewModel::class.java)
         initStatistics()
     }
 

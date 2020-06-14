@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
@@ -33,7 +33,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
         tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, -1)
 
-        viewModel = ViewModelProviders.of(this).get(AddNewPokemonViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AddNewPokemonViewModel::class.java)
 
         add_new_pokemon_activity_button_add.setOnClickListener {
 
