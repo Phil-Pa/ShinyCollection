@@ -102,7 +102,7 @@
 
         <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/pokemon_statistic_list_fragment"
-                android:name="de.phil.solidsabissupershinysammlung.fragment.PokemonListFragment"
+                android:name="de.phil.shinycollection.fragment.PokemonListFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

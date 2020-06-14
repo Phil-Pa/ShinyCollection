@@ -12,6 +12,7 @@ class DataImporter {
             "PokemonData\\(name=([\\w+\\-\\d:]+), pokedexId=(\\d+), generation=(\\d), encounterNeeded=(\\d+), huntMethod=(\\w+), pokemonEdition=(\\w+), tabIndex=(\\d), internalId=(\\d+)\\)"
     }
 
+    // TODO: what if an english app version imports german data?
     fun import(pokemonDao: PokemonDao, data: String?): Boolean {
         if (data == null)
             return false

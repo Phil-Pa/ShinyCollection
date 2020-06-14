@@ -130,4 +130,14 @@
         <item>Pokedex ID</item>
         <item>Original order</item>
     </string-array>
+    <string name="guide_shiny_list_title">The Shiny List</string>
+    <string name="guide_shiny_list_description">In the Shiny List you will find all your captured Shiny Pokemon. You cannot increase or decrease their encounters.</string>
+    <string name="guide_breeding_title">Breeding</string>
+    <string name="guide_breeding_description">To the right of the Shiny list are your Shiny wish lists. This is where you add Pokemon that you want to shiny hunt. These additional lists allow you to organize your Pokemon wishes according to the Shiny hunt method. For example, in Breeding, you enter all the Pokemon you want to get by breeding. The other lists work the same way.</string>
+    <string name="guide_add_pokemon_title">Add Pokemon</string>
+    <string name="guide_add_pokemon_description">Add a Pokemon here to the list you are currently on. Try it out!</string>
+    <string name="guide_random_pokemon_title">Show random Pokemon</string>
+    <string name="guide_random_pokemon_description">This allows you to have a random Pokemon chosen for you from the current list! Then increase the number of encounters by clicking on the Pokemon entry and once you have found the Shiny, hold down the entry and move it to the Shiny list!</string>
+    <string name="guide_pokemon_edition_title">Pokemon Edition</string>
+    <string name="guide_pokemon_edition_description">Here you can see the currently selected Pokemon Edition. If you add Pokemon to the Shiny List or a Wish List, they will be saved to the edition shown here. This allows you to manage your Shiny Pokemon across multiple Pokemon games.</string>
 </resources>

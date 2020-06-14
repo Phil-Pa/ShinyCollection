@@ -36,25 +36,24 @@ internal fun MainActivity.showGuide(
         .targets(
             TapTarget.forView(
             tabs.tabs.getTabAt(0)!!.view,
-            "Die Shiny Liste",
-            "In der Shiny Liste wirst du alle deine gefangenen Shiny Pokemon wiederfinden. Du kannst die Begegnungen nicht erhöhen oder verringern."
+            getString(R.string.guide_shiny_list_title),
+            getString(R.string.guide_shiny_list_description)
         ) // All options below are optional
             .setDefaultTapTargetValues()
             .targetRadius(40),
 
             TapTarget.forView(
                 tabs.tabs.getTabAt(1)!!.view,
-                "Züchten",
-                "Rechts neben der Shiny Liste befinden sich deine Shiny Wunschlisten. Hier fügst du Pokemon hinzu, die du Shiny-Hunten möchtest. Diese weiteren Listen ermöglichen dir es, deine Wunschpokemon je nach Shiny-Hunt Methode einzuordnen. Zum Beispiel in \"Züchten\" trägst du alle Pokemon ein, die du durch Zucht als Shiny bekommen möchtest. Analog funktionieren die anderen Listen rechts nebenan."
-            ) // All options below are optional
+                getString(R.string.guide_breeding_title),
+                getString(R.string.guide_breeding_description)) // All options below are optional
                 .setDefaultTapTargetValues()
                 .targetRadius(40),
 
             TapTarget.forToolbarMenuItem(
                 toolbar,
                 menuItemAdd.itemId,
-                "Pokemon hinzufügen",
-                "Füge hier ein Pokemon zu der Liste hinzu, in der du gerade bist. Probiere es doch gleich aus!"
+                getString(R.string.guide_add_pokemon_title),
+                getString(R.string.guide_add_pokemon_description)
             ) // All options below are optional
                 .setDefaultTapTargetValues()
                 .targetRadius(30),
@@ -62,8 +61,8 @@ internal fun MainActivity.showGuide(
             TapTarget.forToolbarMenuItem(
                 toolbar,
                 menuItemRandom.itemId,
-                "Zufälliges Pokemon auswählen",
-                "Hiermit kannst du ein zufälliges Pokemon aus der aktuellen Liste für dich auswählen lassen! Erhöhe dann die Anzahl seiner Begegnungen durch Klicken auf den Pokemoneintrag und sobald du das Shiny gefunden hast, halte lange auf den Eintrag gedrückt und verschiebe es in die Shiny Liste!"
+                getString(R.string.guide_random_pokemon_title),
+                getString(R.string.guide_random_pokemon_description)
             ) // All options below are optional
                 .setDefaultTapTargetValues()
                 .targetRadius(30))
@@ -94,8 +93,8 @@ internal fun MainActivity.showNavigationDrawerGuide() {
         .target(
             TapTarget
                 .forView(imageView_pokemon_edition,
-                    "Pokemon Edition",
-                    "Hier siehst du die aktuell ausgewählte Pokemon Edition. Wenn du Pokemon der Shiny Liste oder einer Wunschliste hinzufügst, werden sie in die hier angezeigte Edition gespeichert. So kannst du über mehrere Pokemon Spiele hinweg deine Shiny Pokemon verwalten."
+                    getString(R.string.guide_pokemon_edition_title),
+                    getString(R.string.guide_pokemon_edition_description)
                 )
                 .setDefaultTapTargetValues()
                 .cancelable(true)
@@ -127,7 +126,7 @@ internal fun MainActivity.showNavigationDrawerGuide() {
         }
 
         override fun onDrawerClosed(drawerView: View) {
-            Toast.makeText(tempMainActivity, "Viel Spaß noch mit der App!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(tempMainActivity, "Viel Spaß noch mit der App!", Toast.LENGTH_SHORT).show()
         }
 
         override fun onDrawerOpened(drawerView: View) {

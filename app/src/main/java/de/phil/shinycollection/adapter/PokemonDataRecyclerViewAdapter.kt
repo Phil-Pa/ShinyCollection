@@ -40,7 +40,6 @@ class PokemonDataRecyclerViewAdapter(
         else
             holder.mEggsNeededView.text = (activity.getContext().resources.getString(R.string.encounter_colon) + " " + item.encounterNeeded.toString())
 
-        // TODO:
         // "Methode: "
         val method: String = item.huntMethod.translateToCurrentLocaleLanguage()
 

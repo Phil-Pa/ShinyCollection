@@ -91,17 +91,30 @@ data class PokemonData(
 
     companion object {
 
-        // TODO english
         private val alolaPokemon = listOf(
+            // de
             "Rattfratz", "Rattikarl", "Raichu", "Sandan", "Sandamer",
             "Vulpix", "Vulnona", "Digda", "Digdri", "Mauzi", "Snobilikat", "Kleinstein",
-            "Georok", "Geowaz", "Sleima", "Sleimok", "Kokowei", "Knogga"
+            "Georok", "Geowaz", "Sleima", "Sleimok", "Kokowei", "Knogga",
+
+            // en
+            // raichu, vulpix are de and en
+            "Rattata", "Raticate", "Sandshrew", "Sandslash",
+            "Ninetales", "Diglett", "Dugtrio", "Meowth", "Persian", "Geodude",
+            "Graveler", "Golem", "Grimer", "Muk", "Exeggutor", "Marowak"
+
         ).map { "$it${ShinyPokemonApplication.ALOLA_EXTENSION}" }
 
         private val galarPokemon = listOf(
+            // de
             "Mauzi", "Flegmon", "Lahmus", "Ponita", "Gallopa", "Porenta", "Smogmog", "Pantimos",
             "Corasonn", "Zigzachs", "Geradaks", "Flampion", "Flampivian",
-            "Makabaja", "Flunschlik"
+            "Makabaja", "Flunschlik",
+
+            // en
+            "Meowth", "Slowpoke", "Slowbro", "Ponyta", "Rapidash", "Farfetch’d", "Weezing", "Mr. Mime",
+            "Corsola", "Zigzagoon", "Linoone", "Darumaka", "Darmanitan",
+            "Yamask", "Yamask"
         ).map { "$it${ShinyPokemonApplication.GALAR_EXTENSION}" }
 
     }

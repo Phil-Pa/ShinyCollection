@@ -18,8 +18,6 @@
                 app:iconSpaceReserved="false"
                 app:title="@string/enable_dark_mode" />
 
-        <!-- TODO -->
-
         <ListPreference
                 app:key="current_theme"
                 app:iconSpaceReserved="false"

@@ -95,6 +95,16 @@
     <string name="dialog_message_saved_changes">Änderungen wurden gespeichert</string>
     <string name="dialog_message_compress_data">Sollen die Daten komprimiert werden?</string>
     <string name="enable_dark_mode">Dunklen Modus benutzen</string>
+    <string name="guide_shiny_list_title">Die Shiny Liste</string>
+    <string name="guide_shiny_list_description">In der Shiny Liste wirst du alle deine gefangenen Shiny Pokemon wiederfinden. Du kannst ihre Begegnungen nicht erhöhen oder verringern.</string>
+    <string name="guide_breeding_title">Züchten</string>
+    <string name="guide_breeding_description">Rechts neben der Shiny Liste befinden sich deine Shiny Wunschlisten. Hier fügst du Pokemon hinzu, die du Shiny-Hunten möchtest. Diese weiteren Listen ermöglichen dir es, deine Wunschpokemon je nach Shiny-Hunt Methode einzuordnen. Zum Beispiel in "Züchten" trägst du alle Pokemon ein, die du durch Zucht als Shiny bekommen möchtest. Analog funktionieren die anderen Listen rechts nebenan.</string>
+    <string name="guide_add_pokemon_title">Pokemon hinzufügen</string>
+    <string name="guide_add_pokemon_description">Füge hier ein Pokemon zu der Liste hinzu, in der du gerade bist. Probiere es doch gleich aus!</string>
+    <string name="guide_random_pokemon_title">Zufälliges Pokemon auswählen</string>
+    <string name="guide_random_pokemon_description">Hiermit kannst du ein zufälliges Pokemon aus der aktuellen Liste für dich auswählen lassen! Erhöhe dann die Anzahl seiner Begegnungen durch Klicken auf den Pokemoneintrag und sobald du das Shiny gefunden hast, halte lange auf den Eintrag gedrückt und verschiebe es in die Shiny Liste!</string>
+    <string name="guide_pokemon_edition_title">Pokemon Edition</string>
+    <string name="guide_pokemon_edition_description">Hier siehst du die aktuell ausgewählte Pokemon Edition. Wenn du Pokemon der Shiny Liste oder einer Wunschliste hinzufügst, werden sie in die hier angezeigte Edition gespeichert. So kannst du über mehrere Pokemon Spiele hinweg deine Shiny Pokemon verwalten.</string>
 
     <!-- string arrays -->
 
