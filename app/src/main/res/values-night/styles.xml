@@ -3,9 +3,16 @@
 
     <style name="AppThemeSabi" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_dark_gray</item>
+        <item name="colorPrimary">@color/color_black</item>
         <item name="colorPrimaryDark">@color/color_black</item>
         <item name="colorAccent">@color/color_orange_light_sabi</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -15,7 +22,14 @@
 
     <style name="AppThemeSabi.NoActionBar">
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/color_orange_light_sabi</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -26,9 +40,16 @@
 
     <style name="AppThemeTorben" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_dark_gray</item>
+        <item name="colorPrimary">@color/color_black</item>
         <item name="colorPrimaryDark">@color/color_black</item>
-        <item name="colorAccent">@color/color_purple_light_torben</item>
+        <item name="colorAccent">@color/color_purple_torben</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -39,7 +60,15 @@
 
     <style name="AppThemeTorben.NoActionBar">
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/color_purple_light_torben</item>
+        <item name="colorAccent">@color/color_purple_torben</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -50,9 +79,16 @@
 
     <style name="AppThemeJohannes" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_dark_gray</item>
+        <item name="colorPrimary">@color/color_black</item>
         <item name="colorPrimaryDark">@color/color_black</item>
         <item name="colorAccent">@color/color_blue_johannes</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -63,7 +99,14 @@
 
     <style name="AppThemeJohannes.NoActionBar">
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/color_blue_johannes</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -74,9 +117,16 @@
 
     <style name="AppThemePhil" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_dark_gray</item>
+        <item name="colorPrimary">@color/color_black</item>
         <item name="colorPrimaryDark">@color/color_black</item>
         <item name="colorAccent">@color/color_red_dark_phil</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
 
         <item name="android:windowAnimationStyle">@style/CustomActivityTransition</item>
         <item name="android:navigationBarColor">@android:color/black</item>
@@ -86,7 +136,14 @@
 
     <style name="AppThemePhil.NoActionBar">
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/color_red_dark_phil</item>
+
+        <!-- make android dark gray components black -->
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="colorSurface">@color/color_black</item>
+        <item name="colorSecondary">@color/color_black</item>
+        <item name="android:colorBackground">@color/color_black</item>
+        <item name="colorBackgroundFloating">@color/color_black</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@android:color/black</item>
