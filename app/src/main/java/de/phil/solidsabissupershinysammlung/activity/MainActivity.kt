@@ -243,7 +243,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                         editTextEncounter.setText(pokemon.encounterNeeded.toString())
 
                         val dialog = AlertDialog.Builder(this)
-                            .setTitle(pokemon.name + getString(R.string.dialog_edit_pokemon_data_title))
+                            .setTitle(pokemon.name + " " + getString(R.string.dialog_edit_pokemon_data_title))
                             .setView(customView)
                             .create()
 
