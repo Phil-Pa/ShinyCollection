@@ -14,15 +14,6 @@ class StatisticsViewModel(application: Application) : AndroidViewModel(applicati
     private val pokemonDao: PokemonDao =
         PokemonDatabase.instance(application.applicationContext).pokemonDao()
 
-    private fun getAverageEncounterUpTo(data: List<PokemonData>, n: Int): Float {
-
-        if (n <= 1)
-            return data[0].encounterNeeded.toFloat()
-
-        val res = getAverageEncounterUpTo(data, n - 1)
-        return (res * (n - 1) + data[n - 1].encounterNeeded.toFloat()) / n
-    }
-
     fun getAllPokemon(): List<PokemonData> {
         return pokemonDao.getAllPokemonDataFromTabIndex(0)
     }

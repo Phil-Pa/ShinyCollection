@@ -55,7 +55,7 @@
 
     <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             app:itemIconTint="?attr/colorAccent"
             android:layout_gravity="start"

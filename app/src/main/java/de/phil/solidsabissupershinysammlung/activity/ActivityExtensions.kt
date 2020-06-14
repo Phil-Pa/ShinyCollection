@@ -69,10 +69,10 @@ fun Fragment.initTheme(themeAsString: String) {
 //    val themeAsString = prefs.getString(App.PREFERENCES_CURRENT_THEME, null)
 
     when (themeAsString) {
-        "Sabi" -> activity?.setTheme(R.style.AppThemeSabi)
-        "Torben" -> activity?.setTheme(R.style.AppThemeTorben)
-        "Johannes" -> activity?.setTheme(R.style.AppThemeJohannes)
-        "Phil" -> activity?.setTheme(R.style.AppThemePhil)
+        getString(R.string.theme_orange) -> activity?.setTheme(R.style.AppThemeSabi)
+        getString(R.string.theme_purple) -> activity?.setTheme(R.style.AppThemeTorben)
+        getString(R.string.theme_blue) -> activity?.setTheme(R.style.AppThemeJohannes)
+        getString(R.string.theme_red) -> activity?.setTheme(R.style.AppThemePhil)
     }
 }
 
@@ -84,10 +84,10 @@ fun Activity.initTheme(): String? {
     val themeAsString = prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null)
 
     when (themeAsString) {
-        "Sabi" -> if (isMainActivity) setTheme(R.style.AppThemeSabi_NoActionBar) else setTheme(R.style.AppThemeSabi)
-        "Torben" -> if (isMainActivity) setTheme(R.style.AppThemeTorben_NoActionBar) else setTheme(R.style.AppThemeTorben)
-        "Johannes" -> if (isMainActivity) setTheme(R.style.AppThemeJohannes_NoActionBar) else setTheme(R.style.AppThemeJohannes)
-        "Phil" -> if (isMainActivity) setTheme(R.style.AppThemePhil_NoActionBar) else setTheme(R.style.AppThemePhil)
+        getString(R.string.theme_orange) -> if (isMainActivity) setTheme(R.style.AppThemeSabi_NoActionBar) else setTheme(R.style.AppThemeSabi)
+        getString(R.string.theme_purple) -> if (isMainActivity) setTheme(R.style.AppThemeTorben_NoActionBar) else setTheme(R.style.AppThemeTorben)
+        getString(R.string.theme_blue) -> if (isMainActivity) setTheme(R.style.AppThemeJohannes_NoActionBar) else setTheme(R.style.AppThemeJohannes)
+        getString(R.string.theme_red) -> if (isMainActivity) setTheme(R.style.AppThemePhil_NoActionBar) else setTheme(R.style.AppThemePhil)
     }
 
     return themeAsString
@@ -119,15 +119,15 @@ fun Activity.showYesNoDialog(title: String, action: (answer: Boolean) -> Unit) {
                     action(false)
                 }
                 DialogInterface.BUTTON_NEUTRAL -> {
-                    showMessage("Die Aktion wurde abgebrochen.", MessageType.Info)
+                    showMessage(getString(R.string.dialog_action_canceled), MessageType.Info)
                 }
             }
         }
 
     val builder = AlertDialog.Builder(this)
     builder.setMessage(title)
-        .setNeutralButton("Abbrechen", dialogClickListener)
-        .setPositiveButton("Ja", dialogClickListener)
-        .setNegativeButton("Nein", dialogClickListener)
+        .setNeutralButton(getString(R.string.dialog_cancel), dialogClickListener)
+        .setPositiveButton(getString(R.string.dialog_yes), dialogClickListener)
+        .setNegativeButton(getString(R.string.dialog_no), dialogClickListener)
         .show()
 }

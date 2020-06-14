@@ -63,7 +63,6 @@ class SampleTest {
         for (i in 0 until ShinyPokemonApplication.NUM_TAB_VIEWS) {
             val beforeData = activityRule.activity.viewModel.getAllPokemonDataFromTabIndex(i)
 
-//            openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().targetContext)
             delay()
 
             onView(withId(R.id.add_pokemon)).perform(click())

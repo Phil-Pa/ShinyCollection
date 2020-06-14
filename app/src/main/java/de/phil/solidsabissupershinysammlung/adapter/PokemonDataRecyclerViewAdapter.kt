@@ -12,8 +12,9 @@ import de.phil.solidsabissupershinysammlung.R
 import de.phil.solidsabissupershinysammlung.activity.IPokemonListActivity
 import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonData
-import de.phil.solidsabissupershinysammlung.model.toGerman
+import de.phil.solidsabissupershinysammlung.model.translateToLanguage
 import kotlinx.android.synthetic.main.fragment_pokemondata.view.*
+import java.util.*
 
 class PokemonDataRecyclerViewAdapter(
     private val mValues: MutableList<PokemonData>, private val activity: IPokemonListActivity
@@ -40,8 +41,9 @@ class PokemonDataRecyclerViewAdapter(
         else
             holder.mEggsNeededView.text = (activity.getContext().resources.getString(R.string.encounter_colon) + " " + item.encounterNeeded.toString())
 
+        // TODO:
         // "Methode: "
-        val method: String = item.huntMethod.toGerman()
+        val method: String = item.huntMethod.translateToLanguage(Locale.getDefault().language)
 
         holder.mHuntMethodView.text = (activity.getContext().resources.getString(R.string.method_colon) + " " + method)
 

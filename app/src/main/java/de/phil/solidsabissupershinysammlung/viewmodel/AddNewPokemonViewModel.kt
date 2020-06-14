@@ -26,7 +26,7 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
         return PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
     }
 
-    fun validateInput(pokemonData: PokemonData): Pair<String?, PokemonData?> {
+    private fun validateInput(pokemonData: PokemonData): Pair<String?, PokemonData?> {
 
         val context = getApplication<Application>().applicationContext
 

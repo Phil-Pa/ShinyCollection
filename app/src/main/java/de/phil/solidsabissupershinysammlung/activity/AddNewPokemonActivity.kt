@@ -78,7 +78,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         )
 
         add_new_pokemon_activity_edittext_name.setAdapter(adapter)
-        add_new_pokemon_activity_edittext_name.setOnItemClickListener { parent, view, position, id ->
+        add_new_pokemon_activity_edittext_name.setOnItemClickListener { _, _, _, _ ->
             hideKeyboard()
         }
         add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {

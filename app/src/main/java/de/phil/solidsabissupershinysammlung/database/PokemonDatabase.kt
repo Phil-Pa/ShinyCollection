@@ -10,6 +10,7 @@ import androidx.room.TypeConverters
 import de.phil.solidsabissupershinysammlung.ShinyPokemonApplication
 import de.phil.solidsabissupershinysammlung.model.PokemonData
 
+@Suppress("ObjectPropertyName")
 @TypeConverters(Converters::class)
 @Database(entities = [PokemonData::class], version = 1, exportSchema = false)
 abstract class PokemonDatabase : RoomDatabase() {

@@ -69,8 +69,8 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         val customView = layoutInflater.inflate(R.layout.dialog_change_edition, drawerLayout, false)
 
         val builder = AlertDialog.Builder(this)
-            .setTitle("Edition ändern")
-            .setMessage("Wähle, zu welcher Edition du wechseln möchtest")
+            .setTitle(getString(R.string.dialog_change_edition_title))
+            .setMessage(getString(R.string.dialog_change_edition_message))
             .setView(customView)
 
         val imageViews = listOf<AppCompatImageView>(
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_watch_out))
-        builder.setMessage("Möchtest du ${selectedPokemon!!.name} wirklich löschen?")
+        builder.setMessage("${selectedPokemon!!.name} " + getString(R.string.confirm_delete_dialog_message))
         builder.setNegativeButton(R.string.sort_dialog_negative_button,
             DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
         builder.setPositiveButton(
@@ -243,7 +243,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                         editTextEncounter.setText(pokemon.encounterNeeded.toString())
 
                         val dialog = AlertDialog.Builder(this)
-                            .setTitle("Daten von ${pokemon.name} bearbeiten")
+                            .setTitle(pokemon.name + getString(R.string.dialog_edit_pokemon_data_title))
                             .setView(customView)
                             .create()
 
@@ -257,14 +257,14 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                             val encountersString = editTextEncounter.text.toString()
 
                             if (encountersString.isEmpty()) {
-                                showMessage("Du musst die Anzahl der Begegnungen eingeben.", MessageType.Info)
+                                showMessage(getString(R.string.dialog_message_enter_encounter), MessageType.Info)
                                 return@setOnClickListener
                             }
 
                             val encounters = encountersString.toInt()
 
                             if (pokemonEdition == null || huntMethod == null) {
-                                showMessage("Unerwarteter Fehler", MessageType.Error)
+                                showMessage(getString(R.string.dialog_message_unknown_error), MessageType.Error)
                                 dialog.dismiss()
                                 return@setOnClickListener
                             }
@@ -280,7 +280,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                                 it.reload()
                             }
 
-                            showMessage("Änderungen wurden gespeichert", MessageType.Info)
+                            showMessage(getString(R.string.dialog_message_saved_changes), MessageType.Info)
                             dialog.dismiss()
                         }
                     }
@@ -356,7 +356,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         if (!prefs.contains(ShinyPokemonApplication.PREFERENCES_SORT_METHOD))
             viewModel.setSortMethod(PokemonSortMethod.InternalId)
         if (!prefs.contains(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME))
-            prefs.edit().putString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, "Sabi").apply()
+            prefs.edit().putString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, getString(R.string.theme_orange)).apply()
     }
 
     private fun initDarkMode() {
@@ -422,8 +422,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                     }
                 }
                 R.id.exportData -> {
-
-                    showYesNoDialog("Sollen die Daten komprimiert werden?") { shouldCompressData ->
+                    showYesNoDialog(getString(R.string.dialog_message_compress_data)) { shouldCompressData ->
                         viewModel.export(shouldCompressData) { data ->
                             if (data == null) {
                                 showMessage(getString(R.string.export_error), MessageType.Info)
@@ -462,10 +461,10 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         when (prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null)) {
-            "Sabi" -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
-            "Torben" -> imageViewSignaturePokemon.setImageResource(R.drawable.wuffels)
-            "Johannes" -> imageViewSignaturePokemon.setImageResource(R.drawable.scytherold)
-            "Phil" -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
+            getString(R.string.theme_orange) -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
+            getString(R.string.theme_purple) -> imageViewSignaturePokemon.setImageResource(R.drawable.wuffels)
+            getString(R.string.theme_blue) -> imageViewSignaturePokemon.setImageResource(R.drawable.scytherold)
+            getString(R.string.theme_red) -> imageViewSignaturePokemon.setImageResource(R.drawable.leufeo)
         }
     }
 

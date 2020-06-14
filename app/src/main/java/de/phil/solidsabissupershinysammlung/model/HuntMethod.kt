@@ -21,7 +21,15 @@ enum class HuntMethod(val value: Int) {
 
 }
 
-fun HuntMethod.toGerman(): String {
+fun HuntMethod.translateToLanguage(language: String): String {
+    return when (language) {
+        "de" -> toGerman()
+        "en" -> toEnglish()
+        else -> toEnglish()
+    }
+}
+
+private fun HuntMethod.toGerman(): String {
     return when (this) {
         HuntMethod.Hatch -> "Gezüchtet"
         HuntMethod.SOS -> "SOS-Methode"
@@ -35,5 +43,22 @@ fun HuntMethod.toGerman(): String {
         HuntMethod.ChainFinishing -> "Chain Fishing"
         HuntMethod.UltraDimension -> "Ultradimension"
         HuntMethod.Other -> "Anderes"
+    }
+}
+
+private fun HuntMethod.toEnglish(): String {
+    return when (this) {
+        HuntMethod.Hatch -> "Breeded"
+        HuntMethod.SOS -> "SOS-Method"
+        HuntMethod.FriendSafari -> "Friend Safari"
+        HuntMethod.SoftReset -> "Softreset"
+        HuntMethod.Random -> "Random"
+        HuntMethod.DexNav -> "DexNav"
+        HuntMethod.Hordes -> "Mass Encounter"
+        HuntMethod.PokeRadar -> "PokeRadar"
+        HuntMethod.RNGManipulation -> "RNGManipulation"
+        HuntMethod.ChainFinishing -> "Chain Fishing"
+        HuntMethod.UltraDimension -> "Ultradimension"
+        HuntMethod.Other -> "Other"
     }
 }

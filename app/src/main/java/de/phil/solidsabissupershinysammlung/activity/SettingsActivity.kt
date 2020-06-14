@@ -58,7 +58,7 @@ class SettingsActivity : AppCompatActivity() {
                 edit().putBoolean(ShinyPokemonApplication.PREFERENCES_GUIDE_SHOWN, false).apply()
 
             if (!contains(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME)) {
-                edit().putString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, "Sabi").apply()
+                edit().putString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, getString(R.string.theme_orange)).apply()
             }
         }
 

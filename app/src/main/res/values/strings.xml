@@ -77,10 +77,10 @@
     </string-array>
 
     <string-array name="color_themes">
-        <item>Sabi</item>
-        <item>Torben</item>
-        <item>Johannes</item>
-        <item>Phil</item>
+        <item>Orange</item>
+        <item>Violett</item>
+        <item>Blau</item>
+        <item>Rot</item>
     </string-array>
 
     <!-- sort methods -->
@@ -131,5 +131,21 @@
     <string name="edit_pokemon_data">Pokemon Daten bearbeiten</string>
     <string name="label_edit_pokemon_data">Pokemon Daten bearbeiten</string>
     <string name="edit_pokemon_button_save_text">Änderungen speichern</string>
+    <string name="theme_orange">Orange</string>
+    <string name="theme_purple">Violett</string>
+    <string name="theme_blue">Blau</string>
+    <string name="theme_red">Rot</string>
+    <string name="dialog_action_canceled">Die Aktion wurde abgebrochen.</string>
+    <string name="dialog_cancel">Abbrechen</string>
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_no">Nein</string>
+    <string name="dialog_change_edition_title">Edition ändern</string>
+    <string name="dialog_change_edition_message">Wähle, zu welcher Edition du wechseln möchtest</string>
+    <string name="confirm_delete_dialog_message">soll für immer gelöscht werden?</string>
+    <string name="dialog_edit_pokemon_data_title"> bearbeiten</string>
+    <string name="dialog_message_enter_encounter">Du musst die Anzahl der Begegnungen eingeben.</string>
+    <string name="dialog_message_unknown_error">Unerwarteter Fehler</string>
+    <string name="dialog_message_saved_changes">Änderungen wurden gespeichert</string>
+    <string name="dialog_message_compress_data">Sollen die Daten komprimiert werden?</string>
 
 </resources>

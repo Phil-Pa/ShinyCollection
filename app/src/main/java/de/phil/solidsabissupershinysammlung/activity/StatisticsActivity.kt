@@ -39,10 +39,10 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         when (prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null)) {
-            "Sabi" -> statistics_imageView.setImageResource(R.drawable.leufeo)
-            "Torben" -> statistics_imageView.setImageResource(R.drawable.wuffels)
-            "Johannes" -> statistics_imageView.setImageResource(R.drawable.scytherold)
-            "Phil" -> statistics_imageView.setImageResource(R.drawable.leufeo)
+            getString(R.string.theme_orange) -> statistics_imageView.setImageResource(R.drawable.leufeo)
+            getString(R.string.theme_purple) -> statistics_imageView.setImageResource(R.drawable.wuffels)
+            getString(R.string.theme_blue) -> statistics_imageView.setImageResource(R.drawable.scytherold)
+            getString(R.string.theme_red) -> statistics_imageView.setImageResource(R.drawable.leufeo)
         }
     }
 

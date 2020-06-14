@@ -29,10 +29,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val dataManager =
         DataManager()
 
-    fun addPokemon(pokemonData: PokemonData) {
-        pokemonDao.addPokemon(pokemonData)
-    }
-
     fun updatePokemon(pokemonData: PokemonData) {
         pokemonDao.updatePokemon(pokemonData)
     }
