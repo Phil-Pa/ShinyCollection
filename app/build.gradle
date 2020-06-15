@@ -69,8 +69,6 @@ dependencies {
     // Optional -- Mockito framework
     testImplementation 'org.mockito:mockito-core:2.23.4'
 
-
-    implementation 'com.github.GrenderG:Toasty:1.4.2'
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 //    implementation 'com.r0adkll:slidableactivity:2.0.6'
@@ -98,8 +96,6 @@ dependencies {
     // For Kotlin use lifecycle-reactivestreams-ktx
     // optional - Test helpers for LiveData
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
-    testImplementation 'com.jraska.livedata:testing-ktx:1.1.0'
-
 
     // room
     def room_version = "2.2.5"
