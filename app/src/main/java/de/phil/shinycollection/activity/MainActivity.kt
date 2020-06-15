@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Pair
 import android.view.Menu
 import android.view.MenuItem
@@ -474,7 +475,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         if (menu == null)
             return true
 
-        Handler().post {
+        Handler(Looper.myLooper()!!).post {
             val menuItemAdd = menu.findItem(R.id.add_pokemon)
             val menuItemRandom = menu.findItem(R.id.random_pokemon)
 

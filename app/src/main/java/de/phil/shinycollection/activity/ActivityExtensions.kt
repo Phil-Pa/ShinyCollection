@@ -59,11 +59,6 @@ fun Activity.showMessage(message: String, type: MessageType) {
 }
 
 fun Fragment.initTheme(themeAsString: String) {
-
-//    val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-//
-//    val themeAsString = prefs.getString(App.PREFERENCES_CURRENT_THEME, null)
-
     when (themeAsString) {
         getString(R.string.theme_orange) -> activity?.setTheme(R.style.AppThemeSabi)
         getString(R.string.theme_purple) -> activity?.setTheme(R.style.AppThemeTorben)

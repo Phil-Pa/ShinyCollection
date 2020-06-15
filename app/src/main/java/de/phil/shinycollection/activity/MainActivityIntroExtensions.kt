@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.drawerlayout.widget.DrawerLayout
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
@@ -114,8 +113,6 @@ internal fun MainActivity.showNavigationDrawerGuide() {
 
         })
 
-    val tempMainActivity = this
-
     drawer_layout.addDrawerListener(object : DrawerLayout.DrawerListener {
         override fun onDrawerStateChanged(newState: Int) {
 
@@ -126,7 +123,7 @@ internal fun MainActivity.showNavigationDrawerGuide() {
         }
 
         override fun onDrawerClosed(drawerView: View) {
-//            Toast.makeText(tempMainActivity, "Viel Spaß noch mit der App!", Toast.LENGTH_SHORT).show()
+
         }
 
         override fun onDrawerOpened(drawerView: View) {
