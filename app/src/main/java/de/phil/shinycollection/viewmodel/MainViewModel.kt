@@ -34,7 +34,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun import(data: String?, action: (Boolean) -> Unit) {
-        val value = dataManager.import(pokemonDao, data)
+        val value = dataManager.import(getApplication(), pokemonDao, data)
         action(value)
     }
 

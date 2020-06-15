@@ -33,7 +33,7 @@ class SampleTest {
     @get:Rule
     var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
-    private fun delay(millis: Long = 100) = Thread.sleep(millis)
+    private fun delay(millis: Long = 800) = Thread.sleep(millis)
     private val delayTime: Long = 200
 
     @Test
@@ -91,6 +91,7 @@ class SampleTest {
             assert(beforeData.size + 1 == afterData.size)
 
             onView(withId(R.id.view_pager)).perform(swipeLeft())
+//            onView(withId(R.id.view_pager)).perform(swipeLeft())
             delay()
         }
     }

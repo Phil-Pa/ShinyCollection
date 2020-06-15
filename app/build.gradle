@@ -23,7 +23,7 @@ android {
 
     compileSdkVersion 30
     defaultConfig {
-        applicationId "de.phil.solidsabissupershinysammlung"
+        applicationId "de.phil.shinycollection"
         minSdkVersion 27
         targetSdkVersion 30
         versionCode 1

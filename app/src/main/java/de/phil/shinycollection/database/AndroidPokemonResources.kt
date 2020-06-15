@@ -113,7 +113,7 @@ class AndroidPokemonResources(context: Context) : IAndroidPokemonResources {
 
     override fun getNameByPokedexId(pokedexId: Int): String {
 
-        if (pokedexId !in genPokedexIdsArray.flatten())
+        if (pokedexId < genPokedexIdsArray[0][0] || pokedexId > genPokedexIdsArray[genPokedexIdsArray.size - 1][genPokedexIdsArray[genPokedexIdsArray.size - 1].size - 1])
             throw Exception("$pokedexId is not a valid pokedex id")
 
         return getPokemonNames()[pokedexId - 1]

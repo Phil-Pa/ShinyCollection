@@ -1,5 +1,7 @@
 package de.phil.shinycollection.database
 
+import android.app.Application
+
 class DataManager {
 
     private val dataImporter =
@@ -7,8 +9,8 @@ class DataManager {
     private val dataExporter =
         DataExporter()
 
-    fun import(pokemonDao: PokemonDao, data: String?): Boolean {
-        return dataImporter.import(pokemonDao, data)
+    fun import(application: Application, pokemonDao: PokemonDao, data: String?): Boolean {
+        return dataImporter.import(application, pokemonDao, data)
     }
 
     fun export(
