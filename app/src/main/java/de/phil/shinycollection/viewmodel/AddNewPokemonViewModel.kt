@@ -13,18 +13,9 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
     private val pokemonDao: PokemonDao =
         PokemonDatabase.instance(application.applicationContext).pokemonDao()
 
-    fun pokemonNameExists(name: String): Boolean {
-        val pokemonNames = PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
-        for (pokemonName in pokemonNames)
-            if (name == pokemonName)
-                return true
+    fun pokemonNameExists(name: String) = name in getPokemonNames()
 
-        return false
-    }
-
-    fun getPokemonNames(): List<String> {
-        return PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
-    }
+    fun getPokemonNames() = PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
 
     private fun validateInput(pokemonData: PokemonData): Pair<String?, PokemonData?> {
 
@@ -62,13 +53,9 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
         return Pair(null, validatedData)
     }
 
-    fun getPokedexIdByName(name: String): Int {
-        return PokemonDatabase.androidPokemonResources(getApplication()).getPokedexIdByName(name)
-    }
+    fun getPokedexIdByName(name: String) = PokemonDatabase.androidPokemonResources(getApplication()).getPokedexIdByName(name)
 
-    fun getGenerationByName(name: String): Int {
-        return PokemonDatabase.androidPokemonResources(getApplication()).getGenerationByName(name)
-    }
+    fun getGenerationByName(name: String) = PokemonDatabase.androidPokemonResources(getApplication()).getGenerationByName(name)
 
     fun addPokemonToDatabase(pokemonData: PokemonData): Pair<Boolean, String> {
 

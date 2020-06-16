@@ -20,15 +20,14 @@ class SectionsPagerAdapter(context: Context, fm: FragmentManager) :
     private var tabTitles: Array<String> = context.resources.getStringArray(R.array.tab_titles)
 
     override fun getItem(position: Int): Fragment {
+
+        if (position < 0 || position >= ShinyPokemonApplication.NUM_TAB_VIEWS)
+            throw IllegalArgumentException("invalid position $position, less than 0 or greater than maximum number of tabs in view pager")
+
         if (!pages.keys.contains(position))
             pages[position] = PokemonListFragment.newInstance(position)
 
-        if (pages[position] == null) {
-            Log.e(TAG, "$position as tabIndex is not a key in the pokemon list fragment map")
-            throw IllegalArgumentException("position")
-        }
-
-        return pages[position] ?: throw IllegalStateException()
+        return pages[position]!!
     }
 
     override fun getPageTitle(position: Int) = tabTitles[position]

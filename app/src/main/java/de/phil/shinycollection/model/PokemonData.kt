@@ -52,40 +52,9 @@ data class PokemonData(
     @PrimaryKey(autoGenerate = true)
     var internalId: Int = 1
 
-    private fun isAlola(): Boolean {
-        return name in alolaPokemon
-    }
+    fun getDownloadUrl() = Companion.getDownloadUrl(generation, pokedexId)
 
-    private fun isGalar(): Boolean {
-        return name in galarPokemon
-    }
-
-    fun getDownloadUrl(): String {
-
-        val baseString = when {
-            generation == 8 || isGalar() -> "https://media.bisafans.de/67fac06/pokemon/gen8/swsh/shiny/"
-            else -> "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
-        }
-
-        return "$baseString${getBitmapFileName()}"
-    }
-
-    private fun getBitmapFileName(): String {
-        val generationString = StringBuilder(pokedexId.toString())
-        while (generationString.length < 3)
-            generationString.insert(0, '0')
-
-        when {
-            isAlola() -> generationString.append(ShinyPokemonApplication.ALOLA_EXTENSION)
-            isGalar() -> generationString.append(ShinyPokemonApplication.GALAR_EXTENSION)
-        }
-
-        return "$generationString.png"
-    }
-
-    override fun toString(): String {
-        return "PokemonData(name=$name, pokedexId=$pokedexId, generation=$generation, encounterNeeded=$encounterNeeded, huntMethod=$huntMethod, pokemonEdition=$pokemonEdition, tabIndex=$tabIndex, internalId=$internalId)"
-    }
+    override fun toString() = "PokemonData(name=$name, pokedexId=$pokedexId, generation=$generation, encounterNeeded=$encounterNeeded, huntMethod=$huntMethod, pokemonEdition=$pokemonEdition, tabIndex=$tabIndex, internalId=$internalId)"
 
     fun toShortString(): String {
 
@@ -108,8 +77,8 @@ data class PokemonData(
         val tabIndex = tabIndex.toString()
 
         val pokemonAlternativeFormFlag = when {
-            isAlola() -> '1'
-            isGalar() -> '2'
+            isAlola(pokedexId) -> '1'
+            isGalar(pokedexId) -> '2'
             else -> '0'
         }
 
@@ -137,31 +106,37 @@ data class PokemonData(
 
         const val SHORT_DATA_STRING_LENGTH = 17
 
-        private val alolaPokemon = listOf(
-            // de
-            "Rattfratz", "Rattikarl", "Raichu", "Sandan", "Sandamer",
-            "Vulpix", "Vulnona", "Digda", "Digdri", "Mauzi", "Snobilikat", "Kleinstein",
-            "Georok", "Geowaz", "Sleima", "Sleimok", "Kokowei", "Knogga",
+        private val alolaPokemonIds = arrayOf(19, 20, 26, 27, 28, 37, 38, 50, 51, 52, 53, 74, 75, 76, 88, 89, 103, 105)
 
-            // en
-            // raichu, vulpix are de and en
-            "Rattata", "Raticate", "Sandshrew", "Sandslash",
-            "Ninetales", "Diglett", "Dugtrio", "Meowth", "Persian", "Geodude",
-            "Graveler", "Golem", "Grimer", "Muk", "Exeggutor", "Marowak"
+        private val galarPokemonIds = arrayOf(52, 77, 78, 79, 80, 83, 110, 122, 144, 145, 146, 199, 222, 263, 264, 554, 555, 562, 618)
 
-        ).map { "$it${ShinyPokemonApplication.ALOLA_EXTENSION}" }
+        fun isAlola(pokedexId: Int) = pokedexId in alolaPokemonIds
 
-        private val galarPokemon = listOf(
-            // de
-            "Mauzi", "Flegmon", "Lahmus", "Ponita", "Gallopa", "Porenta", "Smogmog", "Pantimos",
-            "Corasonn", "Zigzachs", "Geradaks", "Flampion", "Flampivian",
-            "Makabaja", "Flunschlik",
+        fun isGalar(pokedexId: Int) = pokedexId in galarPokemonIds
 
-            // en
-            "Meowth", "Slowpoke", "Slowbro", "Ponyta", "Rapidash", "Farfetch’d", "Weezing", "Mr. Mime",
-            "Corsola", "Zigzagoon", "Linoone", "Darumaka", "Darmanitan",
-            "Yamask", "Yamask"
-        ).map { "$it${ShinyPokemonApplication.GALAR_EXTENSION}" }
+        private fun getBitmapFileName(pokedexId: Int): String {
+
+            val generationString = prependZerosToNumber(3, pokedexId)
+            val sb = StringBuilder(generationString.length + ShinyPokemonApplication.ALOLA_EXTENSION.length)
+            sb.append(generationString)
+
+            when {
+                isAlola(pokedexId) -> sb.append(ShinyPokemonApplication.ALOLA_EXTENSION)
+                isGalar(pokedexId) -> sb.append(ShinyPokemonApplication.GALAR_EXTENSION)
+            }
+
+            return "$generationString.png"
+        }
+
+        fun getDownloadUrl(generation: Int, pokedexId: Int): String {
+
+            val baseString = when {
+                generation == 8 || isGalar(pokedexId) -> "https://media.bisafans.de/67fac06/pokemon/gen8/swsh/shiny/"
+                else -> "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
+            }
+
+            return "$baseString${getBitmapFileName(pokedexId)}"
+        }
 
     }
 

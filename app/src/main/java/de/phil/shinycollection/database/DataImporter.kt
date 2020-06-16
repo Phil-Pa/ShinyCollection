@@ -117,11 +117,7 @@ class DataImporter {
 
             pokemonData.internalId = internalId
 
-            try {
-                pokemonDao.addPokemon(pokemonData)
-            } catch (e: Exception) {
-                val fjkd = 232
-            }
+            pokemonDao.addPokemon(pokemonData)
         }
 
         return true

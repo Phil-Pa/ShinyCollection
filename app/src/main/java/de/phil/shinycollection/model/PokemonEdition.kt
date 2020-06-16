@@ -1,5 +1,6 @@
 package de.phil.shinycollection.model
 
+@Suppress("SpellCheckingInspection")
 enum class PokemonEdition(val value: Int) {
     XY(0),
     ORAS(1),

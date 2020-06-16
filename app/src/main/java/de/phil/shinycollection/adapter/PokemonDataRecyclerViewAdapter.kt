@@ -30,7 +30,7 @@ class PokemonDataRecyclerViewAdapter(
         val item = mValues[position]
 
         // "ID: "
-        holder.mPokedexIdView.text = ("ID: " + item.pokedexId.toString())
+        holder.mPokedexIdView.text = ("ID: ${item.pokedexId}")
         // "Name: "
         holder.mNameView.text = (item.name)
         // "Encounter: "

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import de.phil.shinycollection.R
 import de.phil.shinycollection.ShinyPokemonApplication
+import de.phil.shinycollection.ShinyPokemonApplication.Companion.INVALID_VALUE
 import de.phil.shinycollection.model.HuntMethod
 import de.phil.shinycollection.model.INTENT_EXTRA_TAB_INDEX
 import de.phil.shinycollection.model.PokemonData
@@ -24,23 +25,21 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
     private lateinit var viewModel: AddNewPokemonViewModel
 
-    private var tabIndex = -1
+    private var tabIndex = INVALID_VALUE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initTheme()
         setContentView(R.layout.activity_add_new_pokemon)
 
-        tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, -1)
+        tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, INVALID_VALUE)
 
         viewModel = ViewModelProvider(this).get(AddNewPokemonViewModel::class.java)
 
         add_new_pokemon_activity_button_add.setOnClickListener {
 
             val name = add_new_pokemon_activity_edittext_name.text.toString()
-
             val encountersKnown = add_new_pokemon_activity_checkbox_encounter_known.isChecked
-
             val encountersNeededText = add_new_pokemon_activity_edittext_eggsNeeded.text
 
             val encounters =
@@ -71,6 +70,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
         add_new_pokemon_activity_checkbox_encounter_known.setOnCheckedChangeListener { _, isChecked ->
             add_new_pokemon_activity_edittext_eggsNeeded.isEnabled = isChecked
         }
+
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_dropdown_item_1line,
@@ -94,32 +94,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     text = text.replace(ShinyPokemonApplication.GALAR_EXTENSION, "")
 
                 if (viewModel.pokemonNameExists(text)) {
-
-                    // needed to get the correct download url
-                    val id = viewModel.getPokedexIdByName(text)
-                    val generation = when {
-                        !isAlola && !isGalar -> viewModel.getGenerationByName(text)
-                        !isGalar -> 7
-                        !isAlola -> 8
-                        else -> throw Exception()
-                    }
-
-                    val invalidData = PokemonData("-1", id, generation, -1, HuntMethod.Other, PokemonEdition.ORAS, -1)
-                    val urlWithoutAlola = invalidData.getDownloadUrl()
-                    val url = StringBuilder(urlWithoutAlola)
-
-                    when {
-                        isAlola -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.ALOLA_EXTENSION)
-                        isGalar -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.GALAR_EXTENSION)
-                    }
-
-                    val downloadUrl = url.toString()
-
-                    Glide.with(this@AddNewPokemonActivity)
-                        .load(downloadUrl)
-                        .placeholder(ContextCompat.getDrawable(this@AddNewPokemonActivity, R.drawable.placeholder_pokemon))
-                        .into(add_new_pokemon_activity_imageView_preview)
-
+                    loadPokemonImage(text, isAlola, isAlola)
                 } else {
                     add_new_pokemon_activity_imageView_preview.setImageBitmap(null)
                 }
@@ -131,6 +106,32 @@ class AddNewPokemonActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+    }
+
+    private fun loadPokemonImage(pokemonName: String, isAlola: Boolean, isGalar: Boolean) {
+        // needed to get the correct download url
+        val id = viewModel.getPokedexIdByName(pokemonName)
+        val generation = when {
+            !isAlola && !isGalar -> viewModel.getGenerationByName(pokemonName)
+            !isGalar -> 7
+            !isAlola -> 8
+            else -> throw Exception()
+        }
+
+        val urlWithoutAlola = PokemonData.getDownloadUrl(generation, id)
+        val url = StringBuilder(urlWithoutAlola)
+
+        when {
+            isAlola -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.ALOLA_EXTENSION)
+            isGalar -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.GALAR_EXTENSION)
+        }
+
+        val downloadUrl = url.toString()
+
+        Glide.with(this@AddNewPokemonActivity)
+            .load(downloadUrl)
+            .placeholder(ContextCompat.getDrawable(this@AddNewPokemonActivity, R.drawable.placeholder_pokemon))
+            .into(add_new_pokemon_activity_imageView_preview)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

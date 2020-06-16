@@ -18,7 +18,7 @@ class PokemonDataRecyclerViewSmallIconAdapter(
 ) : RecyclerView.Adapter<PokemonDataRecyclerViewSmallIconAdapter.ViewHolder>() {
 
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val mShinyImageView: ImageView = mView.fragment_pokemondata_small_icon
         val mEncounterTextView: TextView = mView.fragment_pokemondata_small_icon_encounter_text
     }

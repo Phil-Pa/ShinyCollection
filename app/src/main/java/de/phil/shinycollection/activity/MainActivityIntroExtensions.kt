@@ -24,8 +24,6 @@ private fun TapTarget.setDefaultTapTargetValues(): TapTarget {
     return this
 }
 
-// TODO: update guide to english
-
 internal fun MainActivity.showGuide(
     menuItemAdd: MenuItem,
     menuItemRandom: MenuItem

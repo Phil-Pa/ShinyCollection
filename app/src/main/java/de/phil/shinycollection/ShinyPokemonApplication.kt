@@ -6,6 +6,7 @@ class ShinyPokemonApplication : Application() {
 
     companion object {
         // constants
+        const val INVALID_VALUE = -1
         const val NUM_TAB_VIEWS = 5
         const val ENCOUNTER_UNKNOWN = 0
         const val TAB_INDEX_SHINY_LIST = 0

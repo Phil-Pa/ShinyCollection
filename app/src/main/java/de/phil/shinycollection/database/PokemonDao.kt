@@ -10,7 +10,7 @@ interface PokemonDao {
     @Query("SELECT COUNT(*) FROM pokemondata WHERE tab_index = 0 AND pokemon_edition = :pokemonEditionOrdinal")
     fun getTotalNumberOfShinys(pokemonEditionOrdinal: Int): Int
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addPokemon(vararg data: PokemonData)
 
     @Update

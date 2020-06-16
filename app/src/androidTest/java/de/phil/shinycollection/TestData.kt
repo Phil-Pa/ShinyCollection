@@ -4,167 +4,202 @@ class TestData {
 
     companion object {
 
-        const val CLIPBOARD_DATA = "PokemonData(name=Velursi, pokedexId=759, generation=7, encounterNeeded=140, huntMethod=Hatch, tabIndex=0, internalId=1)\n" +
-                "PokemonData(name=Flamiau, pokedexId=725, generation=7, encounterNeeded=16, huntMethod=Hatch, tabIndex=0, internalId=2)\n" +
-                "PokemonData(name=Knirfish, pokedexId=779, generation=7, encounterNeeded=261, huntMethod=Hatch, tabIndex=0, internalId=3)\n" +
-                "PokemonData(name=Sankabuh, pokedexId=769, generation=7, encounterNeeded=2856, huntMethod=Hatch, tabIndex=0, internalId=4)\n" +
-                "PokemonData(name=Mabula, pokedexId=736, generation=7, encounterNeeded=392, huntMethod=Hatch, tabIndex=0, internalId=5)\n" +
-                "PokemonData(name=Wuffels, pokedexId=744, generation=7, encounterNeeded=206, huntMethod=Hatch, tabIndex=0, internalId=6)\n" +
-                "PokemonData(name=Bauz, pokedexId=722, generation=7, encounterNeeded=766, huntMethod=Hatch, tabIndex=0, internalId=7)\n" +
-                "PokemonData(name=Garstella, pokedexId=747, generation=6, encounterNeeded=143, huntMethod=Hatch, tabIndex=0, internalId=8)\n" +
-                "PokemonData(name=Waumboll, pokedexId=546, generation=4, encounterNeeded=126, huntMethod=Hatch, tabIndex=0, internalId=9)\n" +
-                "PokemonData(name=Lusardin, pokedexId=746, generation=6, encounterNeeded=176, huntMethod=Hatch, tabIndex=0, internalId=10)\n" +
-                "PokemonData(name=Wommel, pokedexId=742, generation=6, encounterNeeded=733, huntMethod=Hatch, tabIndex=0, internalId=11)\n" +
-                "PokemonData(name=Leufeo, pokedexId=667, generation=5, encounterNeeded=833, huntMethod=Hatch, tabIndex=0, internalId=12)\n" +
-                "PokemonData(name=Gramokles, pokedexId=679, generation=5, encounterNeeded=1300, huntMethod=Hatch, tabIndex=0, internalId=13)\n" +
-                "PokemonData(name=Schneckmag, pokedexId=218, generation=1, encounterNeeded=603, huntMethod=Hatch, tabIndex=0, internalId=14)\n" +
-                "PokemonData(name=Imantis, pokedexId=753, generation=6, encounterNeeded=179, huntMethod=Hatch, tabIndex=0, internalId=15)\n" +
-                "PokemonData(name=Frubberl, pokedexId=761, generation=6, encounterNeeded=773, huntMethod=Hatch, tabIndex=0, internalId=16)\n" +
-                "PokemonData(name=Marill, pokedexId=183, generation=1, encounterNeeded=453, huntMethod=Hatch, tabIndex=0, internalId=17)\n" +
-                "PokemonData(name=Seeper, pokedexId=116, generation=0, encounterNeeded=229, huntMethod=Hatch, tabIndex=0, internalId=18)\n" +
-                "PokemonData(name=Flapteryx, pokedexId=566, generation=4, encounterNeeded=334, huntMethod=Hatch, tabIndex=0, internalId=19)\n" +
-                "PokemonData(name=Bubungus, pokedexId=755, generation=6, encounterNeeded=611, huntMethod=Hatch, tabIndex=0, internalId=20)\n" +
-                "PokemonData(name=Bubungus, pokedexId=755, generation=6, encounterNeeded=2, huntMethod=Hatch, tabIndex=0, internalId=21)\n" +
-                "PokemonData(name=Geckarbor, pokedexId=252, generation=2, encounterNeeded=762, huntMethod=Hatch, tabIndex=0, internalId=22)\n" +
-                "PokemonData(name=Fynx, pokedexId=653, generation=5, encounterNeeded=278, huntMethod=Hatch, tabIndex=0, internalId=23)\n" +
-                "PokemonData(name=Knilz, pokedexId=285, generation=2, encounterNeeded=510, huntMethod=Hatch, tabIndex=0, internalId=24)\n" +
-                "PokemonData(name=Knilz, pokedexId=285, generation=2, encounterNeeded=6, huntMethod=Hatch, tabIndex=0, internalId=25)\n" +
-                "PokemonData(name=Finneon, pokedexId=456, generation=3, encounterNeeded=413, huntMethod=Hatch, tabIndex=0, internalId=26)\n" +
-                "PokemonData(name=Curelei, pokedexId=764, generation=6, encounterNeeded=738, huntMethod=Hatch, tabIndex=0, internalId=27)\n" +
-                "PokemonData(name=Floink, pokedexId=498, generation=4, encounterNeeded=112, huntMethod=Hatch, tabIndex=0, internalId=28)\n" +
-                "PokemonData(name=Lichtel, pokedexId=607, generation=4, encounterNeeded=1050, huntMethod=Hatch, tabIndex=0, internalId=29)\n" +
-                "PokemonData(name=Clavion, pokedexId=707, generation=5, encounterNeeded=219, huntMethod=Hatch, tabIndex=0, internalId=30)\n" +
-                "PokemonData(name=Paragoni, pokedexId=708, generation=5, encounterNeeded=854, huntMethod=Hatch, tabIndex=0, internalId=31)\n" +
-                "PokemonData(name=Scampisto, pokedexId=692, generation=5, encounterNeeded=326, huntMethod=Hatch, tabIndex=0, internalId=32)\n" +
-                "PokemonData(name=Mähikel, pokedexId=672, generation=5, encounterNeeded=166, huntMethod=Hatch, tabIndex=0, internalId=33)\n" +
-                "PokemonData(name=Dartiri, pokedexId=661, generation=5, encounterNeeded=347, huntMethod=Hatch, tabIndex=0, internalId=34)\n" +
-                "PokemonData(name=Kommandutan, pokedexId=765, generation=6, encounterNeeded=260, huntMethod=Hatch, tabIndex=0, internalId=35)\n" +
-                "PokemonData(name=Kiesling, pokedexId=524, generation=4, encounterNeeded=457, huntMethod=Hatch, tabIndex=0, internalId=36)\n" +
-                "PokemonData(name=Gufa, pokedexId=771, generation=6, encounterNeeded=175, huntMethod=Hatch, tabIndex=0, internalId=37)\n" +
-                "PokemonData(name=Mimigma, pokedexId=778, generation=6, encounterNeeded=288, huntMethod=Hatch, tabIndex=0, internalId=38)\n" +
-                "PokemonData(name=Serpifeu, pokedexId=495, generation=4, encounterNeeded=291, huntMethod=Hatch, tabIndex=0, internalId=39)\n" +
-                "PokemonData(name=Araqua, pokedexId=751, generation=6, encounterNeeded=818, huntMethod=Hatch, tabIndex=0, internalId=40)\n" +
-                "PokemonData(name=Dedenne, pokedexId=702, generation=5, encounterNeeded=52, huntMethod=Hatch, tabIndex=0, internalId=41)\n" +
-                "PokemonData(name=Peppeck, pokedexId=731, generation=6, encounterNeeded=1852, huntMethod=Hatch, tabIndex=0, internalId=42)\n" +
-                "PokemonData(name=Glumanda, pokedexId=4, generation=0, encounterNeeded=92, huntMethod=Hatch, tabIndex=0, internalId=43)\n" +
-                "PokemonData(name=Evoli, pokedexId=133, generation=0, encounterNeeded=327, huntMethod=SOS, tabIndex=0, internalId=44)\n" +
-                "PokemonData(name=Krabbox, pokedexId=739, generation=6, encounterNeeded=29, huntMethod=SOS, tabIndex=0, internalId=45)\n" +
-                "PokemonData(name=Driftlon, pokedexId=425, generation=3, encounterNeeded=383, huntMethod=SOS, tabIndex=0, internalId=46)\n" +
-                "PokemonData(name=Rattfratz-alola, pokedexId=19, generation=0, encounterNeeded=347, huntMethod=SOS, tabIndex=0, internalId=47)\n" +
-                "PokemonData(name=Raupy, pokedexId=10, generation=0, encounterNeeded=271, huntMethod=SOS, tabIndex=0, internalId=48)\n" +
-                "PokemonData(name=Magby, pokedexId=240, generation=1, encounterNeeded=329, huntMethod=SOS, tabIndex=0, internalId=49)\n" +
-                "PokemonData(name=Schneppke, pokedexId=361, generation=2, encounterNeeded=241, huntMethod=SOS, tabIndex=0, internalId=50)\n" +
-                "PokemonData(name=Traumato, pokedexId=96, generation=0, encounterNeeded=394, huntMethod=SOS, tabIndex=0, internalId=51)\n" +
-                "PokemonData(name=Muschas, pokedexId=90, generation=0, encounterNeeded=465, huntMethod=SOS, tabIndex=0, internalId=52)\n" +
-                "PokemonData(name=Geronimatz, pokedexId=627, generation=4, encounterNeeded=438, huntMethod=SOS, tabIndex=0, internalId=53)\n" +
-                "PokemonData(name=Magnetilo, pokedexId=81, generation=0, encounterNeeded=255, huntMethod=Hatch, tabIndex=0, internalId=54)\n" +
-                "PokemonData(name=Igamaro, pokedexId=650, generation=5, encounterNeeded=298, huntMethod=Hatch, tabIndex=0, internalId=55)\n" +
-                "PokemonData(name=Klikk, pokedexId=599, generation=4, encounterNeeded=590, huntMethod=Hatch, tabIndex=0, internalId=56)\n" +
-                "PokemonData(name=Enton, pokedexId=54, generation=0, encounterNeeded=508, huntMethod=SOS, tabIndex=0, internalId=57)\n" +
-                "PokemonData(name=Sterndu, pokedexId=120, generation=0, encounterNeeded=252, huntMethod=SOS, tabIndex=0, internalId=58)\n" +
-                "PokemonData(name=Fiffyen, pokedexId=261, generation=2, encounterNeeded=635, huntMethod=Hatch, tabIndex=0, internalId=153)\n" +
-                "PokemonData(name=Voltilamm, pokedexId=179, generation=1, encounterNeeded=116, huntMethod=Hatch, tabIndex=0, internalId=154)\n" +
-                "PokemonData(name=Kanivanha, pokedexId=318, generation=2, encounterNeeded=116, huntMethod=Hatch, tabIndex=0, internalId=155)\n" +
-                "PokemonData(name=Robball, pokedexId=728, generation=6, encounterNeeded=12, huntMethod=Hatch, tabIndex=0, internalId=156)\n" +
-                "PokemonData(name=Krebscorps, pokedexId=341, generation=2, encounterNeeded=342, huntMethod=Hatch, tabIndex=0, internalId=158)\n" +
-                "PokemonData(name=Plinfa, pokedexId=393, generation=3, encounterNeeded=694, huntMethod=Hatch, tabIndex=0, internalId=160)\n" +
-                "PokemonData(name=Minun, pokedexId=312, generation=2, encounterNeeded=519, huntMethod=Hatch, tabIndex=0, internalId=162)\n" +
-                "PokemonData(name=Skunkapuh, pokedexId=434, generation=3, encounterNeeded=363, huntMethod=Hatch, tabIndex=0, internalId=164)\n" +
-                "PokemonData(name=Mangunior, pokedexId=734, generation=6, encounterNeeded=154, huntMethod=SOS, tabIndex=0, internalId=165)\n" +
-                "PokemonData(name=Machollo, pokedexId=66, generation=0, encounterNeeded=576, huntMethod=SOS, tabIndex=0, internalId=168)\n" +
-                "PokemonData(name=Dragonir, pokedexId=148, generation=0, encounterNeeded=114, huntMethod=SOS, tabIndex=0, internalId=169)\n" +
-                "PokemonData(name=Fukano, pokedexId=58, generation=0, encounterNeeded=61, huntMethod=SOS, tabIndex=0, internalId=170)\n" +
-                "PokemonData(name=Togepi, pokedexId=175, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=59)\n" +
-                "PokemonData(name=Zigzachs, pokedexId=263, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=60)\n" +
-                "PokemonData(name=Waumpel, pokedexId=265, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=62)\n" +
-                "PokemonData(name=Staralili, pokedexId=396, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=109)\n" +
-                "PokemonData(name=Wadribie, pokedexId=415, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=112)\n" +
-                "PokemonData(name=Schnuthelm, pokedexId=616, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=125)\n" +
-                "PokemonData(name=Scoppel, pokedexId=659, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=128)\n" +
-                "PokemonData(name=Purmel, pokedexId=664, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=129)\n" +
-                "PokemonData(name=Kleinstein-alola, pokedexId=74, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=145)\n" +
-                "PokemonData(name=Togedemaru, pokedexId=777, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=1, internalId=150)\n" +
-                "PokemonData(name=Bisasam, pokedexId=1, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=71)\n" +
-                "PokemonData(name=Schiggy, pokedexId=7, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=72)\n" +
-                "PokemonData(name=Myrapla, pokedexId=43, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=73)\n" +
-                "PokemonData(name=Bluzuk, pokedexId=48, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=74)\n" +
-                "PokemonData(name=Knofensa, pokedexId=69, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=75)\n" +
-                "PokemonData(name=Ponita, pokedexId=77, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=76)\n" +
-                "PokemonData(name=Voltobal, pokedexId=100, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=78)\n" +
-                "PokemonData(name=Tangela, pokedexId=114, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=79)\n" +
-                "PokemonData(name=Porygon, pokedexId=137, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=80)\n" +
-                "PokemonData(name=Endivie, pokedexId=152, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=81)\n" +
-                "PokemonData(name=Feurigel, pokedexId=155, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=82)\n" +
-                "PokemonData(name=Karnimani, pokedexId=158, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=83)\n" +
-                "PokemonData(name=Yanma, pokedexId=193, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=85)\n" +
-                "PokemonData(name=Girafarig, pokedexId=203, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=87)\n" +
-                "PokemonData(name=Pottrott, pokedexId=213, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=88)\n" +
-                "PokemonData(name=Quiekel, pokedexId=220, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=89)\n" +
-                "PokemonData(name=Corasonn, pokedexId=222, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=90)\n" +
-                "PokemonData(name=Miltank, pokedexId=241, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=91)\n" +
-                "PokemonData(name=Flemmli, pokedexId=255, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=92)\n" +
-                "PokemonData(name=Hydropi, pokedexId=258, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=93)\n" +
-                "PokemonData(name=Frizelbliz, pokedexId=309, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=95)\n" +
-                "PokemonData(name=Plusle, pokedexId=311, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=96)\n" +
-                "PokemonData(name=Roselia, pokedexId=315, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=98)\n" +
-                "PokemonData(name=Spoink, pokedexId=325, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=100)\n" +
-                "PokemonData(name=Tuska, pokedexId=331, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=101)\n" +
-                "PokemonData(name=Barschwa, pokedexId=349, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=103)\n" +
-                "PokemonData(name=Chelast, pokedexId=387, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=106)\n" +
-                "PokemonData(name=Panflam, pokedexId=390, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=107)\n" +
-                "PokemonData(name=Sheinux, pokedexId=403, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=110)\n" +
-                "PokemonData(name=Haspiror, pokedexId=427, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=113)\n" +
-                "PokemonData(name=Skunkapuh, pokedexId=434, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=114)\n" +
-                "PokemonData(name=Pionskora, pokedexId=451, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=116)\n" +
-                "PokemonData(name=Ottaro, pokedexId=501, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=117)\n" +
-                "PokemonData(name=Ganovil, pokedexId=551, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=118)\n" +
-                "PokemonData(name=Symvolara, pokedexId=561, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=119)\n" +
-                "PokemonData(name=Monozyto, pokedexId=577, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=120)\n" +
-                "PokemonData(name=Emolga, pokedexId=587, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=121)\n" +
-                "PokemonData(name=Wattzapf, pokedexId=595, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=122)\n" +
-                "PokemonData(name=Kastadur, pokedexId=597, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=123)\n" +
-                "PokemonData(name=Zapplardin, pokedexId=602, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=124)\n" +
-                "PokemonData(name=Gladiantri, pokedexId=624, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=126)\n" +
-                "PokemonData(name=Froxy, pokedexId=656, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=127)\n" +
-                "PokemonData(name=Leufeo, pokedexId=667, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=130)\n" +
-                "PokemonData(name=Coiffwaff, pokedexId=676, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=133)\n" +
-                "PokemonData(name=Psiau, pokedexId=677, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=134)\n" +
-                "PokemonData(name=Parfi, pokedexId=682, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=135)\n" +
-                "PokemonData(name=Bithora, pokedexId=688, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=136)\n" +
-                "PokemonData(name=Eguana, pokedexId=694, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=137)\n" +
-                "PokemonData(name=Resladero, pokedexId=701, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=140)\n" +
-                "PokemonData(name=Irrbis, pokedexId=710, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=141)\n" +
-                "PokemonData(name=Arktip, pokedexId=712, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=142)\n" +
-                "PokemonData(name=eF-eM, pokedexId=714, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=143)\n" +
-                "PokemonData(name=Choreogel, pokedexId=741, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=147)\n" +
-                "PokemonData(name=Quartermak, pokedexId=766, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=148)\n" +
-                "PokemonData(name=Reißlaus, pokedexId=767, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=149)\n" +
-                "PokemonData(name=Teddiursa, pokedexId=216, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=157)\n" +
-                "PokemonData(name=Lilminip, pokedexId=548, generation=4, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=163)\n" +
-                "PokemonData(name=Knacklion, pokedexId=328, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=2, internalId=166)\n" +
-                "PokemonData(name=Onix, pokedexId=95, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=77)\n" +
-                "PokemonData(name=Stollunior, pokedexId=304, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=94)\n" +
-                "PokemonData(name=Zwirrlicht, pokedexId=355, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=104)\n" +
-                "PokemonData(name=Tanhel, pokedexId=374, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=105)\n" +
-                "PokemonData(name=Koknodon, pokedexId=408, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=111)\n" +
-                "PokemonData(name=Riolu, pokedexId=447, generation=3, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=115)\n" +
-                "PokemonData(name=Pam-Pam, pokedexId=674, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=131)\n" +
-                "PokemonData(name=Balgoras, pokedexId=696, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=138)\n" +
-                "PokemonData(name=Amarino, pokedexId=698, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=139)\n" +
-                "PokemonData(name=Moruda, pokedexId=781, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=151)\n" +
-                "PokemonData(name=Miniras, pokedexId=782, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=3, internalId=152)\n" +
-                "PokemonData(name=Karpador, pokedexId=129, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=63)\n" +
-                "PokemonData(name=Evoli, pokedexId=133, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=64)\n" +
-                "PokemonData(name=Makuhita, pokedexId=296, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=66)\n" +
-                "PokemonData(name=Schmerbe, pokedexId=339, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=67)\n" +
-                "PokemonData(name=Rocara, pokedexId=703, generation=5, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=68)\n" +
-                "PokemonData(name=Pampuli, pokedexId=749, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=69)\n" +
-                "PokemonData(name=Molunk, pokedexId=757, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=70)\n" +
-                "PokemonData(name=Kramurx, pokedexId=198, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=86)\n" +
-                "PokemonData(name=Vulpix-alola, pokedexId=37, generation=0, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=144)\n" +
-                "PokemonData(name=Larvitar, pokedexId=246, generation=1, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=159)\n" +
-                "PokemonData(name=Knacklion, pokedexId=328, generation=2, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=167)\n" +
-                "PokemonData(name=Muramura, pokedexId=805, generation=6, encounterNeeded=0, huntMethod=Other, tabIndex=4, internalId=161)\n"
+        val CLIPBOARD_DATA = "PokemonData(name=Velursi, pokedexId=759, generation=7, encounterNeeded=140, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=1)\n" +
+                "PokemonData(name=Flamiau, pokedexId=725, generation=7, encounterNeeded=16, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=2)\n" +
+                "PokemonData(name=Knirfish, pokedexId=779, generation=7, encounterNeeded=261, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=3)\n" +
+                "PokemonData(name=Sankabuh, pokedexId=769, generation=7, encounterNeeded=2856, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=4)\n" +
+                "PokemonData(name=Mabula, pokedexId=736, generation=7, encounterNeeded=392, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=5)\n" +
+                "PokemonData(name=Wuffels, pokedexId=744, generation=7, encounterNeeded=206, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=6)\n" +
+                "PokemonData(name=Bauz, pokedexId=722, generation=7, encounterNeeded=766, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=7)\n" +
+                "PokemonData(name=Garstella, pokedexId=747, generation=6, encounterNeeded=143, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=8)\n" +
+                "PokemonData(name=Waumboll, pokedexId=546, generation=5, encounterNeeded=126, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=9)\n" +
+                "PokemonData(name=Lusardin, pokedexId=746, generation=6, encounterNeeded=176, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=10)\n" +
+                "PokemonData(name=Wommel, pokedexId=742, generation=7, encounterNeeded=733, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=11)\n" +
+                "PokemonData(name=Leufeo, pokedexId=667, generation=6, encounterNeeded=833, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=12)\n" +
+                "PokemonData(name=Gramokles, pokedexId=679, generation=6, encounterNeeded=1300, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=13)\n" +
+                "PokemonData(name=Schneckmag, pokedexId=218, generation=2, encounterNeeded=603, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=14)\n" +
+                "PokemonData(name=Imantis, pokedexId=753, generation=7, encounterNeeded=179, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=15)\n" +
+                "PokemonData(name=Frubberl, pokedexId=761, generation=7, encounterNeeded=773, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=16)\n" +
+                "PokemonData(name=Marill, pokedexId=183, generation=2, encounterNeeded=453, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=17)\n" +
+                "PokemonData(name=Seeper, pokedexId=116, generation=1, encounterNeeded=229, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=18)\n" +
+                "PokemonData(name=Flapteryx, pokedexId=566, generation=5, encounterNeeded=334, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=19)\n" +
+                "PokemonData(name=Bubungus, pokedexId=755, generation=7, encounterNeeded=611, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=20)\n" +
+                "PokemonData(name=Bubungus, pokedexId=755, generation=7, encounterNeeded=2, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=21)\n" +
+                "PokemonData(name=Geckarbor, pokedexId=252, generation=3, encounterNeeded=762, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=22)\n" +
+                "PokemonData(name=Fynx, pokedexId=653, generation=6, encounterNeeded=278, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=23)\n" +
+                "PokemonData(name=Knilz, pokedexId=285, generation=3, encounterNeeded=510, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=24)\n" +
+                "PokemonData(name=Knilz, pokedexId=285, generation=3, encounterNeeded=6, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=25)\n" +
+                "PokemonData(name=Finneon, pokedexId=456, generation=4, encounterNeeded=414, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=26)\n" +
+                "PokemonData(name=Curelei, pokedexId=764, generation=7, encounterNeeded=738, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=27)\n" +
+                "PokemonData(name=Floink, pokedexId=498, generation=5, encounterNeeded=112, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=28)\n" +
+                "PokemonData(name=Lichtel, pokedexId=607, generation=5, encounterNeeded=1050, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=29)\n" +
+                "PokemonData(name=Clavion, pokedexId=707, generation=6, encounterNeeded=219, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=30)\n" +
+                "PokemonData(name=Paragoni, pokedexId=708, generation=6, encounterNeeded=854, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=31)\n" +
+                "PokemonData(name=Scampisto, pokedexId=692, generation=6, encounterNeeded=326, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=32)\n" +
+                "PokemonData(name=Mähikel, pokedexId=672, generation=6, encounterNeeded=166, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=33)\n" +
+                "PokemonData(name=Dartiri, pokedexId=661, generation=6, encounterNeeded=347, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=34)\n" +
+                "PokemonData(name=Kommandutan, pokedexId=765, generation=7, encounterNeeded=260, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=35)\n" +
+                "PokemonData(name=Kiesling, pokedexId=524, generation=5, encounterNeeded=457, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=36)\n" +
+                "PokemonData(name=Gufa, pokedexId=771, generation=7, encounterNeeded=175, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=37)\n" +
+                "PokemonData(name=Mimigma, pokedexId=778, generation=7, encounterNeeded=288, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=38)\n" +
+                "PokemonData(name=Serpifeu, pokedexId=495, generation=5, encounterNeeded=291, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=39)\n" +
+                "PokemonData(name=Araqua, pokedexId=751, generation=7, encounterNeeded=818, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=40)\n" +
+                "PokemonData(name=Dedenne, pokedexId=702, generation=6, encounterNeeded=52, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=41)\n" +
+                "PokemonData(name=Peppeck, pokedexId=731, generation=7, encounterNeeded=1852, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=42)\n" +
+                "PokemonData(name=Glumanda, pokedexId=4, generation=1, encounterNeeded=92, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=43)\n" +
+                "PokemonData(name=Evoli, pokedexId=133, generation=1, encounterNeeded=327, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=44)\n" +
+                "PokemonData(name=Krabbox, pokedexId=739, generation=7, encounterNeeded=29, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=45)\n" +
+                "PokemonData(name=Driftlon, pokedexId=425, generation=4, encounterNeeded=383, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=46)\n" +
+                "PokemonData(name=Rattfratz-alola, pokedexId=19, generation=1, encounterNeeded=347, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=47)\n" +
+                "PokemonData(name=Raupy, pokedexId=10, generation=1, encounterNeeded=271, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=48)\n" +
+                "PokemonData(name=Magby, pokedexId=240, generation=2, encounterNeeded=329, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=49)\n" +
+                "PokemonData(name=Schneppke, pokedexId=361, generation=3, encounterNeeded=241, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=50)\n" +
+                "PokemonData(name=Traumato, pokedexId=96, generation=1, encounterNeeded=394, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=51)\n" +
+                "PokemonData(name=Muschas, pokedexId=90, generation=1, encounterNeeded=465, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=52)\n" +
+                "PokemonData(name=Geronimatz, pokedexId=627, generation=5, encounterNeeded=438, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=53)\n" +
+                "PokemonData(name=Magnetilo, pokedexId=81, generation=1, encounterNeeded=255, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=54)\n" +
+                "PokemonData(name=Igamaro, pokedexId=650, generation=6, encounterNeeded=298, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=55)\n" +
+                "PokemonData(name=Klikk, pokedexId=599, generation=5, encounterNeeded=590, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=56)\n" +
+                "PokemonData(name=Enton, pokedexId=54, generation=1, encounterNeeded=508, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=57)\n" +
+                "PokemonData(name=Sterndu, pokedexId=120, generation=1, encounterNeeded=252, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=58)\n" +
+                "PokemonData(name=Fiffyen, pokedexId=261, generation=3, encounterNeeded=635, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=153)\n" +
+                "PokemonData(name=Voltilamm, pokedexId=179, generation=2, encounterNeeded=116, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=154)\n" +
+                "PokemonData(name=Kanivanha, pokedexId=318, generation=3, encounterNeeded=116, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=155)\n" +
+                "PokemonData(name=Robball, pokedexId=728, generation=7, encounterNeeded=12, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=156)\n" +
+                "PokemonData(name=Krebscorps, pokedexId=341, generation=3, encounterNeeded=342, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=158)\n" +
+                "PokemonData(name=Plinfa, pokedexId=393, generation=4, encounterNeeded=695, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=160)\n" +
+                "PokemonData(name=Minun, pokedexId=312, generation=3, encounterNeeded=520, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=162)\n" +
+                "PokemonData(name=Skunkapuh, pokedexId=434, generation=4, encounterNeeded=363, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=164)\n" +
+                "PokemonData(name=Mangunior, pokedexId=734, generation=7, encounterNeeded=154, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=165)\n" +
+                "PokemonData(name=Machollo, pokedexId=66, generation=1, encounterNeeded=576, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=168)\n" +
+                "PokemonData(name=Dragonir, pokedexId=148, generation=1, encounterNeeded=114, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=169)\n" +
+                "PokemonData(name=Fukano, pokedexId=58, generation=1, encounterNeeded=61, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=170)\n" +
+                "PokemonData(name=Menki, pokedexId=56, generation=1, encounterNeeded=249, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=171)\n" +
+                "PokemonData(name=Makuhita, pokedexId=296, generation=3, encounterNeeded=286, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=172)\n" +
+                "PokemonData(name=Tentacha, pokedexId=72, generation=1, encounterNeeded=102, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=173)\n" +
+                "PokemonData(name=Rocara, pokedexId=703, generation=6, encounterNeeded=832, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=174)\n" +
+                "PokemonData(name=Chelast, pokedexId=387, generation=4, encounterNeeded=132, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=175)\n" +
+                "PokemonData(name=Bithora, pokedexId=688, generation=6, encounterNeeded=41, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=177)\n" +
+                "PokemonData(name=Bithora, pokedexId=688, generation=6, encounterNeeded=9, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=178)\n" +
+                "PokemonData(name=Nagelotz, pokedexId=504, generation=5, encounterNeeded=157, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=180)\n" +
+                "PokemonData(name=Wadribie, pokedexId=415, generation=4, encounterNeeded=2195, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=187)\n" +
+                "PokemonData(name=Ottaro, pokedexId=501, generation=5, encounterNeeded=312, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=188)\n" +
+                "PokemonData(name=Knapfel, pokedexId=840, generation=8, encounterNeeded=145, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=189)\n" +
+                "PokemonData(name=Urgl, pokedexId=845, generation=8, encounterNeeded=356, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=190)\n" +
+                "PokemonData(name=Chimpep, pokedexId=810, generation=8, encounterNeeded=112, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=191)\n" +
+                "PokemonData(name=Pikuda, pokedexId=846, generation=8, encounterNeeded=103, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=192)\n" +
+                "PokemonData(name=Britzigel, pokedexId=871, generation=8, encounterNeeded=605, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=193)\n" +
+                "PokemonData(name=Fatalitee, pokedexId=854, generation=8, encounterNeeded=320, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=194)\n" +
+                "PokemonData(name=Thermopod, pokedexId=850, generation=8, encounterNeeded=424, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=195)\n" +
+                "PokemonData(name=Bähmon, pokedexId=859, generation=8, encounterNeeded=356, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=196)\n" +
+                "PokemonData(name=Hopplo, pokedexId=813, generation=8, encounterNeeded=234, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=197)\n" +
+                "PokemonData(name=Wiesor, pokedexId=161, generation=2, encounterNeeded=1065, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=199)\n" +
+                "PokemonData(name=Reißlaus, pokedexId=767, generation=7, encounterNeeded=78, huntMethod=Hatch, pokemonEdition=SM, tabIndex=0, internalId=200)\n" +
+                "PokemonData(name=Porenta, pokedexId=83, generation=1, encounterNeeded=222, huntMethod=Hatch, pokemonEdition=SWSH, tabIndex=0, internalId=201)\n" +
+                "PokemonData(name=Molunk, pokedexId=757, generation=7, encounterNeeded=252, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=202)\n" +
+                "PokemonData(name=Choreogel, pokedexId=741, generation=7, encounterNeeded=40, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=203)\n" +
+                "PokemonData(name=Choreogel, pokedexId=741, generation=7, encounterNeeded=343, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=204)\n" +
+                "PokemonData(name=Pampuli, pokedexId=749, generation=7, encounterNeeded=199, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=205)\n" +
+                "PokemonData(name=Wingull, pokedexId=278, generation=3, encounterNeeded=382, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=206)\n" +
+                "PokemonData(name=Kindwurm, pokedexId=371, generation=3, encounterNeeded=914, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=207)\n" +
+                "PokemonData(name=Zubat, pokedexId=41, generation=1, encounterNeeded=70, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=208)\n" +
+                "PokemonData(name=Evoli, pokedexId=133, generation=1, encounterNeeded=85, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=209)\n" +
+                "PokemonData(name=Webarak, pokedexId=167, generation=2, encounterNeeded=485, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=210)\n" +
+                "PokemonData(name=Mauzi-alola, pokedexId=52, generation=1, encounterNeeded=107, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=212)\n" +
+                "PokemonData(name=Owei, pokedexId=102, generation=1, encounterNeeded=74, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=213)\n" +
+                "PokemonData(name=Tauros, pokedexId=128, generation=1, encounterNeeded=31, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=214)\n" +
+                "PokemonData(name=Glaziola, pokedexId=471, generation=4, encounterNeeded=129, huntMethod=SOS, pokemonEdition=SM, tabIndex=0, internalId=215)\n" +
+                "PokemonData(name=Togepi, pokedexId=175, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=59)\n" +
+                "PokemonData(name=Zigzachs, pokedexId=263, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=60)\n" +
+                "PokemonData(name=Waumpel, pokedexId=265, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=62)\n" +
+                "PokemonData(name=Staralili, pokedexId=396, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=109)\n" +
+                "PokemonData(name=Schnuthelm, pokedexId=616, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=125)\n" +
+                "PokemonData(name=Scoppel, pokedexId=659, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=128)\n" +
+                "PokemonData(name=Purmel, pokedexId=664, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=129)\n" +
+                "PokemonData(name=Kleinstein-alola, pokedexId=74, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=145)\n" +
+                "PokemonData(name=Togedemaru, pokedexId=777, generation=7, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=150)\n" +
+                "PokemonData(name=Loturzel, pokedexId=270, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=181)\n" +
+                "PokemonData(name=Schwalbini, pokedexId=276, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=182)\n" +
+                "PokemonData(name=Bidiza, pokedexId=399, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=183)\n" +
+                "PokemonData(name=Yorkleff, pokedexId=506, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=184)\n" +
+                "PokemonData(name=Fleknoil, pokedexId=527, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=185)\n" +
+                "PokemonData(name=Dusselgurr, pokedexId=519, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=1, internalId=186)\n" +
+                "PokemonData(name=Bisasam, pokedexId=1, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=71)\n" +
+                "PokemonData(name=Schiggy, pokedexId=7, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=72)\n" +
+                "PokemonData(name=Myrapla, pokedexId=43, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=73)\n" +
+                "PokemonData(name=Bluzuk, pokedexId=48, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=74)\n" +
+                "PokemonData(name=Knofensa, pokedexId=69, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=75)\n" +
+                "PokemonData(name=Ponita, pokedexId=77, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=76)\n" +
+                "PokemonData(name=Voltobal, pokedexId=100, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=78)\n" +
+                "PokemonData(name=Tangela, pokedexId=114, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=79)\n" +
+                "PokemonData(name=Porygon, pokedexId=137, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=80)\n" +
+                "PokemonData(name=Endivie, pokedexId=152, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=81)\n" +
+                "PokemonData(name=Feurigel, pokedexId=155, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=82)\n" +
+                "PokemonData(name=Karnimani, pokedexId=158, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=83)\n" +
+                "PokemonData(name=Yanma, pokedexId=193, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=85)\n" +
+                "PokemonData(name=Girafarig, pokedexId=203, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=87)\n" +
+                "PokemonData(name=Pottrott, pokedexId=213, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=88)\n" +
+                "PokemonData(name=Quiekel, pokedexId=220, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=89)\n" +
+                "PokemonData(name=Corasonn, pokedexId=222, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=90)\n" +
+                "PokemonData(name=Miltank, pokedexId=241, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=91)\n" +
+                "PokemonData(name=Flemmli, pokedexId=255, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=92)\n" +
+                "PokemonData(name=Hydropi, pokedexId=258, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=93)\n" +
+                "PokemonData(name=Frizelbliz, pokedexId=309, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=95)\n" +
+                "PokemonData(name=Plusle, pokedexId=311, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=96)\n" +
+                "PokemonData(name=Roselia, pokedexId=315, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=98)\n" +
+                "PokemonData(name=Spoink, pokedexId=325, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=100)\n" +
+                "PokemonData(name=Tuska, pokedexId=331, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=101)\n" +
+                "PokemonData(name=Barschwa, pokedexId=349, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=103)\n" +
+                "PokemonData(name=Panflam, pokedexId=390, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=107)\n" +
+                "PokemonData(name=Sheinux, pokedexId=403, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=110)\n" +
+                "PokemonData(name=Haspiror, pokedexId=427, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=113)\n" +
+                "PokemonData(name=Pionskora, pokedexId=451, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=116)\n" +
+                "PokemonData(name=Ganovil, pokedexId=551, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=118)\n" +
+                "PokemonData(name=Symvolara, pokedexId=561, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=119)\n" +
+                "PokemonData(name=Monozyto, pokedexId=577, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=120)\n" +
+                "PokemonData(name=Emolga, pokedexId=587, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=121)\n" +
+                "PokemonData(name=Wattzapf, pokedexId=595, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=122)\n" +
+                "PokemonData(name=Kastadur, pokedexId=597, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=123)\n" +
+                "PokemonData(name=Zapplardin, pokedexId=602, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=124)\n" +
+                "PokemonData(name=Gladiantri, pokedexId=624, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=126)\n" +
+                "PokemonData(name=Froxy, pokedexId=656, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=127)\n" +
+                "PokemonData(name=Leufeo, pokedexId=667, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=130)\n" +
+                "PokemonData(name=Coiffwaff, pokedexId=676, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=133)\n" +
+                "PokemonData(name=Psiau, pokedexId=677, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=134)\n" +
+                "PokemonData(name=Parfi, pokedexId=682, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=135)\n" +
+                "PokemonData(name=Eguana, pokedexId=694, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=137)\n" +
+                "PokemonData(name=Resladero, pokedexId=701, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=140)\n" +
+                "PokemonData(name=Irrbis, pokedexId=710, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=141)\n" +
+                "PokemonData(name=Arktip, pokedexId=712, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=142)\n" +
+                "PokemonData(name=eF-eM, pokedexId=714, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=143)\n" +
+                "PokemonData(name=Choreogel, pokedexId=741, generation=7, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=147)\n" +
+                "PokemonData(name=Quartermak, pokedexId=766, generation=7, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=148)\n" +
+                "PokemonData(name=Reißlaus, pokedexId=767, generation=7, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=149)\n" +
+                "PokemonData(name=Teddiursa, pokedexId=216, generation=2, encounterNeeded=1, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=157)\n" +
+                "PokemonData(name=Lilminip, pokedexId=548, generation=5, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=163)\n" +
+                "PokemonData(name=Knacklion, pokedexId=328, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=166)\n" +
+                "PokemonData(name=Sonnkern, pokedexId=191, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=2, internalId=198)\n" +
+                "PokemonData(name=Onix, pokedexId=95, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=77)\n" +
+                "PokemonData(name=Stollunior, pokedexId=304, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=94)\n" +
+                "PokemonData(name=Zwirrlicht, pokedexId=355, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=104)\n" +
+                "PokemonData(name=Tanhel, pokedexId=374, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=105)\n" +
+                "PokemonData(name=Koknodon, pokedexId=408, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=111)\n" +
+                "PokemonData(name=Riolu, pokedexId=447, generation=4, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=115)\n" +
+                "PokemonData(name=Pam-Pam, pokedexId=674, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=131)\n" +
+                "PokemonData(name=Balgoras, pokedexId=696, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=138)\n" +
+                "PokemonData(name=Amarino, pokedexId=698, generation=6, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=139)\n" +
+                "PokemonData(name=Moruda, pokedexId=781, generation=7, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=151)\n" +
+                "PokemonData(name=Miniras, pokedexId=782, generation=7, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=3, internalId=152)\n" +
+                "PokemonData(name=Karpador, pokedexId=129, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=63)\n" +
+                "PokemonData(name=Evoli, pokedexId=133, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=64)\n" +
+                "PokemonData(name=Schmerbe, pokedexId=339, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=67)\n" +
+                "PokemonData(name=Kramurx, pokedexId=198, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=86)\n" +
+                "PokemonData(name=Vulpix-alola, pokedexId=37, generation=1, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=144)\n" +
+                "PokemonData(name=Larvitar, pokedexId=246, generation=2, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=159)\n" +
+                "PokemonData(name=Knacklion, pokedexId=328, generation=3, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=167)\n" +
+                "PokemonData(name=Muramura, pokedexId=805, generation=7, encounterNeeded=0, huntMethod=Other, pokemonEdition=SM, tabIndex=4, internalId=161)".split("\n").joinToString {
+                    it
+                }
 
     }
 
