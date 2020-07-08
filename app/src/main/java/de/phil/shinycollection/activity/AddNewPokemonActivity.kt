@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +11,7 @@ import com.bumptech.glide.Glide
 import de.phil.shinycollection.R
 import de.phil.shinycollection.ShinyPokemonApplication
 import de.phil.shinycollection.ShinyPokemonApplication.Companion.INVALID_VALUE
+import de.phil.shinycollection.adapter.PokemonAutoCompleteFilterAdapter
 import de.phil.shinycollection.model.HuntMethod
 import de.phil.shinycollection.model.INTENT_EXTRA_TAB_INDEX
 import de.phil.shinycollection.model.PokemonData
@@ -71,11 +71,11 @@ class AddNewPokemonActivity : AppCompatActivity() {
             add_new_pokemon_activity_edittext_eggsNeeded.isEnabled = isChecked
         }
 
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_dropdown_item_1line,
-            viewModel.getPokemonNames()
-        )
+        val adapter = PokemonAutoCompleteFilterAdapter(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                viewModel.getPokemonNamesFormsInclusive()
+            )
 
         add_new_pokemon_activity_edittext_name.setAdapter(adapter)
         add_new_pokemon_activity_edittext_name.setOnItemClickListener { _, _, _, _ ->
@@ -94,7 +94,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
                     text = text.replace(ShinyPokemonApplication.GALAR_EXTENSION, "")
 
                 if (viewModel.pokemonNameExists(text)) {
-                    loadPokemonImage(text, isAlola, isAlola)
+                    loadPokemonImage(text, isAlola, isGalar)
                 } else {
                     add_new_pokemon_activity_imageView_preview.setImageBitmap(null)
                 }
