@@ -25,6 +25,11 @@
                 app:entryValues="@array/color_themes"
                 app:title="@string/change_current_color_theme"/>
 
+        <PreferenceScreen
+                app:iconSpaceReserved="false"
+                android:title="Version"
+                android:summary="1.0.1"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>
