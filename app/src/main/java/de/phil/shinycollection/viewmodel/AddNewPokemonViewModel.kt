@@ -15,7 +15,9 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
 
     fun pokemonNameExists(name: String) = name in getPokemonNames()
 
-    fun getPokemonNames() = PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
+    private fun getPokemonNames() = PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNames()
+
+    fun getPokemonNamesFormsInclusive() = PokemonDatabase.androidPokemonResources(getApplication()).getPokemonNamesFormsInclusive()
 
     private fun validateInput(pokemonData: PokemonData): Pair<String?, PokemonData?> {
 

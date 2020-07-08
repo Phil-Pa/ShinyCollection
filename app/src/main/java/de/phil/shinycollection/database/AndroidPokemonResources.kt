@@ -3,6 +3,7 @@ package de.phil.shinycollection.database
 import android.content.Context
 import de.phil.shinycollection.R
 import de.phil.shinycollection.ShinyPokemonApplication
+import de.phil.shinycollection.model.PokemonData
 
 class AndroidPokemonResources(context: Context) : IAndroidPokemonResources {
 
@@ -120,6 +121,23 @@ class AndroidPokemonResources(context: Context) : IAndroidPokemonResources {
             throw Exception("$pokedexId is not a valid pokedex id")
 
         return getPokemonNames()[pokedexId - 1]
+    }
+
+    override fun getPokemonNamesFormsInclusive(): List<String> {
+        val names = getPokemonNames()
+
+        val result = mutableListOf<String>()
+        result.addAll(names)
+
+        for (id in PokemonData.alolaPokemonIds) {
+            result.add(getNameByPokedexId(id) + "-alola")
+        }
+
+        for (id in PokemonData.galarPokemonIds) {
+            result.add(getNameByPokedexId(id) + "-galar")
+        }
+
+        return result
     }
 
 }

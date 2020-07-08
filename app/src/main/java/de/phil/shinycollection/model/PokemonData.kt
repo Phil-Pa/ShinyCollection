@@ -106,9 +106,9 @@ data class PokemonData(
 
         const val SHORT_DATA_STRING_LENGTH = 17
 
-        private val alolaPokemonIds = arrayOf(19, 20, 26, 27, 28, 37, 38, 50, 51, 52, 53, 74, 75, 76, 88, 89, 103, 105)
+        val alolaPokemonIds = arrayOf(19, 20, 26, 27, 28, 37, 38, 50, 51, 52, 53, 74, 75, 76, 88, 89, 103, 105)
 
-        private val galarPokemonIds = arrayOf(52, 77, 78, 79, 80, 83, 110, 122, 144, 145, 146, 199, 222, 263, 264, 554, 555, 562, 618)
+        val galarPokemonIds = arrayOf(52, 77, 78, 79, 80, 83, 110, 122, 144, 145, 146, 199, 222, 263, 264, 554, 555, 562, 618)
 
         fun isAlola(pokedexId: Int) = pokedexId in alolaPokemonIds
 
