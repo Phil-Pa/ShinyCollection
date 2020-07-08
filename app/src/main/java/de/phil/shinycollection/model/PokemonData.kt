@@ -52,7 +52,7 @@ data class PokemonData(
     @PrimaryKey(autoGenerate = true)
     var internalId: Int = 1
 
-    fun getDownloadUrl() = Companion.getDownloadUrl(generation, pokedexId)
+    fun getDownloadUrl() = Companion.getDownloadUrl(generation, pokedexId, name.endsWith(ShinyPokemonApplication.ALOLA_EXTENSION), name.endsWith(ShinyPokemonApplication.GALAR_EXTENSION))
 
     override fun toString() = "PokemonData(name=$name, pokedexId=$pokedexId, generation=$generation, encounterNeeded=$encounterNeeded, huntMethod=$huntMethod, pokemonEdition=$pokemonEdition, tabIndex=$tabIndex, internalId=$internalId)"
 
@@ -128,14 +128,21 @@ data class PokemonData(
             return "$generationString.png"
         }
 
-        fun getDownloadUrl(generation: Int, pokedexId: Int): String {
+        fun getDownloadUrl(generation: Int, pokedexId: Int, isAlola: Boolean, isGalar: Boolean): String {
 
             val baseString = when {
                 generation == 8 || isGalar(pokedexId) -> "https://media.bisafans.de/67fac06/pokemon/gen8/swsh/shiny/"
                 else -> "https://media.bisafans.de/d4c7a05/pokemon/gen7/sm/shiny/"
             }
 
-            return "$baseString${getBitmapFileName(pokedexId)}"
+            val url = StringBuilder("$baseString${getBitmapFileName(pokedexId)}")
+
+            when {
+                isAlola -> url.insert(url.length - 4, ShinyPokemonApplication.ALOLA_EXTENSION)
+                isGalar -> url.insert(url.length - 4, ShinyPokemonApplication.GALAR_EXTENSION)
+            }
+
+            return url.toString()
         }
 
     }

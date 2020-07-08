@@ -28,7 +28,7 @@
         <PreferenceScreen
                 app:iconSpaceReserved="false"
                 android:title="Version"
-                android:summary="1.0.1"/>
+                android:summary="1.0.2"/>
 
     </PreferenceCategory>
 

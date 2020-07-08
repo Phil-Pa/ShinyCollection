@@ -118,15 +118,7 @@ class AddNewPokemonActivity : AppCompatActivity() {
             else -> throw Exception()
         }
 
-        val urlWithoutAlola = PokemonData.getDownloadUrl(generation, id)
-        val url = StringBuilder(urlWithoutAlola)
-
-        when {
-            isAlola -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.ALOLA_EXTENSION)
-            isGalar -> url.insert(urlWithoutAlola.length - 4, ShinyPokemonApplication.GALAR_EXTENSION)
-        }
-
-        val downloadUrl = url.toString()
+        val downloadUrl = PokemonData.getDownloadUrl(generation, id, isAlola, isGalar)
 
         Glide.with(this@AddNewPokemonActivity)
             .load(downloadUrl)
