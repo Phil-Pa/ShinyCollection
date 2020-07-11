@@ -19,19 +19,9 @@ object GZIPCompression {
 
     fun decompress(str: String): String {
         val test: ByteArray = Base64.getDecoder().decode(str.substring(4))
-        val gis =
-            GZIPInputStream(
-                ByteArrayInputStream(
-                    test
-                )
-            )
-        val bf = BufferedReader(
-            InputStreamReader(
-                gis,
-                "UTF-8"
-            )
-        )
-        val sb = java.lang.StringBuilder()
+        val gis = GZIPInputStream(ByteArrayInputStream(test))
+        val bf = BufferedReader(InputStreamReader(gis, "UTF-8"))
+        val sb = StringBuilder()
         var line: String?
         while (bf.readLine().also { line = it } != null) {
             sb.append(line)

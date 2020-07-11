@@ -24,16 +24,19 @@ fun Activity.vibrate(millis: Long) {
 }
 
 fun Activity.getClipboardStringData(): String? {
+
+    fun Activity.getLatestStringOnClipboard(): String? {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        // 0 -> text, 1 -> uri, 2 -> intent
+        return clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+    }
+
     var result: String? = null
 
     var finished = false
 
     runOnUiThread {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-        // 0 -> text, 1 -> uri, 2 -> intent
-
-        result = clipboard.primaryClip?.getItemAt(0)?.text?.toString()
+        result = getLatestStringOnClipboard()
         finished = true
     }
 
@@ -53,9 +56,7 @@ fun Activity.copyToClipboard(data: String) {
 }
 
 fun Activity.showMessage(message: String, type: MessageType) {
-
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
 }
 
 fun Fragment.initTheme(themeAsString: String) {
@@ -100,20 +101,20 @@ fun Activity.hideKeyboard() {
 
 // yes = true, no = false
 fun Activity.showYesNoDialog(title: String, action: (answer: Boolean) -> Unit) {
-    val dialogClickListener =
-        DialogInterface.OnClickListener { _, which ->
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    action(true)
-                }
-                DialogInterface.BUTTON_NEGATIVE -> {
-                    action(false)
-                }
-                DialogInterface.BUTTON_NEUTRAL -> {
-                    showMessage(getString(R.string.dialog_action_canceled), MessageType.Info)
-                }
+
+    val dialogClickListener = DialogInterface.OnClickListener { _, which ->
+        when (which) {
+            DialogInterface.BUTTON_POSITIVE -> {
+                action(true)
+            }
+            DialogInterface.BUTTON_NEGATIVE -> {
+                action(false)
+            }
+            DialogInterface.BUTTON_NEUTRAL -> {
+                showMessage(getString(R.string.dialog_action_canceled), MessageType.Info)
             }
         }
+    }
 
     val builder = AlertDialog.Builder(this)
     builder.setMessage(title)

@@ -23,16 +23,10 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
 
         val context = getApplication<Application>().applicationContext
 
-        if (pokemonData.name.isEmpty() || pokemonData.name.isBlank())
+        if (pokemonNameEmpty(pokemonData))
             return Pair(context.resources.getString(R.string.error_empty_name), null)
-        else if (!pokemonNameExists(pokemonData.name) && !pokemonData.name.endsWith(
-                ShinyPokemonApplication.ALOLA_EXTENSION) &&
-            !pokemonData.name.endsWith(ShinyPokemonApplication.GALAR_EXTENSION)
-        )
-            return Pair(
-                "${pokemonData.name} " + context.resources.getString(R.string.error_is_not_a_pokemon),
-                null
-            )
+        else if (!pokemonNameExists(pokemonData.name) && pokemonNameHasNoExtension(pokemonData.name))
+            return Pair("${pokemonData.name} " + context.resources.getString(R.string.error_is_not_a_pokemon), null)
         else if (pokemonData.encounterNeeded < 0)
             return Pair(context.resources.getString(R.string.error_encounter_lower_zero), null)
 
@@ -54,6 +48,14 @@ class AddNewPokemonViewModel(application: Application) : AndroidViewModel(applic
 
         return Pair(null, validatedData)
     }
+
+    private fun pokemonNameHasNoExtension(name: String): Boolean {
+        return name.endsWith(
+            ShinyPokemonApplication.ALOLA_EXTENSION) &&
+                name.endsWith(ShinyPokemonApplication.GALAR_EXTENSION)
+    }
+
+    private fun pokemonNameEmpty(pokemonData: PokemonData) = pokemonData.name.isEmpty() || pokemonData.name.isBlank()
 
     fun getPokedexIdByName(name: String) = PokemonDatabase.androidPokemonResources(getApplication()).getPokedexIdByName(name)
 

@@ -23,10 +23,9 @@ class DataImporter {
             importCompressed(application, pokemonDao, data)
         else
             importNormal(pokemonDao, data)
-
-
     }
 
+    // TODO: refactor
     private fun importNormal(pokemonDao: PokemonDao, data: String): Boolean {
         val dataList = data.split("\n")
 

@@ -64,6 +64,7 @@ class AndroidPokemonResources(context: Context) : IAndroidPokemonResources {
     }
 
     override fun getPokemonNames(): List<String> {
+        // TODO: make lazy
         return genNamesArray.flatten()
     }
 
@@ -130,11 +131,11 @@ class AndroidPokemonResources(context: Context) : IAndroidPokemonResources {
         result.addAll(names)
 
         for (id in PokemonData.alolaPokemonIds) {
-            result.add(getNameByPokedexId(id) + "-alola")
+            result.add(getNameByPokedexId(id) + ShinyPokemonApplication.ALOLA_EXTENSION)
         }
 
         for (id in PokemonData.galarPokemonIds) {
-            result.add(getNameByPokedexId(id) + "-galar")
+            result.add(getNameByPokedexId(id) + ShinyPokemonApplication.GALAR_EXTENSION)
         }
 
         return result

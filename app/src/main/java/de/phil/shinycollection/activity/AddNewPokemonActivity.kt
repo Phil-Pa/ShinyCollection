@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
 class AddNewPokemonActivity : AppCompatActivity() {
 
     private lateinit var viewModel: AddNewPokemonViewModel
-
     private var tabIndex = INVALID_VALUE
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,25 +32,34 @@ class AddNewPokemonActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_new_pokemon)
 
         tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, INVALID_VALUE)
-
         viewModel = ViewModelProvider(this).get(AddNewPokemonViewModel::class.java)
 
+        setupEncounterKnownCheckBox()
+        setupAddPokemonButton()
+        setupEditTextName()
+    }
+
+    private fun textIsEntered(text: Editable?): Boolean {
+        return text != null &&
+                text.isNotEmpty() &&
+                text.isNotBlank()
+    }
+
+    private fun setupAddPokemonButton() {
         add_new_pokemon_activity_button_add.setOnClickListener {
 
             val name = add_new_pokemon_activity_edittext_name.text.toString()
-            val encountersKnown = add_new_pokemon_activity_checkbox_encounter_known.isChecked
+            val areEncountersKnown = add_new_pokemon_activity_checkbox_encounter_known.isChecked
             val encountersNeededText = add_new_pokemon_activity_edittext_eggsNeeded.text
 
-            val encounters =
-                if (encountersKnown &&
-                    encountersNeededText != null &&
-                    encountersNeededText.isNotEmpty() &&
-                    encountersNeededText.isNotBlank()
-                )
-                    encountersNeededText.toString().toInt() else ShinyPokemonApplication.ENCOUNTER_UNKNOWN
-            val huntMethod =
-                HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
+            val encounters = if (areEncountersKnown && textIsEntered(encountersNeededText)) {
+                encountersNeededText.toString().toInt()
+            }
+            else  {
+                ShinyPokemonApplication.ENCOUNTER_UNKNOWN
+            }
 
+            val huntMethod = HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
             val pokemonEdition = PokemonEdition.fromInt(add_new_pokemon_activity_spinner_pokemon_editions.selectedItemPosition)!!
 
             val pokemonData = PokemonData(name, -1, -1, encounters, huntMethod, pokemonEdition, tabIndex)
@@ -67,24 +75,23 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
 
         }
-        add_new_pokemon_activity_checkbox_encounter_known.setOnCheckedChangeListener { _, isChecked ->
-            add_new_pokemon_activity_edittext_eggsNeeded.isEnabled = isChecked
-        }
+    }
 
+    private fun setupEditTextName() {
         val adapter = PokemonAutoCompleteFilterAdapter(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                viewModel.getPokemonNamesFormsInclusive()
-            )
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            viewModel.getPokemonNamesFormsInclusive()
+        )
 
         add_new_pokemon_activity_edittext_name.setAdapter(adapter)
-        add_new_pokemon_activity_edittext_name.setOnItemClickListener { _, _, _, _ ->
-            hideKeyboard()
-        }
+        add_new_pokemon_activity_edittext_name.setOnItemClickListener { _, _, _, _ -> hideKeyboard() }
+
         add_new_pokemon_activity_edittext_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 var text = s.toString()
 
+                // TODO: refactor
                 val isAlola = text.endsWith(ShinyPokemonApplication.ALOLA_EXTENSION)
                 if (isAlola)
                     text = text.replace(ShinyPokemonApplication.ALOLA_EXTENSION, "")
@@ -106,6 +113,12 @@ class AddNewPokemonActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+    }
+
+    private fun setupEncounterKnownCheckBox() {
+        add_new_pokemon_activity_checkbox_encounter_known.setOnCheckedChangeListener { _, isChecked ->
+            add_new_pokemon_activity_edittext_eggsNeeded.isEnabled = isChecked
+        }
     }
 
     private fun loadPokemonImage(pokemonName: String, isAlola: Boolean, isGalar: Boolean) {
