@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,20 +30,13 @@ class PokemonListFragment : Fragment() {
      * specifies what tab this fragment is in the view pager
      */
     private var mTabIndex = 0
-
-    /**
-     * the main view of the fragment
-     */
     private lateinit var recyclerView: RecyclerView
 
     private val masterAdapter = PokemonDataAdapter()
 
     private var dataList = mutableListOf<PokemonData>()
 
-    /**
-     * sort the data in the @see [recyclerView]
-     */
-    private fun sortData(sortMethod: PokemonSortMethod) {
+    private fun sortDataInRecyclerView(sortMethod: PokemonSortMethod) {
         when (sortMethod) {
             PokemonSortMethod.InternalId -> dataList.sortBy { it.internalId }
             PokemonSortMethod.Name -> dataList.sortBy { it.name }
@@ -73,13 +67,12 @@ class PokemonListFragment : Fragment() {
         return activity as IPokemonListActivity
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
 
+        numFragments++
 
+        Toast.makeText(activity, "$numFragments fragment", Toast.LENGTH_SHORT).show()
 
         val view = inflater.inflate(R.layout.fragment_pokemondata_list, container, false)
 
@@ -167,7 +160,7 @@ class PokemonListFragment : Fragment() {
                     }
 
                     override fun sort(pokemonSortMethod: PokemonSortMethod) {
-                        sortData(pokemonSortMethod)
+                        sortDataInRecyclerView(pokemonSortMethod)
                         masterAdapter.normalAdapter?.notifyDataSetChanged()
                     }
 
@@ -183,7 +176,7 @@ class PokemonListFragment : Fragment() {
         dataList = data.toMutableList()
 
         // sort the data
-        sortData(getPokemonListActivity().getSortMethod())
+        sortDataInRecyclerView(getPokemonListActivity().getSortMethod())
 
         if (getPokemonListActivity().showSmallIcons())
             masterAdapter.smallIconAdapter = PokemonDataRecyclerViewSmallIconAdapter(dataList, getPokemonListActivity())
@@ -194,6 +187,8 @@ class PokemonListFragment : Fragment() {
     companion object {
 
         private const val ARG_SECTION_NUMBER = "section_number"
+
+        private var numFragments = 0
 
         @JvmStatic
         fun newInstance(sectionNumber: Int): PokemonListFragment {

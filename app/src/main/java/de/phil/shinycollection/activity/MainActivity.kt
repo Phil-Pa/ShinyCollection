@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
-    private fun applyPokemonEdition(pokemonEdition: PokemonEdition) {
+    private fun applyPokemonEditionOnUi(pokemonEdition: PokemonEdition) {
         val updateData = viewModel.getStatisticsData()
 
         updateShinyStatistics(
@@ -95,18 +95,15 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
     }
 
     private fun showConfirmDeleteDialog() {
-
         vibrate(200)
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.dialog_watch_out))
         builder.setMessage("${selectedPokemon!!.name} " + getString(R.string.confirm_delete_dialog_message))
-        builder.setNegativeButton(R.string.sort_dialog_negative_button,
-            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
-        builder.setPositiveButton(
-            R.string.sort_dialog_positive_button
-        ) { _, _ ->
-            recyclerViewChangedListeners.forEach { it.deletePokemon(selectedPokemon!!) }
+        builder.setNegativeButton(R.string.sort_dialog_negative_button, DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+        builder.setPositiveButton(R.string.sort_dialog_positive_button) { _, _ ->
+//            recyclerViewChangedListeners.forEach { it.deletePokemon(selectedPokemon!!) }
+            recyclerViewChangedListeners[getCurrentTabIndex()].deletePokemon(selectedPokemon!!)
             viewModel.deletePokemon(selectedPokemon!!)
         }
 
@@ -114,18 +111,15 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         dialog.show()
     }
 
-    private fun showDialog(action: (PokemonSortMethod) -> Unit) {
+    private fun showSortDialog(sortPokemonList: (PokemonSortMethod) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(resources.getString(R.string.sort_dialog_title))
         builder.setMessage(R.string.dialog_sort_message)
 
         val customView = layoutInflater.inflate(R.layout.dialog_sort, drawerLayout, false)
         builder.setView(customView)
-        builder.setNegativeButton(R.string.sort_dialog_negative_button,
-            DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
-        builder.setPositiveButton(
-            R.string.sort_dialog_positive_button
-        ) { _, _ ->
+        builder.setNegativeButton(R.string.sort_dialog_negative_button, DialogInterface.OnClickListener { _, _ -> return@OnClickListener })
+        builder.setPositiveButton(R.string.sort_dialog_positive_button) { _, _ ->
             val spinner = customView.findViewById<AppCompatSpinner>(R.id.dialog_sort_spinner)
 
             // 0 = name, 1 = encounter, 2 = pokedexId, 3 = original
@@ -137,16 +131,14 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                 else -> PokemonSortMethod.InternalId
             }
 
-            action(sortMethod)
+            sortPokemonList(sortMethod)
         }
 
         val dialog = builder.create()
         dialog.show()
     }
 
-    private fun getCurrentTabIndex(): Int {
-        return view_pager.currentItem
-    }
+    private fun getCurrentTabIndex() = view_pager.currentItem
 
     private fun updateShinyStatistics(
         numberOfShinys: Int,
@@ -172,17 +164,18 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
             return
 
         pokemonData.encounterNeeded++
-        recyclerViewChangedListeners.forEach { it.updatePokemonEncounter(pokemonData) }
+        recyclerViewChangedListeners[getCurrentTabIndex()].updatePokemonEncounter(pokemonData)
         viewModel.updatePokemon(pokemonData)
 
         if (viewModel.shouldAutoSort())
-            recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
+            recyclerViewChangedListeners[getCurrentTabIndex()].sort(viewModel.getSortMethod())
     }
 
     private var selectedPokemon: PokemonData? = null
 
     override fun onListEntryLongClick(view: View) {
 
+        // passed through the interface from fragment
         val pokemonData = view.tag as PokemonData
 
         selectedPokemon = pokemonData
@@ -338,7 +331,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         })
         viewModel.getPokemonEditionLiveData().observe(this, Observer {
             recyclerViewChangedListeners.forEach { listener -> listener.reload() }
-            applyPokemonEdition(it)
+            applyPokemonEditionOnUi(it)
         })
 
         initPreferences()
@@ -374,11 +367,10 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
     private fun initTabs() {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
-        viewPager.adapter = sectionsPagerAdapter
-        viewPager.offscreenPageLimit = ShinyPokemonApplication.NUM_TAB_VIEWS
+        view_pager.adapter = sectionsPagerAdapter
+        view_pager.offscreenPageLimit = ShinyPokemonApplication.NUM_TAB_VIEWS
         val tabs: TabLayout = findViewById(R.id.tabs)
-        tabs.setupWithViewPager(viewPager)
+        tabs.setupWithViewPager(view_pager)
     }
 
     private fun initNavigationDrawer() {
@@ -437,7 +429,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
                     changeEdition()
                 }
                 R.id.sortData -> {
-                    showDialog { sortMethod ->
+                    showSortDialog { sortMethod ->
                         recyclerViewChangedListeners.forEach { listener -> listener.sort(sortMethod) }
                         viewModel.setSortMethod(sortMethod)
                     }
@@ -475,13 +467,11 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         if (menu == null)
             return true
 
-        Handler(Looper.myLooper()!!).post {
-            val menuItemAdd = menu.findItem(R.id.add_pokemon)
-            val menuItemRandom = menu.findItem(R.id.random_pokemon)
+        if (!viewModel.isGuideShown()) {
+            Handler(Looper.myLooper()!!).post {
+                val menuItemAdd = menu.findItem(R.id.add_pokemon)
+                val menuItemRandom = menu.findItem(R.id.random_pokemon)
 
-//            showGuide(menuItemAdd, menuItemRandom)
-
-            if (!viewModel.isGuideShown()) {
                 showGuide(menuItemAdd, menuItemRandom)
                 viewModel.setGuideShown()
             }
@@ -493,14 +483,15 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
     override fun onResume() {
         super.onResume()
 
-        // if theme has been changes in the settings activity
+        // if theme has been changed in the settings activity
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        if (prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null) != viewModel.currentTheme)
+        val themeChanged = prefs.getString(ShinyPokemonApplication.PREFERENCES_CURRENT_THEME, null) != viewModel.currentTheme
+        if (themeChanged)
             recreate()
 
         initDarkMode()
         recyclerViewChangedListeners.forEach { it.reload() }
-        applyPokemonEdition(viewModel.getPokemonEdition())
+        applyPokemonEditionOnUi(viewModel.getPokemonEdition())
 
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
