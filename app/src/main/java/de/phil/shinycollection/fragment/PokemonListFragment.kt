@@ -70,10 +70,6 @@ class PokemonListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
 
-        numFragments++
-
-        Toast.makeText(activity, "$numFragments fragment", Toast.LENGTH_SHORT).show()
-
         val view = inflater.inflate(R.layout.fragment_pokemondata_list, container, false)
 
         if (view is RecyclerView) {
@@ -187,8 +183,6 @@ class PokemonListFragment : Fragment() {
     companion object {
 
         private const val ARG_SECTION_NUMBER = "section_number"
-
-        private var numFragments = 0
 
         @JvmStatic
         fun newInstance(sectionNumber: Int): PokemonListFragment {

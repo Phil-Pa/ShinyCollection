@@ -102,6 +102,8 @@ data class PokemonData(
         return shortString
     }
 
+    fun isInShinyList() = tabIndex == ShinyPokemonApplication.TAB_INDEX_SHINY_LIST
+
     companion object {
 
         const val SHORT_DATA_STRING_LENGTH = 17
