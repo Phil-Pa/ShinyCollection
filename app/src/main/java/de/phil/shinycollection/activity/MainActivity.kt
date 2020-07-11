@@ -161,9 +161,8 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         if (getCurrentTabIndex() == ShinyPokemonApplication.TAB_INDEX_SHINY_LIST)
             return
 
-        pokemonData.encounterNeeded++
+        viewModel.increasePokemonEncounter(pokemonData)
         recyclerViewChangedListeners[getCurrentTabIndex()].updatePokemonEncounter(pokemonData)
-        viewModel.updatePokemon(pokemonData)
 
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners[getCurrentTabIndex()].sort(viewModel.getSortMethod())

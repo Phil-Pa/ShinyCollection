@@ -28,8 +28,7 @@ class ViewModelTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         val context: ShinyPokemonApplication = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as ShinyPokemonApplication
-        database = Room.inMemoryDatabaseBuilder(context, PokemonDatabase::class.java)
-            .allowMainThreadQueries().build()
+
 
         viewModel = MainViewModel(context)
     }

@@ -114,6 +114,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return pokemonEditionLiveData
     }
 
+    fun increasePokemonEncounter(pokemonData: PokemonData) {
+        pokemonData.encounterNeeded++
+        updatePokemon(pokemonData)
+    }
+
     //endregion
 
 }
