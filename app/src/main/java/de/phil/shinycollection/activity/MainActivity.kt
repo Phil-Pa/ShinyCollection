@@ -255,8 +255,10 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
             pokemonData.encounterNeeded = encounters
 
             viewModel.updatePokemon(pokemonData)
-
             recyclerViewChangedListeners[getCurrentTabIndex()].reload()
+
+            if (pokemonData.tabIndex != getCurrentTabIndex())
+                recyclerViewChangedListeners[pokemonData.tabIndex].reload()
 
             showMessage(getString(R.string.dialog_message_saved_changes), MessageType.Info)
             dialog.dismiss()
@@ -526,8 +528,8 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         recyclerViewChangedListeners.add(listener)
     }
 
-    override fun getAllPokemonDataFromTabIndex(mTabIndex: Int): List<PokemonData> {
-        return viewModel.getAllPokemonDataFromTabIndex(mTabIndex)
+    override fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
+        return viewModel.getAllPokemonDataFromTabIndex(tabIndex)
     }
 
     override fun getSortMethod(): PokemonSortMethod {
@@ -536,9 +538,5 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
     override fun getContext(): Context {
         return this
-    }
-
-    override fun showSmallIcons(): Boolean {
-        return false
     }
 }

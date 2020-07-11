@@ -25,7 +25,7 @@ class SectionsPagerAdapter(context: Context, fm: FragmentManager) :
             throw IllegalArgumentException("invalid position $position, less than 0 or greater than maximum number of tabs in view pager")
 
         if (!pages.keys.contains(position))
-            pages[position] = PokemonListFragment.newInstance(position)
+            pages[position] = PokemonListFragment.newInstance(position, false)
 
         return pages[position]!!
     }

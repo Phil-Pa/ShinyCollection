@@ -2,6 +2,7 @@ package de.phil.shinycollection.fragment
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +31,9 @@ class PokemonListFragment : Fragment() {
      * specifies what tab this fragment is in the view pager
      */
     private var mTabIndex = 0
+    private var showSmallIcon = true
     private lateinit var recyclerView: RecyclerView
-
     private val masterAdapter = PokemonDataAdapter()
-
     private var dataList = mutableListOf<PokemonData>()
 
     private fun sortDataInRecyclerView(sortMethod: PokemonSortMethod) {
@@ -78,7 +78,7 @@ class PokemonListFragment : Fragment() {
             loadData()
 
             with(recyclerView) {
-                layoutManager = if (getPokemonListActivity().showSmallIcons()) {
+                layoutManager = if (showSmallIcon) {
                     GridLayoutManager(context, 4).apply {
                         orientation = HORIZONTAL
                     }
@@ -86,12 +86,12 @@ class PokemonListFragment : Fragment() {
                     GridLayoutManager(context, if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 1 else 2)
                 }
 
-                adapter = if (getPokemonListActivity().showSmallIcons())
+                adapter = if (showSmallIcon)
                     masterAdapter.smallIconAdapter
                 else
                     masterAdapter.normalAdapter
 
-                if (getPokemonListActivity().showSmallIcons()) {
+                if (showSmallIcon) {
                     recyclerView.background = null
                     val layoutParams = RecyclerView.LayoutParams(
                         RecyclerView.LayoutParams.WRAP_CONTENT,
@@ -174,7 +174,7 @@ class PokemonListFragment : Fragment() {
         // sort the data
         sortDataInRecyclerView(getPokemonListActivity().getSortMethod())
 
-        if (getPokemonListActivity().showSmallIcons())
+        if (showSmallIcon)
             masterAdapter.smallIconAdapter = PokemonDataRecyclerViewSmallIconAdapter(dataList, getPokemonListActivity())
         else
             masterAdapter.normalAdapter = PokemonDataRecyclerViewAdapter(dataList, getPokemonListActivity())
@@ -182,17 +182,11 @@ class PokemonListFragment : Fragment() {
 
     companion object {
 
-        private const val ARG_SECTION_NUMBER = "section_number"
-
         @JvmStatic
-        fun newInstance(sectionNumber: Int): PokemonListFragment {
+        fun newInstance(sectionNumber: Int, showSmallIcon: Boolean): PokemonListFragment {
             val fragment = PokemonListFragment()
-            with (fragment) {
-                mTabIndex = sectionNumber
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber + 1)
-                }
-            }
+            fragment.mTabIndex = sectionNumber
+            fragment.showSmallIcon = showSmallIcon
 
             return fragment
         }

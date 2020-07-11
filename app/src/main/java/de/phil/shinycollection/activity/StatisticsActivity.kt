@@ -2,6 +2,8 @@ package de.phil.shinycollection.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +26,7 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
         initTheme()
         setContentView(R.layout.activity_statistics)
         viewModel = ViewModelProvider(this).get(StatisticsViewModel::class.java)
+
         setupStatistics()
         setupThemePokemonImage()
     }
@@ -52,15 +55,21 @@ class StatisticsActivity : AppCompatActivity(), IPokemonListActivity {
         statistics_textView_average_eggs.text = (getString(R.string.avg_eggs) + ": ${statistics.averageEggs}")
     }
 
-    override fun showSmallIcons(): Boolean {
-        return true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun addRecyclerViewChangedListener(listener: MainActivity.OnListChangedListener) {
 
     }
 
-    override fun getAllPokemonDataFromTabIndex(mTabIndex: Int): List<PokemonData> {
+    override fun getAllPokemonDataFromTabIndex(tabIndex: Int): List<PokemonData> {
         return viewModel.getAllPokemon()
     }
 
