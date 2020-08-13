@@ -71,11 +71,6 @@ class SampleTest {
             onView(withId(R.id.add_new_pokemon_activity_edittext_name)).perform(replaceText("Bisasam"))
             delay()
 
-            onView(withId(R.id.add_new_pokemon_activity_spinner_pokemon_editions)).perform(click())
-            delay()
-            onData(allOf(`is`(instanceOf(String::class.java)), `is`("Go")))
-                .perform(click())
-
             delay()
 
             onView(withId(R.id.add_new_pokemon_activity_edittext_eggsNeeded)).perform(typeText("123"))

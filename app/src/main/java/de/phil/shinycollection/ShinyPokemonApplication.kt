@@ -5,6 +5,7 @@ import android.app.Application
 class ShinyPokemonApplication : Application() {
 
     companion object {
+
         // constants
         const val INVALID_VALUE = -1
         const val NUM_TAB_VIEWS = 5
@@ -22,6 +23,7 @@ class ShinyPokemonApplication : Application() {
         const val PREFERENCES_USE_DARK_MODE = "use_dark_mode"
         const val PREFERENCES_POKEMON_EDITION = "pokemon_edition"
         const val PREFERENCES_CURRENT_THEME = "current_theme"
+        const val PREFERENCES_LAST_UPDATE_TIME = "last_update_time"
 
         const val ALOLA_EXTENSION = "-alola"
         const val GALAR_EXTENSION = "-galar"

@@ -20,6 +20,10 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     compileSdkVersion 30
     defaultConfig {
         applicationId "de.phil.shinycollection"

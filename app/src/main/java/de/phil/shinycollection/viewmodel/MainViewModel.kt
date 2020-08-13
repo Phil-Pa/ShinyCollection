@@ -5,7 +5,10 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import de.phil.shinycollection.ShinyPokemonApplication
+import de.phil.shinycollection.ShinyPokemonApplication.Companion.PREFERENCES_LAST_UPDATE_TIME
+import de.phil.shinycollection.activity.isNetworkAvailable
 import de.phil.shinycollection.database.DataManager
 import de.phil.shinycollection.database.PokemonDao
 import de.phil.shinycollection.database.PokemonDatabase
@@ -14,6 +17,11 @@ import de.phil.shinycollection.model.PokemonEdition
 import de.phil.shinycollection.model.PokemonSortMethod
 import de.phil.shinycollection.model.UpdateStatisticsData
 import de.phil.shinycollection.utils.round
+import kotlinx.coroutines.*
+import java.net.URL
+import java.time.LocalDateTime
+import java.util.regex.Pattern
+import kotlin.math.abs
 
 fun AndroidViewModel.getPreferences(): SharedPreferences {
     return PokemonDatabase.preferences(getApplication())
@@ -100,6 +108,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return getPreferences().getBoolean(ShinyPokemonApplication.PREFERENCES_AUTO_SORT, false)
     }
 
+    fun shouldAskForUpdate(): Boolean {
+        val currentTimeNanos = System.nanoTime()
+        val lastUpdateTimeNanos = getPreferences().getLong(PREFERENCES_LAST_UPDATE_TIME, 0)
+
+        val oneDayInNanos = 1000L * 1000L * 1000L *60L * 60L * 24L
+        if (abs(currentTimeNanos - lastUpdateTimeNanos) > oneDayInNanos)
+            return true
+        return false
+    }
+
     fun setPokemonEdition(pokemonEdition: PokemonEdition) {
         getPreferences().edit().putInt(ShinyPokemonApplication.PREFERENCES_POKEMON_EDITION, pokemonEdition.ordinal).apply()
         pokemonEditionLiveData.value = pokemonEdition
@@ -117,6 +135,44 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun increasePokemonEncounter(pokemonData: PokemonData) {
         pokemonData.encounterNeeded++
         updatePokemon(pokemonData)
+    }
+
+    @Suppress("BlockingMethodInNonBlockingContext")
+    fun ifNewVersionAvailable(currentVersionCode: Long, action: () -> Unit) {
+
+        var newVersionAvailable = false
+
+        val job = CoroutineScope(Dispatchers.IO).async {
+            val pattern = "<span class=\"pl-c1\">(\\d+)</span>"
+            Thread.sleep(2000)
+            val website = URL("https://github.com/Phil-Pa/ShinyCollection/blob/master/app/build.gradle").readText()
+            val lines = website.split("\n")
+            for (line in lines) {
+                if (line.contains("versionCode")) {
+                    val matcher = Pattern.compile(pattern).matcher(line)
+                    if (!matcher.find())
+                        continue
+
+                    val match = matcher.toMatchResult()
+
+                    val versionCode = match.group(1).toLong()
+                    if (currentVersionCode < versionCode) {
+                        newVersionAvailable = true
+                        break
+                    }
+                }
+            }
+
+        }
+
+        job.invokeOnCompletion {
+            if (newVersionAvailable) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    action()
+                    getPreferences().edit().putLong(PREFERENCES_LAST_UPDATE_TIME, System.nanoTime()).apply()
+                }
+            }
+        }
     }
 
     //endregion

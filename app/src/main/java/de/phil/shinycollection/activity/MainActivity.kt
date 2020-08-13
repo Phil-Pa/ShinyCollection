@@ -4,6 +4,8 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +16,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +34,7 @@ import com.google.android.material.textfield.TextInputEditText
 import de.phil.shinycollection.R
 import de.phil.shinycollection.ShinyPokemonApplication
 import de.phil.shinycollection.adapter.SectionsPagerAdapter
+import de.phil.shinycollection.databinding.ActivityMainBinding
 import de.phil.shinycollection.model.*
 import de.phil.shinycollection.utils.MessageType
 import de.phil.shinycollection.viewmodel.MainViewModel
@@ -310,8 +314,11 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
     lateinit var viewModel: MainViewModel
     private val recyclerViewChangedListeners = mutableListOf<OnListChangedListener>()
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getShinyListData().observe(this, Observer {
 
@@ -333,7 +340,8 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
         initPreferences()
         viewModel.currentTheme = initTheme()
-        setContentView(R.layout.activity_main)
+
+        setContentView(binding.root)
         setSupportActionBar(toolbar)
         initTabs()
         initNavigationDrawer()
@@ -364,15 +372,15 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
     private fun initTabs() {
         val sectionsPagerAdapter = SectionsPagerAdapter(applicationContext, supportFragmentManager)
-        view_pager.adapter = sectionsPagerAdapter
-        view_pager.offscreenPageLimit = ShinyPokemonApplication.NUM_TAB_VIEWS
-        val tabs: TabLayout = findViewById(R.id.tabs)
+        binding.viewPager.adapter = sectionsPagerAdapter
+        binding.viewPager.offscreenPageLimit = ShinyPokemonApplication.NUM_TAB_VIEWS
+        val tabs: TabLayout = binding.tabs
         tabs.setupWithViewPager(view_pager)
     }
 
     private fun initNavigationDrawer() {
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navigationView = findViewById(R.id.nav_view)
+        drawerLayout = binding.drawerLayout
+        navigationView = binding.navView
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.app_name, R.string.app_name
         )
@@ -437,7 +445,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
     }
 
     private fun initNavigationViewViews() {
-        val headerView = navigationView.getHeaderView(0)
+        val headerView = binding.navView.getHeaderView(0)
         imageViewPokemonEdition = headerView.findViewById(R.id.imageView_pokemon_edition)
         imageViewSignaturePokemon = headerView.findViewById(R.id.imageView)
         textViewTotalShinys = headerView.findViewById(R.id.textView_number_shinys)
@@ -492,6 +500,28 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
 
         if (viewModel.shouldAutoSort())
             recyclerViewChangedListeners.forEach { it.sort(viewModel.getSortMethod()) }
+
+        checkForNewAppVersion()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun checkForNewAppVersion() {
+        if (!viewModel.shouldAskForUpdate())
+            return
+
+        if (isNetworkAvailable()) {
+            val versionCode = packageManager.getPackageInfo(packageName, 0).longVersionCode
+            viewModel.ifNewVersionAvailable(versionCode) {
+                showYesNoDialog("New Update available! Want to download?") { answer ->
+                    if (answer) {
+                        val url = "https://github.com/Phil-Pa/ShinyCollection/releases"
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(url)
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

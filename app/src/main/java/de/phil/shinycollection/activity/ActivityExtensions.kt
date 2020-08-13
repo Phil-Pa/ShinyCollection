@@ -5,12 +5,16 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import de.phil.shinycollection.R
@@ -122,4 +126,18 @@ fun Activity.showYesNoDialog(title: String, action: (answer: Boolean) -> Unit) {
         .setPositiveButton(getString(R.string.dialog_yes), dialogClickListener)
         .setNegativeButton(getString(R.string.dialog_no), dialogClickListener)
         .show()
+}
+
+fun Activity.isNetworkAvailable(): Boolean {
+    val connectivityManager =
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkCapabilities = connectivityManager.activeNetwork ?: return false
+    val actNw =
+        connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+    return when {
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        else -> false
+    }
 }
