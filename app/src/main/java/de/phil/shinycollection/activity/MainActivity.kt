@@ -267,7 +267,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
     }
 
     private fun movePokemonToShinyList(selectedPokemon: PokemonData) {
-        if (selectedPokemon.isInShinyList()) {
+        if (!selectedPokemon.isInShinyList()) {
             recyclerViewChangedListeners[getCurrentTabIndex()].deletePokemon(selectedPokemon)
 
             selectedPokemon.tabIndex = ShinyPokemonApplication.TAB_INDEX_SHINY_LIST
@@ -516,6 +516,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
             R.id.add_pokemon -> {
                 val intent = Intent(applicationContext, AddNewPokemonActivity::class.java)
                 intent.putExtra(INTENT_EXTRA_TAB_INDEX, view_pager.currentItem)
+                intent.putExtra(INTENT_EXTRA_POKEMON_EDITION, viewModel.getPokemonEdition().value)
                 startActivity(intent)
                 true
             }

@@ -94,8 +94,8 @@
     <string-array name="hunt_methods">
         <item>Breeding</item>
         <item>SOS-Method</item>
-        <item>Friend Safari</item>
         <item>Softreset</item>
+        <item>Friend Safari</item>
         <item>Random</item>
         <item>DexNav</item>
         <item>Mass Encounter</item>
@@ -140,4 +140,5 @@
     <string name="guide_random_pokemon_description">This allows you to have a random Pokemon chosen for you from the current list! Then increase the number of encounters by clicking on the Pokemon entry and once you have found the Shiny, hold down the entry and move it to the Shiny list!</string>
     <string name="guide_pokemon_edition_title">Pokemon Edition</string>
     <string name="guide_pokemon_edition_description">Here you can see the currently selected Pokemon Edition. If you add Pokemon to the Shiny List or a Wish List, they will be saved to the edition shown here. This allows you to manage your Shiny Pokemon across multiple Pokemon games.</string>
+    <string name="internal_error">Internal error</string>
 </resources>

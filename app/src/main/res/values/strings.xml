@@ -105,6 +105,7 @@
     <string name="guide_random_pokemon_description">Hiermit kannst du ein zufälliges Pokemon aus der aktuellen Liste für dich auswählen lassen! Erhöhe dann die Anzahl seiner Begegnungen durch Klicken auf den Pokemoneintrag und sobald du das Shiny gefunden hast, halte lange auf den Eintrag gedrückt und verschiebe es in die Shiny Liste!</string>
     <string name="guide_pokemon_edition_title">Pokemon Edition</string>
     <string name="guide_pokemon_edition_description">Hier siehst du die aktuell ausgewählte Pokemon Edition. Wenn du Pokemon der Shiny Liste oder einer Wunschliste hinzufügst, werden sie in die hier angezeigte Edition gespeichert. So kannst du über mehrere Pokemon Spiele hinweg deine Shiny Pokemon verwalten.</string>
+    <string name="internal_error">Interner Fehler</string>
 
     <!-- string arrays -->
 
@@ -121,8 +122,8 @@
     <string-array name="hunt_methods">
         <item>Gezüchtet</item>
         <item>SOS-Methode</item>
-        <item>Kontaktsafari</item>
         <item>Softreset</item>
+        <item>Kontaktsafari</item>
         <item>Zufall</item>
         <item>DexNav</item>
         <item>Massenbegegnung</item>

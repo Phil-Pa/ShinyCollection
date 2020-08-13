@@ -5,8 +5,8 @@ import java.util.*
 enum class HuntMethod(val value: Int) {
     Hatch(0),
     SOS(1),
-    FriendSafari(2),
-    SoftReset(3),
+    SoftReset(2),
+    FriendSafari(3),
     Random(4),
     DexNav(5),
     Hordes(6),
@@ -19,6 +19,24 @@ enum class HuntMethod(val value: Int) {
     companion object {
         private val map = values().associateBy(HuntMethod::ordinal)
         fun fromInt(type: Int) = map[type]
+
+        fun fromString(huntMethod: String): HuntMethod {
+            return when (huntMethod) {
+                "Breeding", "Gezüchtet" -> Hatch
+                "SOS-Method", "SOS-Methode" -> SOS
+                "Softreset" -> SoftReset
+                "Friend Safari", "Kontaktsafari" -> FriendSafari
+                "Random", "Zufall" -> Random
+                "DexNav" -> DexNav
+                "Mass Encounter", "Massenbegegnung" -> Hordes
+                "PokeRadar" -> PokeRadar
+                "RNGManipulation" -> RNGManipulation
+                "Chain Fishing" -> ChainFinishing
+                "Ultradimension" -> UltraDimension
+                "Other", "Anderes" -> Other
+                else -> throw IllegalArgumentException("invalid hunt method: $huntMethod")
+            }
+        }
     }
 
 }
@@ -32,8 +50,8 @@ fun HuntMethod.translateToCurrentLocaleLanguage() = when (Locale.getDefault().la
 private fun HuntMethod.toGerman() = when (this) {
     HuntMethod.Hatch -> "Gezüchtet"
     HuntMethod.SOS -> "SOS-Methode"
-    HuntMethod.FriendSafari -> "Kontaktsafari"
     HuntMethod.SoftReset -> "Softreset"
+    HuntMethod.FriendSafari -> "Kontaktsafari"
     HuntMethod.Random -> "Zufall"
     HuntMethod.DexNav -> "DexNav"
     HuntMethod.Hordes -> "Massenbegegnung"
@@ -47,8 +65,8 @@ private fun HuntMethod.toGerman() = when (this) {
 private fun HuntMethod.toEnglish() = when (this) {
     HuntMethod.Hatch -> "Breeding"
     HuntMethod.SOS -> "SOS-Method"
-    HuntMethod.FriendSafari -> "Friend Safari"
     HuntMethod.SoftReset -> "Softreset"
+    HuntMethod.FriendSafari -> "Friend Safari"
     HuntMethod.Random -> "Random"
     HuntMethod.DexNav -> "DexNav"
     HuntMethod.Hordes -> "Mass Encounter"

@@ -10,6 +10,10 @@ class ShinyPokemonApplication : Application() {
         const val NUM_TAB_VIEWS = 5
         const val ENCOUNTER_UNKNOWN = 0
         const val TAB_INDEX_SHINY_LIST = 0
+        const val TAB_INDEX_BREEDING = 1
+        const val TAB_INDEX_SOS = 2
+        const val TAB_INDEX_SOFTRESET = 3
+        const val TAB_INDEX_OTHER = 4
 
         const val PREFERENCES_NAME = "_preferences"
         const val PREFERENCES_GUIDE_SHOWN = "guide_shown"

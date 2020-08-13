@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -11,11 +12,13 @@ import com.bumptech.glide.Glide
 import de.phil.shinycollection.R
 import de.phil.shinycollection.ShinyPokemonApplication
 import de.phil.shinycollection.ShinyPokemonApplication.Companion.INVALID_VALUE
+import de.phil.shinycollection.ShinyPokemonApplication.Companion.TAB_INDEX_BREEDING
+import de.phil.shinycollection.ShinyPokemonApplication.Companion.TAB_INDEX_OTHER
+import de.phil.shinycollection.ShinyPokemonApplication.Companion.TAB_INDEX_SHINY_LIST
+import de.phil.shinycollection.ShinyPokemonApplication.Companion.TAB_INDEX_SOFTRESET
+import de.phil.shinycollection.ShinyPokemonApplication.Companion.TAB_INDEX_SOS
 import de.phil.shinycollection.adapter.PokemonAutoCompleteFilterAdapter
-import de.phil.shinycollection.model.HuntMethod
-import de.phil.shinycollection.model.INTENT_EXTRA_TAB_INDEX
-import de.phil.shinycollection.model.PokemonData
-import de.phil.shinycollection.model.PokemonEdition
+import de.phil.shinycollection.model.*
 import de.phil.shinycollection.utils.MessageType
 import de.phil.shinycollection.viewmodel.AddNewPokemonViewModel
 import kotlinx.android.synthetic.main.activity_add_new_pokemon.*
@@ -25,18 +28,70 @@ class AddNewPokemonActivity : AppCompatActivity() {
 
     private lateinit var viewModel: AddNewPokemonViewModel
     private var tabIndex = INVALID_VALUE
+    private lateinit var pokemonEdition: PokemonEdition
+    private val addedSpinnerOptions = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initTheme()
         setContentView(R.layout.activity_add_new_pokemon)
 
-        tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, INVALID_VALUE)
+        finishIfIntentExtraInvalid()
+        setupPassedIntentExtras()
+
         viewModel = ViewModelProvider(this).get(AddNewPokemonViewModel::class.java)
 
         setupEncounterKnownCheckBox()
         setupAddPokemonButton()
         setupEditTextName()
+        setupHuntMethodSpinner()
+    }
+
+    private fun setupHuntMethodSpinner() {
+        val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item)
+
+        val spinnerOptions = resources.getStringArray(R.array.hunt_methods).toMutableList()
+
+        when (tabIndex) {
+            TAB_INDEX_SHINY_LIST -> addedSpinnerOptions.addAll(spinnerOptions)
+            TAB_INDEX_BREEDING -> addedSpinnerOptions.add(spinnerOptions[0])
+            TAB_INDEX_SOS -> addedSpinnerOptions.add(spinnerOptions[1])
+            TAB_INDEX_SOFTRESET -> addedSpinnerOptions.add(spinnerOptions[2])
+            TAB_INDEX_OTHER -> {
+                for (i in 1..3)
+                    spinnerOptions.removeAt(0)
+
+                addedSpinnerOptions.addAll(spinnerOptions)
+            }
+        }
+
+        spinnerAdapter.addAll(addedSpinnerOptions)
+
+        add_new_pokemon_activity_spinner_hunt_methods.adapter = spinnerAdapter
+    }
+
+    private fun setupPassedIntentExtras() {
+        tabIndex = intent.getIntExtra(INTENT_EXTRA_TAB_INDEX, INVALID_VALUE)
+        pokemonEdition = PokemonEdition.fromInt(
+            intent.getIntExtra(
+                INTENT_EXTRA_POKEMON_EDITION,
+                PokemonEdition.XY.value
+            )
+        )!!
+    }
+
+    private fun finishIfIntentExtraInvalid() {
+        if (intent.getIntExtra(
+                INTENT_EXTRA_POKEMON_EDITION,
+                INVALID_VALUE
+            ) == INVALID_VALUE || intent.getIntExtra(
+                INTENT_EXTRA_TAB_INDEX,
+                INVALID_VALUE
+            ) == INVALID_VALUE
+        ) {
+            showMessage(getString(R.string.internal_error), MessageType.Error)
+            finish()
+        }
     }
 
     private fun textIsEntered(text: Editable?): Boolean {
@@ -59,10 +114,10 @@ class AddNewPokemonActivity : AppCompatActivity() {
                 ShinyPokemonApplication.ENCOUNTER_UNKNOWN
             }
 
-            val huntMethod = HuntMethod.fromInt(add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition)!!
-            val pokemonEdition = PokemonEdition.fromInt(add_new_pokemon_activity_spinner_pokemon_editions.selectedItemPosition)!!
+            val huntMethodName = addedSpinnerOptions[add_new_pokemon_activity_spinner_hunt_methods.selectedItemPosition]
+            val huntMethod = HuntMethod.fromString(huntMethodName)
 
-            val pokemonData = PokemonData(name, -1, -1, encounters, huntMethod, pokemonEdition, tabIndex)
+            val pokemonData = PokemonData(name, INVALID_VALUE, INVALID_VALUE, encounters, huntMethod, pokemonEdition, tabIndex)
 
             val (success, message) = viewModel.addPokemonToDatabase(pokemonData)
 
