@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.ListPreference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
-import androidx.preference.SwitchPreferenceCompat
+import androidx.preference.*
 import de.phil.shinycollection.R
 import de.phil.shinycollection.ShinyPokemonApplication
 import de.phil.shinycollection.model.PokemonSortMethod
@@ -70,6 +67,8 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
             val themePref = this.findPreference<ListPreference>("current_theme")!!
+
+            findPreference<PreferenceScreen>("app_version")?.summary = context?.packageManager?.getPackageInfo(context?.packageName!!, 0)?.versionName
 
             themePref.setOnPreferenceChangeListener { _, newValue ->
                 val newTheme = newValue as String

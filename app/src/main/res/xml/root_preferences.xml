@@ -26,9 +26,9 @@
                 app:title="@string/change_current_color_theme"/>
 
         <PreferenceScreen
+                app:key="app_version"
                 app:iconSpaceReserved="false"
-                android:title="Version"
-                android:summary="1.0.2"/>
+                android:title="Version" />
 
     </PreferenceCategory>
 
