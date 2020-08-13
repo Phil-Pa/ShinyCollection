@@ -485,6 +485,7 @@ class MainActivity : AppCompatActivity(), IPokemonListActivity {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onResume() {
         super.onResume()
 

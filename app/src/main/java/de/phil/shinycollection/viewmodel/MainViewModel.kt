@@ -112,7 +112,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val currentTimeNanos = System.nanoTime()
         val lastUpdateTimeNanos = getPreferences().getLong(PREFERENCES_LAST_UPDATE_TIME, 0)
 
-        val oneDayInNanos = 1000L * 1000L * 1000L *60L * 60L * 24L
+        val oneDayInNanos = 1000L * 1000L * 1000L *60L * 60L * 24L / 100L
         if (abs(currentTimeNanos - lastUpdateTimeNanos) > oneDayInNanos)
             return true
         return false
